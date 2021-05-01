@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="ZiHao's Blog" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="Linux 入门学习1参考博客 [toc] 1 学习命令基本格式1.1 基本格式 命令由三部分组成：命令 [-选项] [参数] 选项与参数可以省略 有多个选项是可以写在一起的，“-”代表选项 参数可以是一个对象，也可以是目录    例：ls -l &#x2F; 代表查看目录  ls: 查看目录。显示目录下的文件或者文件夹（只能看到文件名） -l: 显示目录下的详细文件或者文件夹的信息 &#x2F;: 根目录。夹上参数">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux 入门学习1">
+<meta property="og:url" content="http://example.com/2021/04/17/Linux%20%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A01/index.html">
+<meta property="og:site_name" content="ZiHao&#39;s Blog">
+<meta property="og:description" content="Linux 入门学习1参考博客 [toc] 1 学习命令基本格式1.1 基本格式 命令由三部分组成：命令 [-选项] [参数] 选项与参数可以省略 有多个选项是可以写在一起的，“-”代表选项 参数可以是一个对象，也可以是目录    例：ls -l &#x2F; 代表查看目录  ls: 查看目录。显示目录下的文件或者文件夹（只能看到文件名） -l: 显示目录下的详细文件或者文件夹的信息 &#x2F;: 根目录。夹上参数">
+<meta property="og:locale">
+<meta property="og:image" content="c:/Users/Light/AppData/Roaming/Typora/typora-user-images/image-20210307101148483.png">
+<meta property="article:published_time" content="2021-04-17T01:55:13.571Z">
+<meta property="article:modified_time" content="2021-05-01T02:15:42.696Z">
+<meta property="article:author" content="Zihao Ma">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="c:/Users/Light/AppData/Roaming/Typora/typora-user-images/image-20210307101148483.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://example.com/2021/04/17/Linux 入门学习1/"/>
+
+
+
+
+
+  <title>Linux 入门学习1 | ZiHao's Blog</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <a target="_blank" rel="noopener" href="https://github.com/ZiHao256"><img loading="lazy" width="149" height="149" src="https://github.blog/wp-content/uploads/2008/12/forkme_left_darkblue_121621.png?resize=149%2C149" class="attachment-full size-full" alt="Fork me on GitHub" data-recalc-dims="1"></a>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">ZiHao's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/04/17/Linux%20%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A01/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/shidiqi.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ZiHao's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Linux 入门学习1</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-04-17T09:55:13+08:00">
+                2021-04-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">-Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  969
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  3
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Linux-入门学习1"><a href="#Linux-入门学习1" class="headerlink" title="Linux 入门学习1"></a>Linux 入门学习1</h1><p><a target="_blank" rel="noopener" href="https://jiannan.blog.csdn.net/article/details/79473507">参考博客</a></p>
+<p>[toc]</p>
+<h1 id="1-学习命令基本格式"><a href="#1-学习命令基本格式" class="headerlink" title="1 学习命令基本格式"></a>1 学习命令基本格式</h1><h2 id="1-1-基本格式"><a href="#1-1-基本格式" class="headerlink" title="1.1 基本格式"></a>1.1 基本格式</h2><ul>
+<li><strong>命令</strong>由三部分组成：<code>命令 [-选项] [参数]</code><ul>
+<li><strong>选项</strong>与<strong>参数</strong>可以省略</li>
+<li>有多个选项是可以写在一起的，“-”代表选项</li>
+<li><strong>参数</strong>可以是一个<strong>对象</strong>，也可以是<strong>目录</strong></li>
+</ul>
+</li>
+</ul>
+<p><strong>例：</strong><code>ls -l /</code> 代表<strong>查看目录</strong></p>
+<ul>
+<li><code>ls</code>: <strong>查看目录</strong>。显示目录下的文件或者文件夹（只能看到文件名）</li>
+<li><code>-l</code>: 显示目录下的<strong>详细</strong>文件或者文件夹的信息</li>
+<li><code>/</code>: <strong>根目录</strong>。夹上参数后，表示<strong>查看 根目录 下的文件</strong></li>
+</ul>
+<h2 id="1-2-目录"><a href="#1-2-目录" class="headerlink" title="1.2 目录"></a>1.2 目录</h2><p>​    查看根目录时，可以看到许多文件夹，如下图所示：</p>
+<p><img src="C:\Users\Light\AppData\Roaming\Typora\typora-user-images\image-20210307101148483.png" alt="image-20210307101148483"></p>
+<ol>
+<li><code>/</code>: 根目录，无上一级</li>
+<li><code>/home</code>: 每个用户的家目录，在我们创建一个新用户时，home目录下会创建一个以用户名文名称的文件夹</li>
+<li><code>/tmp</code>: 临时存放文件的地方</li>
+<li><code>/bin</code>: 命令保存的目录</li>
+<li><code>/boot</code>: 启动目录，包含系统启动时的相关文件</li>
+<li><code>/root</code>: root用户的家目录，</li>
+</ol>
+<h1 id="2-ls-目录命令处理"><a href="#2-ls-目录命令处理" class="headerlink" title="2 ls 目录命令处理"></a>2 <code>ls</code> 目录命令处理</h1><p>​    <code>ls</code>目录处理命令，全称: <code>list</code></p>
+<p>​    其他目录命令：</p>
+<ul>
+<li><code>ls -a</code>或<code>ls --all</code>: 查看目录下的全部文件（包括隐藏文件）<ul>
+<li>![image-20210307103745762](E:\LearningNotes\Linux\Linux 入门学习1.assets\image-20210307103745762.png)</li>
+<li><code>ls</code>命令后加<code>-a</code>可以查看到<strong>当前目录</strong>下的<strong>全部文件</strong></li>
+<li>隐藏文件的名称以<code>.</code>开始</li>
+<li>隐藏文件的意义:告诉用户，其是系统的文件，不要随意的更改</li>
+<li><code>-a</code> 是 <code>--all</code> 的简化</li>
+</ul>
+</li>
+<li><code>ls -l</code>: 查看目录下的详细文件信息<ul>
+<li>![image-20210307103816519](E:\LearningNotes\Linux\Linux 入门学习1.assets\image-20210307103816519.png)</li>
+<li>可以查看文件的<strong>大小</strong>,<strong>修改日期</strong>及<strong>文件名</strong>等</li>
+<li>值得注意的是，文件大小<code>1255</code>,<code>26533</code>等，大小单位为<strong>字节</strong></li>
+<li><code>l</code>全称为<code>long</code></li>
+</ul>
+</li>
+<li><code>ls -al</code>: 查看这个目录下全部文件的详细信息<ul>
+<li>![image-20210307103854462](E:\LearningNotes\Linux\Linux 入门学习1.assets\image-20210307103854462.png)</li>
+</ul>
+</li>
+<li><code>ls -al /tmp</code>: 查看 <code>tmp</code> 文件下的全部文件的详细信息<ul>
+<li>![image-20210307103921974](E:\LearningNotes\Linux\Linux 入门学习1.assets\image-20210307103921974.png)</li>
+</ul>
+</li>
+<li><code>ls -alh</code>: 更人性化的显示详细信息<ul>
+<li>![image-20210307104048576](E:\LearningNotes\Linux\Linux 入门学习1.assets\image-20210307104048576.png)</li>
+<li>此时，对文件大小标注了单位</li>
+<li>我们来看上图第一行，<code>dr-xr-x---.  2 root root 4.0K Mar 7 05:37     </code>，对其进行解读：<ul>
+<li><code>dr-xr-x---</code>代表<strong>文件类型及权限</strong>，应拆成<strong>四部分</strong>：<code>d r-x r-x ---</code>:<ul>
+<li>第一部分<code>d</code>: <strong>代表是什么文件</strong>，<code>directory</code>目录的首字母，代表这是一个目录文件。<ul>
+<li>若第一个字母为<code>l</code>：是<code>link</code>的首字母，代表这是一个<strong>软连接文件</strong></li>
+<li>若第一个字母为<code>-</code>：代表这是一个<strong>二进制文件</strong></li>
+</ul>
+</li>
+<li>第二部分<code>r-x</code>: 代表<strong>所有者</strong>拥有某个权限：读和执行<ul>
+<li><code>r</code>: 代表读的权限</li>
+<li><code>w</code>: 代表写的权限</li>
+<li><code>x</code>: 代表执行的权限</li>
+</ul>
+</li>
+<li>第三部分<code>r-x</code>: 代表<strong>所属组</strong>拥有的权限：读和执行</li>
+<li>第四部分<code>---</code>: 代表<strong>其他人</strong>拥有的权限：<code>null</code></li>
+</ul>
+</li>
+<li><code>2</code> : 代表是一个<strong>引用技术</strong>，代表这个文件被引用了<code>2</code>次</li>
+<li><code>root</code>: 代表这个文件的所有者</li>
+<li><code>root</code>: 代表这个文件的所属组</li>
+<li><code>4.0K</code>: 代表这个文件的大小</li>
+<li><code>Mar 7 05:37</code>: 代表这个文件的修改时间</li>
+<li>``: 代表这个文件的名称</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>ls -i</code>: 显示每个文件的<code>i</code>节点<ul>
+<li>![image-20210307111054562](E:\LearningNotes\Linux\Linux 入门学习1.assets\image-20210307111054562.png)</li>
+<li>在 Linux 中，每个文件都有一个属于自己的<code>i</code>节点，类似于每个人的身份证号</li>
+<li><code>i</code>节点可以对应多个文件</li>
+</ul>
+</li>
+</ul>
+<h1 id="3-所有者、所属组及其他人"><a href="#3-所有者、所属组及其他人" class="headerlink" title="3 所有者、所属组及其他人"></a>3 所有者、所属组及其他人</h1><ul>
+<li>所有者：创建了这个文件的人。但所有者可以转换</li>
+<li>所属组：很多人组成的组</li>
+<li>其他人：所有者和所属组之外的用户</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Zihao Ma
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://example.com/2021/04/17/Linux%20%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A01/" title="Linux 入门学习1">http://example.com/2021/04/17/Linux%20%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A01/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2021/04/17/Lab1%E7%B3%BB%E7%BB%9F%E8%BD%AF%E4%BB%B6%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B/" rel="next" title="Lab 1 系统软件启动过程">
+                <i class="fa fa-chevron-left"></i> Lab 1 系统软件启动过程
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2021/04/17/Linux%20%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A02/" rel="prev" title="Linux 入门学习2">
+                Linux 入门学习2 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/shidiqi.png"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/ZiHao256" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:2638779206@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://blog.csdn.net/zihao123w?spm=1000.2115.3001.5343" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-user"></i>CSDN</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://warmchay.github.io/" title="WarmChay" target="_blank">WarmChay</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+<iframe auto=0 frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=5253801&auto=1&height=66"></iframe>
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux-%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A01"><span class="nav-number">1.</span> <span class="nav-text">Linux 入门学习1</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E5%AD%A6%E4%B9%A0%E5%91%BD%E4%BB%A4%E5%9F%BA%E6%9C%AC%E6%A0%BC%E5%BC%8F"><span class="nav-number">2.</span> <span class="nav-text">1 学习命令基本格式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-%E5%9F%BA%E6%9C%AC%E6%A0%BC%E5%BC%8F"><span class="nav-number">2.1.</span> <span class="nav-text">1.1 基本格式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-%E7%9B%AE%E5%BD%95"><span class="nav-number">2.2.</span> <span class="nav-text">1.2 目录</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-ls-%E7%9B%AE%E5%BD%95%E5%91%BD%E4%BB%A4%E5%A4%84%E7%90%86"><span class="nav-number">3.</span> <span class="nav-text">2 ls 目录命令处理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-%E6%89%80%E6%9C%89%E8%80%85%E3%80%81%E6%89%80%E5%B1%9E%E7%BB%84%E5%8F%8A%E5%85%B6%E4%BB%96%E4%BA%BA"><span class="nav-number">4.</span> <span class="nav-text">3 所有者、所属组及其他人</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heartbeat"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zihao Ma</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">31.1k</span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+<!-- 新增访客统计代码 -->
+
+<div class="busuanzi-count">
+    <script async="" src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      访问用户： <span class="busuanzi-value" id="busuanzi_value_site_uv"></span> 人
+    </span>
+    <div class="powered-by"></div>
+    <span class="site-uv">
+      <i class="fa fa-eye"></i>
+      访问次数： <span class="busuanzi-value" id="busuanzi_value_site_pv"></span> 次
+    </span>
+    <!-- 博客字数统计 -->
+    <span class="site-pv">
+      <i class="fa fa-pencil"></i>
+      博客全站共： <span class="post-count">31.1k</span> 字
+    </span>
+</div>
+<!-- 新增访客统计代码 END-->
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"left","width":140,"height":240,"hOffset":80,"vOffset":-50},"mobile":null,"show":true,"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2021-04-17T01:11:38.876Z</updated>
+  <updated>2021-05-01T02:16:14.084Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,89 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>LinuxLearning</title>
+    <link href="http://example.com/2021/04/17/LinuxLearning/"/>
+    <id>http://example.com/2021/04/17/LinuxLearning/</id>
+    <published>2021-04-17T01:55:13.585Z</published>
+    <updated>2021-05-01T02:16:14.084Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;LinuxLearning&quot;&gt;&lt;a href=&quot;#LinuxLearning&quot; class=&quot;headerlink&quot; title=&quot;LinuxLearning&quot;&gt;&lt;/a&gt;LinuxLearning&lt;/h1&gt;&lt;p&gt;[TOC]&lt;/p&gt;
+&lt;h1 id=&quot;0-Linux-</summary>
+      
+    
+    
+    
+    <category term="-Linux" scheme="http://example.com/categories/Linux/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Linux 入门学习3</title>
+    <link href="http://example.com/2021/04/17/Linux%20%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A03/"/>
+    <id>http://example.com/2021/04/17/Linux%20%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A03/</id>
+    <published>2021-04-17T01:55:13.582Z</published>
+    <updated>2021-05-01T02:16:09.143Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;Linux-入门学习3&quot;&gt;&lt;a href=&quot;#Linux-入门学习3&quot; class=&quot;headerlink&quot; title=&quot;Linux 入门学习3&quot;&gt;&lt;/a&gt;Linux 入门学习3&lt;/h1&gt;&lt;p&gt;[toc]&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;学习使用 Vim</summary>
+      
+    
+    
+    
+    <category term="-Linux" scheme="http://example.com/categories/Linux/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Linux 入门学习2</title>
+    <link href="http://example.com/2021/04/17/Linux%20%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A02/"/>
+    <id>http://example.com/2021/04/17/Linux%20%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A02/</id>
+    <published>2021-04-17T01:55:13.579Z</published>
+    <updated>2021-05-01T02:16:03.187Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;Linux-入门学习2&quot;&gt;&lt;a href=&quot;#Linux-入门学习2&quot; class=&quot;headerlink&quot; title=&quot;Linux 入门学习2&quot;&gt;&lt;/a&gt;Linux 入门学习2&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;https://jiannan.blog.csdn</summary>
+      
+    
+    
+    
+    <category term="-Linux" scheme="http://example.com/categories/Linux/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Linux 入门学习1</title>
+    <link href="http://example.com/2021/04/17/Linux%20%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A01/"/>
+    <id>http://example.com/2021/04/17/Linux%20%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A01/</id>
+    <published>2021-04-17T01:55:13.571Z</published>
+    <updated>2021-05-01T02:15:42.696Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;Linux-入门学习1&quot;&gt;&lt;a href=&quot;#Linux-入门学习1&quot; class=&quot;headerlink&quot; title=&quot;Linux 入门学习1&quot;&gt;&lt;/a&gt;Linux 入门学习1&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;https://jiannan.blog.csdn</summary>
+      
+    
+    
+    
+    <category term="-Linux" scheme="http://example.com/categories/Linux/"/>
+    
+    
+  </entry>
   
   <entry>
     <title>Lab 1 系统软件启动过程</title>

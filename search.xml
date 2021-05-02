@@ -1223,8 +1223,11 @@
 </ul>
 ]]></content>
       <categories>
-        <category>-SQL</category>
+        <category>-分布式数据库</category>
       </categories>
+      <tags>
+        <tag>-SQL</tag>
+      </tags>
   </entry>
   <entry>
     <title>LinuxLearning</title>

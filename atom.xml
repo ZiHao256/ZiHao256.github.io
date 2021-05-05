@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2021-05-02T05:39:40.488Z</updated>
+  <updated>2021-05-05T14:44:35.530Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,135 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Array</title>
+    <link href="http://example.com/2021/05/05/5%20Array%20%E6%95%B0%E7%BB%84/"/>
+    <id>http://example.com/2021/05/05/5%20Array%20%E6%95%B0%E7%BB%84/</id>
+    <published>2021-05-05T14:41:19.375Z</published>
+    <updated>2021-05-05T14:44:35.530Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;5-Array-数组&quot;&gt;&lt;a href=&quot;#5-Array-数组&quot; class=&quot;headerlink&quot; title=&quot;5 Array 数组&quot;&gt;&lt;/a&gt;5 Array 数组&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;同一种数据类型的集合&lt;/li&gt;
+&lt;li&gt;Go 中，数组从声明时就</summary>
+      
+    
+    
+    
+    <category term="-Go LearningNote" scheme="http://example.com/categories/Go-LearningNote/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>流程控制</title>
+    <link href="http://example.com/2021/05/05/4%20%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6/"/>
+    <id>http://example.com/2021/05/05/4%20%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6/</id>
+    <published>2021-05-05T14:41:19.372Z</published>
+    <updated>2021-05-05T14:44:14.940Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;4-流程控制&quot;&gt;&lt;a href=&quot;#4-流程控制&quot; class=&quot;headerlink&quot; title=&quot;4 流程控制&quot;&gt;&lt;/a&gt;4 流程控制&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;流程控制是每种语言控制逻辑走向和执行次序的重要部分&lt;/li&gt;
+&lt;li&gt;Go 中有&lt;code&gt;if</summary>
+      
+    
+    
+    
+    <category term="-Go LearningNote" scheme="http://example.com/categories/Go-LearningNote/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>运算符</title>
+    <link href="http://example.com/2021/05/05/3%20%E8%BF%90%E7%AE%97%E7%AC%A6/"/>
+    <id>http://example.com/2021/05/05/3%20%E8%BF%90%E7%AE%97%E7%AC%A6/</id>
+    <published>2021-05-05T14:41:19.369Z</published>
+    <updated>2021-05-05T14:43:52.187Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;3-运算符&quot;&gt;&lt;a href=&quot;#3-运算符&quot; class=&quot;headerlink&quot; title=&quot;3 运算符&quot;&gt;&lt;/a&gt;3 运算符&lt;/h2&gt;&lt;p&gt;Go 内置运算符：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;算术运算符&lt;/li&gt;
+&lt;li&gt;关系运算符&lt;/li&gt;
+&lt;li&gt;逻辑运算符</summary>
+      
+    
+    
+    
+    <category term="-Go LearningNote" scheme="http://example.com/categories/Go-LearningNote/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>基本数据类型</title>
+    <link href="http://example.com/2021/05/05/2%20%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/"/>
+    <id>http://example.com/2021/05/05/2%20%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/</id>
+    <published>2021-05-05T14:41:19.366Z</published>
+    <updated>2021-05-05T14:43:27.051Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;2-基本数据类型&quot;&gt;&lt;a href=&quot;#2-基本数据类型&quot; class=&quot;headerlink&quot; title=&quot;2 基本数据类型&quot;&gt;&lt;/a&gt;2 基本数据类型&lt;/h2&gt;&lt;p&gt;整型、浮点型、布尔型、字符串&lt;/p&gt;
+&lt;p&gt;数组、切片、结构体、函数、map、通道等&lt;/p&gt;</summary>
+      
+    
+    
+    
+    <category term="-Go LearningNote" scheme="http://example.com/categories/Go-LearningNote/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>变量和常量</title>
+    <link href="http://example.com/2021/05/05/1%20%E5%8F%98%E9%87%8F%E5%92%8C%E5%B8%B8%E9%87%8F/"/>
+    <id>http://example.com/2021/05/05/1%20%E5%8F%98%E9%87%8F%E5%92%8C%E5%B8%B8%E9%87%8F/</id>
+    <published>2021-05-05T14:41:19.363Z</published>
+    <updated>2021-05-05T14:43:00.194Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;&quot;&gt;&lt;a href=&quot;#&quot; class=&quot;headerlink&quot; title=&quot;&quot;&gt;&lt;/a&gt;&lt;/h1&gt;&lt;h2 id=&quot;1-变量和常量&quot;&gt;&lt;a href=&quot;#1-变量和常量&quot; class=&quot;headerlink&quot; title=&quot;1 变量和常量&quot;&gt;&lt;/a&gt;1 变量和常</summary>
+      
+    
+    
+    
+    <category term="-Go LearningNote" scheme="http://example.com/categories/Go-LearningNote/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Hexo LearningNote</title>
+    <link href="http://example.com/2021/05/05/Hexo%20%E5%8D%9A%E5%AE%A2/"/>
+    <id>http://example.com/2021/05/05/Hexo%20%E5%8D%9A%E5%AE%A2/</id>
+    <published>2021-05-05T14:40:01.246Z</published>
+    <updated>2021-05-05T14:39:44.018Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;Hexo-博客&quot;&gt;&lt;a href=&quot;#Hexo-博客&quot; class=&quot;headerlink&quot; title=&quot;Hexo 博客&quot;&gt;&lt;/a&gt;Hexo 博客&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;https://io-oi.me/tech/hexo-next-optimizat</summary>
+      
+    
+    
+    
+    <category term="-Blog" scheme="http://example.com/categories/Blog/"/>
+    
+    
+  </entry>
   
   <entry>
     <title>SQL</title>

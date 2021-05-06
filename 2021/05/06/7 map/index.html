@@ -88,11 +88,15 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="ZiHao&#39;s Blog">
-<meta property="og:url" content="http://example.com/categories/Blog/index.html">
+<meta name="description" content="7 map 无序的基于key-value的数据结构 内部使用散列表(hash)实现 Go 中的map是引用类型，必须初始化才能使用  map 定义 Go 中map基本语法 map[KeyType]ValueType KeyType : 键的类型 ValueType ：键对应的值得类型   默认初始值：nil 需要使用make 分配内存 make(map[KeyType]ValueType, [ca">
+<meta property="og:type" content="article">
+<meta property="og:title" content="7 map">
+<meta property="og:url" content="http://example.com/2021/05/06/7%20map/index.html">
 <meta property="og:site_name" content="ZiHao&#39;s Blog">
+<meta property="og:description" content="7 map 无序的基于key-value的数据结构 内部使用散列表(hash)实现 Go 中的map是引用类型，必须初始化才能使用  map 定义 Go 中map基本语法 map[KeyType]ValueType KeyType : 键的类型 ValueType ：键对应的值得类型   默认初始值：nil 需要使用make 分配内存 make(map[KeyType]ValueType, [ca">
 <meta property="og:locale">
+<meta property="article:published_time" content="2021-05-06T06:23:30.000Z">
+<meta property="article:modified_time" content="2021-05-06T06:26:44.403Z">
 <meta property="article:author" content="Zihao Ma">
 <meta name="twitter:card" content="summary">
 
@@ -124,13 +128,13 @@
 
 
 
-  <link rel="canonical" href="http://example.com/categories/Blog/"/>
+  <link rel="canonical" href="http://example.com/2021/05/06/7 map/"/>
 
 
 
 
 
-  <title>分类: -Blog | ZiHao's Blog</title>
+  <title>7 map | ZiHao's Blog</title>
   
 
 
@@ -149,7 +153,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
     <a target="_blank" rel="noopener" href="https://GitHub.com/ZiHao256" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; left: 0; transform: scale(-1, 1);" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style></a>
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -447,55 +451,362 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block category">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>-Blog<small>分类</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/05/06/7%20map/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/stitch.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ZiHao's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2021/05/05/Hexo%20%E5%8D%9A%E5%AE%A2/" itemprop="url">
-              
-                <span itemprop="name">Hexo LearningNote</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">7 map</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2021-05-05T22:40:01+08:00"
-              content="2021-05-05" >
-          05-05
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-05-06T14:23:30+08:00">
+                2021-05-06
+              </time>
+            
 
-    </header>
-  </article>
+            
+              <span class="post-meta-divider">|</span>
+            
 
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2021-05-06T14:26:44+08:00">
+                2021-05-06
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Go-LearningNote/" itemprop="url" rel="index">
+                    <span itemprop="name">-Go LearningNote</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.1k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  5
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="7-map"><a href="#7-map" class="headerlink" title="7 map"></a>7 map</h2><ul>
+<li>无序的基于<code>key-value</code>的数据结构</li>
+<li>内部使用<code>散列表(hash)</code>实现</li>
+<li>Go 中的map是引用类型，必须初始化才能使用</li>
+</ul>
+<h3 id="map-定义"><a href="#map-定义" class="headerlink" title="map 定义"></a>map 定义</h3><ul>
+<li>Go 中map基本语法<ul>
+<li><code>map[KeyType]ValueType</code></li>
+<li>KeyType : 键的类型</li>
+<li>ValueType ：键对应的值得类型</li>
+</ul>
+</li>
+<li>默认初始值：<code>nil</code> 需要使用make 分配内存<ul>
+<li><code>make(map[KeyType]ValueType, [cap])</code><ul>
+<li>cap ：容量，可省略。但应该在初始化时指定一个合适的容量</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="map-基本使用"><a href="#map-基本使用" class="headerlink" title="map 基本使用"></a>map 基本使用</h3><ul>
+<li><p>map 中的数据都是成对出现</p>
+<ul>
+<li><p>示例</p>
+</li>
+<li><p>```go<br>scoreMap := make(map[string]int, 8)<br>scoreMap[“小明”] = 90<br>fmt.Println(scoreMap)<br>fmt.Println(scoreMap[“小明”])</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* map 支持在声明时，列表初始化</span><br><span class="line"></span><br><span class="line">  * &#96;&#96;&#96;go</span><br><span class="line">    userInfo :&#x3D; map[string]string&#123;</span><br><span class="line">    	&quot;username&quot;: &quot;马子豪&quot;,</span><br><span class="line">    	&quot;password&quot;:&quot;122&quot;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<h3 id="map-的遍历"><a href="#map-的遍历" class="headerlink" title="map 的遍历"></a>map 的遍历</h3><ul>
+<li><p>判断 map 中键是否存在的特殊写法：</p>
+<ul>
+<li><p><code>value,ok := mapname[key]</code></p>
+<ul>
+<li>如果key存在，则 ok 为 true，value 为对应的 <strong>值</strong></li>
+<li>若key不存在，则ok 为false</li>
+</ul>
+</li>
+<li><p>exampe</p>
+<ul>
+<li>```go<pre><code>scoreMap := make(map[string]int)
+scoreMap[&quot;张三&quot;] = 90
+scoreMap[&quot;小明&quot;] = 100
+// 如果key存在ok为true,v为对应的值；不存在ok为false,v为值类型的零值
+v, ok := scoreMap[&quot;张三&quot;]
+if ok &#123;
+    fmt.Println(v)
+&#125; else &#123;
+    fmt.Println(&quot;查无此人&quot;)
+&#125;
+</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">      </span><br><span class="line"></span><br><span class="line">### map 的遍历</span><br><span class="line"></span><br><span class="line">* &#96;for range&#96;键值遍历，同字符串和数组，可以使用匿名变量&#96;_&#96;省略key或者value</span><br><span class="line">  * 注意：遍历map时，元素顺序与添加时顺序无关</span><br><span class="line">  * 示例, </span><br><span class="line"></span><br><span class="line">&#96;&#96;&#96;go</span><br><span class="line">	scoreMap :&#x3D; make(map[string]int)</span><br><span class="line">	scoreMap[&quot;张三&quot;] &#x3D; 90</span><br><span class="line">	scoreMap[&quot;小明&quot;] &#x3D; 100</span><br><span class="line">	scoreMap[&quot;娜扎&quot;] &#x3D; 60</span><br><span class="line">	for k, v :&#x3D; range scoreMap &#123;</span><br><span class="line">		fmt.Println(k, v)</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="使用-delete-函数删除键值对"><a href="#使用-delete-函数删除键值对" class="headerlink" title="使用 delete() 函数删除键值对"></a>使用 delete() 函数删除键值对</h3><ul>
+<li><p>使用内置函数<code>delete()</code> 从map删除一组 键值对 ，</p>
+<ul>
+<li>语法：<code>delete(mapname,key)</code></li>
+<li>mapname: 要删除的键值对的 map</li>
+<li>key：要删除的键值对的键</li>
+</ul>
+</li>
+<li><p>示例</p>
+<ul>
+<li>```go<pre><code>scoreMap := make(map[string]int)
+scoreMap[&quot;张三&quot;] = 90
+scoreMap[&quot;小明&quot;] = 100
+scoreMap[&quot;娜扎&quot;] = 60
+delete(scoreMap, &quot;小明&quot;)//将小明:100从map中删除
+</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 按照指定顺序遍历map</span><br><span class="line"></span><br><span class="line">&#96;&#96;&#96;go</span><br><span class="line">func main() &#123;</span><br><span class="line">	rand.Seed(time.Now().UnixNano()) &#x2F;&#x2F;初始化随机数种子</span><br><span class="line"></span><br><span class="line">	var scoreMap &#x3D; make(map[string]int, 200)</span><br><span class="line"></span><br><span class="line">	for i :&#x3D; 0; i &lt; 100; i++ &#123;</span><br><span class="line">		key :&#x3D; fmt.Sprintf(&quot;stu%02d&quot;, i) &#x2F;&#x2F;生成stu开头的字符串</span><br><span class="line">		value :&#x3D; rand.Intn(100)          &#x2F;&#x2F;生成0~99的随机整数</span><br><span class="line">		scoreMap[key] &#x3D; value</span><br><span class="line">	&#125;</span><br><span class="line">	&#x2F;&#x2F;取出map中的所有key存入切片keys</span><br><span class="line">	var keys &#x3D; make([]string, 0, 200)</span><br><span class="line">	for key :&#x3D; range scoreMap &#123;</span><br><span class="line">		keys &#x3D; append(keys, key)</span><br><span class="line">	&#125;</span><br><span class="line">	&#x2F;&#x2F;对切片进行排序</span><br><span class="line">	sort.Strings(keys)</span><br><span class="line">	&#x2F;&#x2F;按照排序后的key遍历map</span><br><span class="line">	for _, key :&#x3D; range keys &#123;</span><br><span class="line">		fmt.Println(key, scoreMap[key])</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>先对key值排序，</p>
+</li>
+<li><p>再输出对应顺序的<code>mapname[key]</code></p>
+</li>
+</ul>
+<h3 id="元素为-map-类型的切片"><a href="#元素为-map-类型的切片" class="headerlink" title="元素为 map 类型的切片"></a>元素为 map 类型的切片</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="keyword">var</span> mapSlice = <span class="built_in">make</span>([]<span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">string</span>, <span class="number">3</span>)</span><br><span class="line">	<span class="keyword">for</span> index, value := <span class="keyword">range</span> mapSlice &#123;</span><br><span class="line">		fmt.Printf(<span class="string">&quot;index:%d value:%v\n&quot;</span>, index, value)</span><br><span class="line">	&#125;</span><br><span class="line">	fmt.Println(<span class="string">&quot;after init&quot;</span>)</span><br><span class="line">	<span class="comment">// 对切片中的map元素进行初始化</span></span><br><span class="line">	mapSlice[<span class="number">0</span>] = <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">string</span>, <span class="number">10</span>)</span><br><span class="line">	mapSlice[<span class="number">0</span>][<span class="string">&quot;name&quot;</span>] = <span class="string">&quot;小王子&quot;</span></span><br><span class="line">	mapSlice[<span class="number">0</span>][<span class="string">&quot;password&quot;</span>] = <span class="string">&quot;123456&quot;</span></span><br><span class="line">	mapSlice[<span class="number">0</span>][<span class="string">&quot;address&quot;</span>] = <span class="string">&quot;沙河&quot;</span></span><br><span class="line">	<span class="keyword">for</span> index, value := <span class="keyword">range</span> mapSlice &#123;</span><br><span class="line">		fmt.Printf(<span class="string">&quot;index:%d value:%v\n&quot;</span>, index, value)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="值为切片类型的-map"><a href="#值为切片类型的-map" class="headerlink" title="值为切片类型的 map"></a>值为切片类型的 map</h3><ul>
+<li>键为<code>string</code></li>
+<li>值为<code>[]string</code>, 切片</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="keyword">var</span> sliceMap = <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">string</span>][]<span class="keyword">string</span>, <span class="number">3</span>)</span><br><span class="line">    </span><br><span class="line">	fmt.Println(sliceMap)</span><br><span class="line">	fmt.Println(<span class="string">&quot;after init&quot;</span>)</span><br><span class="line">	key := <span class="string">&quot;中国&quot;</span></span><br><span class="line">    </span><br><span class="line">	value, ok := sliceMap[key]</span><br><span class="line">	<span class="keyword">if</span> !ok &#123;</span><br><span class="line">        </span><br><span class="line">		value = <span class="built_in">make</span>([]<span class="keyword">string</span>, <span class="number">0</span>, <span class="number">2</span>)</span><br><span class="line">        </span><br><span class="line">	&#125;</span><br><span class="line">	value = <span class="built_in">append</span>(value, <span class="string">&quot;北京&quot;</span>, <span class="string">&quot;上海&quot;</span>)</span><br><span class="line">	sliceMap[key] = value</span><br><span class="line">	fmt.Println(sliceMap)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="练习题"><a href="#练习题" class="headerlink" title="练习题"></a>练习题</h3><h4 id="练习一"><a href="#练习一" class="headerlink" title="练习一"></a>练习一</h4><ul>
+<li><p>写一个程序，统计一个字符串中每个单词出现的次数。比如：”how do you do”中how=1 do=2 you=1。</p>
+</li>
+<li><p>分析：给一个字符串，以某个符号分隔：使用<code>strings</code>包中的Split方法</p>
+</li>
+<li><p>```go<br>package main</p>
+<p>import (</p>
+<pre><code>&quot;fmt&quot;
+&quot;strings&quot;
+</code></pre>
+<p>)</p>
+<p>func main() {</p>
+<pre><code>a := &quot;how do you do&quot;
+result := make(map[string]int, 10)
+b := strings.Split(a, &quot; &quot;)
+for _, s := range b &#123;
+    result[s]++
+&#125;
+fmt.Println(result)
+</code></pre>
+<p>}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">  </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### 练习二</span><br><span class="line"></span><br><span class="line">* &#96;&#96;&#96;go</span><br><span class="line">  func main() &#123;</span><br><span class="line">  	type Map map[string][]int   &#x2F;&#x2F;值为切片（元素为int类型）的map类型</span><br><span class="line">  	m :&#x3D; make(Map)				&#x2F;&#x2F;初始化</span><br><span class="line">  	s :&#x3D; []int&#123;1, 2&#125;			&#x2F;&#x2F;切片</span><br><span class="line">      s &#x3D; append(s, 3)			&#x2F;&#x2F;s : [1 2 3]</span><br><span class="line">  	fmt.Printf(&quot;%+v\n&quot;, s)		&#x2F;&#x2F;[1 2 3]</span><br><span class="line">      m[&quot;q1mi&quot;] &#x3D; s				&#x2F;&#x2F;m : [&quot;qlmi&quot;:[1 2 3]]</span><br><span class="line">      s &#x3D; append(s[:1], s[2:]...)	&#x2F;&#x2F;s : [1 3]</span><br><span class="line">  	fmt.Printf(&quot;%+v\n&quot;, s)		&#x2F;&#x2F;[1 3]</span><br><span class="line">  	fmt.Printf(&quot;%+v\n&quot;, m[&quot;q1mi&quot;])	&#x2F;&#x2F;[1 2 3]</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>目测结果: </p>
+<ul>
+<li><code>[1 2 3]</code></li>
+<li><code>[1 3]</code></li>
+<li><code>[1 2 3]</code></li>
+</ul>
+</li>
+<li><p>运行结果：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[<span class="number">1</span> <span class="number">2</span> <span class="number">3</span>]</span><br><span class="line">[<span class="number">1</span> <span class="number">3</span>]</span><br><span class="line">[<span class="number">1</span> <span class="number">3</span> <span class="number">3</span>]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>为什么最后一行`[1 3 3]</li>
+</ul>
+</li>
+</ul>
 
       
     </div>
+   
+    
+    
+    
 
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Zihao Ma
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://example.com/2021/05/06/7%20map/" title="7 map">http://example.com/2021/05/06/7%20map/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2021/05/06/8%20%E5%87%BD%E6%95%B0/" rel="next" title="8 函数">
+                <i class="fa fa-chevron-left"></i> 8 函数
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2021/05/06/9%20%E5%87%BD%E6%95%B0%E8%BF%9B%E9%98%B6/" rel="prev" title="9 函数进阶">
+                9 函数进阶 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -503,6 +814,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -523,8 +838,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -681,6 +1005,22 @@ show_date_time();
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#7-map"><span class="nav-text">7 map</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#map-%E5%AE%9A%E4%B9%89"><span class="nav-text">map 定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#map-%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="nav-text">map 基本使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#map-%E7%9A%84%E9%81%8D%E5%8E%86"><span class="nav-text">map 的遍历</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-delete-%E5%87%BD%E6%95%B0%E5%88%A0%E9%99%A4%E9%94%AE%E5%80%BC%E5%AF%B9"><span class="nav-text">使用 delete() 函数删除键值对</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%83%E7%B4%A0%E4%B8%BA-map-%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%88%87%E7%89%87"><span class="nav-text">元素为 map 类型的切片</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%80%BC%E4%B8%BA%E5%88%87%E7%89%87%E7%B1%BB%E5%9E%8B%E7%9A%84-map"><span class="nav-text">值为切片类型的 map</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%83%E4%B9%A0%E9%A2%98"><span class="nav-text">练习题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BB%83%E4%B9%A0%E4%B8%80"><span class="nav-text">练习一</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -860,6 +1200,10 @@ show_date_time();
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 

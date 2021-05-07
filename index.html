@@ -462,6 +462,380 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/05/07/lab1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/stitch.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ZiHao's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/05/07/lab1/" itemprop="url">Lab1</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-05-07T11:07:31+08:00">
+                2021-05-07
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2021-05-07T11:10:09+08:00">
+                2021-05-07
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/XDU-OS/" itemprop="url" rel="index">
+                    <span itemprop="name">-XDU OS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  4.7k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  18
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="lab1"><a href="#lab1" class="headerlink" title="lab1"></a>lab1</h1><p>[toc]</p>
+<h1 id="1-Producer-Consumer-problem"><a href="#1-Producer-Consumer-problem" class="headerlink" title="1 Producer-Consumer problem"></a>1 Producer-Consumer problem</h1><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/zhou1021jian/article/details/71514738">参考博客1</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/a2ade02979d1">参考博客2</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/linhaostudy/p/7554942.html">参考博客3</a></p>
+<p><a href="">参考博客4</a></p>
+<ul>
+<li><p>也称 有限缓冲问题 <code>Bounded-buffer problem</code></p>
+</li>
+<li><p>多线程同步的问题</p>
+</li>
+</ul>
+<h2 id="1-1-信号量配合互斥锁"><a href="#1-1-信号量配合互斥锁" class="headerlink" title="1.1 信号量配合互斥锁"></a>1.1 信号量配合互斥锁</h2><ul>
+<li>信号量特性：<ul>
+<li>非负整数，对共享资源和线程的控制</li>
+<li>通过信号量的线程会使得信号量减一，当为零时，所有试图通过的线程等待</li>
+<li>操作：<ul>
+<li>Wait：线程调用该函数时<ul>
+<li>要么得到资源并将信号量减一</li>
+<li>要么线程进入等待队列，直到信号量大于零</li>
+</ul>
+</li>
+<li>Release：在信号量上执行加一<ul>
+<li>释放由信号量守护的资源</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Wait，Release再Linux中：<ul>
+<li><code>int sem_wait(sem_t* sem)</code></li>
+<li><code>int sem_post(sem_t* sem)</code></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>针对该问题：<ul>
+<li>设定两个信号量：<ul>
+<li><code>empty</code>: 空槽的个数</li>
+<li><code>full</code>: 占有的个数</li>
+</ul>
+</li>
+<li>生产者 向任务队列 放资源时，调用<code>sem_wait(&amp;empty)</code> 检查队列是否已满，<ul>
+<li>若满，就阻塞，直到有消费者从队列里取资源</li>
+<li>若不满，就放入资源，并通知消费者取</li>
+</ul>
+</li>
+<li>消费者 从任务队列 取资源时，调用<code>sem_wait(&amp;full)</code> 检查任务队列是否已空<ul>
+<li>若已空，就阻塞，直到生产者向里面放入资源在苏醒</li>
+<li>若非空，就取资源，并通知生产者来放入</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>互斥锁是对任务队列进行保护</li>
+</ul>
+<ul>
+<li><p>```C</p>
+<p>#include &lt;stdio.h&gt;<br>#include &lt;pthread.h&gt;            //pthread_mutex_t, pthread_mutex_lock/unlock, pthread_t，pthread_create(), pthread_join()<br>#include &lt;semaphore.h&gt;            //sem_wait, sem_post, sem_init</p>
+<p>#define MAX 5  //队列长度</p>
+<p>pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;<br>sem_t full;     //填充的个数<br>sem_t empty;     //空槽的个数</p>
+<p>int top = 0;     //队尾<br>int bottom = 0;  //队头</p>
+<p>void* produce(void* arg)<br>{</p>
+<pre><code>int i;
+for ( i = 0; i &lt; MAX*2; i++)
+&#123;
+    printf(&quot;producer is preparing data\n&quot;);
+    sem_wait(&amp;empty);//若空槽个数低于0阻塞
+    
+    pthread_mutex_lock(&amp;mutex);
+    
+    top = (top+1) % MAX;
+    printf(&quot;now top is %d\n&quot;, top);
+
+    pthread_mutex_unlock(&amp;mutex);
+    
+    sem_post(&amp;full);
+&#125;
+return (void*)1;
+</code></pre>
+<p>}</p>
+<p>void* consume(void* arg)<br>{</p>
+<pre><code>int i;
+for ( i = 0; i &lt; MAX*2; i++)
+&#123;
+    printf(&quot;consumer is preparing data\n&quot;);
+    sem_wait(&amp;full);//若填充个数低于0阻塞
+
+    pthread_mutex_lock(&amp;mutex);
+    
+    bottom = (bottom+1) % MAX;
+    printf(&quot;now bottom is %d\n&quot;, bottom);
+
+    pthread_mutex_unlock(&amp;mutex);
+    
+    sem_post(&amp;empty);
+&#125;
+
+return (void*)2;
+</code></pre>
+<p>}</p>
+<p>int main(int argc, char *argv[])<br>{</p>
+<pre><code>pthread_t thid1;        //创建四个线程，unsigned long int
+pthread_t thid2;
+pthread_t thid3;
+pthread_t thid4;
+
+int  ret1;
+int  ret2;
+int  ret3;
+int  ret4;
+
+sem_init(&amp;full, 0, 0);            //初始化信号量full为0
+sem_init(&amp;empty, 0, MAX);        //初始化信号量empty为MAX=5
+
+pthread_create(&amp;thid1, NULL, produce, NULL);        //
+pthread_create(&amp;thid2, NULL, consume, NULL);
+pthread_create(&amp;thid3, NULL, produce, NULL);
+pthread_create(&amp;thid4, NULL, consume, NULL);
+
+pthread_join(thid1, (void**)&amp;ret1);                    //
+pthread_join(thid2, (void**)&amp;ret2);
+pthread_join(thid3, (void**)&amp;ret3);
+pthread_join(thid4, (void**)&amp;ret4);
+
+return 0;
+</code></pre>
+<p>}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">  * 若将&#96;sem_wait()&#96;， &#96;sem_post()&#96;放于lock和unlock之间</span><br><span class="line">  * 死锁，因为我们不能预知线程进入共享区顺序，如果消费者线程先对mutex加锁，并进入，sem_wait()发现队列为空，阻塞，而生产者在对mutex加锁时，发现已上锁也阻塞，双方永远无法唤醒对方。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">* </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">* &#96;sem_init&#96;: 长整型</span><br><span class="line">  * &#96;int sem_init(sem_t *sem, int pshared, unsigned int value);&#96;</span><br><span class="line">    * sem: 指向信号量结构的一个指针</span><br><span class="line">    * pshared不为零时，信号量在进程间共享，否则只能为当前进程的线程共享</span><br><span class="line">    * value为信号量的初始值</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 1.2 Pthread</span><br><span class="line"></span><br><span class="line">* linux下用C语言开发多线程程序，Linux系统下的多线程遵循POSIX线程接口，称为pthread。</span><br><span class="line"></span><br><span class="line">* &#96;pthread_create()&#96;：创建子线程</span><br><span class="line">  * Linux 下创建的线程的 API 接口</span><br><span class="line">  * &#96;int pthread_create(pthread_t *thread, const pthread_attr_t *attr, void *(*start_routine)(void *), void *arg);&#96;</span><br><span class="line">  * 参数：</span><br><span class="line">    * thread: 返回成功时，由 thread 指向的内存单元被设置为新创建线程的线程ID</span><br><span class="line">    * attr：线程属性，默认使用NULL</span><br><span class="line">    * start_routine: 新创建的线程从&#96;start_routine&#96;函数的地址开始运行，该函数只有一个万能参数arg，如果需要向&#96;start_rutine&#96;函数传递的参数不止一个，那么需要把这些参数放到一个结构中，然后把这个结构的地址作为arg的参数传入。</span><br><span class="line">    * arg: 子线程处理函数的参数</span><br><span class="line">  * 简单来说：</span><br><span class="line">    * 第一个参数为指向线程 [标识符](http:&#x2F;&#x2F;baike.baidu.com&#x2F;item&#x2F;标识符)的 [指针](http:&#x2F;&#x2F;baike.baidu.com&#x2F;item&#x2F;指针)。</span><br><span class="line">    * 第二个参数用来设置线程属性。</span><br><span class="line">    * 第三个参数是线程运行函数的起始地址。</span><br><span class="line">    * 最后一个参数是运行函数的参数。</span><br><span class="line">  * 返回值：</span><br><span class="line">    * 成功返回0，失败返回错误号</span><br><span class="line">  </span><br><span class="line">* &#96;pthread_join()&#96;: 子线程合入主线程</span><br><span class="line">  * &#96; int pthread_join(pthread_t thread, void **retval);&#96;</span><br><span class="line">  * 主线程阻塞，等待子线程结束，然后回收子线程资源</span><br><span class="line">  * 以阻塞的方式，等待thread指定的线程结束</span><br><span class="line">    * 当函数返回时，被等待线程的资源被回收</span><br><span class="line">    * 若线程已经结束，该函数立即返回</span><br><span class="line">  * 参数：</span><br><span class="line">    * thread : 线程标识符，线程id</span><br><span class="line">    * retval：指向一个指向被连接线程的返回码的指针的指针</span><br><span class="line">  * 返回值，0成功，错误号失败</span><br><span class="line">  </span><br><span class="line">* &gt; 在很多情况下，主线程生成并起动了子线程，如果子线程里要进行大量的耗时的运算，主线程往往将于子线程之前结束，但是如果主线程处理完其他的事务后，需要用到子线程的处理结果，也就是主线程需要等待子线程执行完成之后再结束，这个时候就要用到pthread_join()方法了。</span><br><span class="line">  &gt;  即pthread_join()的作用可以这样理解：主线程等待子线程的终止。也就是在子线程调用了pthread_join()方法后面的代码，只有等到子线程结束了才能执行。</span><br><span class="line"></span><br><span class="line">* 如果没有加pthread_join()方法，main线程里面直接就执行起走了，加了之后是等待线程执行了之后才执行的后面的代码。</span><br><span class="line"></span><br><span class="line">![image-20210505195248476](E:\4th_term\操作系统OS\Lab1\lab1.assets\image-20210505195248476.png)</span><br><span class="line"></span><br><span class="line">![image-20210505195202511](E:\4th_term\操作系统OS\Lab1\lab1.assets\image-20210505195202511.png)</span><br><span class="line"></span><br><span class="line"># 2 用共享内存的多进程实现生产者消费者问题</span><br><span class="line"></span><br><span class="line">## .1 前置知识</span><br><span class="line"></span><br><span class="line">### 2.1.1 共享内存</span><br><span class="line"></span><br><span class="line">  共享内存是不同进程间为了通信而申请的可以被不同进程共同访问的内存区域。在Linux 中，共享内存的相关API由POSIX提供。</span><br><span class="line"></span><br><span class="line">\1. shmget函数：</span><br><span class="line"></span><br><span class="line">函数原型：int shmget(key_t key, size_t size, int shmflg);</span><br><span class="line"></span><br><span class="line">参数：</span><br><span class="line"></span><br><span class="line">  Key: 用于共享内存命名，不同进程通过key进行共享内存识别;</span><br><span class="line"></span><br><span class="line">  Size: 需要的共享内存大小；</span><br><span class="line"></span><br><span class="line">  shmflg: 权限标志。Key标识的内存不存在时，该参数为IPC_CREAT。</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">\2. shmat 函数：创建完共享内存后，不能被进程访问，需要调用shmat启动该共享内存的访问，并把共享内存连接到当前进程的地址空间</span><br><span class="line"></span><br><span class="line">函数原型：void *shmat(int shm_id, const void *shm_addr, int shmflg);</span><br><span class="line"></span><br><span class="line">参数：</span><br><span class="line"></span><br><span class="line">  Shm_id: shmget返回的描述符</span><br><span class="line"></span><br><span class="line">  Shm_addr: 指定共享内存链接到当前进程中的地址位置，通常为空，让系统自己选择</span><br><span class="line"></span><br><span class="line">  Shmflg: 标志位，通常为0</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">\3. shmctl 函数：控制共享内存</span><br><span class="line"></span><br><span class="line">函数原型：int shmctl(int shm_id, int command, struct shmid_ds *buf);</span><br><span class="line"></span><br><span class="line">参数：</span><br><span class="line"></span><br><span class="line">  Shm_id: 同上</span><br><span class="line"></span><br><span class="line">  Command: 要采取的操作</span><br><span class="line"></span><br><span class="line">  Buf: 结构体指针，指向共享内存的 shmid_ds 结构。</span><br><span class="line"></span><br><span class="line">### 2.1.2 信号量</span><br><span class="line"></span><br><span class="line">​    信号量是一个特殊的变量，程序对其访问都是原子操作，且只允许对它进行等待（即P(信号变量))和发送（即V(信号变量))信息操作。最简单的信号量是只能取0和1的变量，这也是信号量最常见的一种形式，叫做二进制信号量。而可以取多个正整数的信号量被称为通用信号量。</span><br><span class="line"></span><br><span class="line">Linux中对信号量的操作在我们小组的课题《Linux中信号量的实现机制》中详细讲过，接下来简单介绍：</span><br><span class="line"></span><br><span class="line">函数semget创建一个新信号量或取得一个已有信号量；</span><br><span class="line"></span><br><span class="line">函数semop 对信号量进行操作；</span><br><span class="line"></span><br><span class="line">函数 semctl 控制信号量的销毁等</span><br><span class="line"></span><br><span class="line">## 2.2 思路</span><br><span class="line"></span><br><span class="line">  该 Task 涉及进程管理和进程间共享内存通信，可将main函数当成主进程，fork出多个子进程，并负责创建共享内存和信号量。将子进程分为两部分，生产者和消费者，通过信号量对共享内存进行互斥读写。</span><br><span class="line"></span><br><span class="line">  生产者和消费者的操作都类似于Task1中的操作，不再赘述。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 3 测试有名&#x2F;匿名，共有&#x2F;私有内存映射</span><br><span class="line"></span><br><span class="line">## 内存映射</span><br><span class="line"></span><br><span class="line">## .1 前置知识</span><br><span class="line"></span><br><span class="line">​    内存映射 mmap 是Linux 内核的一个重要机制，和虚拟内存管理以及文件IO都有直接关系。</span><br><span class="line"></span><br><span class="line">  Linux 的虚拟内存管理是基于 mmap 实现的，vm_area_struct 在mmap 创建时创建，代表了一段连续的虚拟地址，这些虚拟地址相应的映射到一个后备文件或者匿名文件的虚拟页。一个vm_area_struct映射到一组连续的页表项，页表项映射物理内存page frame，这样文件和物理内存页相映射。</span><br><span class="line"></span><br><span class="line">### 3.1.1 mmap 和 虚拟内存管理</span><br><span class="line"></span><br><span class="line">  Linux内核的用户进程虚拟内存管理：内核定义了mm_struct 结构表示一个用户进程的虚拟内存地址空间。</span><br><span class="line"></span><br><span class="line">  mm**_**struct**结构**：</span><br><span class="line"></span><br><span class="line">​                           ![image-20210507110545709](E:\4th_term\操作系统OS\Lab1\lab1.assets\image-20210507110545709.png)    </span><br><span class="line"></span><br><span class="line">\1.  start_code, end_code: 指定了进程的代码段的边界；</span><br><span class="line"></span><br><span class="line">\2.  start_data, end_data: 指定了进程数据段的边界；</span><br><span class="line"></span><br><span class="line">\3.  start_brk指定了堆的起始地址; brk指定了堆的结束位置；</span><br><span class="line"></span><br><span class="line">\4.  start_stack: 指定了站的起始位置；</span><br><span class="line"></span><br><span class="line">\5.  mmap_base: 指定了用户进程虚拟地址空间中 用作内存映射部分的地址的基地址，</span><br><span class="line"></span><br><span class="line">\6.  task_size: 指定了用户进程地址空间的长度。</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">进程的mm_struct 除了包含**进程虚拟内存地址空间布局**，还包含了**虚拟内存区域**vm_area_struct信息。虚拟内存区域是内核管理用户进程虚拟地址空间的方式，数据段、代码段、共享库等都是通过vm_area_atruct管理。</span><br><span class="line"></span><br><span class="line">vm_area_struct结构：</span><br><span class="line"></span><br><span class="line"> ![image-20210507110550648](E:\4th_term\操作系统OS\Lab1\lab1.assets\image-20210507110550648.png)</span><br><span class="line"></span><br><span class="line">\1. vm_start, vm_end表示区域的开始位置和结束位置，确定了区域的边界。两个vm_area_struct不会出现交叉的情况</span><br><span class="line"></span><br><span class="line">\2. vm_page_prot 表示这个区域的页的访问权限</span><br><span class="line"></span><br><span class="line">\3. shared结构处理有后备文件的内存映射，和后备文件的address_space地址空间关联起来</span><br><span class="line"></span><br><span class="line">\4. anon_vma_node, anon_vma处理匿名文件共享内存映射的情况，映射到同一物理内存页的映射都保存在一个链表中</span><br><span class="line"></span><br><span class="line">\5. vm_pgoff, vm_file都是处理有后备文件内存映射的情况，获得该映射在文件的页偏移量，以及打开文件file实例的信息</span><br><span class="line"></span><br><span class="line">## 3.2 mmap 的四种类型</span><br><span class="line"></span><br><span class="line">mmap分为**后备文件的映射**和**匿名文件的映射**，这两种映射又有**私有映射和共享映射**之分，所以mmap可以创建4种类型的映射</span><br><span class="line"></span><br><span class="line">\1. **后备文件的共享映射**，多个进程的vm_area_struct指向同一个物理内存区域，一个进程对文件内容的修改，会被其他进程可见。对文件内容的修改会被写回到后备文件。</span><br><span class="line"></span><br><span class="line"> ![image-20210507110514289](E:\4th_term\操作系统OS\Lab1\lab1.assets\image-20210507110514289.png)</span><br><span class="line"></span><br><span class="line">\2. **后备文件的私有映射**，多个进程的vm_area_struct指向同一个物理内存区域，采用写时拷贝的方式，当一个进程对文件内容做修改，不会被其他进程看到。另外对文件内的修改也不会被写回到后备文件。当内存不够需要进行页回收时，私有映射的页被交换到交换区。一般用在加载共享代码库</span><br><span class="line"></span><br><span class="line"> ![image-20210507110518143](E:\4th_term\操作系统OS\Lab1\lab1.assets\image-20210507110518143.png)</span><br><span class="line"></span><br><span class="line">\3. **匿名文件的共享映射**，内核创建一个初始都是0的物理内存区域，然后多个进程的vm_area_struct指向这个共享的物理内存区域，对该区域内容的修改对所有进程可见。匿名文件在页回收时被交换到交换区</span><br><span class="line"></span><br><span class="line"> ![image-20210507110530695](E:\4th_term\操作系统OS\Lab1\lab1.assets\image-20210507110530695.png)</span><br><span class="line"></span><br><span class="line">\4. **匿名文件的私有映射**，内核创建一个初始都是0的物理内存区域，对该区域内容的修改只对创建者进程可见。匿名文件在页回收时被交换到交换区。malloc()底层是用了匿名文件的私有映射来分配大块内存。</span><br><span class="line"></span><br><span class="line"> ![image-20210507110535432](E:\4th_term\操作系统OS\Lab1\lab1.assets\image-20210507110535432.png)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 4 共享库的创建和使用</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 4.1 前置知识：源代码到运行程序的过程</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">1. 预处理：对所有预处理指令进行处理。以#开始的语句</span><br><span class="line">2. 编译：通常指 程序构建的过程，称为&#96;compilation proper&#96;, 将c源代码文件转换成object文件</span><br><span class="line">3. 连接：将 object文件和库 串联起来，称为可执行程序</span><br><span class="line">   1. 静态库已经植入程序中</span><br><span class="line">   2. 共享库，只在程序中对其引用</span><br><span class="line">4. 加载：加载 发生在可执行程序启动时。</span><br><span class="line">   1. 首先，扫描程序，来引用共享库</span><br><span class="line">   2. 然后所有引用都立即生效，对应的库也被映射到程序中</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">* 一个程序函数库：一个文件包含了一些编译好的代码和数据，可供其他程序使用</span><br><span class="line">* 可以使得整个程序更加模块化，更容易重新编译，方便升级</span><br><span class="line">* 程序函数库分为3类：</span><br><span class="line">  * 静态函数库(static libraries): 在程序执行前就加入到了目标程序中</span><br><span class="line">  * 共享函数库(shared libraries)：&#96;.so&#96;</span><br><span class="line">  * 动态加载函数库(dynamically loaded libraries)：&#96;.dll&#96;, 与共享函数库是一样的，在l Windows 中叫动态加载函数库</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 4.2 静态函数库</span><br><span class="line"></span><br><span class="line">### 4.2.1 生成静态函数库</span><br><span class="line"></span><br><span class="line">* 简单的一个普通的目标文件的集合，&#96;.a&#96;后缀文件</span><br><span class="line">* 允许程序员把程序 link 起来而不用重新编译代码，节省了重新编译代码的时间</span><br><span class="line">  * 如今该优势不再那么明显</span><br><span class="line">* 静态函数库对开发者来说还是很有用的，例如你想把自己提供的函数给别人使用，但是又想对函数的源代码进行保密</span><br><span class="line">* 理论上说，使用ELF格式的静态库函数生成的代码可以比使用共享函数库（或者动态函数库）的程序运行速度上快一些，大概1－5％。 </span><br><span class="line">* &#96;ar rcs my_library.a file.o file1.o&#96;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 4.2.2 使用静态函数库</span><br><span class="line"></span><br><span class="line">* 把它作为你编译和连接过程中的一部分用来生成你的可执行代码</span><br><span class="line">* 用gcc来编译产生可执行代码的话，你可以用“-l”参数来指定这个库函数。你也可以用ld来做，使用它的“-l”和“-L”参数选项。具体用法可以参考info:gcc。 </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 4.3 共享函数库</span><br><span class="line"></span><br><span class="line">* **作用：**共享函数库中的函数是在当一个可执行程序在启动的时候被加载</span><br><span class="line">* 如果一个共享函数库正常安装，所有的程序在重新运行的时候都可以自动加载最新的函数库中的函数。对于Linux系统还有更多可以实现的功能：</span><br><span class="line">  * 升级了函数库但是仍然允许程序使用老版本的函数库</span><br><span class="line">  * 当执行某个特定程序的时候可以覆盖某个特定的库或者库中指定的函数</span><br><span class="line">  * 可以在库函数被使用的过程中修改这些函数库</span><br><span class="line"></span><br><span class="line">### 4.3.1 约定</span><br><span class="line"></span><br><span class="line">* 为了编写的共享函数库支持所有有用的特性，必须遵循一系列约定</span><br><span class="line"></span><br><span class="line">#### 4.3.1.1 命名</span><br><span class="line"></span><br><span class="line">* 每个共享函数库的**特殊名字**, 称作&#96;soname&#96;</span><br><span class="line">  * 以&#96;lib&#96;为前缀，然后是函数名</span><br><span class="line">  * 以&#96;.so&#96;为后缀</span><br><span class="line">  * 最后是版本号信息</span><br><span class="line">* 特例：非常底层的C库函数都不是以lib开头命名</span><br><span class="line">* 每个共享函数库都有一个**真正名字**，称为&#96;real name&#96;</span><br><span class="line">  * 包含真正函数代码的文件</span><br><span class="line">  * 真名有一个主版本号和一个发行主版号（可有可无）</span><br><span class="line">    * 知道安装了什么版本的函数库</span><br><span class="line">* 还有一个名字，**编译器编译时需要的函数库名字**：简单的soname，不包含任何版本号信息</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 4.4 函数库如何使用</span><br><span class="line"></span><br><span class="line">* 基于GNU glibc的系统中，启动一个ELF格式的二进制可执行文件，会自动启动和运行一个program loader</span><br><span class="line"></span><br><span class="line">  * 对于Linux 系统，loader的名字是&#96;&#x2F;lib&#x2F;ld-linux.so.X（版本号）&#96;</span><br><span class="line">  * loader启动后，会load 其他本程序要使用的共享库</span><br><span class="line"></span><br><span class="line">  </span><br><span class="line"></span><br><span class="line">## 4.5 创建一个共享库</span><br><span class="line"></span><br><span class="line">示例：</span><br><span class="line"></span><br><span class="line">* &#96;foo.h&#96;: 定义接口，连接动态库</span><br><span class="line"></span><br><span class="line">  * ![image-20210506205836103](E:\4th_term\操作系统OS\Lab1\lab1.assets\image-20210506205836103-1620305918992.png)</span><br><span class="line"></span><br><span class="line">  * &#96;&#96;&#96;</span><br><span class="line">    #ifndef foo_h__</span><br><span class="line">    #define foo_h__</span><br><span class="line">    </span><br><span class="line">    extern void foo(void);</span><br><span class="line">    </span><br><span class="line">    #endif  &#x2F;&#x2F; foo_h__</span><br></pre></td></tr></table></figure></li>
+<li><p><code>foo.c</code>：对接口foo()的实现</p>
+<ul>
+<li><p><img src="E:\4th_term\操作系统OS\Lab1\lab1.assets\image-20210506205941576.png" alt="image-20210506205941576"></p>
+</li>
+<li><p>```<br>#include &lt;stdio.h&gt;</p>
+<p>void foo(void)<br>{</p>
+<pre><code>puts(&quot;Hello, I&#39;m a shared library&quot;);
+</code></pre>
+<p>}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* &#96;main.c&#96;： 库的驱动程序</span><br><span class="line"></span><br><span class="line">  * &#96;&#96;&#96;</span><br><span class="line">    #include &lt;stdio.h&gt;</span><br><span class="line">    #include &quot;foo.h&quot;</span><br><span class="line">     </span><br><span class="line">    int main(void)</span><br><span class="line">    &#123;</span><br><span class="line">        puts(&quot;This is a shared library test...&quot;);</span><br><span class="line">        foo();</span><br><span class="line">        return 0;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>首先，编译位置无关代码，即创建object文件</p>
+<ul>
+<li>通过<code>gcc -fPIC</code>参数加入到共享函数库中：<code>PIC</code>: 位置无关代码</li>
+</ul>
+</li>
+<li><p>然后，将对象文件创建共享库，</p>
+</li>
+<li><p>例如：创建a.0, b.o, 然后创建一个包含a.o, b.o的共享库</p>
+<ul>
+<li><code>gcc -fPIC -g -c -Wall a.c</code></li>
+<li><code>gcc -fPIC -g -c -Wall b.c</code></li>
+<li><code>gcc -shared -WL -libmath.so -o  a.o b.o -lc</code></li>
+</ul>
+</li>
+<li><p>通常，动态函数库的符号表里面包含了这些动态的对象的符号。这个选项在创建ELF格式的文件时候，会将所有的符号加入到动态符号表中。可以参考ld的帮助获得更详细的说明。</p>
+</li>
+</ul>
+<h2 id="4-6-安装和使用共享库"><a href="#4-6-安装和使用共享库" class="headerlink" title="4.6 安装和使用共享库"></a>4.6 安装和使用共享库</h2><h3 id="方法一：将共享库拷贝入标准目录-usr-lib或-usr-local-lib"><a href="#方法一：将共享库拷贝入标准目录-usr-lib或-usr-local-lib" class="headerlink" title="方法一：将共享库拷贝入标准目录(/usr/lib或/usr/local/lib)"></a>方法一：将共享库拷贝入标准目录(/usr/lib或/usr/local/lib)</h3><ul>
+<li><p>需要有权限</p>
+</li>
+<li><p>使得系统上所有用户都可以使用该共享库</p>
+</li>
+</ul>
+<p>方法：</p>
+<ul>
+<li><p>首先，以root权限，将库放到标准位置（/usr/lib或/usr/local/lib）</p>
+<ul>
+<li><code>sudo cp /home/zihao/task4/libfoo.so /usr/lib</code></li>
+</ul>
+</li>
+<li><p>然后，以root权限更新缓存，告诉加载器 库文件可用，</p>
+<ul>
+<li><code>sudo ldconfig</code>: 检查一块存在的库文件，然后创建soname符号链接到真正的函数库</li>
+<li>将创建链接到共享库，并且更新缓存以便可立即生效</li>
+<li>使用<code>ldconfig -p | grep foo</code>，核实创建了链接</li>
+</ul>
+</li>
+<li><p>其次，重新连接可执行程序</p>
+<ul>
+<li><code>gcc -Wall -o main.c -lfoo</code></li>
+</ul>
+</li>
+<li><p>最后，运行程序</p>
+<ul>
+<li><code>./test</code></li>
+</ul>
+</li>
+</ul>
+
+          
+        
+      
+    </div>
+   
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/05/06/10%20%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0%E4%BB%8B%E7%BB%8D/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -3550,196 +3924,11 @@ func main() &#123;
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/05/05/1%20%E5%8F%98%E9%87%8F%E5%92%8C%E5%B8%B8%E9%87%8F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/stitch.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ZiHao's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2021/05/05/1%20%E5%8F%98%E9%87%8F%E5%92%8C%E5%B8%B8%E9%87%8F/" itemprop="url">1 变量和常量</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-05-05T22:41:19+08:00">
-                2021-05-05
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于&#58;</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2021-05-06T14:21:53+08:00">
-                2021-05-06
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Go-LearningNote/" itemprop="url" rel="index">
-                    <span itemprop="name">-Go LearningNote</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  6
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id=""><a href="#" class="headerlink" title=""></a></h1><h2 id="1-变量和常量"><a href="#1-变量和常量" class="headerlink" title="1 变量和常量"></a>1 变量和常量</h2>
-          
-        
-      
-    </div>
-   
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">&lt;i class&#x3D;&quot;fa fa-angle-right&quot;&gt;&lt;&#x2F;i&gt;</a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">&lt;i class&#x3D;&quot;fa fa-angle-right&quot;&gt;&lt;&#x2F;i&gt;</a>
   </nav>
 
 
@@ -3789,7 +3978,7 @@ func main() &#123;
               
                 <a href="/archives/%7C%7C%20archive">
               
-                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-count">21</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -3800,7 +3989,7 @@ func main() &#123;
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -3962,7 +4151,7 @@ show_date_time();
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">52.8k</span>
+    <span title="Site words total count">57.5k</span>
   
 </div>
 
@@ -3990,7 +4179,7 @@ show_date_time();
     <!-- 博客字数统计 -->
     <span class="site-pv">
       <i class="fa fa-pencil"></i>
-      博客全站共： <span class="post-count">52.8k</span> 字
+      博客全站共： <span class="post-count">57.5k</span> 字
     </span>
 </div>
 <!-- 新增访客统计代码 END-->

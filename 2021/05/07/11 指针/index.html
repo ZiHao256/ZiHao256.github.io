@@ -88,15 +88,15 @@
 
 
 
-<meta name="description" content="10 内置函数介绍   内置函数 介绍    close 关闭 channel   len 求长度(string, array, slice, map, channel)   new 分配内存，主要用来分配值类型，int，struct。返回的是指针   make 分配内存，主要用来分配引用类型，chan，map, slice   append 用来追加元素到数组、slice   panic, re">
+<meta name="description" content="11 指针 与C&#x2F;C++ 中的指针不同，Go 中的指针不能进行偏移和运算，是安全指针 取地址符：&amp; 根据指针取值：*   需要知道：指针地址、指针类型、指针取值  指针地址和指针类型 每个变量运行时都有一个地址，代表变量在内存中的位置 指针类型：*int… 取变量指针的语法：ptr :&#x3D; &amp;v v : 被取地址的变量 ptr ：接收地址的变量，ptr 的类型就为*T，称为T的指针类">
 <meta property="og:type" content="article">
-<meta property="og:title" content="10 内置函数介绍">
-<meta property="og:url" content="http://example.com/2021/05/06/10%20%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0%E4%BB%8B%E7%BB%8D/index.html">
+<meta property="og:title" content="11 指针">
+<meta property="og:url" content="http://example.com/2021/05/07/11%20%E6%8C%87%E9%92%88/index.html">
 <meta property="og:site_name" content="ZiHao&#39;s Blog">
-<meta property="og:description" content="10 内置函数介绍   内置函数 介绍    close 关闭 channel   len 求长度(string, array, slice, map, channel)   new 分配内存，主要用来分配值类型，int，struct。返回的是指针   make 分配内存，主要用来分配引用类型，chan，map, slice   append 用来追加元素到数组、slice   panic, re">
+<meta property="og:description" content="11 指针 与C&#x2F;C++ 中的指针不同，Go 中的指针不能进行偏移和运算，是安全指针 取地址符：&amp; 根据指针取值：*   需要知道：指针地址、指针类型、指针取值  指针地址和指针类型 每个变量运行时都有一个地址，代表变量在内存中的位置 指针类型：*int… 取变量指针的语法：ptr :&#x3D; &amp;v v : 被取地址的变量 ptr ：接收地址的变量，ptr 的类型就为*T，称为T的指针类">
 <meta property="og:locale">
-<meta property="article:published_time" content="2021-05-06T06:26:06.000Z">
-<meta property="article:modified_time" content="2021-05-06T06:27:26.779Z">
+<meta property="article:published_time" content="2021-05-07T11:25:46.240Z">
+<meta property="article:modified_time" content="2021-05-07T11:26:22.337Z">
 <meta property="article:author" content="Zihao Ma">
 <meta name="twitter:card" content="summary">
 
@@ -128,13 +128,13 @@
 
 
 
-  <link rel="canonical" href="http://example.com/2021/05/06/10 内置函数介绍/"/>
+  <link rel="canonical" href="http://example.com/2021/05/07/11 指针/"/>
 
 
 
 
 
-  <title>10 内置函数介绍 | ZiHao's Blog</title>
+  <title>11 指针 | ZiHao's Blog</title>
   
 
 
@@ -465,7 +465,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/05/06/10%20%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0%E4%BB%8B%E7%BB%8D/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/05/07/11%20%E6%8C%87%E9%92%88/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -482,7 +482,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">10 内置函数介绍</h1>
+          <h1 class="post-title" itemprop="name headline">11 指针</h1>
         
 
         <div class="post-meta">
@@ -494,8 +494,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-05-06T14:26:06+08:00">
-                2021-05-06
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-05-07T19:25:46+08:00">
+                2021-05-07
               </time>
             
 
@@ -510,8 +510,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2021-05-06T14:27:26+08:00">
-                2021-05-06
+              <time title="更新于" itemprop="dateModified" datetime="2021-05-07T19:26:22+08:00">
+                2021-05-07
               </time>
             
           </span>
@@ -565,7 +565,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  717
+                  809
                 </span>
               
 
@@ -602,78 +602,90 @@
       
 
       
-        <h2 id="10-内置函数介绍"><a href="#10-内置函数介绍" class="headerlink" title="10 内置函数介绍"></a>10 内置函数介绍</h2><table>
-<thead>
-<tr>
-<th>内置函数</th>
-<th>介绍</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>close</td>
-<td>关闭 channel</td>
-</tr>
-<tr>
-<td>len</td>
-<td>求长度(string, array, slice, map, channel)</td>
-</tr>
-<tr>
-<td>new</td>
-<td>分配内存，主要用来分配值类型，int，struct。返回的是指针</td>
-</tr>
-<tr>
-<td>make</td>
-<td>分配内存，主要用来分配引用类型，chan，map, slice</td>
-</tr>
-<tr>
-<td>append</td>
-<td>用来追加元素到数组、slice</td>
-</tr>
-<tr>
-<td>panic, recover</td>
-<td>做错误处理</td>
-</tr>
-</tbody></table>
-<h4 id="panic-recover"><a href="#panic-recover" class="headerlink" title="panic/recover"></a>panic/recover</h4><ul>
-<li><p>Go 无异常机制，但是使用 <code>panic/recover</code> 模式来处理错误</p>
+        <h2 id="11-指针"><a href="#11-指针" class="headerlink" title="11 指针"></a>11 指针</h2><ul>
+<li>与C/C++ 中的指针不同，Go 中的指针不能进行偏移和运算，是安全指针<ul>
+<li>取地址符：<code>&amp;</code></li>
+<li>根据指针取值：<code>*</code></li>
+</ul>
 </li>
-<li><p><code>panic</code> 可在<strong>任何地方引发</strong>，但<code>recover</code> 只有在**<code>defer</code> 调用的函数中**有效</p>
+<li>需要知道：指针地址、指针类型、指针取值</li>
+</ul>
+<h3 id="指针地址和指针类型"><a href="#指针地址和指针类型" class="headerlink" title="指针地址和指针类型"></a>指针地址和指针类型</h3><ul>
+<li>每个变量运行时都有一个地址，代表变量在内存中的位置</li>
+<li>指针类型：<code>*int</code>…</li>
+<li>取变量指针的语法：<code>ptr := &amp;v</code><ul>
+<li><code>v</code> : <strong>被取地址的变量</strong></li>
+<li><code>ptr</code> ：<strong>接收地址的变量</strong>，ptr 的类型就为<code>*T</code>，称为T的指针类型</li>
+</ul>
+</li>
+</ul>
+<h3 id="指针取值"><a href="#指针取值" class="headerlink" title="指针取值"></a>指针取值</h3><ul>
+<li>对普通变量使用 <code>&amp;</code> 取地址后，会获得这个变量的指针<ul>
+<li>可以对指针使用<code>*</code>操作，对指针取值</li>
+<li>根据指针去内存取值</li>
+</ul>
+</li>
+</ul>
+<p><strong>总结：</strong> 取地址操作符<code>&amp;</code>和取值操作符<code>*</code>是一对互补操作符，<code>&amp;</code>取出地址，<code>*</code>根据地址取出地址指向的值。</p>
+<p><strong>变量、指针地址、指针变量、取地址、取值</strong>的相互关系和特性如下：</p>
 <ul>
-<li><p>例子：</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">funcA</span><span class="params">()</span></span> &#123;</span><br><span class="line">	fmt.Println(<span class="string">&quot;func A&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">funcB</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="built_in">panic</span>(<span class="string">&quot;panic in B&quot;</span>)		<span class="comment">//panic</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">funcC</span><span class="params">()</span></span> &#123;</span><br><span class="line">	fmt.Println(<span class="string">&quot;func C&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	funcA()</span><br><span class="line">	funcB()</span><br><span class="line">	funcC()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-<li><p>输出：</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">A</span></span></span><br><span class="line"><span class="built_in">panic</span>: <span class="built_in">panic</span> in B</span><br><span class="line"></span><br><span class="line">goroutine <span class="number">1</span> [running]:</span><br><span class="line">main.funcB(...)</span><br><span class="line">	e:/LearningNotes/Go/_function/<span class="built_in">panic</span>.<span class="keyword">go</span>:<span class="number">10</span></span><br><span class="line">main.main()</span><br><span class="line">	e:/LearningNotes/Go/_function/<span class="built_in">panic</span>.<span class="keyword">go</span>:<span class="number">18</span> +<span class="number">0xa5</span></span><br><span class="line">exit status <span class="number">2</span></span><br></pre></td></tr></table></figure></li>
-<li><p>调用函数 funcB 时，引发了<code>panic</code>导致程序崩溃异常退出</p>
-</li>
-<li><p>此时，我们可以使用 <code>recover</code> 将程序恢复，继续执行</p>
+<li>对变量进行<strong>取地址（&amp;）操作</strong>，可以获得这个变量的<strong>指针变量</strong>。</li>
+<li>指针变量的值是<strong>指针地址</strong>。</li>
+<li>对指针变量进行<strong>取值（*）操作</strong>，可以获得指针变量指向的原变量的值。</li>
+</ul>
 <ul>
-<li>```go<br>func funcA() {<pre><code>fmt.Println(&quot;func A&quot;)
-</code></pre>
-}func funcB() {<pre><code>defer func() &#123;
-    err := recover()
-    //如果程序出出现了panic错误,可以通过recover恢复过来
-    if err != nil &#123;
-        fmt.Println(&quot;recover in B&quot;)
-    &#125;
-&#125;()
-panic(&quot;panic in B&quot;)
-</code></pre>
-}func funcC() {<pre><code>fmt.Println(&quot;func C&quot;)
-</code></pre>
-}<br>func main() {<pre><code>funcA()
-funcB()
-funcC()
-</code></pre>
-}<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">  * 注意：</span><br><span class="line"></span><br><span class="line">    * &#96;recoer()&#96; 必须搭配 &#96;defer&#96; 使用</span><br><span class="line">    * &#96;defer&#96; 一定要在可能引发 &#96;panic&#96; **的语句前定义**</span><br><span class="line"></span><br><span class="line">### 练习题</span><br><span class="line"></span><br><span class="line">* **分金币**</span><br><span class="line"></span><br><span class="line">* &#96;&#96;&#96;go</span><br><span class="line">  &#x2F;*</span><br><span class="line">  你有50枚金币，需要分配给以下几个人：Matthew,Sarah,Augustus,Heidi,Emilie,Peter,Giana,Adriano,Aaron,Elizabeth。</span><br><span class="line">  分配规则如下：</span><br><span class="line">  a. 名字中每包含1个&#39;e&#39;或&#39;E&#39;分1枚金币</span><br><span class="line">  b. 名字中每包含1个&#39;i&#39;或&#39;I&#39;分2枚金币</span><br><span class="line">  c. 名字中每包含1个&#39;o&#39;或&#39;O&#39;分3枚金币</span><br><span class="line">  d: 名字中每包含1个&#39;u&#39;或&#39;U&#39;分4枚金币</span><br><span class="line">  写一个程序，计算每个用户分到多少金币，以及最后剩余多少金币？</span><br><span class="line">  程序结构如下，请实现 ‘dispatchCoin’ 函数</span><br><span class="line">  *&#x2F;</span><br><span class="line">  var (</span><br><span class="line">  	coins &#x3D; 50</span><br><span class="line">  	users &#x3D; []string&#123;</span><br><span class="line">  		&quot;Matthew&quot;, &quot;Sarah&quot;, &quot;Augustus&quot;, &quot;Heidi&quot;, &quot;Emilie&quot;, &quot;Peter&quot;, &quot;Giana&quot;, &quot;Adriano&quot;, &quot;Aaron&quot;, &quot;Elizabeth&quot;,</span><br><span class="line">  	&#125;</span><br><span class="line">  	distribution &#x3D; make(map[string]int, len(users))</span><br><span class="line">  )</span><br><span class="line">  </span><br><span class="line">  func main() &#123;</span><br><span class="line">  	left :&#x3D; dispatchCoin()</span><br><span class="line">  	fmt.Println(&quot;剩下：&quot;, left)</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure></li>
+<li>定义函数时，可以传入地址，使用<strong>指针传值</strong></li>
 </ul>
+<h3 id="new-和-make"><a href="#new-和-make" class="headerlink" title="new 和 make"></a>new 和 make</h3><ul>
+<li><p>Go 中对于<strong>引用类型的变量</strong>，我们在使用时，不仅要声明它，还要<strong>为其分配内存</strong>，否则其值无法存储</p>
 </li>
-</ul>
-</li>
-<li><p>我的答案：</p>
-</li>
-</ul>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;fmt&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> (</span><br><span class="line">	coins = <span class="number">50</span></span><br><span class="line">	users = []<span class="keyword">string</span>&#123;</span><br><span class="line">		<span class="string">&quot;Matthew&quot;</span>, <span class="string">&quot;Sarah&quot;</span>, <span class="string">&quot;Augustus&quot;</span>, <span class="string">&quot;Heidi&quot;</span>, <span class="string">&quot;Emilie&quot;</span>, <span class="string">&quot;Peter&quot;</span>, <span class="string">&quot;Giana&quot;</span>, <span class="string">&quot;Adriano&quot;</span>, <span class="string">&quot;Aaron&quot;</span>, <span class="string">&quot;Elizabeth&quot;</span>,</span><br><span class="line">	&#125;</span><br><span class="line">	distribution = <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">int</span>, <span class="built_in">len</span>(users))</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">dispatchCoin</span><span class="params">()</span> <span class="title">int</span></span> &#123;</span><br><span class="line"></span><br><span class="line">	ans := <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">int</span>, <span class="number">10</span>)</span><br><span class="line">	<span class="keyword">for</span> _, i := <span class="keyword">range</span> users &#123;</span><br><span class="line">		<span class="keyword">for</span> _, j := <span class="keyword">range</span> i &#123;</span><br><span class="line">			k := j</span><br><span class="line">			<span class="keyword">switch</span> k &#123;</span><br><span class="line">			<span class="keyword">case</span> <span class="string">&#x27;e&#x27;</span>, <span class="string">&#x27;E&#x27;</span>:</span><br><span class="line">				ans[i] += <span class="number">1</span></span><br><span class="line">				coins -= <span class="number">1</span></span><br><span class="line">			<span class="keyword">case</span> <span class="string">&#x27;i&#x27;</span>, <span class="string">&#x27;I&#x27;</span>:</span><br><span class="line">				ans[i] += <span class="number">2</span></span><br><span class="line">				coins -= <span class="number">2</span></span><br><span class="line">			<span class="keyword">case</span> <span class="string">&#x27;o&#x27;</span>, <span class="string">&#x27;O&#x27;</span>:</span><br><span class="line">				ans[i] += <span class="number">3</span></span><br><span class="line">				coins -= <span class="number">3</span></span><br><span class="line">			<span class="keyword">case</span> <span class="string">&#x27;u&#x27;</span>, <span class="string">&#x27;U&#x27;</span>:</span><br><span class="line">				ans[i] += <span class="number">4</span></span><br><span class="line">				coins -= <span class="number">4</span></span><br><span class="line">			<span class="keyword">default</span>:</span><br><span class="line">				<span class="keyword">continue</span></span><br><span class="line"></span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	fmt.Println(ans)</span><br><span class="line">	<span class="keyword">return</span> (coins)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	left := dispatchCoin()</span><br><span class="line">	fmt.Println(<span class="string">&quot;剩下：&quot;</span>, left)</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<li><p>对于<strong>值类型的声明</strong>，不需要分配内存空间，因为他们在声明的时候，已经<strong>默认分配好了</strong>内存空间</p>
+<ul>
+<li>```go<br>func main() {<pre><code>var a *int
+*a = 100
+fmt.Println(*a)
 
+var b map[string]int
+b[&quot;沙河娜扎&quot;] = 100
+fmt.Println(b)
+</code></pre>
+}<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* &#96;new&#96;, &#96;make&#96; 用来分配内存</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### new</span><br><span class="line"></span><br><span class="line">* 内置函数</span><br><span class="line"></span><br><span class="line">* 函数原型：&#96;func new(Type) *Type&#96;</span><br><span class="line"></span><br><span class="line">  * Type : new 只接受一个参数，是一个类型</span><br><span class="line">  * *Type ：new函数返回一个指向该类型内存地址的指针</span><br><span class="line"></span><br><span class="line">* 使用&#96;new&#96;得到是一个指针，并且该指针对应的值，为**该类型的零值**</span><br><span class="line"></span><br><span class="line">  * 示例：</span><br><span class="line"></span><br><span class="line">    &#96;&#96;&#96;go</span><br><span class="line">    func main() &#123;</span><br><span class="line">    	a :&#x3D; new(int)</span><br><span class="line">    	b :&#x3D; new(bool)</span><br><span class="line">    	fmt.Printf(&quot;%T\n&quot;, a) &#x2F;&#x2F; *int</span><br><span class="line">    	fmt.Printf(&quot;%T\n&quot;, b) &#x2F;&#x2F; *bool</span><br><span class="line">    	fmt.Println(*a)       &#x2F;&#x2F; 0</span><br><span class="line">    	fmt.Println(*b)       &#x2F;&#x2F; false</span><br><span class="line">    &#125;	</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>对于<code>var a *int</code>: </p>
+<ul>
+<li>只是声明了一个指针变量，但未初始化, 不能被赋值</li>
+<li>指针是引用类型，需要初始化才有内存空间</li>
+<li></li>
+</ul>
+</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a *<span class="keyword">int</span></span><br><span class="line">a = <span class="built_in">new</span>(<span class="keyword">int</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="make"><a href="#make" class="headerlink" title="make"></a>make</h4><ul>
+<li><p>也是<strong>用于内存分配</strong>，</p>
+</li>
+<li><p>与 <code>new</code> 不同，只用于<code>slice</code> , <code>map</code> , <code>chan</code> 的内存创建</p>
+</li>
+<li><p>而且函数返回的类型就是类型本身, 而非指针类型，因为这三种类型就是引用类型，所以没必要返回他们的指针</p>
+</li>
+<li><p><code>make</code> 的原型：<code>func make(t Type, size ...InterType) Type</code></p>
+</li>
+<li><p>需要使用make 对<code>slice</code>, <code>map</code>,<code>channel</code> 进行初始化</p>
+<ul>
+<li><pre><code class="go">m := make(map[string]int,10)
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="new-和-make-的区别"><a href="#new-和-make-的区别" class="headerlink" title="new 和 make 的区别"></a>new 和 make 的区别</h4><ul>
+<li>二者都是用于内存分配</li>
+<li><code>make</code> 只用于<code>slice</code>, <code>map</code>, <code>channel</code> 的初始化，并且返回的还是这<strong>三个引用类型的本身</strong></li>
+<li><code>new</code> 用于类型的内存分配，并且内存对应的值为 该类型的零值，**返回的是指向该类型的指针</li>
+</ul>
 
       
     </div>
@@ -695,7 +707,7 @@ funcC()
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://example.com/2021/05/06/10%20%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0%E4%BB%8B%E7%BB%8D/" title="10 内置函数介绍">http://example.com/2021/05/06/10%20%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0%E4%BB%8B%E7%BB%8D/</a>
+    <a href="http://example.com/2021/05/07/11%20%E6%8C%87%E9%92%88/" title="11 指针">http://example.com/2021/05/07/11%20%E6%8C%87%E9%92%88/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -717,8 +729,8 @@ funcC()
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2021/05/06/9%20%E5%87%BD%E6%95%B0%E8%BF%9B%E9%98%B6/" rel="next" title="9 函数进阶">
-                <i class="fa fa-chevron-left"></i> 9 函数进阶
+              <a href="/2021/05/07/lab1/" rel="next" title="Lab1">
+                <i class="fa fa-chevron-left"></i> Lab1
               </a>
             
           </div>
@@ -727,8 +739,8 @@ funcC()
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2021/05/07/lab1/" rel="prev" title="Lab1">
-                Lab1 <i class="fa fa-chevron-right"></i>
+              <a href="/2021/05/07/12%20%E7%BB%93%E6%9E%84%E4%BD%93/" rel="prev" title="12 结构体">
+                12 结构体 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -958,7 +970,7 @@ show_date_time();
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#10-%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0%E4%BB%8B%E7%BB%8D"><span class="nav-text">10 内置函数介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#panic-recover"><span class="nav-text">panic&#x2F;recover</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#11-%E6%8C%87%E9%92%88"><span class="nav-text">11 指针</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%87%E9%92%88%E5%9C%B0%E5%9D%80%E5%92%8C%E6%8C%87%E9%92%88%E7%B1%BB%E5%9E%8B"><span class="nav-text">指针地址和指针类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%87%E9%92%88%E5%8F%96%E5%80%BC"><span class="nav-text">指针取值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#new-%E5%92%8C-make"><span class="nav-text">new 和 make</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#make"><span class="nav-text">make</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#new-%E5%92%8C-make-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-text">new 和 make 的区别</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>

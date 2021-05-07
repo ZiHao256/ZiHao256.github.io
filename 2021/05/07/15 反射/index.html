@@ -88,15 +88,15 @@
 
 
 
-<meta name="description" content="10 内置函数介绍   内置函数 介绍    close 关闭 channel   len 求长度(string, array, slice, map, channel)   new 分配内存，主要用来分配值类型，int，struct。返回的是指针   make 分配内存，主要用来分配引用类型，chan，map, slice   append 用来追加元素到数组、slice   panic, re">
+<meta name="description" content="15 反射[toc] 变量的内在机制 Go 的变量分为两部分 类型信息：预先定义好的元信息 值信息：程序运行过程中可动态变化的    反射介绍 程序运行时 对程序本身进行访问和修改的能力 一般，程序在编译时，变量被转换成内存地址，变量名不会被编译器写道可执行部分 在运行程序时，程序无法获取自身的信息   但对于支持反射的语言，在程序编译时会将变量的反射信息（字段名、类型信息、结构体信息等）整合到可">
 <meta property="og:type" content="article">
-<meta property="og:title" content="10 内置函数介绍">
-<meta property="og:url" content="http://example.com/2021/05/06/10%20%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0%E4%BB%8B%E7%BB%8D/index.html">
+<meta property="og:title" content="15 反射">
+<meta property="og:url" content="http://example.com/2021/05/07/15%20%E5%8F%8D%E5%B0%84/index.html">
 <meta property="og:site_name" content="ZiHao&#39;s Blog">
-<meta property="og:description" content="10 内置函数介绍   内置函数 介绍    close 关闭 channel   len 求长度(string, array, slice, map, channel)   new 分配内存，主要用来分配值类型，int，struct。返回的是指针   make 分配内存，主要用来分配引用类型，chan，map, slice   append 用来追加元素到数组、slice   panic, re">
+<meta property="og:description" content="15 反射[toc] 变量的内在机制 Go 的变量分为两部分 类型信息：预先定义好的元信息 值信息：程序运行过程中可动态变化的    反射介绍 程序运行时 对程序本身进行访问和修改的能力 一般，程序在编译时，变量被转换成内存地址，变量名不会被编译器写道可执行部分 在运行程序时，程序无法获取自身的信息   但对于支持反射的语言，在程序编译时会将变量的反射信息（字段名、类型信息、结构体信息等）整合到可">
 <meta property="og:locale">
-<meta property="article:published_time" content="2021-05-06T06:26:06.000Z">
-<meta property="article:modified_time" content="2021-05-06T06:27:26.779Z">
+<meta property="article:published_time" content="2021-05-07T11:25:46.252Z">
+<meta property="article:modified_time" content="2021-05-07T11:27:38.862Z">
 <meta property="article:author" content="Zihao Ma">
 <meta name="twitter:card" content="summary">
 
@@ -128,13 +128,13 @@
 
 
 
-  <link rel="canonical" href="http://example.com/2021/05/06/10 内置函数介绍/"/>
+  <link rel="canonical" href="http://example.com/2021/05/07/15 反射/"/>
 
 
 
 
 
-  <title>10 内置函数介绍 | ZiHao's Blog</title>
+  <title>15 反射 | ZiHao's Blog</title>
   
 
 
@@ -465,7 +465,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/05/06/10%20%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0%E4%BB%8B%E7%BB%8D/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/05/07/15%20%E5%8F%8D%E5%B0%84/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -482,7 +482,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">10 内置函数介绍</h1>
+          <h1 class="post-title" itemprop="name headline">15 反射</h1>
         
 
         <div class="post-meta">
@@ -494,8 +494,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-05-06T14:26:06+08:00">
-                2021-05-06
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-05-07T19:25:46+08:00">
+                2021-05-07
               </time>
             
 
@@ -510,8 +510,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2021-05-06T14:27:26+08:00">
-                2021-05-06
+              <time title="更新于" itemprop="dateModified" datetime="2021-05-07T19:27:38+08:00">
+                2021-05-07
               </time>
             
           </span>
@@ -565,7 +565,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  717
+                  1.9k
                 </span>
               
 
@@ -581,7 +581,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  3
+                  8
                 </span>
               
             </div>
@@ -602,78 +602,126 @@
       
 
       
-        <h2 id="10-内置函数介绍"><a href="#10-内置函数介绍" class="headerlink" title="10 内置函数介绍"></a>10 内置函数介绍</h2><table>
-<thead>
-<tr>
-<th>内置函数</th>
-<th>介绍</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>close</td>
-<td>关闭 channel</td>
-</tr>
-<tr>
-<td>len</td>
-<td>求长度(string, array, slice, map, channel)</td>
-</tr>
-<tr>
-<td>new</td>
-<td>分配内存，主要用来分配值类型，int，struct。返回的是指针</td>
-</tr>
-<tr>
-<td>make</td>
-<td>分配内存，主要用来分配引用类型，chan，map, slice</td>
-</tr>
-<tr>
-<td>append</td>
-<td>用来追加元素到数组、slice</td>
-</tr>
-<tr>
-<td>panic, recover</td>
-<td>做错误处理</td>
-</tr>
-</tbody></table>
-<h4 id="panic-recover"><a href="#panic-recover" class="headerlink" title="panic/recover"></a>panic/recover</h4><ul>
-<li><p>Go 无异常机制，但是使用 <code>panic/recover</code> 模式来处理错误</p>
+        <h1 id="15-反射"><a href="#15-反射" class="headerlink" title="15 反射"></a>15 反射</h1><p>[toc]</p>
+<h1 id="变量的内在机制"><a href="#变量的内在机制" class="headerlink" title="变量的内在机制"></a>变量的内在机制</h1><ul>
+<li>Go 的变量分为两部分<ul>
+<li><strong>类型信息</strong>：预先定义好的元信息</li>
+<li><strong>值信息</strong>：程序运行过程中可动态变化的</li>
+</ul>
 </li>
-<li><p><code>panic</code> 可在<strong>任何地方引发</strong>，但<code>recover</code> 只有在**<code>defer</code> 调用的函数中**有效</p>
+</ul>
+<h1 id="反射介绍"><a href="#反射介绍" class="headerlink" title="反射介绍"></a>反射介绍</h1><ul>
+<li><strong>程序运行时</strong> <strong>对程序本身进行访问和修改</strong>的能力<ul>
+<li>一般，程序在编译时，变量被转换成内存地址，变量名不会被编译器写道可执行部分</li>
+<li>在运行程序时，程序无法获取自身的信息</li>
+</ul>
+</li>
+<li>但对于<strong>支持反射的语言</strong>，在程序<strong>编译时</strong>会将变量的<strong>反射信息</strong>（字段名、类型信息、结构体信息等）整合到可执行文件中，并给程序提供 <strong>接口</strong> 访问反射信息</li>
+<li>Go 在运行期间 使用 <strong>reflect包</strong> 访问程序的<strong>反射信息</strong></li>
+</ul>
+<h1 id="reflect-包"><a href="#reflect-包" class="headerlink" title="reflect 包"></a>reflect 包</h1><ul>
+<li>在 Go 的反射机制中，<strong>任何接口值</strong> 都是由<code>一个具体类型</code> 和 <code>具体类型的值</code> 两部分组成</li>
+<li>反射相关功能由 内置 reflect 包提供，<ul>
+<li>任意接口值在反射中都可以理解为<code>reflect.Type</code> 和 <code>reflect.Value</code> 两部分，</li>
+<li>reflect 包提供了<code>reflect.TypeOf</code> <code>reflect.ValueOf</code> 获取任意对象的 Value 和 Type</li>
+</ul>
+</li>
+</ul>
+<h2 id="TypeOf"><a href="#TypeOf" class="headerlink" title="TypeOf"></a>TypeOf</h2><ul>
+<li><p>使用<code>reflect.TypeOf()</code> 可以获得任意值的<strong>类型对象<code>(reflect.Type)</code></strong>, 程序通过类型对象可以访问任意值的类型信息</p>
 <ul>
-<li><p>例子：</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">funcA</span><span class="params">()</span></span> &#123;</span><br><span class="line">	fmt.Println(<span class="string">&quot;func A&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">funcB</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="built_in">panic</span>(<span class="string">&quot;panic in B&quot;</span>)		<span class="comment">//panic</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">funcC</span><span class="params">()</span></span> &#123;</span><br><span class="line">	fmt.Println(<span class="string">&quot;func C&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	funcA()</span><br><span class="line">	funcB()</span><br><span class="line">	funcC()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-<li><p>输出：</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">A</span></span></span><br><span class="line"><span class="built_in">panic</span>: <span class="built_in">panic</span> in B</span><br><span class="line"></span><br><span class="line">goroutine <span class="number">1</span> [running]:</span><br><span class="line">main.funcB(...)</span><br><span class="line">	e:/LearningNotes/Go/_function/<span class="built_in">panic</span>.<span class="keyword">go</span>:<span class="number">10</span></span><br><span class="line">main.main()</span><br><span class="line">	e:/LearningNotes/Go/_function/<span class="built_in">panic</span>.<span class="keyword">go</span>:<span class="number">18</span> +<span class="number">0xa5</span></span><br><span class="line">exit status <span class="number">2</span></span><br></pre></td></tr></table></figure></li>
-<li><p>调用函数 funcB 时，引发了<code>panic</code>导致程序崩溃异常退出</p>
+<li><p>```go<br>package main</p>
+<p>import (</p>
+<pre><code>&quot;fmt&quot;
+&quot;reflect&quot;
+</code></pre>
+<p>)</p>
+<p>func reflectType(x interface{}) {</p>
+<pre><code>v := reflect.TypeOf(x)
+fmt.Printf(&quot;type:%v\n&quot;, v)
+</code></pre>
+<p>}<br>func main() {</p>
+<pre><code>var a float32 = 3.14
+reflectType(a) // type:float32
+var b int64 = 100
+reflectType(b) // type:int64
+</code></pre>
+<p>}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### type name 和 type kind</span><br><span class="line"></span><br><span class="line">* 在反射中，关于类型还划分为两种：&#96;类型Type&#96; 和 &#96;种类Kind&#96;</span><br><span class="line"></span><br><span class="line">* &#96;type&#96; 关键字，使我们可以构造很多自定义类型</span><br><span class="line"></span><br><span class="line">* &#96;kind&#96; 指底层的类型</span><br><span class="line"></span><br><span class="line">* 在反射中，需要区分 指针、结构体等大品种的类型时，会用到&#96;kind&#96;</span><br><span class="line"></span><br><span class="line">* 示例：定义 指针类型和结构体类型：</span><br><span class="line"></span><br><span class="line">  * &#96;&#96;&#96;go</span><br><span class="line">    package main</span><br><span class="line">    </span><br><span class="line">    import (</span><br><span class="line">    	&quot;fmt&quot;</span><br><span class="line">    	&quot;reflect&quot;</span><br><span class="line">    )</span><br><span class="line">    </span><br><span class="line">    type myInt int64</span><br><span class="line">    </span><br><span class="line">    func reflectType(x interface&#123;&#125;) &#123;</span><br><span class="line">    	t :&#x3D; reflect.TypeOf(x)</span><br><span class="line">    	fmt.Printf(&quot;type:%v kind:%v\n&quot;, t.Name(), t.Kind())</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    func main() &#123;</span><br><span class="line">    	var a *float32 &#x2F;&#x2F; 指针</span><br><span class="line">    	var b myInt    &#x2F;&#x2F; 自定义类型</span><br><span class="line">    	var c rune     &#x2F;&#x2F; 类型别名</span><br><span class="line">    	reflectType(a) &#x2F;&#x2F; type: kind:ptr</span><br><span class="line">    	reflectType(b) &#x2F;&#x2F; type:myInt kind:int64</span><br><span class="line">    	reflectType(c) &#x2F;&#x2F; type:int32 kind:int32</span><br><span class="line">    </span><br><span class="line">    	type person struct &#123;</span><br><span class="line">    		name string</span><br><span class="line">    		age  int</span><br><span class="line">    	&#125;</span><br><span class="line">    	type book struct&#123; title string &#125;</span><br><span class="line">    	var d &#x3D; person&#123;</span><br><span class="line">    		name: &quot;沙河小王子&quot;,</span><br><span class="line">    		age:  18,</span><br><span class="line">    	&#125;</span><br><span class="line">    	var e &#x3D; book&#123;title: &quot;《跟小王子学Go语言》&quot;&#125;</span><br><span class="line">    	reflectType(d) &#x2F;&#x2F; type:person kind:struct</span><br><span class="line">    	reflectType(e) &#x2F;&#x2F; type:book kind:struct</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>Go 的反射中，像数组、切片、Map、指针等类型变量，他们的<code>.Name()</code>返回空</p>
 </li>
-<li><p>此时，我们可以使用 <code>recover</code> 将程序恢复，继续执行</p>
+</ul>
+</li>
+<li><p><code>reflect</code> 包中，定义的 Kind 类型：</p>
 <ul>
-<li>```go<br>func funcA() {<pre><code>fmt.Println(&quot;func A&quot;)
+<li>```go<br>type Kind uint<br>const (<pre><code>Invalid Kind = iota  // 非法类型
+Bool                 // 布尔型
+Int                  // 有符号整型
+Int8                 // 有符号8位整型
+Int16                // 有符号16位整型
+Int32                // 有符号32位整型
+Int64                // 有符号64位整型
+Uint                 // 无符号整型
+Uint8                // 无符号8位整型
+Uint16               // 无符号16位整型
+Uint32               // 无符号32位整型
+Uint64               // 无符号64位整型
+Uintptr              // 指针
+Float32              // 单精度浮点数
+Float64              // 双精度浮点数
+Complex64            // 64位复数类型
+Complex128           // 128位复数类型
+Array                // 数组
+Chan                 // 通道
+Func                 // 函数
+Interface            // 接口
+Map                  // 映射
+Ptr                  // 指针
+Slice                // 切片
+String               // 字符串
+Struct               // 结构体
+UnsafePointer        // 底层指针
 </code></pre>
-}func funcB() {<pre><code>defer func() &#123;
-    err := recover()
-    //如果程序出出现了panic错误,可以通过recover恢复过来
-    if err != nil &#123;
-        fmt.Println(&quot;recover in B&quot;)
-    &#125;
-&#125;()
-panic(&quot;panic in B&quot;)
-</code></pre>
-}func funcC() {<pre><code>fmt.Println(&quot;func C&quot;)
-</code></pre>
-}<br>func main() {<pre><code>funcA()
-funcB()
-funcC()
-</code></pre>
-}<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">  * 注意：</span><br><span class="line"></span><br><span class="line">    * &#96;recoer()&#96; 必须搭配 &#96;defer&#96; 使用</span><br><span class="line">    * &#96;defer&#96; 一定要在可能引发 &#96;panic&#96; **的语句前定义**</span><br><span class="line"></span><br><span class="line">### 练习题</span><br><span class="line"></span><br><span class="line">* **分金币**</span><br><span class="line"></span><br><span class="line">* &#96;&#96;&#96;go</span><br><span class="line">  &#x2F;*</span><br><span class="line">  你有50枚金币，需要分配给以下几个人：Matthew,Sarah,Augustus,Heidi,Emilie,Peter,Giana,Adriano,Aaron,Elizabeth。</span><br><span class="line">  分配规则如下：</span><br><span class="line">  a. 名字中每包含1个&#39;e&#39;或&#39;E&#39;分1枚金币</span><br><span class="line">  b. 名字中每包含1个&#39;i&#39;或&#39;I&#39;分2枚金币</span><br><span class="line">  c. 名字中每包含1个&#39;o&#39;或&#39;O&#39;分3枚金币</span><br><span class="line">  d: 名字中每包含1个&#39;u&#39;或&#39;U&#39;分4枚金币</span><br><span class="line">  写一个程序，计算每个用户分到多少金币，以及最后剩余多少金币？</span><br><span class="line">  程序结构如下，请实现 ‘dispatchCoin’ 函数</span><br><span class="line">  *&#x2F;</span><br><span class="line">  var (</span><br><span class="line">  	coins &#x3D; 50</span><br><span class="line">  	users &#x3D; []string&#123;</span><br><span class="line">  		&quot;Matthew&quot;, &quot;Sarah&quot;, &quot;Augustus&quot;, &quot;Heidi&quot;, &quot;Emilie&quot;, &quot;Peter&quot;, &quot;Giana&quot;, &quot;Adriano&quot;, &quot;Aaron&quot;, &quot;Elizabeth&quot;,</span><br><span class="line">  	&#125;</span><br><span class="line">  	distribution &#x3D; make(map[string]int, len(users))</span><br><span class="line">  )</span><br><span class="line">  </span><br><span class="line">  func main() &#123;</span><br><span class="line">  	left :&#x3D; dispatchCoin()</span><br><span class="line">  	fmt.Println(&quot;剩下：&quot;, left)</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure></li>
+)<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## ValueOf</span><br><span class="line"></span><br><span class="line">* &#96;reflect.ValueOf()&#96; 返回的是 &#96;reflect.Value&#96; 类型，包含了**原始值**的值信息</span><br><span class="line"></span><br><span class="line">* &#96;reflect.Value&#96; 与**原始值**之间可以**相互转换**</span><br><span class="line"></span><br><span class="line">* &#96;reflect.Value&#96; 提供获取原始值的方法：</span><br><span class="line"></span><br><span class="line">  * |             方法             |                             说明                             |</span><br><span class="line">    | :--------------------------: | :----------------------------------------------------------: |</span><br><span class="line">    | Interface() **interface &#123;&#125;** | 将值以 interface&#123;&#125; 类型返回，可以通过类型断言转换为指定类型  |</span><br><span class="line">    |         Int() int64          |     将值以 int 类型返回，所有有符号整型均可以此方式返回      |</span><br><span class="line">    |        Uint() uint64         |     将值以 uint 类型返回，所有无符号整型均可以此方式返回     |</span><br><span class="line">    |       Float() float64        | 将值以双精度（float64）类型返回，所有浮点数（float32、float64）均可以此方式返回 |</span><br><span class="line">    |         Bool() bool          |                     将值以 bool 类型返回                     |</span><br><span class="line">    |       Bytes() []bytes        |               将值以字节数组 []bytes 类型返回                |</span><br><span class="line">    |       String() string        |                     将值以字符串类型返回                     |</span><br><span class="line"></span><br><span class="line">### 通过反射获取值</span><br><span class="line"></span><br><span class="line">&#96;&#96;&#96;go</span><br><span class="line">func reflectValue(x interface&#123;&#125;) &#123;</span><br><span class="line">	v :&#x3D; reflect.ValueOf(x)</span><br><span class="line">	k :&#x3D; v.Kind()</span><br><span class="line">	switch k &#123;</span><br><span class="line">	case reflect.Int64:</span><br><span class="line">		&#x2F;&#x2F; v.Int()从反射中获取整型的原始值，然后通过int64()强制类型转换</span><br><span class="line">		fmt.Printf(&quot;type is int64, value is %d\n&quot;, int64(v.Int()))</span><br><span class="line">	case reflect.Float32:</span><br><span class="line">		&#x2F;&#x2F; v.Float()从反射中获取浮点型的原始值，然后通过float32()强制类型转换</span><br><span class="line">		fmt.Printf(&quot;type is float32, value is %f\n&quot;, float32(v.Float()))</span><br><span class="line">	case reflect.Float64:</span><br><span class="line">		&#x2F;&#x2F; v.Float()从反射中获取浮点型的原始值，然后通过float64()强制类型转换</span><br><span class="line">		fmt.Printf(&quot;type is float64, value is %f\n&quot;, float64(v.Float()))</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">func main() &#123;</span><br><span class="line">	var a float32 &#x3D; 3.14</span><br><span class="line">	var b int64 &#x3D; 100</span><br><span class="line">	reflectValue(a) &#x2F;&#x2F; type is float32, value is 3.140000</span><br><span class="line">	reflectValue(b) &#x2F;&#x2F; type is int64, value is 100</span><br><span class="line">	&#x2F;&#x2F; 将int类型的原始值转换为reflect.Value类型</span><br><span class="line">	c :&#x3D; reflect.ValueOf(10)</span><br><span class="line">	fmt.Printf(&quot;type c :%T\n&quot;, c) &#x2F;&#x2F; type c :reflect.Value</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
 </ul>
 </li>
 </ul>
+<h3 id="通过反射设置变量的值"><a href="#通过反射设置变量的值" class="headerlink" title="通过反射设置变量的值"></a>通过反射设置变量的值</h3><ul>
+<li><p>在函数中通过反射修改变量的值，需要<strong>传递变量地址</strong>才能修改变量值</p>
 </li>
-<li><p>我的答案：</p>
+<li><p>反射中，使用专有的<code>Elem()</code>方法<strong>可以获取指针对应的值</strong></p>
+<ul>
+<li>```go<br>package mainimport (<pre><code>&quot;fmt&quot;
+&quot;reflect&quot;
+</code></pre>
+)func reflectSetValue1(x interface{}) {<pre><code>v := reflect.ValueOf(x)
+if v.Kind() == reflect.Int64 &#123;
+    v.SetInt(200) //修改的是副本，reflect包会引发panic
+&#125;
+</code></pre>
+}<br>func reflectSetValue2(x interface{}) {<pre><code>v := reflect.ValueOf(x)
+// 反射中使用 Elem()方法获取指针对应的值
+if v.Elem().Kind() == reflect.Int64 &#123;
+    v.Elem().SetInt(200)
+&#125;
+</code></pre>
+}<br>func main() {<pre><code>var a int64 = 100
+// reflectSetValue1(a) //panic: reflect: reflect.Value.SetInt using unaddressable value
+reflectSetValue2(&amp;a)
+fmt.Println(a)
+</code></pre>
+}<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### IsNil() 和 IsValid</span><br><span class="line"></span><br><span class="line">#### IsNil()</span><br><span class="line"></span><br><span class="line">* 函数原型：&#96;func (v Value) IsNil() bool&#96;</span><br><span class="line"></span><br><span class="line">* 判断 v 持有的值是否为&#96;Nil&#96;</span><br><span class="line">  * v 持有的值的分类必须是通道、函数、接口、映射、指针、切片之一，</span><br><span class="line">  * 否则&#96;IsNil&#96;函数会导致 panic</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### IsValid</span><br><span class="line"></span><br><span class="line">* 函数原型：&#96;func (v Value) IsValid() bool&#96;</span><br><span class="line"></span><br><span class="line">* 判断 v 是否持有一个值，如果 v 是**Value零值**，返回假，此时v除了IsValid , String, Kind 之外的方法都会导致 panic</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### 示例</span><br><span class="line"></span><br><span class="line">* &#96;IsNil&#96; 常用于判断指针是否为空</span><br><span class="line">* &#96;IsValid&#96; 常用于判断返回值是否有效</span><br><span class="line"></span><br><span class="line">&#96;&#96;&#96;go</span><br><span class="line">func main() &#123;</span><br><span class="line">	&#x2F;&#x2F; *int类型空指针</span><br><span class="line">	var a *int</span><br><span class="line">	fmt.Println(&quot;var a *int IsNil:&quot;, reflect.ValueOf(a).IsNil())</span><br><span class="line">	&#x2F;&#x2F; nil值</span><br><span class="line">	fmt.Println(&quot;nil IsValid:&quot;, reflect.ValueOf(nil).IsValid())</span><br><span class="line">	&#x2F;&#x2F; 实例化一个匿名结构体</span><br><span class="line">	b :&#x3D; struct&#123;&#125;&#123;&#125;</span><br><span class="line">	&#x2F;&#x2F; 尝试从结构体中查找&quot;abc&quot;字段</span><br><span class="line">	fmt.Println(&quot;不存在的结构体成员:&quot;, reflect.ValueOf(b).FieldByName(&quot;abc&quot;).IsValid())</span><br><span class="line">	&#x2F;&#x2F; 尝试从结构体中查找&quot;abc&quot;方法</span><br><span class="line">	fmt.Println(&quot;不存在的结构体方法:&quot;, reflect.ValueOf(b).MethodByName(&quot;abc&quot;).IsValid())</span><br><span class="line">	&#x2F;&#x2F; map</span><br><span class="line">	c :&#x3D; map[string]int&#123;&#125;</span><br><span class="line">	&#x2F;&#x2F; 尝试从map中查找一个不存在的键</span><br><span class="line">	fmt.Println(&quot;map中不存在的键：&quot;, reflect.ValueOf(c).MapIndex(reflect.ValueOf(&quot;娜扎&quot;)).IsValid())</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
 </li>
 </ul>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;fmt&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> (</span><br><span class="line">	coins = <span class="number">50</span></span><br><span class="line">	users = []<span class="keyword">string</span>&#123;</span><br><span class="line">		<span class="string">&quot;Matthew&quot;</span>, <span class="string">&quot;Sarah&quot;</span>, <span class="string">&quot;Augustus&quot;</span>, <span class="string">&quot;Heidi&quot;</span>, <span class="string">&quot;Emilie&quot;</span>, <span class="string">&quot;Peter&quot;</span>, <span class="string">&quot;Giana&quot;</span>, <span class="string">&quot;Adriano&quot;</span>, <span class="string">&quot;Aaron&quot;</span>, <span class="string">&quot;Elizabeth&quot;</span>,</span><br><span class="line">	&#125;</span><br><span class="line">	distribution = <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">int</span>, <span class="built_in">len</span>(users))</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">dispatchCoin</span><span class="params">()</span> <span class="title">int</span></span> &#123;</span><br><span class="line"></span><br><span class="line">	ans := <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">int</span>, <span class="number">10</span>)</span><br><span class="line">	<span class="keyword">for</span> _, i := <span class="keyword">range</span> users &#123;</span><br><span class="line">		<span class="keyword">for</span> _, j := <span class="keyword">range</span> i &#123;</span><br><span class="line">			k := j</span><br><span class="line">			<span class="keyword">switch</span> k &#123;</span><br><span class="line">			<span class="keyword">case</span> <span class="string">&#x27;e&#x27;</span>, <span class="string">&#x27;E&#x27;</span>:</span><br><span class="line">				ans[i] += <span class="number">1</span></span><br><span class="line">				coins -= <span class="number">1</span></span><br><span class="line">			<span class="keyword">case</span> <span class="string">&#x27;i&#x27;</span>, <span class="string">&#x27;I&#x27;</span>:</span><br><span class="line">				ans[i] += <span class="number">2</span></span><br><span class="line">				coins -= <span class="number">2</span></span><br><span class="line">			<span class="keyword">case</span> <span class="string">&#x27;o&#x27;</span>, <span class="string">&#x27;O&#x27;</span>:</span><br><span class="line">				ans[i] += <span class="number">3</span></span><br><span class="line">				coins -= <span class="number">3</span></span><br><span class="line">			<span class="keyword">case</span> <span class="string">&#x27;u&#x27;</span>, <span class="string">&#x27;U&#x27;</span>:</span><br><span class="line">				ans[i] += <span class="number">4</span></span><br><span class="line">				coins -= <span class="number">4</span></span><br><span class="line">			<span class="keyword">default</span>:</span><br><span class="line">				<span class="keyword">continue</span></span><br><span class="line"></span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	fmt.Println(ans)</span><br><span class="line">	<span class="keyword">return</span> (coins)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	left := dispatchCoin()</span><br><span class="line">	fmt.Println(<span class="string">&quot;剩下：&quot;</span>, left)</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
+<h1 id="结构体反射"><a href="#结构体反射" class="headerlink" title="结构体反射"></a>结构体反射</h1><h2 id="与结构体相关的方法"><a href="#与结构体相关的方法" class="headerlink" title="与结构体相关的方法"></a>与结构体相关的方法</h2><h2 id="结构体反射示例"><a href="#结构体反射示例" class="headerlink" title="结构体反射示例"></a>结构体反射示例</h2><h1 id="反射是把双刃剑"><a href="#反射是把双刃剑" class="headerlink" title="反射是把双刃剑"></a>反射是把双刃剑</h1><ul>
+<li>反射式一个强大并富有表现力的工具，能使得我们写出灵活的代码<ul>
+<li>基于反射的代码十分脆弱，反射中类型错误会在真正运行的时候才会引发 panic ，那很可能是在代码写完的很长时间之后</li>
+<li>大量使用反射的代码通常难以理解</li>
+<li>反射的性能低下</li>
+</ul>
+</li>
+</ul>
 
       
     </div>
@@ -695,7 +743,7 @@ funcC()
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://example.com/2021/05/06/10%20%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0%E4%BB%8B%E7%BB%8D/" title="10 内置函数介绍">http://example.com/2021/05/06/10%20%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0%E4%BB%8B%E7%BB%8D/</a>
+    <a href="http://example.com/2021/05/07/15%20%E5%8F%8D%E5%B0%84/" title="15 反射">http://example.com/2021/05/07/15%20%E5%8F%8D%E5%B0%84/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -717,8 +765,8 @@ funcC()
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2021/05/06/9%20%E5%87%BD%E6%95%B0%E8%BF%9B%E9%98%B6/" rel="next" title="9 函数进阶">
-                <i class="fa fa-chevron-left"></i> 9 函数进阶
+              <a href="/2021/05/07/14%20%E6%8E%A5%E5%8F%A3/" rel="next" title="14 接口">
+                <i class="fa fa-chevron-left"></i> 14 接口
               </a>
             
           </div>
@@ -726,10 +774,6 @@ funcC()
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2021/05/07/lab1/" rel="prev" title="Lab1">
-                Lab1 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -958,7 +1002,7 @@ show_date_time();
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#10-%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0%E4%BB%8B%E7%BB%8D"><span class="nav-text">10 内置函数介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#panic-recover"><span class="nav-text">panic&#x2F;recover</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#15-%E5%8F%8D%E5%B0%84"><span class="nav-text">15 反射</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%98%E9%87%8F%E7%9A%84%E5%86%85%E5%9C%A8%E6%9C%BA%E5%88%B6"><span class="nav-text">变量的内在机制</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%8D%E5%B0%84%E4%BB%8B%E7%BB%8D"><span class="nav-text">反射介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reflect-%E5%8C%85"><span class="nav-text">reflect 包</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#TypeOf"><span class="nav-text">TypeOf</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9A%E8%BF%87%E5%8F%8D%E5%B0%84%E8%AE%BE%E7%BD%AE%E5%8F%98%E9%87%8F%E7%9A%84%E5%80%BC"><span class="nav-text">通过反射设置变量的值</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BB%93%E6%9E%84%E4%BD%93%E5%8F%8D%E5%B0%84"><span class="nav-text">结构体反射</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8E%E7%BB%93%E6%9E%84%E4%BD%93%E7%9B%B8%E5%85%B3%E7%9A%84%E6%96%B9%E6%B3%95"><span class="nav-text">与结构体相关的方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%93%E6%9E%84%E4%BD%93%E5%8F%8D%E5%B0%84%E7%A4%BA%E4%BE%8B"><span class="nav-text">结构体反射示例</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%8D%E5%B0%84%E6%98%AF%E6%8A%8A%E5%8F%8C%E5%88%83%E5%89%91"><span class="nav-text">反射是把双刃剑</span></a></li></ol></div>
             
 
           </div>

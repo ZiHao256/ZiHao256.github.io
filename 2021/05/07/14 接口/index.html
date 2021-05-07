@@ -88,15 +88,15 @@
 
 
 
-<meta name="description" content="10 内置函数介绍   内置函数 介绍    close 关闭 channel   len 求长度(string, array, slice, map, channel)   new 分配内存，主要用来分配值类型，int，struct。返回的是指针   make 分配内存，主要用来分配引用类型，chan，map, slice   append 用来追加元素到数组、slice   panic, re">
+<meta name="description" content="14 接口[toc]  Interface 定义了一个对象的行为规范， 只定义规范而不实现，由具体的对象来实现规范的细节  接口类型 &#96;Interface ·是一种抽象的类型 Interface  是一组method的集合，是duck-type programming的一种体现 接口的作用：定义一个协定(规则)， 不用关心其数据，和方法具体是什么   &#96;Interface· 是一种类型  为什么使">
 <meta property="og:type" content="article">
-<meta property="og:title" content="10 内置函数介绍">
-<meta property="og:url" content="http://example.com/2021/05/06/10%20%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0%E4%BB%8B%E7%BB%8D/index.html">
+<meta property="og:title" content="14 接口">
+<meta property="og:url" content="http://example.com/2021/05/07/14%20%E6%8E%A5%E5%8F%A3/index.html">
 <meta property="og:site_name" content="ZiHao&#39;s Blog">
-<meta property="og:description" content="10 内置函数介绍   内置函数 介绍    close 关闭 channel   len 求长度(string, array, slice, map, channel)   new 分配内存，主要用来分配值类型，int，struct。返回的是指针   make 分配内存，主要用来分配引用类型，chan，map, slice   append 用来追加元素到数组、slice   panic, re">
+<meta property="og:description" content="14 接口[toc]  Interface 定义了一个对象的行为规范， 只定义规范而不实现，由具体的对象来实现规范的细节  接口类型 &#96;Interface ·是一种抽象的类型 Interface  是一组method的集合，是duck-type programming的一种体现 接口的作用：定义一个协定(规则)， 不用关心其数据，和方法具体是什么   &#96;Interface· 是一种类型  为什么使">
 <meta property="og:locale">
-<meta property="article:published_time" content="2021-05-06T06:26:06.000Z">
-<meta property="article:modified_time" content="2021-05-06T06:27:26.779Z">
+<meta property="article:published_time" content="2021-05-07T11:25:46.250Z">
+<meta property="article:modified_time" content="2021-05-07T11:27:25.299Z">
 <meta property="article:author" content="Zihao Ma">
 <meta name="twitter:card" content="summary">
 
@@ -128,13 +128,13 @@
 
 
 
-  <link rel="canonical" href="http://example.com/2021/05/06/10 内置函数介绍/"/>
+  <link rel="canonical" href="http://example.com/2021/05/07/14 接口/"/>
 
 
 
 
 
-  <title>10 内置函数介绍 | ZiHao's Blog</title>
+  <title>14 接口 | ZiHao's Blog</title>
   
 
 
@@ -465,7 +465,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/05/06/10%20%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0%E4%BB%8B%E7%BB%8D/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/05/07/14%20%E6%8E%A5%E5%8F%A3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -482,7 +482,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">10 内置函数介绍</h1>
+          <h1 class="post-title" itemprop="name headline">14 接口</h1>
         
 
         <div class="post-meta">
@@ -494,8 +494,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-05-06T14:26:06+08:00">
-                2021-05-06
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-05-07T19:25:46+08:00">
+                2021-05-07
               </time>
             
 
@@ -510,8 +510,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2021-05-06T14:27:26+08:00">
-                2021-05-06
+              <time title="更新于" itemprop="dateModified" datetime="2021-05-07T19:27:25+08:00">
+                2021-05-07
               </time>
             
           </span>
@@ -565,7 +565,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  717
+                  2.5k
                 </span>
               
 
@@ -581,7 +581,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  3
+                  10
                 </span>
               
             </div>
@@ -602,78 +602,243 @@
       
 
       
-        <h2 id="10-内置函数介绍"><a href="#10-内置函数介绍" class="headerlink" title="10 内置函数介绍"></a>10 内置函数介绍</h2><table>
-<thead>
-<tr>
-<th>内置函数</th>
-<th>介绍</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>close</td>
-<td>关闭 channel</td>
-</tr>
-<tr>
-<td>len</td>
-<td>求长度(string, array, slice, map, channel)</td>
-</tr>
-<tr>
-<td>new</td>
-<td>分配内存，主要用来分配值类型，int，struct。返回的是指针</td>
-</tr>
-<tr>
-<td>make</td>
-<td>分配内存，主要用来分配引用类型，chan，map, slice</td>
-</tr>
-<tr>
-<td>append</td>
-<td>用来追加元素到数组、slice</td>
-</tr>
-<tr>
-<td>panic, recover</td>
-<td>做错误处理</td>
-</tr>
-</tbody></table>
-<h4 id="panic-recover"><a href="#panic-recover" class="headerlink" title="panic/recover"></a>panic/recover</h4><ul>
-<li><p>Go 无异常机制，但是使用 <code>panic/recover</code> 模式来处理错误</p>
-</li>
-<li><p><code>panic</code> 可在<strong>任何地方引发</strong>，但<code>recover</code> 只有在**<code>defer</code> 调用的函数中**有效</p>
+        <h1 id="14-接口"><a href="#14-接口" class="headerlink" title="14 接口"></a>14 接口</h1><p>[toc]</p>
 <ul>
-<li><p>例子：</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">funcA</span><span class="params">()</span></span> &#123;</span><br><span class="line">	fmt.Println(<span class="string">&quot;func A&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">funcB</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="built_in">panic</span>(<span class="string">&quot;panic in B&quot;</span>)		<span class="comment">//panic</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">funcC</span><span class="params">()</span></span> &#123;</span><br><span class="line">	fmt.Println(<span class="string">&quot;func C&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	funcA()</span><br><span class="line">	funcB()</span><br><span class="line">	funcC()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-<li><p>输出：</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">A</span></span></span><br><span class="line"><span class="built_in">panic</span>: <span class="built_in">panic</span> in B</span><br><span class="line"></span><br><span class="line">goroutine <span class="number">1</span> [running]:</span><br><span class="line">main.funcB(...)</span><br><span class="line">	e:/LearningNotes/Go/_function/<span class="built_in">panic</span>.<span class="keyword">go</span>:<span class="number">10</span></span><br><span class="line">main.main()</span><br><span class="line">	e:/LearningNotes/Go/_function/<span class="built_in">panic</span>.<span class="keyword">go</span>:<span class="number">18</span> +<span class="number">0xa5</span></span><br><span class="line">exit status <span class="number">2</span></span><br></pre></td></tr></table></figure></li>
-<li><p>调用函数 funcB 时，引发了<code>panic</code>导致程序崩溃异常退出</p>
-</li>
-<li><p>此时，我们可以使用 <code>recover</code> 将程序恢复，继续执行</p>
-<ul>
-<li>```go<br>func funcA() {<pre><code>fmt.Println(&quot;func A&quot;)
-</code></pre>
-}func funcB() {<pre><code>defer func() &#123;
-    err := recover()
-    //如果程序出出现了panic错误,可以通过recover恢复过来
-    if err != nil &#123;
-        fmt.Println(&quot;recover in B&quot;)
-    &#125;
-&#125;()
-panic(&quot;panic in B&quot;)
-</code></pre>
-}func funcC() {<pre><code>fmt.Println(&quot;func C&quot;)
-</code></pre>
-}<br>func main() {<pre><code>funcA()
-funcB()
-funcC()
-</code></pre>
-}<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">  * 注意：</span><br><span class="line"></span><br><span class="line">    * &#96;recoer()&#96; 必须搭配 &#96;defer&#96; 使用</span><br><span class="line">    * &#96;defer&#96; 一定要在可能引发 &#96;panic&#96; **的语句前定义**</span><br><span class="line"></span><br><span class="line">### 练习题</span><br><span class="line"></span><br><span class="line">* **分金币**</span><br><span class="line"></span><br><span class="line">* &#96;&#96;&#96;go</span><br><span class="line">  &#x2F;*</span><br><span class="line">  你有50枚金币，需要分配给以下几个人：Matthew,Sarah,Augustus,Heidi,Emilie,Peter,Giana,Adriano,Aaron,Elizabeth。</span><br><span class="line">  分配规则如下：</span><br><span class="line">  a. 名字中每包含1个&#39;e&#39;或&#39;E&#39;分1枚金币</span><br><span class="line">  b. 名字中每包含1个&#39;i&#39;或&#39;I&#39;分2枚金币</span><br><span class="line">  c. 名字中每包含1个&#39;o&#39;或&#39;O&#39;分3枚金币</span><br><span class="line">  d: 名字中每包含1个&#39;u&#39;或&#39;U&#39;分4枚金币</span><br><span class="line">  写一个程序，计算每个用户分到多少金币，以及最后剩余多少金币？</span><br><span class="line">  程序结构如下，请实现 ‘dispatchCoin’ 函数</span><br><span class="line">  *&#x2F;</span><br><span class="line">  var (</span><br><span class="line">  	coins &#x3D; 50</span><br><span class="line">  	users &#x3D; []string&#123;</span><br><span class="line">  		&quot;Matthew&quot;, &quot;Sarah&quot;, &quot;Augustus&quot;, &quot;Heidi&quot;, &quot;Emilie&quot;, &quot;Peter&quot;, &quot;Giana&quot;, &quot;Adriano&quot;, &quot;Aaron&quot;, &quot;Elizabeth&quot;,</span><br><span class="line">  	&#125;</span><br><span class="line">  	distribution &#x3D; make(map[string]int, len(users))</span><br><span class="line">  )</span><br><span class="line">  </span><br><span class="line">  func main() &#123;</span><br><span class="line">  	left :&#x3D; dispatchCoin()</span><br><span class="line">  	fmt.Println(&quot;剩下：&quot;, left)</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure></li>
+<li><code>Interface</code> 定义了<strong>一个对象的行为规范</strong>，</li>
+<li>只定义规范而不实现，由<strong>具体的对象来实现规范的细节</strong></li>
+</ul>
+<h1 id="接口类型"><a href="#接口类型" class="headerlink" title="接口类型"></a>接口类型</h1><ul>
+<li>`Interface ·是一种抽象的类型</li>
+<li><code>Interface</code>  是一组<code>method</code>的集合，是<code>duck-type programming</code>的一种体现</li>
+<li>接口的作用：定义一个协定(规则)，<ul>
+<li>不用关心其数据，和方法具体是什么</li>
 </ul>
 </li>
+<li>`Interface· 是一种类型</li>
 </ul>
-</li>
-<li><p>我的答案：</p>
-</li>
-</ul>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;fmt&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> (</span><br><span class="line">	coins = <span class="number">50</span></span><br><span class="line">	users = []<span class="keyword">string</span>&#123;</span><br><span class="line">		<span class="string">&quot;Matthew&quot;</span>, <span class="string">&quot;Sarah&quot;</span>, <span class="string">&quot;Augustus&quot;</span>, <span class="string">&quot;Heidi&quot;</span>, <span class="string">&quot;Emilie&quot;</span>, <span class="string">&quot;Peter&quot;</span>, <span class="string">&quot;Giana&quot;</span>, <span class="string">&quot;Adriano&quot;</span>, <span class="string">&quot;Aaron&quot;</span>, <span class="string">&quot;Elizabeth&quot;</span>,</span><br><span class="line">	&#125;</span><br><span class="line">	distribution = <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">int</span>, <span class="built_in">len</span>(users))</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">dispatchCoin</span><span class="params">()</span> <span class="title">int</span></span> &#123;</span><br><span class="line"></span><br><span class="line">	ans := <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">int</span>, <span class="number">10</span>)</span><br><span class="line">	<span class="keyword">for</span> _, i := <span class="keyword">range</span> users &#123;</span><br><span class="line">		<span class="keyword">for</span> _, j := <span class="keyword">range</span> i &#123;</span><br><span class="line">			k := j</span><br><span class="line">			<span class="keyword">switch</span> k &#123;</span><br><span class="line">			<span class="keyword">case</span> <span class="string">&#x27;e&#x27;</span>, <span class="string">&#x27;E&#x27;</span>:</span><br><span class="line">				ans[i] += <span class="number">1</span></span><br><span class="line">				coins -= <span class="number">1</span></span><br><span class="line">			<span class="keyword">case</span> <span class="string">&#x27;i&#x27;</span>, <span class="string">&#x27;I&#x27;</span>:</span><br><span class="line">				ans[i] += <span class="number">2</span></span><br><span class="line">				coins -= <span class="number">2</span></span><br><span class="line">			<span class="keyword">case</span> <span class="string">&#x27;o&#x27;</span>, <span class="string">&#x27;O&#x27;</span>:</span><br><span class="line">				ans[i] += <span class="number">3</span></span><br><span class="line">				coins -= <span class="number">3</span></span><br><span class="line">			<span class="keyword">case</span> <span class="string">&#x27;u&#x27;</span>, <span class="string">&#x27;U&#x27;</span>:</span><br><span class="line">				ans[i] += <span class="number">4</span></span><br><span class="line">				coins -= <span class="number">4</span></span><br><span class="line">			<span class="keyword">default</span>:</span><br><span class="line">				<span class="keyword">continue</span></span><br><span class="line"></span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	fmt.Println(ans)</span><br><span class="line">	<span class="keyword">return</span> (coins)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	left := dispatchCoin()</span><br><span class="line">	fmt.Println(<span class="string">&quot;剩下：&quot;</span>, left)</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h1 id="为什么使用接口"><a href="#为什么使用接口" class="headerlink" title="为什么使用接口"></a>为什么使用接口</h1><ul>
+<li><p>```go<br>type Cat struct{}</p>
+<p>func (c Cat) Say() string { return “喵喵喵” }</p>
+<p>type Dog struct{}</p>
+<p>func (d Dog) Say() string { return “汪汪汪” }</p>
+<p>func main() {</p>
+<pre><code>c := Cat&#123;&#125;
+fmt.Println(&quot;猫:&quot;, c.Say())
+d := Dog&#123;&#125;
+fmt.Println(&quot;狗:&quot;, d.Say())
+</code></pre>
+<p>}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* 共同特点：都会叫</span><br><span class="line">  </span><br><span class="line">  * 有重复代码</span><br><span class="line">* 为了解决 有共同特点而导致的代码重复，设计了接口</span><br><span class="line">* 接口是一种抽象的类型，</span><br><span class="line">  </span><br><span class="line">  * 看到一个接口，只知道通过它的方法能做什么</span><br><span class="line"></span><br><span class="line"># 接口的定义</span><br><span class="line"></span><br><span class="line">* Go 提倡面向接口编程</span><br><span class="line"></span><br><span class="line">* 每个接口由数个方法组成，定义格式:</span><br><span class="line"></span><br><span class="line">  * &#96;&#96;&#96;go</span><br><span class="line">    type 接口类型名 interface&#123;</span><br><span class="line">        方法名1(参数列表) 返回值列表</span><br><span class="line">        方法名2(参数列表) 返回值列表</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 
+<ul>
+<li><p><strong>接口名</strong>：自定义的类型名</p>
+<ul>
+<li>一般命名时，在单词后<code>er</code> , 接口名最好能突出该接口的类型含义</li>
+</ul>
+</li>
+<li><p><strong>方法名：</strong>当接口名首字母是大写，并且方法名首字母也是大写时，方法可以被接口是所在的包 之外的代码访问</p>
+</li>
+<li><p><strong>参数列表、返回值列表：</strong>其中的参数变量名可以省略</p>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="实现接口的条件"><a href="#实现接口的条件" class="headerlink" title="实现接口的条件"></a>实现接口的条件</h1><ul>
+<li><p>接口 是一个<strong>需要实现的方法列表</strong></p>
+</li>
+<li><p>实现了接口中所有方法，就实现了这个接口</p>
+</li>
+<li><p>示例：</p>
+<ul>
+<li><p>定义<code>Sayer</code> 接口：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Sayer <span class="keyword">interface</span>&#123;</span><br><span class="line">	say()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>定义结构体</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> dog <span class="keyword">struct</span>&#123;&#125;</span><br><span class="line"><span class="keyword">type</span> cat <span class="keyword">struct</span>&#123;&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>需要<strong>对dog和cat</strong>分别实现<code>say</code>方法，即可实现Sayer接口</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// dog实现了Sayer接口</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(d dog)</span> <span class="title">say</span><span class="params">()</span></span> &#123;</span><br><span class="line">	fmt.Println(<span class="string">&quot;汪汪汪&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// cat实现了Sayer接口</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(c cat)</span> <span class="title">say</span><span class="params">()</span></span> &#123;</span><br><span class="line">	fmt.Println(<span class="string">&quot;喵喵喵&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<h1 id="接口类型变量"><a href="#接口类型变量" class="headerlink" title="接口类型变量"></a>接口类型变量</h1><ul>
+<li><p><strong>接口类型变量</strong> 能<strong>存储所有实现了该接口的实例</strong></p>
+<ul>
+<li><p>例如，<code>Sayer</code> 类型的变量能存储<code>dog</code>和<code>cat</code>类型的变量</p>
+</li>
+<li><p>```go<br>func main() {</p>
+<pre><code>var x Sayer // 声明一个Sayer类型的变量x
+a := cat&#123;&#125;  // 实例化一个cat
+b := dog&#123;&#125;  // 实例化一个dog
+x = a       // 可以把cat实例直接赋值给x
+x.say()     // 喵喵喵
+x = b       // 可以把dog实例直接赋值给x
+x.say()     // 汪汪汪
+</code></pre>
+<p>}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* &#96;&#96;&#96;go</span><br><span class="line">  &#x2F;&#x2F; 摘自gin框架routergroup.go</span><br><span class="line">  type IRouter interface&#123; ... &#125;</span><br><span class="line">  </span><br><span class="line">  type RouterGroup struct &#123; ... &#125;</span><br><span class="line">  </span><br><span class="line">  var _ IRouter &#x3D; &amp;RouterGroup&#123;&#125;  &#x2F;&#x2F; 确保RouterGroup实现了接口IRouter</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>确保 <code>RouterGroup</code> 一定实现了<code>IRouter</code></p>
+</li>
+</ul>
+<h1 id="值接收者-和-指针接收者-实现接口的区别"><a href="#值接收者-和-指针接收者-实现接口的区别" class="headerlink" title="值接收者 和 指针接收者 实现接口的区别"></a>值接收者 和 指针接收者 实现接口的区别</h1><ul>
+<li><p>示例，一个<code>Mover</code> 接口和<code>dog</code> 结构体</p>
+<ul>
+<li>```go<br>type Mover interface {<pre><code>move()
+</code></pre>
+}type dog struct {}<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">## 值接收者实现接口</span><br><span class="line"></span><br><span class="line">* dog 类型实现接口：</span><br><span class="line">  * &#96;&#96;&#96;go</span><br><span class="line">    func (d dog) move() &#123;</span><br><span class="line">    	fmt.Println(&quot;狗会动&quot;)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>```go<br>func main() {</p>
+<pre><code>var x Mover
+var wangcai = dog&#123;&#125; // 旺财是dog类型
+x = wangcai         // x可以接收dog类型
+var fugui = &amp;dog&#123;&#125;  // 富贵是*dog类型
+x = fugui           // x可以接收*dog类型
+x.move()
+</code></pre>
+<p>}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* 使用值接收者实现接口 后，d**og 结构体和结构体指针类型的变量** 都可以赋值给该接口变量</span><br><span class="line">  </span><br><span class="line">  * 由于Go中有对指针类型变量求值的语法糖，指针类型内部会自动求值</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 指针接收者实现接口</span><br><span class="line"></span><br><span class="line">&#96;&#96;&#96;go</span><br><span class="line">func (d *dog) move() &#123;</span><br><span class="line">	fmt.Println(&quot;狗会动&quot;)</span><br><span class="line">&#125;</span><br><span class="line">func main() &#123;</span><br><span class="line">	var x Mover</span><br><span class="line">	var wangcai &#x3D; dog&#123;&#125; &#x2F;&#x2F; 旺财是dog类型</span><br><span class="line">	x &#x3D; wangcai         &#x2F;&#x2F; x不可以接收dog类型</span><br><span class="line">	var fugui &#x3D; &amp;dog&#123;&#125;  &#x2F;&#x2F; 富贵是*dog类型</span><br><span class="line">	x &#x3D; fugui           &#x2F;&#x2F; x可以接收*dog类型</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>此时实现<code>Mover</code> 接口的是<code>*dog</code>类型，所以不能给 x 传入 dog类型的wangcai，此时x只能存储*dog类型的值</p>
+</li>
+</ul>
+<h3 id="面试题"><a href="#面试题" class="headerlink" title="面试题"></a>面试题</h3><ul>
+<li><p>能否通过编译</p>
+</li>
+<li><p>```go<br>type People interface {</p>
+<pre><code>Speak(string) string
+</code></pre>
+<p>}</p>
+<p>type Student struct{}</p>
+<p>func (stu *Student) Speak(think string) (talk string) {</p>
+<pre><code>if think == &quot;sb&quot; &#123;
+    talk = &quot;你是个大帅比&quot;
+&#125; else &#123;
+    talk = &quot;您好&quot;
+&#125;
+return
+</code></pre>
+<p>}</p>
+<p>func main() {</p>
+<pre><code>var peo People = Student&#123;&#125;
+think := &quot;bitch&quot;
+fmt.Println(peo.Speak(think))
+</code></pre>
+<p>}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* 不能。可能是因为&#96;var peo People &#x3D; Student&#123;&#125;&#96;</span><br><span class="line">  </span><br><span class="line">  * 实现People接口的是&#96;*Student&#96;类型</span><br><span class="line">* 将其修改后：&#96;您好&#96;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 类型与接口的关系</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 一个类型实现多个接口</span><br><span class="line"></span><br><span class="line">* **一个类型**可以**同时实现多个接口**，而接口间彼此独立，不知道对方的实现</span><br><span class="line"></span><br><span class="line">  * 例如，狗可以叫，也可以动。定义&#96;Sayer&#96; 和&#96;Mover&#96; 接口：</span><br><span class="line"></span><br><span class="line">    * &#96;&#96;&#96;go</span><br><span class="line">      &#x2F;&#x2F; Sayer 接口</span><br><span class="line">      type Sayer interface &#123;</span><br><span class="line">      	say()</span><br><span class="line">      &#125;</span><br><span class="line">      </span><br><span class="line">      &#x2F;&#x2F; Mover 接口</span><br><span class="line">      type Mover interface &#123;</span><br><span class="line">      	move()</span><br><span class="line">      &#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>对 dog 实现<code>Sayer</code> 和 <code>Mover</code> 接口</p>
+<ul>
+<li>```go<br>type dog struct {<pre><code>name string
+</code></pre>
+}// 实现Sayer接口<br>func (d dog) say() {<pre><code>fmt.Printf(&quot;%s会叫汪汪汪\n&quot;, d.name)
+</code></pre>
+}// 实现Mover接口<br>func (d dog) move() {<pre><code>fmt.Printf(&quot;%s会动\n&quot;, d.name)
+</code></pre>
+}func main() {<pre><code>var x Sayer
+var y Mover
+
+var a = dog&#123;name: &quot;旺财&quot;&#125;
+x = a
+y = a
+x.say()
+y.move()
+</code></pre>
+}<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 多个类型实现统一接口</span><br><span class="line"></span><br><span class="line">* **不同的类型** 可以 **实现统一接口**</span><br><span class="line"></span><br><span class="line">  * 定义一个&#96;Mover&#96;接口，有一个 move 方法</span><br><span class="line"></span><br><span class="line">    * &#96;&#96;&#96;go</span><br><span class="line">      &#x2F;&#x2F; Mover 接口</span><br><span class="line">      type Mover interface &#123;</span><br><span class="line">      	move()</span><br><span class="line">      &#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>多个类型实现<code>Mover</code>的方法<code>move</code></p>
+<ul>
+<li>```go<br>type dog struct {<pre><code>name string
+</code></pre>
+}type car struct {<pre><code>brand string
+</code></pre>
+}// dog类型实现Mover接口<br>func (d dog) move() {<pre><code>fmt.Printf(&quot;%s会跑\n&quot;, d.name)
+</code></pre>
+}// car类型实现Mover接口<br>func (c car) move() {<pre><code>fmt.Printf(&quot;%s速度70迈\n&quot;, c.brand)
+</code></pre>
+}<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">  </span><br><span class="line">* 在代码中，就可以把不同的类型，当成拥有同一特性的物体处理，不需要关注具体是什么，</span><br><span class="line"></span><br><span class="line">  * &#96;&#96;&#96;go</span><br><span class="line">    func main() &#123;</span><br><span class="line">    	var x Mover</span><br><span class="line">    	var a &#x3D; dog&#123;name: &quot;旺财&quot;&#125;</span><br><span class="line">    	var b &#x3D; car&#123;brand: &quot;保时捷&quot;&#125;</span><br><span class="line">    	x &#x3D; a</span><br><span class="line">    	x.move()</span><br><span class="line">    	x &#x3D; b</span><br><span class="line">    	x.move()</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>一个接口的方法，不一定需要由一个类型完全实现，接口的方法可以通过在类型中嵌入其他类型或者结构体来实现</p>
+<ul>
+<li>```go<br>// WashingMachine 洗衣机<br>type WashingMachine interface {<pre><code>wash()
+dry()
+</code></pre>
+}// 甩干器<br>type dryer struct{}// 实现WashingMachine接口的dry()方法<br>func (d dryer) dry() {<pre><code>fmt.Println(&quot;甩一甩&quot;)
+</code></pre>
+}// 海尔洗衣机<br>type haier struct {<pre><code>dryer //嵌入甩干器
+</code></pre>
+}// 实现WashingMachine接口的wash()方法<br>func (h haier) wash() {<pre><code>fmt.Println(&quot;洗刷刷&quot;)
+</code></pre>
+}<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"># 接口嵌套</span><br><span class="line"></span><br><span class="line">* 接口与接口 间 可以通过 嵌套创造新的接口</span><br><span class="line">  * &#96;&#96;&#96;go</span><br><span class="line">    &#x2F;&#x2F; Sayer 接口</span><br><span class="line">    type Sayer interface &#123;</span><br><span class="line">    	say()</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    &#x2F;&#x2F; Mover 接口</span><br><span class="line">    type Mover interface &#123;</span><br><span class="line">    	move()</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    &#x2F;&#x2F; 接口嵌套</span><br><span class="line">    type animal interface &#123;</span><br><span class="line">    	Sayer</span><br><span class="line">    	Mover</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>嵌套得到的接口 使用与普通接口一致，</p>
+<ul>
+<li>```go<br>type cat struct {<pre><code>name string
+</code></pre>
+}func (c cat) say() {<pre><code>fmt.Println(&quot;喵喵喵&quot;)
+</code></pre>
+}func (c cat) move() {<pre><code>fmt.Println(&quot;猫会动&quot;)
+</code></pre>
+}func main() {<pre><code>var x animal
+x = cat&#123;name: &quot;花花&quot;&#125;
+x.move()
+x.say()
+</code></pre>
+}<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"># 空接口</span><br><span class="line"></span><br><span class="line">## 空接口的定义</span><br><span class="line"></span><br><span class="line">* 没有指定任何方法的接口，**任何类型都实现了空接口**</span><br><span class="line"></span><br><span class="line">* **空接口类型的变量**可以**存储任意类型的变量**</span><br><span class="line"></span><br><span class="line">  * &#96;&#96;&#96;go</span><br><span class="line">    func main() &#123;</span><br><span class="line">    	&#x2F;&#x2F; 定义一个空接口x</span><br><span class="line">    	var x interface&#123;&#125;</span><br><span class="line">    	s :&#x3D; &quot;Hello 沙河&quot;</span><br><span class="line">    	x &#x3D; s</span><br><span class="line">    	fmt.Printf(&quot;type:%T value:%v\n&quot;, x, x)</span><br><span class="line">    	i :&#x3D; 100</span><br><span class="line">    	x &#x3D; i</span><br><span class="line">    	fmt.Printf(&quot;type:%T value:%v\n&quot;, x, x)</span><br><span class="line">    	b :&#x3D; true</span><br><span class="line">    	x &#x3D; b</span><br><span class="line">    	fmt.Printf(&quot;type:%T value:%v\n&quot;, x, x)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<h2 id="空接口的应用"><a href="#空接口的应用" class="headerlink" title="空接口的应用"></a>空接口的应用</h2><h3 id="空接口作为函数的参数"><a href="#空接口作为函数的参数" class="headerlink" title="空接口作为函数的参数"></a>空接口作为函数的参数</h3><ul>
+<li><p>使用空接口可以实现接受 <strong>任意类型的函数参数</strong></p>
+<ul>
+<li>```go<br>// 空接口作为函数参数<br>func show(a interface{}) {<pre><code>fmt.Printf(&quot;type:%T value:%v\n&quot;, a, a)
+</code></pre>
+}<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### 空接口作为 map 的值</span><br><span class="line"></span><br><span class="line">* 使用空接口实现 可以**保存任意值的字典**</span><br><span class="line"></span><br><span class="line">  * &#96;&#96;&#96;go</span><br><span class="line">    &#x2F;&#x2F; 空接口作为map值</span><br><span class="line">    	var studentInfo &#x3D; make(map[string]interface&#123;&#125;)</span><br><span class="line">    	studentInfo[&quot;name&quot;] &#x3D; &quot;沙河娜扎&quot;</span><br><span class="line">    	studentInfo[&quot;age&quot;] &#x3D; 18</span><br><span class="line">    	studentInfo[&quot;married&quot;] &#x3D; false</span><br><span class="line">    	fmt.Println(studentInfo)</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<h1 id="类型断言"><a href="#类型断言" class="headerlink" title="类型断言"></a>类型断言</h1><ul>
+<li>空接口实现，可以使得map存储任意类型的值，</li>
+<li>如何获取存储的具体数据</li>
+</ul>
+<h2 id="接口值"><a href="#接口值" class="headerlink" title="接口值"></a>接口值</h2><ul>
+<li><p>一个接口的值 <strong>简称为接口值</strong>。<del>废话</del></p>
+</li>
+<li><p><strong>接口值</strong> ： <code>一个具体的类型</code> 和 <code>具体类型的值</code> 组成</p>
+<ul>
+<li>称为 接口的<code>动态类型</code> 和 <code>动态值</code></li>
+</ul>
+</li>
+<li><p><strong>示例：</strong></p>
+<ul>
+<li><p>```go<br>var w io.Writer<br>w = os.Stdout<br>w = new(bytes.Buffer)<br>w = nil</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">  * ![接口值图解](E:\LearningNotes\Go\14 接口.assets\interface.png)</span><br><span class="line"></span><br><span class="line">* **判断空接口中的值**，使用类型断言，格式</span><br><span class="line">  * &#96;x.(T)&#96;</span><br><span class="line">  * &#96;x&#96; : 表示类型为&#96;interface&#123;&#125;&#96; 的变量</span><br><span class="line">  * &#96;T &#96;：表示断言 x 可能是的类型</span><br><span class="line">* 该语法返回两个参数</span><br><span class="line">  * **第一个：**x 转化为 T 类型后的变量</span><br><span class="line">  * **第二个 ：**布尔值，若为&#96;true&#96; 表示断言成功</span><br><span class="line"></span><br><span class="line">* 示例：</span><br><span class="line"></span><br><span class="line">  * &#96;&#96;&#96;go</span><br><span class="line">    func main() &#123;</span><br><span class="line">    	var x interface&#123;&#125;</span><br><span class="line">    	x &#x3D; &quot;Hello 沙河&quot;</span><br><span class="line">    	v, ok :&#x3D; x.(string)</span><br><span class="line">    	if ok &#123;</span><br><span class="line">    		fmt.Println(v)</span><br><span class="line">    	&#125; else &#123;</span><br><span class="line">    		fmt.Println(&quot;类型断言失败&quot;)</span><br><span class="line">    	&#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>使用<code>switch</code> 语句实现：</p>
+<ul>
+<li>```go<br>func justifyType(x interface{}) {<pre><code>switch v := x.(type) &#123;
+case string:
+    fmt.Printf(&quot;x is a string，value is %v\n&quot;, v)
+case int:
+    fmt.Printf(&quot;x is a int is %v\n&quot;, v)
+case bool:
+    fmt.Printf(&quot;x is a bool is %v\n&quot;, v)
+default:
+    fmt.Println(&quot;unsupport type！&quot;)
+&#125;
+</code></pre>
+}<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* &#x3D;&#x3D;空接口 可以存储任意类型值&#x3D;&#x3D;</span><br><span class="line">* **注意**：只有当两个以上的**具体类型必须以相同的方式处理**时，才需要定义接口</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 练习题</span><br><span class="line"></span><br><span class="line">* 使用接口的方式实现一个既可以往终端写日志也可以往文件写日志的简易日志库</span><br><span class="line"></span><br><span class="line">* &#96;os&#96; 和 &#96;io&#96; 包的学习：</span><br><span class="line"></span><br><span class="line">  * &#96;os&#96;</span><br><span class="line"></span><br><span class="line">  * &#96;io&#96;</span><br><span class="line"></span><br><span class="line">    * &#96;io.Writer&#96; ：表示一个编写器，从缓冲区读取数据，并将数据写入目标资源</span><br><span class="line"></span><br><span class="line">      * 必须实现&#96;io.Writer&#96;接口的唯一方法&#96;Write(p []byte)&#96; </span><br><span class="line"></span><br><span class="line">      * &#96;&#96;&#96;go</span><br><span class="line">        type Writer interface &#123;</span><br><span class="line">            Write(p []byte) (n int, err error) &#x2F;&#x2F;返回写入到目标资源的字节数，发生错误时的错误</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 
       
     </div>
@@ -695,7 +860,7 @@ funcC()
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://example.com/2021/05/06/10%20%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0%E4%BB%8B%E7%BB%8D/" title="10 内置函数介绍">http://example.com/2021/05/06/10%20%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0%E4%BB%8B%E7%BB%8D/</a>
+    <a href="http://example.com/2021/05/07/14%20%E6%8E%A5%E5%8F%A3/" title="14 接口">http://example.com/2021/05/07/14%20%E6%8E%A5%E5%8F%A3/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -717,8 +882,8 @@ funcC()
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2021/05/06/9%20%E5%87%BD%E6%95%B0%E8%BF%9B%E9%98%B6/" rel="next" title="9 函数进阶">
-                <i class="fa fa-chevron-left"></i> 9 函数进阶
+              <a href="/2021/05/07/13%20%E5%8C%85/" rel="next" title="13 包">
+                <i class="fa fa-chevron-left"></i> 13 包
               </a>
             
           </div>
@@ -727,8 +892,8 @@ funcC()
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2021/05/07/lab1/" rel="prev" title="Lab1">
-                Lab1 <i class="fa fa-chevron-right"></i>
+              <a href="/2021/05/07/15%20%E5%8F%8D%E5%B0%84/" rel="prev" title="15 反射">
+                15 反射 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -958,7 +1123,7 @@ show_date_time();
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#10-%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0%E4%BB%8B%E7%BB%8D"><span class="nav-text">10 内置函数介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#panic-recover"><span class="nav-text">panic&#x2F;recover</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#14-%E6%8E%A5%E5%8F%A3"><span class="nav-text">14 接口</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8E%A5%E5%8F%A3%E7%B1%BB%E5%9E%8B"><span class="nav-text">接口类型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%BF%E7%94%A8%E6%8E%A5%E5%8F%A3"><span class="nav-text">为什么使用接口</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E6%8E%A5%E5%8F%A3%E7%9A%84%E6%9D%A1%E4%BB%B6"><span class="nav-text">实现接口的条件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8E%A5%E5%8F%A3%E7%B1%BB%E5%9E%8B%E5%8F%98%E9%87%8F"><span class="nav-text">接口类型变量</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%80%BC%E6%8E%A5%E6%94%B6%E8%80%85-%E5%92%8C-%E6%8C%87%E9%92%88%E6%8E%A5%E6%94%B6%E8%80%85-%E5%AE%9E%E7%8E%B0%E6%8E%A5%E5%8F%A3%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-text">值接收者 和 指针接收者 实现接口的区别</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9D%A2%E8%AF%95%E9%A2%98"><span class="nav-text">面试题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A9%BA%E6%8E%A5%E5%8F%A3%E7%9A%84%E5%BA%94%E7%94%A8"><span class="nav-text">空接口的应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A9%BA%E6%8E%A5%E5%8F%A3%E4%BD%9C%E4%B8%BA%E5%87%BD%E6%95%B0%E7%9A%84%E5%8F%82%E6%95%B0"><span class="nav-text">空接口作为函数的参数</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%B1%BB%E5%9E%8B%E6%96%AD%E8%A8%80"><span class="nav-text">类型断言</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A5%E5%8F%A3%E5%80%BC"><span class="nav-text">接口值</span></a></li></ol></li></ol></div>
             
 
           </div>

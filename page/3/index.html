@@ -462,6 +462,734 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/04/17/LinuxLearning/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/stitch.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ZiHao's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/04/17/LinuxLearning/" itemprop="url">LinuxLearning</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-04-17T09:55:13+08:00">
+                2021-04-17
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2021-05-01T10:16:14+08:00">
+                2021-05-01
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">-Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.7k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  6
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="LinuxLearning"><a href="#LinuxLearning" class="headerlink" title="LinuxLearning"></a>LinuxLearning</h1><p>[TOC]</p>
+<h1 id="0-Linux-系统简介"><a href="#0-Linux-系统简介" class="headerlink" title="0 Linux 系统简介"></a>0 Linux 系统简介</h1><h2 id="0-0-历史"><a href="#0-0-历史" class="headerlink" title="0.0 历史"></a>0.0 历史</h2><ul>
+<li>操作系统始于二十世纪五十年代，当时的操作系统能运行批处理程序。批处理程序不需要用户的交互，它从文件或者穿孔卡片读取数据，然后输出到另外一个文件或者打印机</li>
+<li>二十世纪六十年代初，交互式操作系统开始流行。它不仅仅可以交互，还能使多个用户从不同的终端同时操作主机。这样的操作系统被称作分时操作系统，它的出现对批处理操作系统是个极大的挑战。</li>
+<li>UNIX 最初免费发布并因此在大学里受到欢迎。后来，UNIX 实现了 TCP/IP 协议栈</li>
+<li>Linux 本身只是操作系统的内核。内核是使其它程序能够运行的基础。它实现了多任务和硬件管理，用户或者系统管理员交互运行的所有程序实际上都运行在内核之上<ul>
+<li>其中有些程序是必需的，比如说，命令行解释器（shell），它用于用户交互和编写 shell 脚本。</li>
+</ul>
+</li>
+<li>许多重要的软件，包括 C 编译器，都来自于自由软件基金 GNU 项目。GNU 项目开始于 1984 年，目的是为了开发一个完全类似于 UNIX 的免费操作系统。为了表扬 GNU 对 Linux 的贡献，许多人把 Linux 称为 GNU/Linux（GNU 有自己的内核）</li>
+<li>1992－1993 年，Linux 内核具备了挑战 UNIX 的所有本质特性，包括 TCP/IP 网络，图形界面系统（X window )，Linux 同样也吸引了许多行业的关注。一些小的公司开始开发和发行 Linux，有几十个 Linux 用户社区成立。1994 年，Linux 杂志也开始发行。</li>
+<li>Linux 内核 1.0 在 1994 年 3 月发布，内核的发布要经历许多开发周期，直至达到一个稳定的版本。</li>
+</ul>
+<h2 id="0-1-简介"><a href="#0-1-简介" class="headerlink" title="0.1 简介"></a>0.1 简介</h2><ul>
+<li>是一种自由和开放源码的操作系统，有着不同的Linux版本，但都是用了Linux内核。<ul>
+<li><img src="https://img-blog.csdn.net/20180527120259589?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Nja2V2aW5jeWg=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></li>
+</ul>
+</li>
+<li>Linux 可安装在各种计算机硬件设备中：手机、平板电脑、路由器、台式计算机<ul>
+<li><img src="https://img-blog.csdn.net/2018090315211355?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwNTMwOTQz/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="img"></li>
+</ul>
+</li>
+</ul>
+<h2 id="0-2-特点"><a href="#0-2-特点" class="headerlink" title="0.2 特点"></a>0.2 特点</h2><ul>
+<li>多用户，多任务，</li>
+<li>丰富的网络功能，</li>
+<li>可靠的系统安全，</li>
+<li>良好的可移植性，</li>
+<li>具有标准兼容性，</li>
+<li>良好的用户界面，</li>
+<li>出色的速度性能</li>
+</ul>
+<h2 id="0-3-CentOS"><a href="#0-3-CentOS" class="headerlink" title="0.3 CentOS"></a>0.3 CentOS</h2><ul>
+<li>主流：目前的Linux操作系统主要应用于生产环境，主流企业级Linux系统仍旧是RedHat或者CentOS</li>
+<li>免费：RedHat 和CentOS差别不大</li>
+<li>更新方便：CentOS独有的yum命令支持在线升级，可以即时更新系统，不像RedHat 那样需要花钱购买支持服务！</li>
+</ul>
+<h2 id="0-4-Linux-目录结构"><a href="#0-4-Linux-目录结构" class="headerlink" title="0.4 Linux 目录结构"></a>0.4 Linux 目录结构</h2><p><img src="https://img-blog.csdn.net/20180527120637267?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Nja2V2aW5jeWg=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+<ul>
+<li>bin(binaries): 二进制可执行文件</li>
+<li>sbin(super user binaries)：存放二进制可执行文件，只有root能访问</li>
+<li>etc(etcetera)：存放系统配置文件</li>
+<li>usr(unix shared resources)：存放共享的系统资源</li>
+<li>home： 存放用户文件的根目录</li>
+<li>root：超级用户目录</li>
+<li>dev(devices)：存放设备文件</li>
+<li>lib(library)：存放跟文件系统中的程序运行所需要的共享库及内核模块</li>
+<li>mnt(mount：系统管理员安装临时文件系统的安装点</li>
+<li>boot：存放用于系统引导时使用的各种文件</li>
+<li>tmp(temporary)：用于存放各种临时文件</li>
+<li>var(variable)：存放运行时需要改变数据的文件</li>
+</ul>
+<h2 id="0-5-Linux-与-Windows的区别"><a href="#0-5-Linux-与-Windows的区别" class="headerlink" title="0.5 Linux 与 Windows的区别"></a>0.5 Linux 与 Windows的区别</h2><ol>
+<li>免费与收费<ul>
+<li>最新正版Windows10需付费</li>
+<li>Linux 免费或少许费用</li>
+</ul>
+</li>
+<li>软件与支持</li>
+<li>安全性</li>
+<li>使用习惯<ul>
+<li>Windows：普通用户基本都是纯图形界面下操作使用，依靠鼠标和键盘完成一切操作，用户上手容易，入门简单；</li>
+<li>Linux：兼具图形界面操作（需要使用带有桌面环境的发行版）和完全的命令行操作，可以只用键盘完成一切操作，新手入门较困难，需要一些学习和指导（这正是我们要做的事情），一旦熟练之后效率极高。</li>
+</ul>
+</li>
+<li>可定制性</li>
+<li>应用范畴<ul>
+<li>在 Windows 使用百度、谷歌，上淘宝，聊 QQ 时，支撑这些软件和服务的，是后台成千上万的 Linux 服务器主机，它们时时刻刻都在忙碌地进行着数据处理和运算，可以说世界上大部分软件和服务都是运行在 Linux 之上的。</li>
+</ul>
+</li>
+<li>Windows 没有的：<ul>
+<li>稳定的系统</li>
+<li>安全性和漏洞的快速修补</li>
+<li>多用户</li>
+<li>用户和用户组的规划</li>
+<li>相对较少的资源占用</li>
+<li>可定制裁剪，移植到嵌入式平台</li>
+<li>可选择的多种图形用户界面</li>
+</ul>
+</li>
+<li>Linux 没有的：<ul>
+<li>特定的支持厂商</li>
+<li>足够的游戏娱乐支持度</li>
+<li>足够的专业软件支持度</li>
+</ul>
+</li>
+</ol>
+<h1 id="1-VMware-虚拟机"><a href="#1-VMware-虚拟机" class="headerlink" title="1 VMware 虚拟机"></a>1 VMware 虚拟机</h1><h2 id="1-1-介绍"><a href="#1-1-介绍" class="headerlink" title="1.1 介绍"></a>1.1 介绍</h2><h2 id="1-2-下载及安装"><a href="#1-2-下载及安装" class="headerlink" title="1.2 下载及安装"></a>1.2 下载及安装</h2><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/98han/p/13170117.html">参考博客</a></p>
+<p><strong>安装版本：</strong><code> VMware-workstation-full-15.5.0-14665864</code></p>
+<p>使用第一个密钥成功！</p>
+<p><img src="E:\LearningNotes\Linux\LinuxLearning.assets\image-20210306193651528.png" alt="image-20210306193651528"></p>
+<h1 id="2-Linux-系统下载及安装"><a href="#2-Linux-系统下载及安装" class="headerlink" title="2 Linux 系统下载及安装"></a>2 Linux 系统下载及安装</h1><p><a target="_blank" rel="noopener" href="https://jiannan.blog.csdn.net/article/details/79417947?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-5.control&dist_request_id=1328603.29514.16150273040264577&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-5.control">参考博客</a></p>
+<p><a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1HVKs4tQaghwxF215LXpWyg">Linux 安装包（百度云盘）</a></p>
+<p><del>花了九块钱，买了百度云盘加速券，呜呜呜</del></p>
+<h2 id="2-1-虚拟机的创建"><a href="#2-1-虚拟机的创建" class="headerlink" title="2.1 虚拟机的创建"></a>2.1 虚拟机的创建</h2><p><a target="_blank" rel="noopener" href="https://jiannan.blog.csdn.net/article/details/79417947?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-5.control&dist_request_id=1328603.29514.16150273040264577&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-5.control">参考博客</a></p>
+<h2 id="2-2-安装Linux-系统"><a href="#2-2-安装Linux-系统" class="headerlink" title="2.2 安装Linux 系统"></a>2.2 安装Linux 系统</h2><p><a target="_blank" rel="noopener" href="https://jiannan.blog.csdn.net/article/details/79417947?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-5.control&dist_request_id=1328603.29514.16150273040264577&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-5.control">参考博客</a></p>
+<p><strong>遇到的问题：</strong></p>
+<ul>
+<li><ul>
+<li><p><input checked="" disabled="" type="checkbox">  问题一：<img src="https://img-blog.csdn.net/2018030316140063?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvd2VpeGluXzM4MTExOTU3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="img"></p>
+</li>
+<li><p>我选择将 D 盘压缩 30G ，新建空的简单卷来装此系统</p>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><p><input checked="" disabled="" type="checkbox">  问题二：<code>have no enough available....</code></p>
+</li>
+<li><p>最后在给<code>根目录</code>分区，根目录就是在选择挂载点的第一个<code>/</code>，然后下面有个选择框<code>选择最大的值</code>，分区4个就够了。</p>
+</li>
+</ul>
+</li>
+<li><p><strong>password</strong>：<code>ZihaoMa123</code></p>
+</li>
+<li><p><strong>Congratulations</strong><img src="E:\LearningNotes\Linux\LinuxLearning.assets\image-20210306213821201.png" alt="image-20210306213821201"></p>
+</li>
+<li><p>在输入密码（<em>密码就是在安装系统时输入的密码</em>）的时候是不会出现<code>****</code></p>
+</li>
+</ul>
+<p>虚拟机挂起和关机的区别</p>
+<ul>
+<li>挂起：相当于物理机中的休眠到内存功能</li>
+<li>关机：执行普通关机操作</li>
+</ul>
+<h1 id="3-学习-Linux-的好习惯"><a href="#3-学习-Linux-的好习惯" class="headerlink" title="3 学习 Linux 的好习惯"></a>3 学习 Linux 的好习惯</h1><ul>
+<li>善于使用 <code>man 命令</code>查看帮助文档</li>
+<li>利用好<code>Tab</code>键</li>
+<li>掌握好：<ul>
+<li><code>ctrl + c</code> 停止当前进程</li>
+<li><code>ctrl + r 查看命令历史</code></li>
+<li><code>ctrl + l</code> 清屏</li>
+</ul>
+</li>
+</ul>
+<h1 id="如何学习-Linux"><a href="#如何学习-Linux" class="headerlink" title="如何学习 Linux"></a>如何学习 Linux</h1><h2 id="1-心态"><a href="#1-心态" class="headerlink" title="1 心态"></a>1 心态</h2><ul>
+<li><p> 明确目的：用Linux来干什么（搭建服务器，做程序开发，日常办公，还是娱乐游戏）</p>
+</li>
+<li><p>面对现实：Linux 大都在命令行下操作，能否接受不用图形化界面</p>
+</li>
+<li><p>是学习Linux操作系统本身，还是某一个发行版（Ubuntu，CentOS，Fedora，OpenSUSE等）</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/Linux%E7%89%88%E6%9C%AC">Linux发行版</a></li>
+</ul>
+</li>
+<li><blockquote>
+<p>一个典型的Linux发行版包括：<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/Linux%E5%86%85%E6%A0%B8">Linux内核</a>，一些<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/GNU">GNU</a><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E7%A8%8B%E5%BA%8F%E5%BA%93/7662317">程序库</a>和工具，命令行shell，图形界面的[X Window](<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/X">https://baike.baidu.com/item/X</a> Window)系统和相应的<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E6%A1%8C%E9%9D%A2%E7%8E%AF%E5%A2%83/3373875">桌面环境</a>，如<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/KDE">KDE</a>或<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/GNOME">GNOME</a>，并包含数千种从办公套件，<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E7%BC%96%E8%AF%91%E5%99%A8/8853067">编译器</a>，<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%99%A8/8853160">文本编辑器</a>到科学工具的应用软件。</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="2-注重基础，从头开始"><a href="#2-注重基础，从头开始" class="headerlink" title="2 注重基础，从头开始"></a>2 注重基础，从头开始</h2><p><img src="https://img-blog.csdn.net/20180903153014660?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwNTMwOTQz/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="img"></p>
+
+          
+        
+      
+    </div>
+   
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/04/17/Linux%20%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A03/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/stitch.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ZiHao's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/04/17/Linux%20%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A03/" itemprop="url">Linux 入门学习3</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-04-17T09:55:13+08:00">
+                2021-04-17
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2021-05-01T10:16:09+08:00">
+                2021-05-01
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">-Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.6k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  6
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Linux-入门学习3"><a href="#Linux-入门学习3" class="headerlink" title="Linux 入门学习3"></a>Linux 入门学习3</h1><p>[toc]</p>
+<blockquote>
+<p>学习使用 Vim 编辑器，编辑、保存文件，以及查看、浏览文件</p>
+</blockquote>
+<h1 id="1-使用文本编辑器-Vim"><a href="#1-使用文本编辑器-Vim" class="headerlink" title="1 使用文本编辑器 Vim"></a>1 使用文本编辑器 Vim</h1><h2 id="1-1-基本命令"><a href="#1-1-基本命令" class="headerlink" title="1.1 基本命令"></a>1.1 基本命令</h2><p><img src="https://img-blog.csdn.net/20171206113916293?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZG92ZTEyMDJseQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<ul>
+<li>任何文件需要编辑默认化的编辑器</li>
+<li>功能强大的全屏幕文本编辑器</li>
+<li>新建、编辑、显示文件</li>
+<li>Vim只有<code>命令</code>，没有<code>菜单</code></li>
+<li>命令：<ul>
+<li><code>vi</code>: 新建一个文件<ul>
+<li>语法：<code>vi 文件名</code></li>
+</ul>
+</li>
+<li>编辑：回车后进入全屏幕的<strong>命令模式</strong><ul>
+<li>进入<strong>命令模式</strong>：<code>Vim</code> 等待输入指令</li>
+<li>输入<code>i</code>, <code>a</code>, <code>o</code>， 进入<strong>输入模式</strong>（左下角会有<code>insert</code>）<ul>
+<li><code>i</code>: 在当前光标所在字符的前面，转为输入模式</li>
+<li><code>I</code>： 在当前光标所在行的行首转换为输入模式</li>
+<li><code>a</code>: 在当前光标所在字符的后面，转为输入模式</li>
+<li><code>A</code>:</li>
+<li><code>o</code>: 在当前光标所在行的下方，新建一行，并转为输入模式</li>
+<li><code>O</code>:</li>
+<li><code>s</code>: 删除光标所在字符</li>
+<li><code>r</code>: 替换光标处字符</li>
+</ul>
+</li>
+<li>退出编辑：按 <code>ESC</code></li>
+<li><code>ESC</code> 后进入<strong>命令模式</strong>，==先输入<code>冒号</code>==：<ul>
+<li><code>w</code>: 保存不退出</li>
+<li><code>w!</code>: 强制保存不退出</li>
+<li><code>wq</code>或<code>x</code>: 保存并退出</li>
+<li><code>wq!</code>: <strong>强制保存并退出</strong></li>
+<li><code>q</code>: <strong>不保存退出</strong></li>
+<li><code>q!</code>: 不保存强制退出 </li>
+<li><code>e!</code>: <strong>放弃所有修改，从上次保存文件开始编辑</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>遇到的问题：由于我在插入模式编辑完后，按<code>ESC</code>退回不到命令模式，把虚拟机关掉后，<code>1.txt</code>文件转换成了<code>.1.txt.swp</code>。再次创建1.txt并用vim打开：<ul>
+<li>![image-20210312201009164](E:\LearningNotes\Linux\Linux 3.assets\image-20210312201009164.png)</li>
+<li>Analysis：<ul>
+<li><code>.</code> 是说明其是隐藏文件</li>
+<li>猜测是由于我未能成功保存文件，产生的依然正在被编辑中的文件，被占用了</li>
+</ul>
+</li>
+<li>solution：<ul>
+<li>使用<code>rm -rf .1.txt.swp</code>可以删除</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="1-2-g-和gdb的安装"><a href="#1-2-g-和gdb的安装" class="headerlink" title="1.2 g++和gdb的安装"></a>1.2 g++和gdb的安装</h2><p><strong>==遇到的下载安装问题仍然未解决，最后选择下载安装CentOS7，下载安装无任何问题？？？==</strong></p>
+<ul>
+<li><p><strong>检查gcc是否存在</strong>：<code>which gcc</code></p>
+<ul>
+<li>若没有安装，输入<code>yum install gcc-c++</code></li>
+</ul>
+</li>
+<li><p><strong>检查gdb是否存在</strong>：<code>which gdb</code></p>
+<ul>
+<li>若没有安装，输入<code>yum install gdb</code></li>
+</ul>
+</li>
+<li><p>检查g++是否存在：<code>which g++</code></p>
+<ul>
+<li>若没有安装，输入<code>yum install gcc-c++ libstdc++devel</code></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><ul>
+<li><input disabled="" type="checkbox"> 遇到了<strong>问题</strong>：未安装gcc，尝试用命令安装时出现：`</li>
+<li>![image-20210313192827363](E:\LearningNotes\Linux\Linux 入门学习3.assets\image-20210313192827363.png)</li>
+<li><strong>analysis:</strong> 似乎是网络问题</li>
+<li><strong>solution1</strong>:<ul>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_34430649/article/details/51474730?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.control&dist_request_id=1328642.24663.16156346773373449&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.control">参考博客</a></li>
+<li>输入内容后不能保存：<code>Cant open the file for writing</code><ul>
+<li><strong>analysis</strong>:可能权限不足或者文件被占用</li>
+<li> <strong>solution1:</strong> 用vi时，加上<code>sudo</code>来临时提供管理员权限</li>
+<li>仍然不行。。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>solution2</strong>:<ul>
+<li>改变思路，应该网络配置</li>
+</ul>
+</li>
+<li><strong>solution3</strong>:<ul>
+<li>在刚开始新建Linux系统的时候，选择<code>镜像系统安装</code>，<code>gcc</code>和<code>g++</code>似乎已被安装</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>问题：</strong><code>yum install g++</code></li>
+</ul>
+<ul>
+<li><blockquote>
+<p>Loaded plugins: fastestmirror, refresh-packagekit, security<br>You need to be root to perform this command.</p>
+</blockquote>
+</li>
+<li><p><strong>solution</strong>：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_26963433/article/details/78222506">参考 </a></p>
+</li>
+</ul>
+<pre><code>* 尝试使用`su`命令切换到root用户，获取更大权限
+
+* result:
+
+
+  * &gt; Loaded plugins: fastestmirror, refresh-packagekit, security
+    &gt; Setting up Install Process
+    &gt; YumRepo Error: All mirror URLs are not using ftp, http[s] or file.
+    &gt;  Eg. Invalid release/repo/arch combination/
+    &gt; removing mirrorlist with no valid mirrors: /var/cache/yum/i386/6/base/mirrorlist.txt
+    &gt; Error: Cannot retrieve repository metadata (repomd.xml) for repository: base. Please verify its path and try again
+</code></pre>
+<ul>
+<li><strong>analysis:</strong> </li>
+</ul>
+<pre><code>* `YumRepo Error: All mirror URLs are not using ftp, http[s] or file.`
+
+  * [参考博客](https://blog.csdn.net/weixin_44160584/article/details/110872926)
+*  `http://mirror.centos.org/centos/6/os/i386/repodata/repomd.xml: [Errno 14] PYCURL ERROR 22 - &quot;The requested URL returned error: 404 Not Found&quot;`
+
+  * 
+* 1. 没网，`ping www.baidu.com`
+  2. ping通了的话，若还是用不了yum命令，说明yum镜像无了，那么需要就得下载一个来更新。
+</code></pre>
+<ul>
+<li></li>
+</ul>
+<h2 id="1-3-编译与运行"><a href="#1-3-编译与运行" class="headerlink" title="1.3 编译与运行"></a>1.3 编译与运行</h2><ul>
+<li>编译<code>.c</code>文件：输入指令 <code>gcc 文件名.c -o 可执行程序名</code><ul>
+<li><code>gcc</code>: 编译该文件</li>
+<li><code>-o</code>: 在当前目录下</li>
+</ul>
+</li>
+<li>运行可执行文件：输入<code>./文件名</code></li>
+</ul>
+<ul>
+<li>编译<code>.cpp</code>文件：输入指令：``</li>
+</ul>
+<h2 id="1-4-简单配置-Vim"><a href="#1-4-简单配置-Vim" class="headerlink" title="1.4 简单配置 Vim"></a>1.4 简单配置 Vim</h2><ul>
+<li><p>使用root权限进入根目录下的<code>etc/</code>目录，列出所有文件，<code>vimrc</code>即是存放Linux默认配置的地方</p>
+</li>
+<li><p>可以用命令<code>vim vimrc</code>进入文件，但一般自己进行配置时，选择在当前用户的主工作目录下新建一个<code>.vimrc</code>文件来存放我们新增的配置</p>
+</li>
+<li><blockquote>
+<p>set number<br>filetype on<br>set history=1000<br>set nocompatible<br>set shiftwidth=4<br>color evening<br>syntax on<br>set autoindent<br>set smartindent<br>set tabstop=4<br>set showmatch<br>set guioptions-=T<br>set vb t_vb=<br>set ruler<br>set nohls<br>set incsearch<br>if has(“vms”)<br>set nobackup<br>else<br>set backup<br>endif</p>
+</blockquote>
+<ul>
+<li><blockquote>
+<p>set nocompatible 注释掉讨厌的有关vi一致性模式，避免以前版本的一些bug和局限<br>set number 显示行号<br>filetype on 检测文件的类型<br>set history=1000 记录历史行数<br>color eveing 夜间背景模式<br>syntax on 语法高亮度显示<br>set autoindent<br>vim使用自动对起，也就是把当前行的对起格式应用到下一行；<br>set smartindent依据上面的对起格式，智能的选择对起方式<br>set tabstop=4 第一行设置tab键为4个空格<br>set shiftwidth=4 设置当行之间交错时使用4个空格<br>set showmatch 设置匹配模式，类似当输入一个左括号时会匹配相应的那个右括号<br>set guioptions=T 去除vim的GUI版本中的toolbar<br>set vb t_vb= 当vim进行编辑时，如果命令错误，会发出一个响声，该设置去掉响声<br>set ruler 在编辑过程中，在右下角显示光标位置的状态行<br>set nohls 默认情况下，寻找匹配是高亮度显示的，该设置关闭高亮显示<br>set incsearch 查询时非常方便，如要查找book单词，当输入到/b 会自动找到第一个b开头的单词，使用此设置会快速找到答案<br>if has(“vms”) 修改一个文件后，自动进行备份，备份的文件名为原文件名加“~“后缀<br>set nobackup<br>else<br>set backup<br>endif</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="2-查看文件的方式"><a href="#2-查看文件的方式" class="headerlink" title="2 查看文件的方式"></a>2 查看文件的方式</h1><h2 id="2-1-cat-命令"><a href="#2-1-cat-命令" class="headerlink" title="2.1 cat 命令"></a>2.1 <code>cat</code> 命令</h2><ul>
+<li>作用：查看浏览文件</li>
+<li>语法：<code>cat 文件名</code></li>
+<li>选项：<code>-n</code>: 显示行号</li>
+</ul>
+<h2 id="2-2-tac命令"><a href="#2-2-tac命令" class="headerlink" title="2.2 tac命令"></a>2.2 <code>tac</code>命令</h2><ul>
+<li>作用：从最后一行浏览文件内容</li>
+<li>无<code>-n</code>选项</li>
+</ul>
+<h2 id="2-3-more命令"><a href="#2-3-more命令" class="headerlink" title="2.3 more命令"></a>2.3 <code>more</code>命令</h2><ul>
+<li>语法<code>more 文件路径</code></li>
+<li>作用：对一些长的内容可以进行翻页显示，左下角有进度百分比</li>
+<li>按空格或<code>f</code>进行翻页</li>
+<li>按<code>Enter</code>换行</li>
+<li>按<code>q</code>退出</li>
+</ul>
+<h2 id="2-4-less命令"><a href="#2-4-less命令" class="headerlink" title="2.4 less命令"></a>2.4 <code>less</code>命令</h2><ul>
+<li>作用：有着<code>more</code>的功能</li>
+<li>更多功能：<ul>
+<li><code>pageup</code>或者<code>up</code>,向前翻页</li>
+<li>查关键字：<ul>
+<li>语法：<code>/关键字</code></li>
+<li>按<code>n</code>查找下一个关键字所在位置</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="2-5-head-命令"><a href="#2-5-head-命令" class="headerlink" title="2.5 head 命令"></a>2.5 <code>head</code> 命令</h2><ul>
+<li>作用：查看文件的前几行</li>
+<li>默认显示前十行</li>
+<li>选项：<code>-n</code><ul>
+<li><code>head -n 显示行数</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="2-6-tail命令"><a href="#2-6-tail命令" class="headerlink" title="2.6 tail命令"></a>2.6 <code>tail</code>命令</h2><ul>
+<li>作用：查看文件最后几行</li>
+<li>默认显示最后十行</li>
+<li>选项：<code>-n</code><ul>
+<li><code>tail -n 显示行数</code></li>
+</ul>
+</li>
+</ul>
+
+          
+        
+      
+    </div>
+   
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/04/17/Linux%20%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A02/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -3291,182 +4019,6 @@ to_struct((le), struct Page, member)
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/04/16/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/stitch.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ZiHao's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2021/04/16/hello-world/" itemprop="url">Hello World</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-04-16T12:09:35+08:00">
-                2021-04-16
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于&#58;</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2021-05-02T10:17:26+08:00">
-                2021-05-02
-              </time>
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  75
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
-          
-        
-      
-    </div>
-   
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -3521,7 +4073,7 @@ to_struct((le), struct Page, member)
               
                 <a href="/archives/%7C%7C%20archive">
               
-                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-count">27</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -3694,7 +4246,7 @@ show_date_time();
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">67.5k</span>
+    <span title="Site words total count">75.2k</span>
   
 </div>
 
@@ -3722,7 +4274,7 @@ show_date_time();
     <!-- 博客字数统计 -->
     <span class="site-pv">
       <i class="fa fa-pencil"></i>
-      博客全站共： <span class="post-count">67.5k</span> 字
+      博客全站共： <span class="post-count">75.2k</span> 字
     </span>
 </div>
 <!-- 新增访客统计代码 END-->

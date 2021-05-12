@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2021-05-08T07:59:57.459Z</updated>
+  <updated>2021-05-12T14:50:05.583Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,71 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>专题一内核编译</title>
+    <link href="http://example.com/2021/05/12/%E4%B8%93%E9%A2%98%E4%B8%80%E5%86%85%E6%A0%B8%E7%BC%96%E8%AF%91/"/>
+    <id>http://example.com/2021/05/12/%E4%B8%93%E9%A2%98%E4%B8%80%E5%86%85%E6%A0%B8%E7%BC%96%E8%AF%91/</id>
+    <published>2021-05-12T14:47:51.310Z</published>
+    <updated>2021-05-12T14:50:05.583Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;[toc]&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;blockquote&gt;
+&lt;p&gt; 作业要求：&lt;/p&gt;
+&lt;p&gt; 完成本专题教学内容中的验收测试题并提交验收材料。&lt;/p&gt;
+&lt;p&gt; 验收材料要求:&lt;/p&gt;
+&lt;p&gt; &lt;strong&gt;新内核引导成功前&lt;/strong&gt;：&lt;/p&gt;
+&lt;p&gt; \1.</summary>
+      
+    
+    
+    
+    <category term="-操作系统课程设计" scheme="http://example.com/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E8%AE%BE%E8%AE%A1/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>第二部分</title>
+    <link href="http://example.com/2021/05/08/%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86/"/>
+    <id>http://example.com/2021/05/08/%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86/</id>
+    <published>2021-05-08T12:15:51.365Z</published>
+    <updated>2021-05-08T12:15:34.178Z</updated>
+    
+    
+    <summary type="html">模型是真实数据的简单明确的描述。</summary>
+    
+    
+    
+    <category term="-Django" scheme="http://example.com/categories/Django/"/>
+    
+    
+    <category term="-Python" scheme="http://example.com/tags/Python/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>编写第一个 Django 应用，第一部分</title>
+    <link href="http://example.com/2021/05/08/%E7%BC%96%E5%86%99%E7%AC%AC%E4%B8%80%E4%B8%AA%20Django%20%E5%BA%94%E7%94%A8%EF%BC%8C%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86/"/>
+    <id>http://example.com/2021/05/08/%E7%BC%96%E5%86%99%E7%AC%AC%E4%B8%80%E4%B8%AA%20Django%20%E5%BA%94%E7%94%A8%EF%BC%8C%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86/</id>
+    <published>2021-05-08T10:41:02.018Z</published>
+    <updated>2021-05-08T10:40:37.454Z</updated>
+    
+    
+    <summary type="html">Django 最初被设计用于具有快速开发需求的新闻类站点，目的是要实现简单快捷的网站开发</summary>
+    
+    
+    
+    <category term="-Django" scheme="http://example.com/categories/Django/"/>
+    
+    
+    <category term="-Python" scheme="http://example.com/tags/Python/"/>
+    
+  </entry>
   
   <entry>
     <title>17 网络编程</title>
@@ -389,71 +454,6 @@
     
     <category term="-Go LearningNote" scheme="http://example.com/categories/Go-LearningNote/"/>
     
-    
-  </entry>
-  
-  <entry>
-    <title>1 变量和常量</title>
-    <link href="http://example.com/2021/05/05/1%20%E5%8F%98%E9%87%8F%E5%92%8C%E5%B8%B8%E9%87%8F/"/>
-    <id>http://example.com/2021/05/05/1%20%E5%8F%98%E9%87%8F%E5%92%8C%E5%B8%B8%E9%87%8F/</id>
-    <published>2021-05-05T14:41:19.363Z</published>
-    <updated>2021-05-06T06:21:53.501Z</updated>
-    
-    
-      
-      
-    <summary type="html">&lt;h1 id=&quot;&quot;&gt;&lt;a href=&quot;#&quot; class=&quot;headerlink&quot; title=&quot;&quot;&gt;&lt;/a&gt;&lt;/h1&gt;&lt;h2 id=&quot;1-变量和常量&quot;&gt;&lt;a href=&quot;#1-变量和常量&quot; class=&quot;headerlink&quot; title=&quot;1 变量和常量&quot;&gt;&lt;/a&gt;1 变量和常</summary>
-      
-    
-    
-    
-    <category term="-Go LearningNote" scheme="http://example.com/categories/Go-LearningNote/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>Hexo LearningNote</title>
-    <link href="http://example.com/2021/05/05/Hexo%20%E5%8D%9A%E5%AE%A2/"/>
-    <id>http://example.com/2021/05/05/Hexo%20%E5%8D%9A%E5%AE%A2/</id>
-    <published>2021-05-05T14:40:01.246Z</published>
-    <updated>2021-05-05T14:39:44.018Z</updated>
-    
-    
-      
-      
-    <summary type="html">&lt;h1 id=&quot;Hexo-博客&quot;&gt;&lt;a href=&quot;#Hexo-博客&quot; class=&quot;headerlink&quot; title=&quot;Hexo 博客&quot;&gt;&lt;/a&gt;Hexo 博客&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;https://io-oi.me/tech/hexo-next-optimizat</summary>
-      
-    
-    
-    
-    <category term="-Blog" scheme="http://example.com/categories/Blog/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>SQL</title>
-    <link href="http://example.com/2021/05/02/SQL/"/>
-    <id>http://example.com/2021/05/02/SQL/</id>
-    <published>2021-05-01T16:19:32.237Z</published>
-    <updated>2021-05-02T05:39:40.488Z</updated>
-    
-    
-      
-      
-    <summary type="html">&lt;h1 id=&quot;SQL&quot;&gt;&lt;a href=&quot;#SQL&quot; class=&quot;headerlink&quot; title=&quot;SQL&quot;&gt;&lt;/a&gt;SQL&lt;/h1&gt;&lt;p&gt;[toc]&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;什么是 &lt;code&gt;SQL &lt;/code&gt;&lt;ul&gt;
-&lt;li&gt;访问和处理 **关系数据库 **的</summary>
-      
-    
-    
-    
-    <category term="-分布式数据库" scheme="http://example.com/categories/%E5%88%86%E5%B8%83%E5%BC%8F%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
-    
-    
-    <category term="-SQL" scheme="http://example.com/tags/SQL/"/>
     
   </entry>
   

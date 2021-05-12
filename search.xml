@@ -1,6 +1,627 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>专题一内核编译</title>
+    <url>/2021/05/12/%E4%B8%93%E9%A2%98%E4%B8%80%E5%86%85%E6%A0%B8%E7%BC%96%E8%AF%91/</url>
+    <content><![CDATA[<p>[toc]</p>
+<ul>
+<li><blockquote>
+<p> 作业要求：</p>
+<p> 完成本专题教学内容中的验收测试题并提交验收材料。</p>
+<p> 验收材料要求:</p>
+<p> <strong>新内核引导成功前</strong>：</p>
+<p> \1. 执行命令：<code>uname –a</code>,提交<strong>截屏结果1</strong></p>
+ <img src="E:\Hexo\Blog\source\_posts\专题一内核编译.assets\image-20210512161354142.png" alt="image-20210512161354142" style="zoom: 33%;" />
+
+<p> <strong>新内核引导成功后</strong>：</p>
+<p> \2. 执行命令：<code>uname –a</code>,提交<strong>截屏结果2</strong></p>
+<p> \3. 进入目录/boot，执行命令：ls -l,提交<strong>截屏结果3</strong></p>
+</blockquote>
+</li>
+</ul>
+<h1 id="1-知识点-什么是-Linux-内核"><a href="#1-知识点-什么是-Linux-内核" class="headerlink" title="1 [知识点]什么是 Linux 内核"></a>1 [知识点]什么是 Linux 内核</h1><ul>
+<li><p><strong>操作系统的结构</strong></p>
+<ul>
+<li><p><img src="E:\Hexo\Blog\source_posts\专题一内核编译.assets\image-20210511210840223.png" alt="image-20210511210840223"></p>
+</li>
+<li><p>操作系统：Kernel + Shell</p>
+</li>
+</ul>
+</li>
+<li><p><strong>Kernel的组成和功能</strong>：</p>
+<ul>
+<li><img src="E:\Hexo\Blog\source_posts\专题一内核编译.assets\image-20210511211233011.png" alt="image-20210511211233011"></li>
+</ul>
+</li>
+<li><p>Linux <strong>发行版本</strong>和<strong>内核版本</strong>之间的关系：</p>
+<ul>
+<li>例如教学视频中：Ubuntu10.04 = Kernel2.6.30 + SHELL + USERS APPLICATIONS</li>
+<li>两者独立</li>
+</ul>
+</li>
+<li><p>本次课程设计我选择的<strong>发行版本</strong>是 <code>Ubuntu20.04.20</code></p>
+<ul>
+<li>其<strong>内核版本</strong>：用命令<code>uname -r</code><ul>
+<li><code>5.8.0-50-generic</code></li>
+</ul>
+</li>
+<li></li>
+</ul>
+</li>
+</ul>
+<h1 id="2-实验-从内核源码-到-内核镜像-Kernel-Image"><a href="#2-实验-从内核源码-到-内核镜像-Kernel-Image" class="headerlink" title="2 [实验] 从内核源码 到 内核镜像(Kernel Image)"></a>2 [实验] 从内核源码 到 内核镜像(Kernel Image)</h1><h2 id="实验准备"><a href="#实验准备" class="headerlink" title="实验准备"></a>实验准备</h2><p>当前Linux内核版本为<code>5.8.0-50</code></p>
+<p>从<a href="https://www.kernel.org/">内核版本</a>官网下载另一个内核版本:</p>
+<ul>
+<li>版本号尾号为偶数的是stable版的，所以我选择<code>5.12.2</code></li>
+</ul>
+<p><em>tips:</em> 直接点击屎黄色按钮下载很慢，可以将下载链接复制至自己喜欢的下载软件下载<code>IDM</code></p>
+<h2 id="实验步骤"><a href="#实验步骤" class="headerlink" title="实验步骤"></a>实验步骤</h2><p><strong>实验要求</strong>： 利用<code>make menuconfig</code>的配置功能，配置并编译信息中带有自己<strong>学号加姓名</strong>的内核</p>
+<h3 id="1-安装相应的软件包"><a href="#1-安装相应的软件包" class="headerlink" title="1 安装相应的软件包"></a>1 安装相应的软件包</h3><p><strong>步骤</strong></p>
+<ul>
+<li><p>手动或终端解压<code>package</code></p>
+</li>
+<li><p><code>.deb</code> 离线安装包</p>
+<ul>
+<li>老版本的发行版在线安装比较麻烦</li>
+</ul>
+</li>
+<li><p><code>sudo bash ./INSTALL.sh</code>: 执行安装脚本</p>
+</li>
+</ul>
+<blockquote>
+<p><strong>遇到的问题</strong>：相关依赖下载安装</p>
+<ol start="0">
+<li><p>可以先更换国内源</p>
+<ol>
+<li>在 <em>软件和更新</em> 选择 <code>最佳的服务器</code></li>
+<li><img src="E:\Hexo\Blog\source\_posts\专题一内核编译.assets\image-20210512163243691-1620808365518.png" alt="image-20210512163243691" style="zoom:50%;" /></li>
+</ol>
+</li>
+<li><p>在执行 INSTALL.sh 时，许多警告，缺少依赖等</p>
+</li>
+</ol>
+<ol>
+<li>百度找到 Ubuntu20.04 编译内核所需要的依赖</li>
+<li>首更新<code>sudo apt-get update &amp;&amp; sudo apt-get upgrade</code></li>
+<li><code>sudo apt-get install libelf-dev</code></li>
+<li><code>sudo apt-get install libncurses5-dev libssl-dev</code></li>
+<li><code>sudo apt-get install build-essential openssl</code></li>
+<li><code>sudo apt-get install libidn11-dev libidn11</code></li>
+<li><code>sudo apt-get install zlibc minizip</code></li>
+<li><code>sudo apt-get install bison</code></li>
+<li><code>sudo apt-get install flex</code></li>
+<li><code>sudo apt-get install pkg-config</code><pre><code> 11. `sudo apt-get install libssl-dev`
+</code></pre>
+</li>
+</ol>
+</blockquote>
+<h3 id="2-拷贝源码包至-usr-src并解压"><a href="#2-拷贝源码包至-usr-src并解压" class="headerlink" title="2 拷贝源码包至/usr/src并解压"></a>2 拷贝源码包至<code>/usr/src</code>并解压</h3><ul>
+<li>需要用 root 用户权限将源码包拷入标准路径<code>/usr/src</code></li>
+<li>解压命令 <code>sudo tar xfv xxx </code><ul>
+<li>解压七万多个文件(.c .h文件)</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>遇到的问题：</p>
+<p>需要重新安装VMware tools</p>
+<ol>
+<li>首先将压缩包移动至 usr/local`</li>
+<li>然后使用<code>tar -zxvf xxx </code>解压</li>
+<li>进入vmware-tools-distrib, 使用<code>sudo ./vmware-install.pl</code>命令安装</li>
+<li>手动启动<code>vmware-user</code></li>
+</ol>
+</blockquote>
+<h3 id="3-进入源码所在目录"><a href="#3-进入源码所在目录" class="headerlink" title="3 进入源码所在目录"></a>3 进入源码所在目录</h3><ul>
+<li>按照功能分</li>
+<li>Makefile</li>
+</ul>
+<h3 id="4-执行一系列-make-指令"><a href="#4-执行一系列-make-指令" class="headerlink" title="4 执行一系列 make 指令"></a>4 执行一系列 make 指令</h3><blockquote>
+<p>可以使用多核进行编译<code>make -j x   </code>: x为核心数，不能超过自己的核心数，省略则使用最多数</p>
+</blockquote>
+<ul>
+<li><code>make menuconfig</code><ul>
+<li>进入<strong>配置菜单</strong><ul>
+<li><code>[ ]</code> : 编译入内核</li>
+<li><code>[*]</code>：可选</li>
+<li><code>[M]</code>： 编译为内核模块</li>
+</ul>
+</li>
+<li><strong>必须</strong>改：在 <code>General setup</code> ——&gt;<code>Local version</code>：加入<code>学号加姓名</code></li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><strong>遇到的错误：</strong></p>
+<p><code>Your display is too small to run Menuconfig! It must be at least 19 lines by 80 columns. make[1]: *** [scripts/kconfig/Makefile:34：menuconfig] 错误 1 make: *** [Makefile:602：menuconfig] 错误 2</code></p>
+<ul>
+<li>第一个问题似乎是终端窗口太小，最大化试试</li>
+<li>最大化之后再将比例缩小即可</li>
+</ul>
+</blockquote>
+<blockquote>
+<p>tips: 可以使用多核进行编译<code>make -j x   </code>: x为核心数，不能超过自己的核心数，省略则使用最多数</p>
+</blockquote>
+<ul>
+<li><code>make -j 4</code> ：<code>.c</code>编译为<code>.o</code><ul>
+<li>一到两小时<ul>
+<li>可以用多内核减少一些时间</li>
+</ul>
+</li>
+<li><strong>快照</strong>：保存当前系统的状态，随时可以恢复载入改状态</li>
+<li>编译finished后，目录下产生：<code>vmlinux.o</code> 目标文件和<code>vmlinux</code> 可执行文件</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>make之后报错：<code>scripts/sign-file.c:25:10: fatal error: openssl/opensslv.h: 没有那个文件或目录    25 | #include &lt;openssl/opensslv.h&gt;       |          ^~~~~~~~~~~~~~~~~~~~ compilation terminated.</code></p>
+<ul>
+<li>解决：<code>sudo apt-get install libssl-dev</code></li>
+<li>应提前安装</li>
+</ul>
+</blockquote>
+<ul>
+<li><code>make modules_install</code><ul>
+<li>编译为动态链接库<code>.ko</code><ul>
+<li><code>driver</code></li>
+<li><code>fs</code></li>
+<li><code>sound</code></li>
+<li><code>lib</code></li>
+</ul>
+</li>
+<li>将<code>.ko</code>（类似于动态库）移动至标准目录</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>make modules_install报错：</p>
+<p><code>sed: 无法读取 modules.order: 没有那个文件或目录 make: *** [Makefile:1471：_modinst_] 错误 2</code></p>
+<ul>
+<li>问题解决：<ul>
+<li><code>make[1]: *** 没有规则可制作目标“debian/canonical-certs.pem”由“certs/x509_certificate_list” 需求。 停止。 make: *** [Makefile:1851：certs] 错误 2</code><ul>
+<li>solution :<ul>
+<li><code>vi .config</code></li>
+<li><code>/</code>搜索<code>CONFIG_SYSTEM_TRUSTED_KEYS</code>，将里面内容清空</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<ul>
+<li><code>make install</code><ul>
+<li>执行<code>.sh</code>脚本：将内核镜像移动至 <code>boot</code> 引导目录<ul>
+<li>用引导程序将内核镜像引导起来</li>
+</ul>
+</li>
+<li>执行完命令后：<ul>
+<li>三个以 <code>学号姓名</code> 为后缀的文件是引导所需要的</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="3-知识点-GNU-make和makefile"><a href="#3-知识点-GNU-make和makefile" class="headerlink" title="3 [知识点] GNU make和makefile"></a>3 [知识点] GNU make和makefile</h1><h2 id="什么是-make"><a href="#什么是-make" class="headerlink" title="什么是 make"></a>什么是 make</h2><ul>
+<li><code>make menuconfig</code>: 用命令行模式<strong>配置内核</strong></li>
+<li><code>make</code>: 编译<strong>内核</strong>和<strong>模块</strong></li>
+<li><code>make modules_install</code>: 安装<strong>模块</strong><ul>
+<li>在<code>/lib/modules/内核版本</code> 对应的目录下，建立文件夹并把模块文件放入</li>
+</ul>
+</li>
+<li><code>make install</code>: 安装<strong>内核</strong><ul>
+<li>即拷贝入<code>/boot</code>目录下</li>
+</ul>
+</li>
+</ul>
+<h2 id="什么是makefile"><a href="#什么是makefile" class="headerlink" title="什么是makefile"></a>什么是makefile</h2><ul>
+<li>告诉 make 命令如何去编译</li>
+</ul>
+<blockquote>
+<p><strong>makefile</strong>文件保存了 <strong>编译器和连接器的参数选项</strong>, 还表述了<strong>所有源文件之间的关系(<strong>源代码文件需要的</strong>特定的包含文件</strong>,可执行文件要求包含的目标文件模块及库等).</p>
+<p><strong>创建程序(make程序</strong>) 首先读取makefile文件, 然后再激活编译器,汇编器,资源编译器和连接器以便产生最后的输出, 最后输出并生成的通常是可执行文件.</p>
+<p>创建程序利用内置的推理规则来激活编译器,以便通过对特定<code>CPP</code>文件的编译来产生特定的OBJ文件. </p>
+</blockquote>
+<h2 id="makefile-规则"><a href="#makefile-规则" class="headerlink" title="makefile 规则"></a>makefile 规则</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">target ... :prerequisites ...</span><br><span class="line">		recipe</span><br><span class="line">		...</span><br><span class="line">		...</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="Makefile-demo-使用规则"><a href="#Makefile-demo-使用规则" class="headerlink" title="Makefile demo 使用规则"></a>Makefile demo 使用规则</h2><h2 id="试读内核源码的Makefile"><a href="#试读内核源码的Makefile" class="headerlink" title="试读内核源码的Makefile"></a>试读内核源码的Makefile</h2><h1 id="4-知识点-操作系统启动"><a href="#4-知识点-操作系统启动" class="headerlink" title="4 [知识点] 操作系统启动"></a>4 [知识点] 操作系统启动</h1><h2 id="操作系统-引导过程"><a href="#操作系统-引导过程" class="headerlink" title="操作系统 引导过程"></a>操作系统 引导过程</h2><ol>
+<li>电脑开机后， 启动 <strong>BIOS</strong> , BIOS <strong>自检</strong></li>
+<li>自检后，BIOS 找到硬盘上的<strong>主引导记录</strong> <strong>MBR</strong></li>
+<li><strong>MBR</strong> 读取<strong>硬盘分区表 DPT</strong> ，找到活动分区中的<strong>分区引导记录 PBR</strong>，将控制权交给 <strong>PBR</strong></li>
+<li><strong>PBR</strong> 搜索活动分区中的<strong>启动管理器</strong> <strong>bootmgr</strong> （Linux下是<strong>Grub</strong>，grub.conf , windows下是），将控制权交给 bootmgr</li>
+<li><strong>bootmgr</strong> 寻找 boot 文件夹中的 <strong>BCD 文件（启动配置数据）</strong></li>
+<li>找到 BCD 后，<strong>bootmgr</strong> 首先从 BCD 中读取启动管理器 <strong>bootmgr</strong> 菜单信息，在显示器上显示多操作系统选择画面</li>
+<li>如果存在多个操作系统并且系统设置的等待时间不是0，就会显示多个操作系统。若无，则直接进入</li>
+<li>进入系统后，<strong>bootmgr</strong> 会读取 BCD 中win7系统所在的盘的<code>winload.exe</code> 文件，将控制器交给</li>
+<li>winload.exe 加载win7 内核、硬件、服务等，之后加载桌面等信息，从而启动整个系统</li>
+</ol>
+<h2 id="启动管理程序-grub"><a href="#启动管理程序-grub" class="headerlink" title="启动管理程序 grub"></a>启动管理程序 grub</h2><ul>
+<li><code>grub.conf</code><ul>
+<li>需要改配置正确才能启动</li>
+</ul>
+</li>
+</ul>
+<h1 id="5-实验-Linux-内核的引导"><a href="#5-实验-Linux-内核的引导" class="headerlink" title="5 [实验] Linux 内核的引导"></a>5 [实验] Linux 内核的引导</h1><ul>
+<li>内核 make 成功后</li>
+</ul>
+<h2 id="生成-虚拟盘文件"><a href="#生成-虚拟盘文件" class="headerlink" title="生成 虚拟盘文件"></a>生成 虚拟盘文件</h2><p><code>update-initramfs -c -k 2.6.32.60</code></p>
+<h2 id="修改-grub-启动项后重启（重启前备份镜像）"><a href="#修改-grub-启动项后重启（重启前备份镜像）" class="headerlink" title="修改 grub 启动项后重启（重启前备份镜像）"></a>修改 grub 启动项后重启（重启前备份镜像）</h2><p><img src="E:\Hexo\Blog\source_posts\专题一内核编译.assets\image-20210512224054681-1620830456511.png" alt="image-20210512224054681"></p>
+]]></content>
+      <categories>
+        <category>-操作系统课程设计</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>第二部分</title>
+    <url>/2021/05/08/%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86/</url>
+    <content><![CDATA[<p>该部分将建立数据库，创建第一个模型module, 并主要关注Django提供的自动生成的管理页面</p>
+<h2 id="数据库配置"><a href="#数据库配置" class="headerlink" title="数据库配置"></a>数据库配置</h2><ul>
+<li><code>mysite/settings.py</code>: 包含了项目配置的python模块</li>
+<li>一般，这个配置文件使用 <code>SQLite</code> 作为默认数据库</li>
+</ul>
+<blockquote>
+<p><strong>更换 数据库</strong> ——[官方文档](<a href="https://docs.djangoproject.com/zh-hans/3.2/intro/tutorial02/">编写你的第一个 Django 应用，第 2 部分 | Django 文档 | Django (djangoproject.com)</a>)</p>
+<p>如果你想使用其他数据库，你需要安装合适的 <a href="https://docs.djangoproject.com/zh-hans/3.2/topics/install/#database-installation">database bindings</a> ，然后改变设置文件中 <a href="https://docs.djangoproject.com/zh-hans/3.2/ref/settings/#std:setting-DATABASES"><code>DATABASES</code></a> <code>&#39;default&#39;</code> 项目中的一些键值：</p>
+<ul>
+<li><a href="https://docs.djangoproject.com/zh-hans/3.2/ref/settings/#std:setting-DATABASE-ENGINE"><code>ENGINE</code></a> – 可选值有 <code>&#39;django.db.backends.sqlite3&#39;</code>，<code>&#39;django.db.backends.postgresql&#39;</code>，<code>&#39;django.db.backends.mysql&#39;</code>，或 <code>&#39;django.db.backends.oracle&#39;</code>。其它 <a href="https://docs.djangoproject.com/zh-hans/3.2/ref/databases/#third-party-notes">可用后端</a>。</li>
+<li><a href="https://docs.djangoproject.com/zh-hans/3.2/ref/settings/#std:setting-NAME"><code>NAME</code></a> – 数据库的名称。如果你使用 SQLite，数据库将是你电脑上的一个文件，在这种情况下，<a href="https://docs.djangoproject.com/zh-hans/3.2/ref/settings/#std:setting-NAME"><code>NAME</code></a> 应该是此文件完整的绝对路径，包括文件名。默认值 <code>BASE_DIR / &#39;db.sqlite3&#39;</code> 将把数据库文件储存在项目的根目录。</li>
+</ul>
+<p>如果你不使用 SQLite，则必须添加一些额外设置，比如 <a href="https://docs.djangoproject.com/zh-hans/3.2/ref/settings/#std:setting-USER"><code>USER</code></a> 、 <a href="https://docs.djangoproject.com/zh-hans/3.2/ref/settings/#std:setting-PASSWORD"><code>PASSWORD</code></a> 、 <a href="https://docs.djangoproject.com/zh-hans/3.2/ref/settings/#std:setting-HOST"><code>HOST</code></a> 等等。想了解更多数据库设置方面的内容，请看文档：<a href="https://docs.djangoproject.com/zh-hans/3.2/ref/settings/#std:setting-DATABASES"><code>DATABASES</code></a> 。</p>
+</blockquote>
+<ul>
+<li>在编辑<code>settings.py</code>文件前，需要先设置<code>TIME_ZONE</code>为自己的时区<ul>
+<li><a href="https://docs.djangoproject.com/zh-hans/3.2/ref/settings/#std:setting-TIME_ZONE">TIME_ZONE</a></li>
+<li>中国时区：<code>CN</code></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p><code>setting.py</code>头部<code>INSTALLED_APPS</code>设置项：包括了会在项目中启动的所有应用</p>
+<ul>
+<li><blockquote>
+<p>应用能在多个项目中使用，你也可以打包并且发布应用，让别人使用它们</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p><code>INSTALLED_APPS</code>默认包括了Django自带应用：</p>
+<ul>
+<li><a href="https://docs.djangoproject.com/zh-hans/3.2/ref/contrib/admin/#module-django.contrib.admin"><code>django.contrib.admin</code></a> – <strong>管理员站点</strong>， 你很快就会使用它。</li>
+<li><a href="https://docs.djangoproject.com/zh-hans/3.2/topics/auth/#module-django.contrib.auth"><code>django.contrib.auth</code></a> – <strong>认证授权系统</strong>。</li>
+<li><a href="https://docs.djangoproject.com/zh-hans/3.2/ref/contrib/contenttypes/#module-django.contrib.contenttypes"><code>django.contrib.contenttypes</code></a> – <strong>内容类型框架</strong>。</li>
+<li><a href="https://docs.djangoproject.com/zh-hans/3.2/topics/http/sessions/#module-django.contrib.sessions"><code>django.contrib.sessions</code></a> – <strong>会话框架</strong>。</li>
+<li><a href="https://docs.djangoproject.com/zh-hans/3.2/ref/contrib/messages/#module-django.contrib.messages"><code>django.contrib.messages</code></a> – <strong>消息框架</strong>。</li>
+<li><a href="https://docs.djangoproject.com/zh-hans/3.2/ref/contrib/staticfiles/#module-django.contrib.staticfiles"><code>django.contrib.staticfiles</code></a> – <strong>管理静态文件的框架</strong>。</li>
+</ul>
+</li>
+<li><p>默认开启的应用至少需要一个数据库表，因此需在使用他们之前，在数据库中创建一些表：</p>
+<ul>
+<li>```python<br>py manage.py migrate<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">  * &#96;migrate&#96;命令:  检查 [&#96;INSTALLED_APPS&#96;](https:&#x2F;&#x2F;docs.djangoproject.com&#x2F;zh-hans&#x2F;3.2&#x2F;ref&#x2F;settings&#x2F;#std:setting-INSTALLED_APPS) 设置，为其中的每个应用创建需要的数据表，至于具体会创建什么，这取决于 &#96;mysite&#x2F;settings.py&#96; 设置文件和每个应用的**数据库迁移文件**</span><br><span class="line">    * 该命令会将所**执行**的每个**迁移**操作在终端显示</span><br><span class="line"></span><br><span class="line">## 创建模型</span><br><span class="line"></span><br><span class="line">在Django中写一个数据库驱动的 Web 应用的**第一步**：&#x3D;&#x3D;定义模型&#x3D;&#x3D;——即**数据库结构设计和附加的其他元数据**</span><br><span class="line"></span><br><span class="line">&gt; 模型是真实数据的简单明确的描述</span><br><span class="line">&gt;</span><br><span class="line">&gt; 包含了存储的数据所必要的字段和行为</span><br><span class="line"></span><br><span class="line">在该应用中，将建立两个模型：Question和Choice</span><br><span class="line"></span><br><span class="line">* Question模型：包括两个字段：问题描述和发布时间</span><br><span class="line">* Choice模型：有两个字段，选项描述和当前得票数。每个Choice属于一个问题</span><br><span class="line"></span><br><span class="line">这些概念都可以通过 Python 类来描述：</span><br><span class="line"></span><br><span class="line">编辑&#96;polls&#x2F;models.py&#96;:</span><br><span class="line"></span><br><span class="line">&#96;&#96;&#96;python</span><br><span class="line">from django.db import models</span><br><span class="line"></span><br><span class="line">class Question(models.Model):</span><br><span class="line">    question_text &#x3D; models.CharField(max_length&#x3D;200)</span><br><span class="line">    pub_date &#x3D; models.DateTimeField(&#39;date published&#39;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class Choice(models.Model):</span><br><span class="line">    question &#x3D; models.ForeignKey(Question, on_delete&#x3D;models.CASCADE)</span><br><span class="line">    choice_text &#x3D; models.CharField(max_length&#x3D;200)</span><br><span class="line">    votes &#x3D; models.IntegerField(default&#x3D;0)</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>每个模型都被表示为<code>django.db.models.Model</code>类的子类</p>
+<ul>
+<li>子类内有许多类变量：表示模型里的一个<strong>数据库字段</strong></li>
+<li>每个字段都是<code>Field</code>类的实例：将告诉Django每个字段要处理的数据类型<ul>
+<li>字符字段：<code>CharField</code></li>
+<li>日期时间字段：<code>DateTimeField</code></li>
+<li>整型字段：<code>IntegerField</code></li>
+<li>更多<a href="https://docs.djangoproject.com/zh-hans/3.2/ref/models/fields/#django.db.models.Field"><code>Field</code></a> </li>
+</ul>
+</li>
+<li>每个Field类的实例名也是字段名</li>
+</ul>
+</li>
+<li><p>定义一些 Field 类实例 需要参数：</p>
+<ul>
+<li><code>CharField</code> 需要<code>max_length</code>参数：用于定义数据库结构，也用于验证数据</li>
+</ul>
+</li>
+<li><p>注意，使用<code>ForeignKey</code>定义关系</p>
+<ul>
+<li>这将告诉Django，每一个 Choice 对象都关联到一个 Question 对象</li>
+</ul>
+</li>
+</ul>
+<h2 id="激活模型"><a href="#激活模型" class="headerlink" title="激活模型"></a>激活模型</h2><ul>
+<li>创建模型的代码给予了 Django 许多信息：<ul>
+<li>为应用创建数据库 schema：生成<code>CTEATE TABLE</code>语句</li>
+<li>创建可以与Question和Choice对象 进行交互的<strong>Python数据库API</strong></li>
+</ul>
+</li>
+</ul>
+<p><strong>首先</strong>，将 polls 应用安装至Django项目中</p>
+<ul>
+<li><p>为了工程中包含该应用，在<code>settings.py</code>的 <code>INSTALLED_APPS</code> 中添加设置</p>
+<ul>
+<li><p><code>PollsConfig</code> 类 写在<code>polls/apps.py</code>中，因此点式路径：<code>polls.apps.PollsConfig</code></p>
+</li>
+<li><p>在<code>settings.py</code>的<code>INSTALLED_APPS</code> 子项添加点式路径</p>
+<ul>
+<li>```python<br>INSTALLED_APPS = [<pre><code>&#39;polls.apps.PollsConfig&#39;,
+&#39;django.contrib.admin&#39;,
+&#39;django.contrib.auth&#39;,
+&#39;django.contrib.contenttypes&#39;,
+&#39;django.contrib.sessions&#39;,
+&#39;django.contrib.messages&#39;,
+&#39;django.contrib.staticfiles&#39;,
+</code></pre>
+]<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">现在项目中包含了polls应用</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">**接着**，运行&#96;py manage.py makemigrations polls&#96;</span><br><span class="line"></span><br><span class="line">* **终端输出**：</span><br><span class="line"></span><br><span class="line">  * &#96;&#96;&#96;</span><br><span class="line">    Migrations for &#39;polls&#39;:</span><br><span class="line">      polls&#x2F;migrations&#x2F;0001_initial.py</span><br><span class="line">        - Create model Question</span><br><span class="line">        - Create model Choice</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>makemigrations</code> : Django 检测对模型文件<code>polls/models.py</code>的修改，并且将修改的部分<strong>存储</strong>为一次 <strong>迁移</strong></p>
+<ul>
+<li><strong>迁移</strong>是 Django 对于<strong>模型</strong>定义（也就是你的数据库结构）的<strong>变化的储存形式</strong> - 它们其实也只是一些你磁盘上的文件</li>
+</ul>
+</li>
+<li><p><a href="https://docs.djangoproject.com/zh-hans/3.2/ref/django-admin/#django-admin-migrate"><code>migrate</code></a>: 自动<strong>执行数据库迁移</strong> 并 <strong>同步管理数据库结构</strong>的命令。</p>
+<ul>
+<li>迁移命令执行的SQL语句：<a href="https://docs.djangoproject.com/zh-hans/3.2/ref/django-admin/#django-admin-sqlmigrate"><code>sqlmigrate</code></a>命令接收一个迁移的名称，然后返回对应的SQL<ul>
+<li><code>py manage.py sqlmigrate polls 0001</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>输出是迁移所对应的SQL语句</p>
+<ul>
+<li>表名是由应用名和模型名的小写形式连接而成</li>
+<li>主键被自动创建</li>
+</ul>
+</li>
+</ul>
+<p><strong>然后</strong>，运行migrate命令，将在数据库里创建 新定义的模型的数据表：<code>py manage.py migrate</code></p>
+<ul>
+<li><p>该 migrate 命令会选中未执行过的迁移并应用在数据库中</p>
+</li>
+<li><blockquote>
+<p>迁移是非常强大的功能，它能让你在开发过程中持续的改变数据库结构而不需要重新删除和创建表 - 它专注于使数据库平滑升级而不会丢失数据</p>
+</blockquote>
+</li>
+<li><p>注意：改变模型需要三步：</p>
+<ul>
+<li>编辑 models 文件，改变模型</li>
+<li>运行 <code>makemigrations</code> 命令生成迁移</li>
+<li>运行 migrate 命令 应用迁移</li>
+</ul>
+</li>
+</ul>
+<h2 id="初试-API"><a href="#初试-API" class="headerlink" title="初试 API"></a>初试 API</h2><p><strong>首先</strong>，进入 交互式 Python 命令行，以使用Django创建的各种 API</p>
+<ul>
+<li><code>py manage.py shell</code><ul>
+<li>manage 会设置<code>DJANGO_SETTINGS_MODULE</code> 环境变量，根据<code>settings</code>文件设置包的导入路径</li>
+</ul>
+</li>
+</ul>
+<p><strong>然后</strong>，尝试 <a href="https://docs.djangoproject.com/zh-hans/3.2/topics/db/queries/">数据库 API</a> </p>
+<ul>
+<li><p>```<br>from polls.models import Choice, Question  # Import the model classes we just wrote.<br>from django.utils import timezone<br>q = Question(question_text=”What’s new?”, pub_date=timezone.now())<br>q.save()</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">* 编辑模型代码，可以更了解模型对象的细节：给模型增加&#96;__str__()&#96;方法</span><br><span class="line"></span><br><span class="line">  * &#96;&#96;&#96;</span><br><span class="line">    from django.db import models</span><br><span class="line">    </span><br><span class="line">    class Question(models.Model):</span><br><span class="line">        # ...</span><br><span class="line">        def __str__(self):</span><br><span class="line">            return self.question_text</span><br><span class="line">    </span><br><span class="line">    class Choice(models.Model):</span><br><span class="line">        # ...</span><br><span class="line">        def __str__(self):</span><br><span class="line">            return self.choice_text</span><br></pre></td></tr></table></figure></li>
+<li><p>```<br>Question.objects.filter(id=1)<br>q = Question.objects.get(pk=1)<br>q.choice_set.all()<br>q.choice_set.create(choice_text=’Not much’, votes=0)</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">## Django 管理页面</span><br><span class="line"></span><br><span class="line">&gt; 为你的员工或客户生成一个用户添加，修改和删除内容的后台是一项缺乏创造性和乏味的工作。因此，Django 全自动地根据模型创建后台界面。</span><br><span class="line"></span><br><span class="line">管理页面默认开启</span><br><span class="line"></span><br><span class="line">### 创建管理员账号</span><br><span class="line"></span><br><span class="line">* &#96;py manage.py createsuperuser&#96;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 启动开发服务器</span><br><span class="line"></span><br><span class="line">* &#96;py manage.py runserver&#96;</span><br><span class="line">* 访问：&#96;http:&#x2F;&#x2F;127.0.0.1:8000&#x2F;admin&#x2F;&#96;</span><br><span class="line"></span><br><span class="line">### 管理站点页面</span><br><span class="line"></span><br><span class="line">* 进入管理页面的索引页后，可编辑的&#96;Groups&#96;和&#96;Users&#96; 是Django 开发的认证框架</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 向管理页面加入投票应用</span><br><span class="line"></span><br><span class="line">* 需要在管理文件&#96;polls&#x2F;admin.py&#96;加入应用的模型</span><br><span class="line"></span><br><span class="line">  * &#96;&#96;&#96;</span><br><span class="line">    from django.contrib import admin</span><br><span class="line">    </span><br><span class="line">    from .models import Question</span><br><span class="line">    </span><br><span class="line">    admin.site.register(Question)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>-Django</category>
+      </categories>
+      <tags>
+        <tag>-Python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>编写第一个 Django 应用，第一部分</title>
+    <url>/2021/05/08/%E7%BC%96%E5%86%99%E7%AC%AC%E4%B8%80%E4%B8%AA%20Django%20%E5%BA%94%E7%94%A8%EF%BC%8C%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86/</url>
+    <content><![CDATA[<h1 id="编写第一个-Django-应用，第一部分"><a href="#编写第一个-Django-应用，第一部分" class="headerlink" title="编写第一个 Django 应用，第一部分"></a>编写第一个 Django 应用，第一部分</h1><p>[官方文档](<a href="https://docs.djangoproject.com/zh-hans/3.2/intro/overview/">初识 Django | Django 文档 | Django (djangoproject.com)</a>)</p>
+<ul>
+<li><p>目标：创建一个基本的投票应用</p>
+<ul>
+<li>让人们 查看和投票 的<strong>公共站点</strong></li>
+<li>让开发者能 添加、修改、删除投票的<strong>管理站点</strong></li>
+</ul>
+</li>
+<li><p>环境：</p>
+<ul>
+<li><code>pycharm 2019</code></li>
+<li><code>python 3.6</code></li>
+<li><code>Django 3.2.1</code>支持Python 和后续版本</li>
+</ul>
+</li>
+</ul>
+<h2 id="创建项目"><a href="#创建项目" class="headerlink" title="创建项目"></a>创建项目</h2><ul>
+<li><p>初始化设置：</p>
+<ul>
+<li>生成Django项目需要的 设置项集合：数据库配置、Django 配置和应用程序配置</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">django-admin startproject mysite(项目名)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>需要注意的是，须提前将django-admin加入环境变量，因为使用的是 <code>Pycharm Professional</code> 所以可以一键创建Django项目</li>
+</ul>
+</li>
+<li><p><code>startproject</code> 所创建的：</p>
+<ul>
+<li>![image-20210507200938455](E:\LearningNotes\python\编写第一个 Django 应用，第一部分.assets\image-20210507200938455-1620389380924.png)</li>
+</ul>
+</li>
+<li><p>根据官方文档：</p>
+<ul>
+<li>最外层<code>mysite</code>：是我们项目的容器</li>
+<li><code>manage.py</code>: 可以让我们用各种方式管理项目的命令行工具</li>
+<li>内层<code>mysite</code>：是一个纯Python包。当需要引用其内部的内容时的包名</li>
+<li><code>mysite/__init__.py</code>: 空文件，告知Python这个目录是一个Python包</li>
+<li><code>mysite/settings.py</code>: Django 项目的配置文件</li>
+<li><code>mysite/urls.py</code>: 项目的 URL 声明，类似于网站的目录</li>
+<li><code>mysite/asgi.py</code>: 作为你的项目的运行在 ASGI 兼容的 Web 服务器上的入口</li>
+<li><code>mysite/wsgi.py</code>: 作为你的项目的运行在 WSGI 兼容的Web服务器上的入口</li>
+</ul>
+</li>
+</ul>
+<h2 id="用于开发的简易服务器"><a href="#用于开发的简易服务器" class="headerlink" title="用于开发的简易服务器"></a>用于开发的简易服务器</h2><ul>
+<li><p>测试项目是否创建成功：在项目容器目录运行<code>py manage.py runserver</code></p>
+</li>
+<li><p>出现报错：</p>
+<ul>
+<li>```<br>Traceback (most recent call last):<br>  File “manage.py”, line 22, in <module><pre><code>main()
+</code></pre>
+  File “manage.py”, line 18, in main<pre><code>execute_from_command_line(sys.argv)
+</code></pre>
+  File “E:\Django_tests\mysite\venv\lib\site-packages\django\core\management_<em>init</em>_.py”, line 419,<br> in execute_from_command_line<pre><code>utility.execute()
+</code></pre>
+  File “E:\Django_tests\mysite\venv\lib\site-packages\django\core\management_<em>init</em>_.py”, line 363,<br> in execute<pre><code>settings.INSTALLED_APPS
+</code></pre>
+  File “E:\Django_tests\mysite\venv\lib\site-packages\django\conf_<em>init_</em>.py”, line 82, in <strong>getatt<br>r</strong><pre><code>self._setup(name)
+</code></pre>
+  File “E:\Django_tests\mysite\venv\lib\site-packages\django\conf_<em>init_</em>.py”, line 69, in _setup<pre><code>self._wrapped = Settings(settings_module)
+</code></pre>
+  File “E:\Django_tests\mysite\venv\lib\site-packages\django\conf_<em>init_</em>.py”, line 170, in _<em>init</em><br>_<pre><code>mod = importlib.import_module(self.SETTINGS_MODULE)
+</code></pre>
+  File “C:\Users\Light\AppData\Local\Programs\Python\Python36\lib\importlib_<em>init</em>_.py”, line 126,<br>in import_module<pre><code>return _bootstrap._gcd_import(name[level:], package, level)
+</code></pre>
+  File “<frozen importlib._bootstrap>“, line 994, in _gcd_import<br>  File “<frozen importlib._bootstrap>“, line 971, in _find_and_load<br>  File “<frozen importlib._bootstrap>“, line 955, in _find_and_load_unlocked<br>  File “<frozen importlib._bootstrap>“, line 665, in _load_unlocked<br>  File “<frozen importlib._bootstrap_external>“, line 678, in exec_module<br>  File “<frozen importlib._bootstrap>“, line 219, in _call_with_frames_removed<br>  File “E:\Django_tests\mysite\mysite\settings.py”, line 57, in <module><pre><code>&#39;DIRS&#39;: [os.path.join(BASE_DIR, &#39;templates&#39;)]
+</code></pre>
+NameError: name ‘os’ is not defined<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">* 分析：&#96;xxxx\settings.py&#96; &#96;os not defined&#96;, 可能是该文件未导入os模块导入后成功</span><br><span class="line"></span><br><span class="line">* solution：导入后成功</span><br><span class="line"></span><br><span class="line">  * &#96;&#96;&#96;</span><br><span class="line">    Watching for file changes with StatReloader</span><br><span class="line">    Performing system checks...</span><br><span class="line">    </span><br><span class="line">    System check identified no issues (0 silenced).</span><br><span class="line">    </span><br><span class="line">    You have 18 unapplied migration(s). Your project may not work properly until you apply the migrations for app(s): admin, auth, contenttypes, sessions.</span><br><span class="line">    Run &#39;python manage.py migrate&#39; to apply them.</span><br><span class="line">    May 07, 2021 - 20:20:20</span><br><span class="line">    Django version 3.2.2, using settings &#39;mysite.settings&#39;</span><br><span class="line">    Starting development server at http:&#x2F;&#x2F;127.0.0.1:8000&#x2F;</span><br><span class="line">    Quit the server with CTRL-BREAK.</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>至此，我们启动了Django自带的 <strong>用于开发的简易服务器</strong></p>
+<ul>
+<li><p>用纯python写的轻量级Web服务器</p>
+</li>
+<li><p>注意：</p>
+<ul>
+<li><blockquote>
+<p><strong>千万不要</strong> 将这个服务器用于和生产环境相关的任何地方。这个服务器只是为了开发而设计的。(我们在 Web 框架方面是专家，在 Web 服务器方面并不是。)</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>更换端口：<ul>
+<li>默认runserver命令会将服务器设置为监听本机内部 IP 的8000端口</li>
+<li>若想更换端口：<ul>
+<li><code>py manage.py runserver 8080</code></li>
+</ul>
+</li>
+<li>若想修改服务器监听的 IP：<ul>
+<li><code>py manage.py runserver 0:8080</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="创建投票应用"><a href="#创建投票应用" class="headerlink" title="创建投票应用"></a>创建投票应用</h2><ul>
+<li><p>开发环境——项目配置初始化成功</p>
+</li>
+<li><blockquote>
+<p> Django 中，每一个应用都是一个Python包</p>
+</blockquote>
+</li>
+<li><blockquote>
+<p><strong>项目 VS 应用</strong></p>
+<p>项目和应用有什么区别？</p>
+<p><strong>应用</strong>是一个专门做某件事的<strong>网络应用程序</strong>——比如博客系统，或者公共记录的数据库，或者小型的投票程序。</p>
+<p><strong>项目</strong>则是<strong>一个网站使用的配置和应用的集合</strong>。项目可以包含很多个应用。应用可以被很多个项目使用。</p>
+</blockquote>
+</li>
+<li><p>应用可以存放任何Python路径中定义的路径</p>
+</li>
+<li><p>在此项目，须在<code>manage.py</code>同级目录下创建应用</p>
+<ul>
+<li>可以作为顶级模块导入，而不是mysite的子模块</li>
+</ul>
+</li>
+<li><p>创建应用：</p>
+<ul>
+<li>```<br>py manage.py startapp polls<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">* 命令会创建polls目录：包含了应用的全部内容</span><br><span class="line"></span><br><span class="line">  * ![image-20210507203223797](E:\LearningNotes\python\编写第一个 Django 应用，第一部分.assets\image-20210507203223797-1620390751727.png)</span><br><span class="line"></span><br><span class="line">## 编写第一个视图</span><br><span class="line"></span><br><span class="line">首先：</span><br><span class="line"></span><br><span class="line">* 在&#96;polls&#x2F;views.py&#96;：</span><br><span class="line"></span><br><span class="line">  * &#96;&#96;&#96;python</span><br><span class="line">    from django.http import HttpResponse</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    def index(request):</span><br><span class="line">        return HttpResponse(&quot;Hello, world. You&#39;re at the polls index.&quot;)</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>其次：</p>
+</li>
+<li><p>需要将一个 <code>URL</code> 映射到它</p>
+<ul>
+<li>因此需要<code>URLconf</code></li>
+</ul>
+</li>
+<li><p>在polls目录里创建<code>urls.py</code>文件，并输入：</p>
+<ul>
+<li>```python<br>from django.urls import pathfrom . import viewsurlpatterns = [<pre><code>path(&#39;&#39;, views.index, name=&#39;index&#39;),
+</code></pre>
+]<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">然后：</span><br><span class="line"></span><br><span class="line">* 在根&#96;URLconf&#96;文件中，指定刚刚创建的 &#96;polls.urls&#96;模块</span><br><span class="line"></span><br><span class="line">  * 在&#96;mysite&#x2F;urls.py&#96;中的&#96;urlpatterns&#96;列表中插入&#96;include()&#96;</span><br><span class="line"></span><br><span class="line">  * &#96;&#96;&#96;python</span><br><span class="line">    from django.contrib import admin</span><br><span class="line">    from django.urls import include, path</span><br><span class="line">    </span><br><span class="line">    urlpatterns &#x3D; [</span><br><span class="line">        path(&#39;polls&#x2F;&#39;, include(&#39;polls.urls&#39;)),</span><br><span class="line">        path(&#39;admin&#x2F;&#39;, admin.site.urls),</span><br><span class="line">    ]</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>函数 include 允许引用其他<code>URLconfs</code>, 当包括其他<code>URL</code>模式时，就使用该函数</p>
+<ul>
+<li><p>当 Django 遇到该函数时，会截断与此项匹配的 URL 部分，将剩余的字符串发送到<code>URLconf</code>一共进一步处理</p>
+</li>
+<li><blockquote>
+<p>我们设计 <a href="https://docs.djangoproject.com/zh-hans/3.2/ref/urls/#django.urls.include"><code>include()</code></a> 的理念是使其可以即插即用。因为投票应用有它自己的 URLconf( <code>polls/urls.py</code> )，他们能够被放在 “/polls/“ ， “/fun_polls/“ ，”/content/polls/“，或者其他任何路径下，这个应用都能够正常工作。</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>现在已经将index视图 天加入了根URLconf</p>
+</li>
+</ul>
+<p>最后，</p>
+<ul>
+<li><p>验证是否能正常工作：<code>py manage.py runserver</code></p>
+</li>
+<li><p>访问：<code>http://localhost:8000/polls/ </code> </p>
+<ul>
+<li>成功</li>
+</ul>
+</li>
+</ul>
+<h2 id="函数path（）"><a href="#函数path（）" class="headerlink" title="函数path（）"></a>函数path（）</h2><p>函数的四个参数：</p>
+<ul>
+<li><p>必须参数：<code>route</code> <code>view</code></p>
+</li>
+<li><p>可选参数：<code>kwargs</code> <code>name</code></p>
+</li>
+<li><p><code>route</code>: 一个匹配 URL 的准则（类似于正则表达式）</p>
+<ul>
+<li><blockquote>
+<p>当 Django 响应一个<strong>请求request</strong>时，它会从 <code>urlpatterns</code> 的第一项开始，按顺序依次匹配列表中的项，直到找到匹配的项。</p>
+</blockquote>
+</li>
+<li><blockquote>
+<p>这些准则不会匹配 GET 和 POST 参数或域名。例如，URLconf 在处理请求 <code>https://www.example.com/myapp/</code> 时，它会尝试匹配 <code>myapp/</code> 。处理请求 <code>https://www.example.com/myapp/?page=3</code> 时，也只会尝试匹配 <code>myapp/</code>。</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p><code>view</code>: 当Django 找到一个匹配的准则，会调用这个特定的视图函数，并传入一个<code>HttpRequest</code>对象作为第一个参数</p>
+<ul>
+<li>被“捕获”的参数以<strong>关键字参数</strong>的形式传入</li>
+</ul>
+</li>
+<li><p><code>kwargs</code>: 任意关键字参数 可以作为一个字典传递给目标视图函数，本此项目不会使用</p>
+</li>
+<li><p><code>name</code>: </p>
+<ul>
+<li><blockquote>
+<p>为 URL 取名能使你在 Django 的<strong>任意地方唯一地引用</strong>它，尤其是在模板中。这个有用的特性允许你只改一个文件就能全局地修改某个 URL 模式。</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>-Django</category>
+      </categories>
+      <tags>
+        <tag>-Python</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>17 网络编程</title>
     <url>/2021/05/08/17%20%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/</url>
     <content><![CDATA[<h1 id="17-网络编程"><a href="#17-网络编程" class="headerlink" title="17 网络编程"></a>17 网络编程</h1><p>[toc]</p>
@@ -3337,7 +3958,7 @@ func main() &#123;
 </li>
 <li><p>生成密钥</p>
 <ul>
-<li>```bash<br> ssh-keygen -t rsa -C “<a href="mailto:&#x32;&#54;&#51;&#56;&#55;&#x37;&#x39;&#x32;&#x30;&#x36;&#64;&#113;&#113;&#x2e;&#x63;&#111;&#x6d;">&#x32;&#54;&#51;&#56;&#55;&#x37;&#x39;&#x32;&#x30;&#x36;&#64;&#113;&#113;&#x2e;&#x63;&#111;&#x6d;</a>“<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">      </span><br><span class="line"></span><br><span class="line">* **配置 Deployment**</span><br><span class="line"></span><br><span class="line">  * 在&#96;_config.yml&#96;文件中，找到Deployment：</span><br><span class="line"></span><br><span class="line">    * &#96;&#96;&#96;bash</span><br><span class="line">      deploy:</span><br><span class="line">        type: git</span><br><span class="line">        repo: git@github.com:ZiHao256&#x2F;ZiHao256.github.io.git</span><br><span class="line">        branch: master</span><br></pre></td></tr></table></figure></li>
+<li>```bash<br> ssh-keygen -t rsa -C “<a href="mailto:&#x32;&#54;&#x33;&#56;&#55;&#55;&#57;&#50;&#x30;&#54;&#64;&#x71;&#113;&#x2e;&#x63;&#x6f;&#x6d;">&#x32;&#54;&#x33;&#56;&#55;&#55;&#57;&#50;&#x30;&#54;&#64;&#x71;&#113;&#x2e;&#x63;&#x6f;&#x6d;</a>“<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">      </span><br><span class="line"></span><br><span class="line">* **配置 Deployment**</span><br><span class="line"></span><br><span class="line">  * 在&#96;_config.yml&#96;文件中，找到Deployment：</span><br><span class="line"></span><br><span class="line">    * &#96;&#96;&#96;bash</span><br><span class="line">      deploy:</span><br><span class="line">        type: git</span><br><span class="line">        repo: git@github.com:ZiHao256&#x2F;ZiHao256.github.io.git</span><br><span class="line">        branch: master</span><br></pre></td></tr></table></figure></li>
 </ul>
 </li>
 </ul>

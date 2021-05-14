@@ -509,7 +509,7 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2021-05-14T21:04:12+08:00">
+              <time title="更新于" itemprop="dateModified" datetime="2021-05-14T21:14:31+08:00">
                 2021-05-14
               </time>
             
@@ -559,7 +559,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1.9k
+                  2k
                 </span>
               
 
@@ -606,8 +606,7 @@
 <p> 验收材料要求:</p>
 <p> <strong>新内核引导成功前</strong>：</p>
 <p> \1. 执行命令：<code>uname –a</code>,提交<strong>截屏结果1</strong></p>
-<p> <img src="E:\4th_term\OS课设\课题一\专题一.assets\image-20210512161354142.png" alt="image-20210512161354142"></p>
-<p> <img src="E:\4th_term\OS课设\课题一\专题一内核编译.assets\image-20210514182005088.png" alt="image-20210514182005088"></p>
+<p> <img src="E:\Hexo\Blog\source_posts\专题一内核编译.assets\image-20210514211226158-1620997948493.png" alt="image-20210514211226158"></p>
 <p> <strong>新内核引导成功后</strong>：</p>
 <p> \2. 执行命令：<code>uname –a</code>,提交<strong>截屏结果2</strong></p>
 <p> <img src="E:\4th_term\OS课设\课题一\专题一内核编译.assets\image-20210514210128321.png" alt="image-20210514210128321"></p>
@@ -615,7 +614,12 @@
 <p> <img src="E:\4th_term\OS课设\课题一\专题一内核编译.assets\image-20210514210310481.png" alt="image-20210514210310481"></p>
 </blockquote>
 </li>
-<li>tips: 在创建虚拟机时，最好分配 50G以上从磁盘空间，四个以上内核</li>
+<li><p><strong>==tips:==</strong>  在创建虚拟机时，最好分配 50 GB 以上从磁盘空间，四个以上内核</p>
+</li>
+<li><p><strong>最重要的是</strong>：分配 4 GB 以上的内存，防止在内存中死锁</p>
+</li>
+<li><p><strong>最最重要的是</strong>：新版本的 Linux 内核<code>make install</code>安装后，<strong>不再需要</strong>手动引导内核！！！即不再需要配置 grub</p>
+</li>
 </ul>
 <h1 id="1-知识点-什么是-Linux-内核"><a href="#1-知识点-什么是-Linux-内核" class="headerlink" title="1 [知识点]什么是 Linux 内核"></a>1 [知识点]什么是 Linux 内核</h1><ul>
 <li><p><strong>操作系统的结构</strong></p>
@@ -633,7 +637,7 @@
 </li>
 <li><p>Linux <strong>发行版本</strong>和<strong>内核版本</strong>之间的关系：</p>
 <ul>
-<li>例如教学视频中：Ubuntu10.04 = Kernel2.6.30 + SHELL + USERS APPLICATIONS</li>
+<li>例如教学视频中：<code>Ubuntu10.04</code> = <code>Kernel2.6.30</code> + <code>SHELL</code> + <code>USERS APPLICATIONS</code></li>
 <li>两者独立</li>
 </ul>
 </li>
@@ -4300,7 +4304,7 @@ show_date_time();
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">80.7k</span>
+    <span title="Site words total count">80.8k</span>
   
 </div>
 
@@ -4328,7 +4332,7 @@ show_date_time();
     <!-- 博客字数统计 -->
     <span class="site-pv">
       <i class="fa fa-pencil"></i>
-      博客全站共： <span class="post-count">80.7k</span> 字
+      博客全站共： <span class="post-count">80.8k</span> 字
     </span>
 </div>
 <!-- 新增访客统计代码 END-->

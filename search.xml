@@ -11,7 +11,7 @@
 <p> 验收材料要求:</p>
 <p> <strong>新内核引导成功前</strong>：</p>
 <p> \1. 执行命令：<code>uname –a</code>,提交<strong>截屏结果1</strong></p>
-<p> <img src="E:\Hexo\Blog\source_posts\专题一内核编译.assets\image-20210514211226158-1620997948493.png" alt="image-20210514211226158"></p>
+<p> <img src="E:\Hexo\Blog\source_posts\专题一内核编译\image-20210514211226158-1620997948493.png" alt="image-20210514211226158"></p>
 <p> <strong>新内核引导成功后</strong>：</p>
 <p> \2. 执行命令：<code>uname –a</code>,提交<strong>截屏结果2</strong></p>
 <p> <img src="E:\4th_term\OS课设\课题一\专题一内核编译.assets\image-20210514210128321.png" alt="image-20210514210128321"></p>

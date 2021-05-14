@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2021-05-12T14:50:05.583Z</updated>
+  <updated>2021-05-14T13:04:12.805Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -18,10 +18,10 @@
   
   <entry>
     <title>专题一内核编译</title>
-    <link href="http://example.com/2021/05/12/%E4%B8%93%E9%A2%98%E4%B8%80%E5%86%85%E6%A0%B8%E7%BC%96%E8%AF%91/"/>
-    <id>http://example.com/2021/05/12/%E4%B8%93%E9%A2%98%E4%B8%80%E5%86%85%E6%A0%B8%E7%BC%96%E8%AF%91/</id>
-    <published>2021-05-12T14:47:51.310Z</published>
-    <updated>2021-05-12T14:50:05.583Z</updated>
+    <link href="http://example.com/2021/05/13/%E4%B8%93%E9%A2%98%E4%B8%80%E5%86%85%E6%A0%B8%E7%BC%96%E8%AF%91/"/>
+    <id>http://example.com/2021/05/13/%E4%B8%93%E9%A2%98%E4%B8%80%E5%86%85%E6%A0%B8%E7%BC%96%E8%AF%91/</id>
+    <published>2021-05-13T05:57:47.367Z</published>
+    <updated>2021-05-14T13:04:12.805Z</updated>
     
     
       
@@ -29,11 +29,10 @@
     <summary type="html">&lt;p&gt;[toc]&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;blockquote&gt;
-&lt;p&gt; 作业要求：&lt;/p&gt;
+&lt;p&gt; &lt;strong&gt;作业要求：&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt; 完成本专题教学内容中的验收测试题并提交验收材料。&lt;/p&gt;
 &lt;p&gt; 验收材料要求:&lt;/p&gt;
-&lt;p&gt; &lt;strong&gt;新内核引导成功前&lt;/strong&gt;：&lt;/p&gt;
-&lt;p&gt; \1.</summary>
+&lt;p&gt; &lt;strong&gt;新内核引导成功前&lt;/str</summary>
       
     
     

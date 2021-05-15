@@ -462,6 +462,1041 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/05/07/13%20%E5%8C%85/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/stitch.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ZiHao's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/05/07/13%20%E5%8C%85/" itemprop="url">13 包</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-05-07T19:25:46+08:00">
+                2021-05-07
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2021-05-07T19:27:11+08:00">
+                2021-05-07
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Go-LearningNote/" itemprop="url" rel="index">
+                    <span itemprop="name">-Go LearningNote</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  937
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  3
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="13-包"><a href="#13-包" class="headerlink" title="13 包"></a>13 包</h1><p>[toc]</p>
+<ul>
+<li>在工程化Go 开发项目中，Go 的源码复用建立在 包 基础之上</li>
+<li>定义包、导出包内容、导入其他包</li>
+</ul>
+<h2 id="包介绍"><a href="#包介绍" class="headerlink" title="包介绍"></a>包介绍</h2><ul>
+<li><code>package</code> 是多个Go 源码的集合，高级的代码复用方案</li>
+<li>内置包：<code>fmt</code>, <code>os</code>,<code>io</code></li>
+</ul>
+<h2 id="定义包"><a href="#定义包" class="headerlink" title="定义包"></a>定义包</h2><ul>
+<li><strong>一个包</strong> 简单理解为存放<code>.go</code>文件的<strong>文件夹</strong><ul>
+<li>该文件夹下的所有<code>go</code>文件，都要在代码第一行添加<code>package 包名</code>,声明该文件归属的包</li>
+</ul>
+</li>
+<li>==注意：==<ul>
+<li>一个文件夹下，直接包含的文件只能归属于一个<code>package</code>, 同样一个<code>package</code>文件不能在多个文件夹下</li>
+<li>包名不可以和文件夹名一样</li>
+<li>包名为<code>main</code>的包，是程序的入口包，这种包编译后会得到一个可执行文件，而编译不包含<code>main</code>包的源代码则不会得到可执行文件</li>
+</ul>
+</li>
+</ul>
+<h2 id="可见性"><a href="#可见性" class="headerlink" title="可见性"></a>可见性</h2><ul>
+<li><p>如果想在一个包中，引用另一个包里的 <strong>标识符</strong>，该标识符必须对外可见（<code>public</code>）,</p>
+</li>
+<li><p>Go 中只需要将标识符的首字母大写，即为<code>public</code></p>
+</li>
+<li><p>```go<br>package pkg2</p>
+<p>import “fmt”</p>
+<p>// 包变量可见性</p>
+<p>var a = 100 // 首字母小写，外部包不可见，只能在当前包内使用</p>
+<p>// 首字母大写外部包可见，可在其他包中使用<br>const Mode = 1</p>
+<p>type person struct { // 首字母小写，外部包不可见，只能在当前包内使用</p>
+<pre><code>name string
+</code></pre>
+<p>}</p>
+<p>// 首字母大写，外部包可见，可在其他包中使用<br>func Add(x, y int) int {</p>
+<pre><code>return x + y
+</code></pre>
+<p>}</p>
+<p>func age() { // 首字母小写，外部包不可见，只能在当前包内使用</p>
+<pre><code>var Age = 18 // 函数局部变量，外部包不可见，只能在当前函数内使用
+fmt.Println(Age)
+</code></pre>
+<p>}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* 结构体的 **字段名和接口中的方法名** 如果**首字母都是大写**，外部包可以访问这些字段和方法</span><br><span class="line"></span><br><span class="line">  * &#96;&#96;&#96;go</span><br><span class="line">    type Student struct &#123;</span><br><span class="line">    	Name  string &#x2F;&#x2F;可在包外访问的方法</span><br><span class="line">    	class string &#x2F;&#x2F;仅限包内访问的字段</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    type Payer interface &#123;</span><br><span class="line">    	init() &#x2F;&#x2F;仅限包内访问的方法</span><br><span class="line">    	Pay()  &#x2F;&#x2F;可在包外访问的方法</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="包的导入"><a href="#包的导入" class="headerlink" title="包的导入"></a>包的导入</h2><ul>
+<li>使用<code>import</code>关键字 导入包<ul>
+<li><code>import &quot;包的路径&quot;</code></li>
+</ul>
+</li>
+<li>注意：<ul>
+<li>import 导入语句通常放在文件开头包声明语句下面</li>
+<li>导入的包名需要使用双引号包裹</li>
+<li>包名是从<code>$GOPATH/src/</code> 后开始的</li>
+<li>禁止循环导入包</li>
+</ul>
+</li>
+</ul>
+<h3 id="单行导入"><a href="#单行导入" class="headerlink" title="单行导入"></a>单行导入</h3><ul>
+<li><code>import &quot;&quot;</code></li>
+<li><code>import &quot;&quot;</code></li>
+</ul>
+<h3 id="多行导入"><a href="#多行导入" class="headerlink" title="多行导入"></a>多行导入</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">&quot;&quot;</span></span><br><span class="line">	<span class="string">&quot;&quot;</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<h2 id="自定义包名"><a href="#自定义包名" class="headerlink" title="自定义包名"></a>自定义包名</h2><ul>
+<li>导入包名时，可以为导入的包设置别名<ul>
+<li><code>import 别名 &quot;包的路径&quot;</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="匿名导入包"><a href="#匿名导入包" class="headerlink" title="匿名导入包"></a>匿名导入包</h2><ul>
+<li>如果只希望导入包，不使用内部数据，可以使用匿名导入：<ul>
+<li><code>import _ &quot;包的路径&quot;</code></li>
+</ul>
+</li>
+<li>一样会被编译到可执行文件中</li>
+</ul>
+<h2 id="init-初始化函数"><a href="#init-初始化函数" class="headerlink" title="init() 初始化函数"></a>init() 初始化函数</h2><h3 id="init-函数介绍"><a href="#init-函数介绍" class="headerlink" title="init() 函数介绍"></a>init() 函数介绍</h3><ul>
+<li><p>Go 语言程序执行时，导入包语句 会自动触发包内部<code>init()</code> 函数的调用</p>
+</li>
+<li><p><code>init()</code> 函数没有参数和返回值</p>
+</li>
+<li><p><code>init()</code>函数在程序运行时，<strong>会被自动调用执行</strong>，<strong>不能在代码中主动调用</strong></p>
+</li>
+<li><p>包中 <code>init()</code> 函数的执行时机</p>
+<ul>
+<li><img src="E:\LearningNotes\Go\包.assets\init01.png" alt="包中的init()执行时机"></li>
+</ul>
+</li>
+</ul>
+<h3 id="init-函数执行顺序"><a href="#init-函数执行顺序" class="headerlink" title="init() 函数执行顺序"></a>init() 函数执行顺序</h3><ul>
+<li>Go 会从<code>main</code> 包开始检查其导入的所有包，每个包有可能导入了其他包</li>
+<li>Go 编译器由此构建出一个树状的包引用关系，再根据引用顺序决定编译顺序，依次编译这些包的代码</li>
+<li>在运行时，最后被导入的包 最先被初始化并调用其<code>init()</code> 函数<ul>
+<li><img src="E:\LearningNotes\Go\包.assets\init02.png" alt="包之间的init()执行顺序"></li>
+</ul>
+</li>
+</ul>
+<h2 id="练习题"><a href="#练习题" class="headerlink" title="练习题"></a>练习题</h2><ul>
+<li>编写一个<code>calc</code>包实现加减乘除四个功能函数，在<code>snow</code>这个包中导入并使用加减乘除四个函数实现数学运算</li>
+</ul>
+
+          
+        
+      
+    </div>
+   
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/05/07/12%20%E7%BB%93%E6%9E%84%E4%BD%93/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/stitch.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ZiHao's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/05/07/12%20%E7%BB%93%E6%9E%84%E4%BD%93/" itemprop="url">12 结构体</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-05-07T19:25:46+08:00">
+                2021-05-07
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2021-05-07T19:26:53+08:00">
+                2021-05-07
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Go-LearningNote/" itemprop="url" rel="index">
+                    <span itemprop="name">-Go LearningNote</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3.9k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  17
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="12-结构体"><a href="#12-结构体" class="headerlink" title="12 结构体"></a>12 结构体</h1><p>[toc]</p>
+<h1 id="12-结构体-1"><a href="#12-结构体-1" class="headerlink" title="12 结构体"></a>12 结构体</h1><ul>
+<li>Go 中无 ·类· 的概念，不支持类的继承等面向对象的概念</li>
+<li>通过 <strong>结构体的内嵌再配合接口</strong> 比面向对象具有更高的扩展性和灵活性</li>
+</ul>
+<h2 id="类型别名和自定义类型"><a href="#类型别名和自定义类型" class="headerlink" title="类型别名和自定义类型"></a>类型别名和自定义类型</h2><h3 id="自定义类型"><a href="#自定义类型" class="headerlink" title="自定义类型"></a>自定义类型</h3><ul>
+<li>Go 中的基本数据类型：<code>string</code>, <code>int</code>… ,<code>浮点数</code>等</li>
+<li>Go 可以使用<code>type</code> 关键字定义自定义类型</li>
+<li>自定义类型：定义了一个全新的类型<ul>
+<li>可以基于内置基本数据类型</li>
+<li>可以通过struct定义</li>
+</ul>
+</li>
+<li><code>type name T</code></li>
+<li>name 就是一种新类型，具有 T类型的特性</li>
+</ul>
+<h3 id="类型别名"><a href="#类型别名" class="headerlink" title="类型别名"></a>类型别名</h3><ul>
+<li><strong>类型别名</strong>规定：<code>type TypeAlias = Type</code><ul>
+<li><code>TypeAlias</code> 只是<code>Type</code> 的<strong>别名</strong>，</li>
+<li><strong>本质上是同一个类型</strong></li>
+</ul>
+</li>
+<li><code>rune</code> 和 <code>byte</code> 就是类型别名：<ul>
+<li><code>type rune = int32</code></li>
+<li><code>type byte = uint8</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="类型定义-和-类型别名的区别"><a href="#类型定义-和-类型别名的区别" class="headerlink" title="类型定义 和 类型别名的区别"></a>类型定义 和 类型别名的区别</h3><ul>
+<li><code>type NewInt int</code> : <code>%T</code> : <code>main.NewInt</code></li>
+<li><code>type MyInt = int</code>: <code>%T</code> : <code>int</code></li>
+</ul>
+<p>结果显示a的类型是<code>main.NewInt</code>，表示<strong>main包下定义</strong>的<code>NewInt</code>类型。</p>
+<p>b的类型是<code>int</code>。<code>MyInt</code>类型只会在代码中存在，编译完成时并不会有<code>MyInt</code>类型。</p>
+<h2 id="结构体"><a href="#结构体" class="headerlink" title="结构体"></a>结构体</h2><ul>
+<li><strong>基本数据类型</strong>可以表示一些事物的部分属性</li>
+<li><strong>结构体</strong>可以封装多个基本数据类型，表达一个事物的全部属性<ul>
+<li>本质上是一种聚合类型</li>
+</ul>
+</li>
+<li>Go 通过struct实现面向对象</li>
+</ul>
+<h3 id="结构体的定义"><a href="#结构体的定义" class="headerlink" title="结构体的定义"></a>结构体的定义</h3><ul>
+<li><p>使用<code>type</code> 和 <code>struct</code></p>
+<ul>
+<li>```go<br>type 类型名 struct{<pre><code>字段名 字段类型
+字段名 字段类型
+</code></pre>
+}<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">  * 类型名：同一个包内不能重复</span><br><span class="line"></span><br><span class="line">  * 字段名：字段名必须唯一，同样字段类型的字段名可写在同一行</span><br><span class="line"></span><br><span class="line">  * 字段类型：结构体字段的具体类型</span><br><span class="line"></span><br><span class="line">### 结构体实例化</span><br><span class="line"></span><br><span class="line">* 只有当结构体实例化时，才会真正的分配内存，才能使用结构体的字段</span><br><span class="line">* 使用关键字&#96;var&#96;声明：&#96;var 结构体实例 结构体类型&#96;</span><br><span class="line"></span><br><span class="line">#### 基本实例化</span><br><span class="line"></span><br><span class="line">* 声明后，使用操作符&#96;.&#96;访问结构体字段（成员变量）进行初始化</span><br><span class="line"></span><br><span class="line">* &#96;&#96;&#96;go</span><br><span class="line">  type person struct &#123;</span><br><span class="line">  	name string</span><br><span class="line">  	city string</span><br><span class="line">  	age  int8</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  func main() &#123;</span><br><span class="line">  	var p1 person</span><br><span class="line">  	p1.name &#x3D; &quot;沙河娜扎&quot;</span><br><span class="line">  	p1.city &#x3D; &quot;北京&quot;</span><br><span class="line">  	p1.age &#x3D; 18</span><br><span class="line">  	fmt.Printf(&quot;p1&#x3D;%v\n&quot;, p1)  &#x2F;&#x2F;p1&#x3D;&#123;沙河娜扎 北京 18&#125;</span><br><span class="line">  	fmt.Printf(&quot;p1&#x3D;%#v\n&quot;, p1) &#x2F;&#x2F;p1&#x3D;main.person&#123;name:&quot;沙河娜扎&quot;, city:&quot;北京&quot;, age:18&#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<h4 id="匿名结构体"><a href="#匿名结构体" class="headerlink" title="匿名结构体"></a>匿名结构体</h4><ul>
+<li><p>定义一些临时数据结构，使用匿名结构体</p>
+<p><code>var user struct&#123;Name string; Age int&#125;</code></p>
+</li>
+</ul>
+<h4 id="创建指针类型结构体"><a href="#创建指针类型结构体" class="headerlink" title="创建指针类型结构体"></a>创建指针类型结构体</h4><ul>
+<li><p>可以使用<code>new</code> 对结构体进行实例化，得到结构体的地址</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> p2 = <span class="built_in">new</span>(person)</span><br><span class="line">fmt.Printf(<span class="string">&quot;%T&quot;</span>,p2) <span class="comment">//*main.person</span></span><br><span class="line">fmt.Printf(<span class="string">&quot;%#v&quot;</span>,p2) <span class="comment">//&amp;main.person(..)</span></span><br></pre></td></tr></table></figure></li>
+<li><p><code>p2</code> 是一个结构体指针</p>
+</li>
+<li><p>注意：Go 支持<strong>对结构体指针</strong>直接使用<code>.</code>访问结构体成员</p>
+</li>
+</ul>
+<h4 id="取结构体的地址实例化"><a href="#取结构体的地址实例化" class="headerlink" title="取结构体的地址实例化"></a>取结构体的地址实例化</h4><ul>
+<li><p>使用<code>&amp;</code> 对结构体进行取地址操作，相当于对该结构体类型 进行了一次<code>new</code>实例化操作</p>
+</li>
+<li><p>```go<br>p3 := &amp;person()<br>p3.name = “qimi”</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* &#96;p3.name &#x3D; &quot;qimi&quot;&#96; 在底层 是&#96;(*p3).name &#x3D; &quot;qimi&quot;&#96;</span><br><span class="line"></span><br><span class="line">  * 是 Go 帮我们实现的语法糖</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 结构体初始化</span><br><span class="line"></span><br><span class="line">* **未初始化的结构体**，其成员变量都是对应其类型的零值</span><br><span class="line"></span><br><span class="line">* &#96;&#96;&#96;go</span><br><span class="line">  type person struct &#123;</span><br><span class="line">  	name string</span><br><span class="line">  	city string</span><br><span class="line">  	age  int8</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  func main() &#123;</span><br><span class="line">  	var p4 person</span><br><span class="line">  	fmt.Printf(&quot;p4&#x3D;%#v\n&quot;, p4) &#x2F;&#x2F;p4&#x3D;main.person&#123;name:&quot;&quot;, city:&quot;&quot;, age:0&#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="使用键值对初始化"><a href="#使用键值对初始化" class="headerlink" title="使用键值对初始化"></a>使用键值对初始化</h4><ul>
+<li><p>键对应结构体的字段</p>
+</li>
+<li><p>值对应该字段的初始值</p>
+<ul>
+<li>```go<br>p5 := person{<pre><code>name : &quot;小王子&quot;,
+city : &quot;beijing&quot;,
+age : 18,
+</code></pre>
+}<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* 对结构体指针进行键值对初始化：</span><br><span class="line"></span><br><span class="line">  * &#96;&#96;&#96;go</span><br><span class="line">    p6 :&#x3D; &amp;person&#123;</span><br><span class="line">    	name: &quot;小王子&quot;,</span><br><span class="line">    	city: &quot;北京&quot;,</span><br><span class="line">    	age:  18,</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>未指定初始值的字段的值为该字段类型的零值</p>
+<ul>
+<li><p>```go<br>p7 := &amp;person{</p>
+<pre><code>city: &quot;北京&quot;,
+</code></pre>
+<p>}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### 使用值得列表初始化</span><br><span class="line"></span><br><span class="line">* 初始化结构体时，直接写值：</span><br><span class="line"></span><br><span class="line">  * &#96;&#96;&#96;go</span><br><span class="line">    p8 :&#x3D; &amp;person&#123;</span><br><span class="line">    	&quot;沙河娜扎&quot;,</span><br><span class="line">    	&quot;北京&quot;,</span><br><span class="line">    	28,</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>必须要初始化结构体的所有字段</p>
+</li>
+<li><p>初始值的填充顺序必须与字段，在结构体中的声明顺序一致</p>
+</li>
+<li><p>不能和键值对初始化混用</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="结构体内存布局"><a href="#结构体内存布局" class="headerlink" title="结构体内存布局"></a>结构体内存布局</h3><ul>
+<li>结构体占用一块 <strong>连续的内存</strong></li>
+</ul>
+<h4 id="空结构体"><a href="#空结构体" class="headerlink" title="空结构体"></a>空结构体</h4><ul>
+<li>空结构体不占用空间</li>
+</ul>
+<p><code>fmt.Printf(unsafe.Sizeof(v))</code> //0</p>
+<h3 id="面试题"><a href="#面试题" class="headerlink" title="面试题"></a>面试题</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> student <span class="keyword">struct</span> &#123;</span><br><span class="line">	name <span class="keyword">string</span></span><br><span class="line">	age  <span class="keyword">int</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	m := <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">string</span>]*student)</span><br><span class="line">	stus := []student&#123;</span><br><span class="line">		&#123;name: <span class="string">&quot;小王子&quot;</span>, age: <span class="number">18</span>&#125;,</span><br><span class="line">		&#123;name: <span class="string">&quot;娜扎&quot;</span>, age: <span class="number">23</span>&#125;,</span><br><span class="line">		&#123;name: <span class="string">&quot;大王八&quot;</span>, age: <span class="number">9000</span>&#125;,</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> _, stu := <span class="keyword">range</span> stus &#123;</span><br><span class="line">        m[stu.name] = &amp;stu  <span class="comment">//m : &quot;小王子&quot;：&amp;student&#123;name: &quot;小王子&quot;, age: 18&#125;</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> k, v := <span class="keyword">range</span> m &#123;</span><br><span class="line">		fmt.Println(k, <span class="string">&quot;=&gt;&quot;</span>, v.name)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>执行结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">小王子 &#x3D;&gt; 小王子</span><br><span class="line">娜扎 &#x3D;&gt; 娜扎</span><br><span class="line">大王八 &#x3D;&gt; 大王八</span><br></pre></td></tr></table></figure></li>
+<li><p>运行结果:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">大王八 &#x3D;&gt; 大王八</span><br><span class="line">小王子 &#x3D;&gt; 大王八</span><br><span class="line">娜扎 &#x3D;&gt; 大王八</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h3><ul>
+<li><p>Go 结构体没有构造函数，需要<strong>自己实现</strong></p>
+</li>
+<li><p><code>struct</code> 是值类型，值拷贝性能开销比较大，所以<strong>构造函数返回的是结构体指针类型</strong></p>
+<ul>
+<li>```go<br>func newPerson(name, city string, age int8) *person {<pre><code>return &amp;person&#123;
+    name: name,
+    city: city,
+    age:  age,
+&#125;
+</code></pre>
+}<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* 调用：</span><br><span class="line"></span><br><span class="line">  * &#96;&#96;&#96;go</span><br><span class="line">    p9 :&#x3D; newPerson(&quot;张三&quot;, &quot;沙河&quot;, 90)</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<h3 id="方法和接收者"><a href="#方法和接收者" class="headerlink" title="方法和接收者"></a>方法和接收者</h3><ul>
+<li><p>Go 中的<strong>方法（Method）</strong>：一种作用于<strong>特定类型变量</strong>的函数</p>
+<ul>
+<li>这种特定类型变量叫做<code>接收者Receiver</code></li>
+<li>接收者的概念类似于<code>this</code>, <code>self</code></li>
+</ul>
+</li>
+<li><p>方法的<strong>定义格式</strong>：</p>
+<ul>
+<li>```go<br>func (接收者变量 接收者类型) 方法名(参数列表) (返回参数) {<pre><code>函数体
+</code></pre>
+}<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">  * **接收者变量：**接收者中的参数变量名在命名时，官方建议使用接收者类型名称首字母的小写，而不是&#96;self&#96;、&#96;this&#96;之类的命名</span><br><span class="line">  * **接收者类型：**接收者类型和参数类似，可以是**指针类型和非指针类型**</span><br><span class="line">  * **方法名、参数列表、返回参数：** 与函数定义相同</span><br><span class="line">  </span><br><span class="line">* 示例：</span><br><span class="line"></span><br><span class="line">  &#96;&#96;&#96;go</span><br><span class="line">  &#x2F;&#x2F;Person 结构体</span><br><span class="line">  type Person struct &#123;</span><br><span class="line">  	name string</span><br><span class="line">  	age  int8</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  &#x2F;&#x2F;NewPerson 构造函数</span><br><span class="line">  func NewPerson(name string, age int8) *Person &#123;</span><br><span class="line">  	return &amp;Person&#123;</span><br><span class="line">  		name: name,</span><br><span class="line">  		age:  age,</span><br><span class="line">  	&#125;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  &#x2F;&#x2F;Dream Person做梦的方法</span><br><span class="line">  func (p Person) Dream() &#123;</span><br><span class="line">  	fmt.Printf(&quot;%s的梦想是学好Go语言！\n&quot;, p.name)</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  func main() &#123;</span><br><span class="line">  	p1 :&#x3D; NewPerson(&quot;小王子&quot;, 25)</span><br><span class="line">  	p1.Dream()</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>方法与函数的区别：</p>
+<ul>
+<li>函数<strong>不属于任何类型</strong></li>
+<li>方法<strong>属于特定类型</strong></li>
+</ul>
+</li>
+</ul>
+<h4 id="指针类型的接收者"><a href="#指针类型的接收者" class="headerlink" title="指针类型的接收者"></a>指针类型的接收者</h4><ul>
+<li><p>指针类型的接收者 ： 结构体的指针</p>
+</li>
+<li><p>调用方法时，修改接收者指针的任意成员变量，都是有效的</p>
+<ul>
+<li>接近于其他面向对象中的<code>this</code>, <code>self</code></li>
+</ul>
+</li>
+<li><p>示例：一个方法：修改实例变量的年龄</p>
+<ul>
+<li>```go<br>// SetAge 设置p的年龄<br>// 使用指针接收者<br>func (p *Person) SetAge(newAge int8) {<pre><code>p.age = newAge
+</code></pre>
+}<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* &#96;&#96;&#96;go</span><br><span class="line">  func main() &#123;</span><br><span class="line">  	p1 :&#x3D; NewPerson(&quot;小王子&quot;, 25)</span><br><span class="line">  	fmt.Println(p1.age) &#x2F;&#x2F; 25</span><br><span class="line">  	p1.SetAge(30)</span><br><span class="line">  	fmt.Println(p1.age) &#x2F;&#x2F; 30</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<h4 id="值类型的接收者"><a href="#值类型的接收者" class="headerlink" title="值类型的接收者"></a>值类型的接收者</h4><ul>
+<li><p>方法作用于 值类型接收者时，Go 会在运行前将<strong>接收者的值复制一份</strong></p>
+</li>
+<li><p>在值类型接收者的方法中，可以获取接收者的成员值，但无法修改接收者变量本身</p>
+<ul>
+<li>```go<br>// SetAge2 设置p的年龄<br>// 使用值接收者<br>func (p Person) SetAge2(newAge int8) {<pre><code>p.age = newAge
+</code></pre>
+}func main() {<pre><code>p1 := NewPerson(&quot;小王子&quot;, 25)
+p1.Dream()
+fmt.Println(p1.age) // 25
+p1.SetAge2(30) // (*p1).SetAge2(30)
+fmt.Println(p1.age) // 25
+</code></pre>
+}<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">#### 何时使用 指针类型的接收者</span><br><span class="line"></span><br><span class="line">* 需要修改接收者的成员值</span><br><span class="line">* 接收者是 拷贝代价比较大的大对象</span><br><span class="line">* 保证一致性，若有个方法使用了指针接收者，其他也应该同步</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 任意类型添加方法</span><br><span class="line"></span><br><span class="line">* 在Go中，**任何类型**都可以拥有方法，**接收者可以是任何类型**</span><br><span class="line"></span><br><span class="line">  * 例如：将内置类型&#96;int&#96; 使用关键字type，定义为新的自定义类型，可以为其添加方法</span><br><span class="line"></span><br><span class="line">  * &#96;&#96;&#96;go</span><br><span class="line">    &#x2F;&#x2F;MyInt 将int定义为自定义MyInt类型</span><br><span class="line">    type MyInt int</span><br><span class="line">    </span><br><span class="line">    &#x2F;&#x2F;SayHello 为MyInt添加一个SayHello的方法</span><br><span class="line">    func (m MyInt) SayHello() &#123;</span><br><span class="line">    	fmt.Println(&quot;Hello, 我是一个int。&quot;)</span><br><span class="line">    &#125;</span><br><span class="line">    func main() &#123;</span><br><span class="line">    	var m1 MyInt</span><br><span class="line">    	m1.SayHello() &#x2F;&#x2F;Hello, 我是一个int。</span><br><span class="line">    	m1 &#x3D; 100</span><br><span class="line">    	fmt.Printf(&quot;%#v  %T\n&quot;, m1, m1) &#x2F;&#x2F;100  main.MyInt</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>注意：不能给其他包的 类型定义方法</p>
+</li>
+</ul>
+<h3 id="结构体的匿名字段"><a href="#结构体的匿名字段" class="headerlink" title="结构体的匿名字段"></a>结构体的匿名字段</h3><ul>
+<li><p>结构体 允许 其成员字段在声明时，<strong>没有字段名，只有类型</strong></p>
+</li>
+<li><p>==注意：==Go 会默认采用类型名作为字段名，<strong>结构体要求字段名称必须唯一</strong></p>
+<ul>
+<li>因此，一个结构体中，同种类型的匿名字段只能有一个</li>
+</ul>
+</li>
+<li><p>```go<br>//Person 结构体Person类型<br>type Person struct {</p>
+<pre><code>string
+int
+</code></pre>
+<p>}</p>
+<p>func main() {</p>
+<pre><code>p1 := Person&#123;
+    &quot;小王子&quot;,
+    18,
+&#125;
+fmt.Printf(&quot;%#v\n&quot;, p1)        //main.Person&#123;string:&quot;北京&quot;, int:18&#125;
+fmt.Println(p1.string, p1.int) //北京 18
+</code></pre>
+<p>}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* </span><br><span class="line"></span><br><span class="line">### 嵌套结构体</span><br><span class="line"></span><br><span class="line">* 结构体中，可以**嵌套包含** 另一个结构体或结构体指针</span><br><span class="line"></span><br><span class="line">  * 示例</span><br><span class="line"></span><br><span class="line">    &#96;&#96;&#96;go</span><br><span class="line">    &#x2F;&#x2F;Address 地址结构体</span><br><span class="line">    type Address struct &#123;</span><br><span class="line">    	Province string</span><br><span class="line">    	City     string</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    &#x2F;&#x2F;User 用户结构体</span><br><span class="line">    type User struct &#123;</span><br><span class="line">    	Name    string</span><br><span class="line">    	Gender  string</span><br><span class="line">    	Address Address</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    func main() &#123;</span><br><span class="line">    	user1 :&#x3D; User&#123;</span><br><span class="line">    		Name:   &quot;小王子&quot;,</span><br><span class="line">    		Gender: &quot;男&quot;,</span><br><span class="line">    		Address: Address&#123;</span><br><span class="line">    			Province: &quot;山东&quot;,</span><br><span class="line">    			City:     &quot;威海&quot;,</span><br><span class="line">    		&#125;,</span><br><span class="line">    	&#125;</span><br><span class="line">    	fmt.Printf(&quot;user1&#x3D;%#v\n&quot;, user1)&#x2F;&#x2F;user1&#x3D;main.User&#123;Name:&quot;小王子&quot;, Gender:&quot;男&quot;, Address:main.Address&#123;Province:&quot;山东&quot;, City:&quot;威海&quot;&#125;&#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="嵌套匿名字段"><a href="#嵌套匿名字段" class="headerlink" title="嵌套匿名字段"></a>嵌套匿名字段</h4><ul>
+<li><p>嵌套的结构体也可采用匿名字段：</p>
+<ul>
+<li>```go<br>//Address 地址结构体<br>type Address struct {<pre><code>Province string
+City     string
+</code></pre>
+}//User 用户结构体<br>type User struct {<pre><code>Name    string
+Gender  string
+Address //匿名字段
+</code></pre>
+}func main() {<pre><code>var user2 User
+user2.Name = &quot;小王子&quot;
+user2.Gender = &quot;男&quot;
+user2.Address.Province = &quot;山东&quot;    // 匿名字段默认使用类型名作为字段名
+user2.City = &quot;威海&quot;                // 匿名字段可以省略
+fmt.Printf(&quot;user2=%#v\n&quot;, user2) //user2=main.User&#123;Name:&quot;小王子&quot;, Gender:&quot;男&quot;, Address:main.Address&#123;Province:&quot;山东&quot;, City:&quot;威海&quot;&#125;&#125;
+</code></pre>
+}<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* 当访问结构体成员时，现在结构体中查找该字段，再去嵌套的匿名字段找</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### 嵌套结构体的字段名冲突</span><br><span class="line"></span><br><span class="line">* 嵌套结构体内部可能存在相同的字段名。在这种情况下为了避免歧义需要通过指定具体的内嵌结构体字段名。</span><br><span class="line"></span><br><span class="line">  &#96;&#96;&#96;go</span><br><span class="line">  &#x2F;&#x2F;Address 地址结构体</span><br><span class="line">  type Address struct &#123;</span><br><span class="line">  	Province   string</span><br><span class="line">  	City       string</span><br><span class="line">  	CreateTime string</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  &#x2F;&#x2F;Email 邮箱结构体</span><br><span class="line">  type Email struct &#123;</span><br><span class="line">  	Account    string</span><br><span class="line">  	CreateTime string</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  &#x2F;&#x2F;User 用户结构体</span><br><span class="line">  type User struct &#123;</span><br><span class="line">  	Name   string</span><br><span class="line">  	Gender string</span><br><span class="line">  	Address</span><br><span class="line">  	Email</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  func main() &#123;</span><br><span class="line">  	var user3 User</span><br><span class="line">  	user3.Name &#x3D; &quot;沙河娜扎&quot;</span><br><span class="line">  	user3.Gender &#x3D; &quot;男&quot;</span><br><span class="line">  	&#x2F;&#x2F; user3.CreateTime &#x3D; &quot;2019&quot; &#x2F;&#x2F;ambiguous selector user3.CreateTime</span><br><span class="line">  	user3.Address.CreateTime &#x3D; &quot;2000&quot; &#x2F;&#x2F;指定Address结构体中的CreateTime</span><br><span class="line">  	user3.Email.CreateTime &#x3D; &quot;2000&quot;   &#x2F;&#x2F;指定Email结构体中的CreateTime</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<h3 id="结构体的-“继承”"><a href="#结构体的-“继承”" class="headerlink" title="结构体的 “继承”"></a>结构体的 “继承”</h3><ul>
+<li><p>Go 中使用结构体，可以实现其他面向对象中的 继承</p>
+<ul>
+<li>```go<br>//Animal 动物<br>type Animal struct {<pre><code>name string
+</code></pre>
+}func (a *Animal) move() {<pre><code>fmt.Printf(&quot;%s会动！\n&quot;, a.name)
+</code></pre>
+}//Dog 狗<br>type Dog struct {<pre><code>Feet    int8
+*Animal //通过嵌套匿名结构体实现继承
+</code></pre>
+}func (d *Dog) wang() {<pre><code>fmt.Printf(&quot;%s会汪汪汪~\n&quot;, d.name)
+</code></pre>
+}func main() {<pre><code>d1 := &amp;Dog&#123;
+    Feet: 4,
+    Animal: &amp;Animal&#123; //注意嵌套的是结构体指针
+        name: &quot;乐乐&quot;,
+    &#125;,
+&#125;
+d1.wang() //乐乐会汪汪汪~
+d1.move() //乐乐会动！
+</code></pre>
+}<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 结构体字段的可见性</span><br><span class="line"></span><br><span class="line">* 结构体中：</span><br><span class="line">  * **大写**开头表示**可公开访问**</span><br><span class="line">  * **小写**表示**私有**(仅在定义当前结构体的包中访问)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 结构体 与 JSON 序列化</span><br><span class="line"></span><br><span class="line">* &#96;JSON&#96; ：&#96;JavaScript Object Notation&#96;</span><br><span class="line"></span><br><span class="line">  * 轻量级的**数据交换格式**</span><br><span class="line">  * 易于 阅读和编写</span><br><span class="line">  * 易于 机器解析和生成</span><br><span class="line"></span><br><span class="line">* JSON 键值对：用于保存 JS 对象的一种方式</span><br><span class="line"></span><br><span class="line">  * 键&#x2F;值对 格式：&#96;&quot;键名&quot; : 值, &#96;</span><br><span class="line"></span><br><span class="line">  * &#96;&#96;&#96;go</span><br><span class="line">    &#x2F;&#x2F;Student 学生</span><br><span class="line">    type Student struct &#123;</span><br><span class="line">    	ID     int</span><br><span class="line">    	Gender string</span><br><span class="line">    	Name   string</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    &#x2F;&#x2F;Class 班级</span><br><span class="line">    type Class struct &#123;</span><br><span class="line">    	Title    string</span><br><span class="line">    	Students []*Student</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    func main() &#123;</span><br><span class="line">    	c :&#x3D; &amp;Class&#123;</span><br><span class="line">    		Title:    &quot;101&quot;,</span><br><span class="line">    		Students: make([]*Student, 0, 200),</span><br><span class="line">    	&#125;</span><br><span class="line">    	for i :&#x3D; 0; i &lt; 10; i++ &#123;</span><br><span class="line">    		stu :&#x3D; &amp;Student&#123;</span><br><span class="line">    			Name:   fmt.Sprintf(&quot;stu%02d&quot;, i),</span><br><span class="line">    			Gender: &quot;男&quot;,</span><br><span class="line">    			ID:     i,</span><br><span class="line">    		&#125;</span><br><span class="line">    		c.Students &#x3D; append(c.Students, stu)</span><br><span class="line">    	&#125;</span><br><span class="line">    	&#x2F;&#x2F;JSON序列化：结构体--&gt;JSON格式的字符串</span><br><span class="line">    	data, err :&#x3D; json.Marshal(c)</span><br><span class="line">    	if err !&#x3D; nil &#123;</span><br><span class="line">    		fmt.Println(&quot;json marshal failed&quot;)</span><br><span class="line">    		return</span><br><span class="line">    	&#125;</span><br><span class="line">    	fmt.Printf(&quot;json:%s\n&quot;, data)</span><br><span class="line">    	&#x2F;&#x2F;JSON反序列化：JSON格式的字符串--&gt;结构体</span><br><span class="line">    	str :&#x3D; &#96;&#123;&quot;Title&quot;:&quot;101&quot;,&quot;Students&quot;:[&#123;&quot;ID&quot;:0,&quot;Gender&quot;:&quot;男&quot;,&quot;Name&quot;:&quot;stu00&quot;&#125;,&#123;&quot;ID&quot;:1,&quot;Gender&quot;:&quot;男&quot;,&quot;Name&quot;:&quot;stu01&quot;&#125;,&#123;&quot;ID&quot;:2,&quot;Gender&quot;:&quot;男&quot;,&quot;Name&quot;:&quot;stu02&quot;&#125;,&#123;&quot;ID&quot;:3,&quot;Gender&quot;:&quot;男&quot;,&quot;Name&quot;:&quot;stu03&quot;&#125;,&#123;&quot;ID&quot;:4,&quot;Gender&quot;:&quot;男&quot;,&quot;Name&quot;:&quot;stu04&quot;&#125;,&#123;&quot;ID&quot;:5,&quot;Gender&quot;:&quot;男&quot;,&quot;Name&quot;:&quot;stu05&quot;&#125;,&#123;&quot;ID&quot;:6,&quot;Gender&quot;:&quot;男&quot;,&quot;Name&quot;:&quot;stu06&quot;&#125;,&#123;&quot;ID&quot;:7,&quot;Gender&quot;:&quot;男&quot;,&quot;Name&quot;:&quot;stu07&quot;&#125;,&#123;&quot;ID&quot;:8,&quot;Gender&quot;:&quot;男&quot;,&quot;Name&quot;:&quot;stu08&quot;&#125;,&#123;&quot;ID&quot;:9,&quot;Gender&quot;:&quot;男&quot;,&quot;Name&quot;:&quot;stu09&quot;&#125;]&#125;&#96;</span><br><span class="line">    	c1 :&#x3D; &amp;Class&#123;&#125;</span><br><span class="line">    	err &#x3D; json.Unmarshal([]byte(str), c1)</span><br><span class="line">    	if err !&#x3D; nil &#123;</span><br><span class="line">    		fmt.Println(&quot;json unmarshal failed!&quot;)</span><br><span class="line">    		return</span><br><span class="line">    	&#125;</span><br><span class="line">    	fmt.Printf(&quot;%#v\n&quot;, c1)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<h3 id="结构体标签-Tag"><a href="#结构体标签-Tag" class="headerlink" title="结构体标签(Tag)"></a>结构体标签(Tag)</h3><ul>
+<li><p><code>Tag</code> 是结构体中的 <strong>元信息</strong>，运行的时候通过反射机制读取出来</p>
+<ul>
+<li><p><code>Tag</code> 在<strong>结构体字段的后方</strong>定义，用==反引号==包裹</p>
+</li>
+<li><p>```<br><code>key1:&quot;balue1&quot; key2:&quot;value2&quot;</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* 结构体&#96;tag&#96; 有一个或多个键值对组成</span><br><span class="line"></span><br><span class="line">  * 键与值是用冒号分隔，值使用双引号括起来</span><br><span class="line">  * 同一个结构体字段可以设置多个键值对，不同键值对使用空格分隔</span><br><span class="line"></span><br><span class="line">* &#x3D;&#x3D;注意： &#x3D;&#x3D;为结构体编写&#96;Tag&#96;时，必须严格遵守键值对的规则。结构体标签的解析代码的容错能力很差，一旦格式写错，编译和运行时都不会提示任何错误，通过反射也无法正确取值。例如**不要在key和value之间添加空格。**</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">* 示例：每个字段定义json序列化时使用的 Tag</span><br><span class="line"></span><br><span class="line">  * &#96;&#96;&#96;go</span><br><span class="line">    &#x2F;&#x2F;Student 学生</span><br><span class="line">    type Student struct &#123;</span><br><span class="line">    	ID     int    &#96;json:&quot;id&quot;&#96; &#x2F;&#x2F;通过指定tag实现json序列化该字段时的key</span><br><span class="line">    	Gender string &#x2F;&#x2F;json序列化是默认使用字段名作为key</span><br><span class="line">    	name   string &#x2F;&#x2F;私有不能被json包访问</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    func main() &#123;</span><br><span class="line">    	s1 :&#x3D; Student&#123;</span><br><span class="line">    		ID:     1,</span><br><span class="line">    		Gender: &quot;男&quot;,</span><br><span class="line">    		name:   &quot;沙河娜扎&quot;,</span><br><span class="line">    	&#125;</span><br><span class="line">    	data, err :&#x3D; json.Marshal(s1)</span><br><span class="line">    	if err !&#x3D; nil &#123;</span><br><span class="line">    		fmt.Println(&quot;json marshal failed!&quot;)</span><br><span class="line">    		return</span><br><span class="line">    	&#125;</span><br><span class="line">    	fmt.Printf(&quot;json str:%s\n&quot;, data) &#x2F;&#x2F;json str:&#123;&quot;id&quot;:1,&quot;Gender&quot;:&quot;男&quot;&#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<h3 id="结构体和方法补充知识点"><a href="#结构体和方法补充知识点" class="headerlink" title="结构体和方法补充知识点"></a>结构体和方法补充知识点</h3><ul>
+<li><p>slice 和 map都包含了指向底层数据的指针，在复制时需要特别注意</p>
+<ul>
+<li><p>```go<br>type Person struct {</p>
+<pre><code>name   string
+age    int8
+dreams []string
+</code></pre>
+<p>}</p>
+<p>func (p *Person) SetDreams(dreams []string) {</p>
+<pre><code>p.dreams = dreams
+</code></pre>
+<p>}</p>
+<p>func main() {</p>
+<pre><code>p1 := Person&#123;name: &quot;小王子&quot;, age: 18&#125;
+data := []string&#123;&quot;吃饭&quot;, &quot;睡觉&quot;, &quot;打豆豆&quot;&#125;
+p1.SetDreams(data)
+
+// 你真的想要修改 p1.dreams 吗？
+data[1] = &quot;不睡觉&quot;
+fmt.Println(p1.dreams)  // ?
+</code></pre>
+<p>}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* 正确的做法：在方法中使用传入的 slice 的拷贝，进行结构体赋值</span><br><span class="line"></span><br><span class="line">  * &#96;&#96;&#96;go</span><br><span class="line">    func (p *Person) SetDreams(dreams []string) &#123;</span><br><span class="line">    	p.dreams &#x3D; make([]string, len(dreams))</span><br><span class="line">    	copy(p.dreams, dreams)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>同样的问题：返回值 slice 和 map情况</p>
+</li>
+</ul>
+</li>
+</ul>
+
+          
+        
+      
+    </div>
+   
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/05/07/11%20%E6%8C%87%E9%92%88/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/stitch.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ZiHao's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/05/07/11%20%E6%8C%87%E9%92%88/" itemprop="url">11 指针</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-05-07T19:25:46+08:00">
+                2021-05-07
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2021-05-07T19:26:22+08:00">
+                2021-05-07
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Go-LearningNote/" itemprop="url" rel="index">
+                    <span itemprop="name">-Go LearningNote</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  809
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  3
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="11-指针"><a href="#11-指针" class="headerlink" title="11 指针"></a>11 指针</h2><ul>
+<li>与C/C++ 中的指针不同，Go 中的指针不能进行偏移和运算，是安全指针<ul>
+<li>取地址符：<code>&amp;</code></li>
+<li>根据指针取值：<code>*</code></li>
+</ul>
+</li>
+<li>需要知道：指针地址、指针类型、指针取值</li>
+</ul>
+<h3 id="指针地址和指针类型"><a href="#指针地址和指针类型" class="headerlink" title="指针地址和指针类型"></a>指针地址和指针类型</h3><ul>
+<li>每个变量运行时都有一个地址，代表变量在内存中的位置</li>
+<li>指针类型：<code>*int</code>…</li>
+<li>取变量指针的语法：<code>ptr := &amp;v</code><ul>
+<li><code>v</code> : <strong>被取地址的变量</strong></li>
+<li><code>ptr</code> ：<strong>接收地址的变量</strong>，ptr 的类型就为<code>*T</code>，称为T的指针类型</li>
+</ul>
+</li>
+</ul>
+<h3 id="指针取值"><a href="#指针取值" class="headerlink" title="指针取值"></a>指针取值</h3><ul>
+<li>对普通变量使用 <code>&amp;</code> 取地址后，会获得这个变量的指针<ul>
+<li>可以对指针使用<code>*</code>操作，对指针取值</li>
+<li>根据指针去内存取值</li>
+</ul>
+</li>
+</ul>
+<p><strong>总结：</strong> 取地址操作符<code>&amp;</code>和取值操作符<code>*</code>是一对互补操作符，<code>&amp;</code>取出地址，<code>*</code>根据地址取出地址指向的值。</p>
+<p><strong>变量、指针地址、指针变量、取地址、取值</strong>的相互关系和特性如下：</p>
+<ul>
+<li>对变量进行<strong>取地址（&amp;）操作</strong>，可以获得这个变量的<strong>指针变量</strong>。</li>
+<li>指针变量的值是<strong>指针地址</strong>。</li>
+<li>对指针变量进行<strong>取值（*）操作</strong>，可以获得指针变量指向的原变量的值。</li>
+</ul>
+<ul>
+<li>定义函数时，可以传入地址，使用<strong>指针传值</strong></li>
+</ul>
+<h3 id="new-和-make"><a href="#new-和-make" class="headerlink" title="new 和 make"></a>new 和 make</h3><ul>
+<li><p>Go 中对于<strong>引用类型的变量</strong>，我们在使用时，不仅要声明它，还要<strong>为其分配内存</strong>，否则其值无法存储</p>
+</li>
+<li><p>对于<strong>值类型的声明</strong>，不需要分配内存空间，因为他们在声明的时候，已经<strong>默认分配好了</strong>内存空间</p>
+<ul>
+<li>```go<br>func main() {<pre><code>var a *int
+*a = 100
+fmt.Println(*a)
+
+var b map[string]int
+b[&quot;沙河娜扎&quot;] = 100
+fmt.Println(b)
+</code></pre>
+}<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* &#96;new&#96;, &#96;make&#96; 用来分配内存</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### new</span><br><span class="line"></span><br><span class="line">* 内置函数</span><br><span class="line"></span><br><span class="line">* 函数原型：&#96;func new(Type) *Type&#96;</span><br><span class="line"></span><br><span class="line">  * Type : new 只接受一个参数，是一个类型</span><br><span class="line">  * *Type ：new函数返回一个指向该类型内存地址的指针</span><br><span class="line"></span><br><span class="line">* 使用&#96;new&#96;得到是一个指针，并且该指针对应的值，为**该类型的零值**</span><br><span class="line"></span><br><span class="line">  * 示例：</span><br><span class="line"></span><br><span class="line">    &#96;&#96;&#96;go</span><br><span class="line">    func main() &#123;</span><br><span class="line">    	a :&#x3D; new(int)</span><br><span class="line">    	b :&#x3D; new(bool)</span><br><span class="line">    	fmt.Printf(&quot;%T\n&quot;, a) &#x2F;&#x2F; *int</span><br><span class="line">    	fmt.Printf(&quot;%T\n&quot;, b) &#x2F;&#x2F; *bool</span><br><span class="line">    	fmt.Println(*a)       &#x2F;&#x2F; 0</span><br><span class="line">    	fmt.Println(*b)       &#x2F;&#x2F; false</span><br><span class="line">    &#125;	</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>对于<code>var a *int</code>: </p>
+<ul>
+<li>只是声明了一个指针变量，但未初始化, 不能被赋值</li>
+<li>指针是引用类型，需要初始化才有内存空间</li>
+<li></li>
+</ul>
+</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a *<span class="keyword">int</span></span><br><span class="line">a = <span class="built_in">new</span>(<span class="keyword">int</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="make"><a href="#make" class="headerlink" title="make"></a>make</h4><ul>
+<li><p>也是<strong>用于内存分配</strong>，</p>
+</li>
+<li><p>与 <code>new</code> 不同，只用于<code>slice</code> , <code>map</code> , <code>chan</code> 的内存创建</p>
+</li>
+<li><p>而且函数返回的类型就是类型本身, 而非指针类型，因为这三种类型就是引用类型，所以没必要返回他们的指针</p>
+</li>
+<li><p><code>make</code> 的原型：<code>func make(t Type, size ...InterType) Type</code></p>
+</li>
+<li><p>需要使用make 对<code>slice</code>, <code>map</code>,<code>channel</code> 进行初始化</p>
+<ul>
+<li><pre><code class="go">m := make(map[string]int,10)
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="new-和-make-的区别"><a href="#new-和-make-的区别" class="headerlink" title="new 和 make 的区别"></a>new 和 make 的区别</h4><ul>
+<li>二者都是用于内存分配</li>
+<li><code>make</code> 只用于<code>slice</code>, <code>map</code>, <code>channel</code> 的初始化，并且返回的还是这<strong>三个引用类型的本身</strong></li>
+<li><code>new</code> 用于类型的内存分配，并且内存对应的值为 该类型的零值，**返回的是指向该类型的指针</li>
+</ul>
+
+          
+        
+      
+    </div>
+   
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/05/07/lab1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2699,1236 +3734,11 @@ func main() &#123;
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/05/05/4%20%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/stitch.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ZiHao's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2021/05/05/4%20%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6/" itemprop="url">4 流程控制</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-05-05T22:41:19+08:00">
-                2021-05-05
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于&#58;</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2021-05-06T14:21:45+08:00">
-                2021-05-06
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Go-LearningNote/" itemprop="url" rel="index">
-                    <span itemprop="name">-Go LearningNote</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  1k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  4
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="4-流程控制"><a href="#4-流程控制" class="headerlink" title="4 流程控制"></a>4 流程控制</h2><ul>
-<li>流程控制是每种语言控制逻辑走向和执行次序的重要部分</li>
-<li>Go 中有<code>if</code> 和 <code>for</code>, 而<code>switch</code> 和 <code>goto</code>主要是为了简化代码、降低重复代码而生，属于扩展类的流程控制</li>
-</ul>
-<h3 id="if-else分支结构"><a href="#if-else分支结构" class="headerlink" title="if else分支结构"></a>if else分支结构</h3><h4 id="if-条件判断的基本写法"><a href="#if-条件判断的基本写法" class="headerlink" title="if 条件判断的基本写法"></a>if 条件判断的基本写法</h4><ul>
-<li><p>if 条件判断格式</p>
-<ul>
-<li>```go<br>if expr1{<pre><code>block1
-</code></pre>
-}else if expr2{<pre><code>block2
-</code></pre>
-}else {<pre><code>block3
-</code></pre>
-}<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">  * &#x3D;&#x3D;注意：&#x3D;&#x3D;Go 规定，&#96;if&#96;的**左括号**必须与&#96;if expr&#96;放于同一行；**右括号必须与下一个语句在同一行**</span><br><span class="line"></span><br><span class="line">#### if 条件判断特殊写法</span><br><span class="line"></span><br><span class="line">* 可以在 if 表达式前添加一个执行语句，再根据变量值判断</span><br><span class="line"></span><br><span class="line">  * 示例：</span><br><span class="line"></span><br><span class="line">  * &#96;&#96;&#96;go</span><br><span class="line">    package main</span><br><span class="line">    </span><br><span class="line">    import &quot;fmt&quot;</span><br><span class="line">    </span><br><span class="line">    func main() &#123;</span><br><span class="line">    </span><br><span class="line">    	if score :&#x3D; 65; score &gt;&#x3D; 90 &#123;</span><br><span class="line">    		fmt.Println(&quot;A&quot;)</span><br><span class="line">    	&#125; else if score &gt; 75 &#123;</span><br><span class="line">    		fmt.Println(&quot;B&quot;)</span><br><span class="line">    	&#125; else &#123;</span><br><span class="line">    		fmt.Println(&quot;C&quot;)</span><br><span class="line">    	&#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br></pre></td></tr></table></figure></li>
-</ul>
-</li>
-<li><p>思考：区别可能就是作用域不同</p>
-</li>
-</ul>
-<h3 id="for-循环结构"><a href="#for-循环结构" class="headerlink" title="for 循环结构"></a>for 循环结构</h3><ul>
-<li><p>Go 语言中的所有循环类型都可以使用关键字 <code>for</code> 完成</p>
-</li>
-<li><p>基本格式：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">for 初始语句; 循环条件表达式; 结束语句&#123;</span><br><span class="line">	循环体</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure></li>
-<li><p>当<code>循环条件表达式</code> 为<code>true</code> 时进行循环，直到为<code>false</code></p>
-</li>
-<li><p>for 循环的 <code>初始语句</code> 可以被省略，但是<strong>分号必须要写</strong></p>
-<ul>
-<li><code>for ;i&lt;10;i++</code></li>
-</ul>
-</li>
-<li><p>for 循环的初始语句和结束语句都可以被省略, 此时不需要分号</p>
-<ul>
-<li>类似于C中的关键词<code>while</code></li>
-<li><code>for i&lt;10 </code></li>
-</ul>
-</li>
-</ul>
-<h4 id="无限循环"><a href="#无限循环" class="headerlink" title="无限循环"></a>无限循环</h4><ul>
-<li><p>```<br>for {</p>
-<pre><code>循环体
-</code></pre>
-<p>}</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* 可以通过关键字&#96;break&#96; &#96;goto&#96; &#96;return&#96;  &#96;panic&#96;强制退出循环</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### for range 键值循环</span><br><span class="line"></span><br><span class="line">* 可以使用 &#96;for range&#96; 遍历 数组、切片、字符串、map以及通道</span><br><span class="line">  * 数组、切片、字符串 返回 &#96;索引&#96;和&#96;值&#96;</span><br><span class="line">  * map 返回&#96;键&#96;和&#96;值&#96;</span><br><span class="line">  * 通道 只返回&#96;通道内的值&#96;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### switch case</span><br><span class="line"></span><br><span class="line">* 对大量值进行条件判断</span><br><span class="line"></span><br><span class="line">  * &#96;&#96;&#96;go</span><br><span class="line">    i :&#x3D; 1</span><br><span class="line">    switch(i)&#123;</span><br><span class="line">    	case 1:</span><br><span class="line">    		block1</span><br><span class="line">    	case 2:</span><br><span class="line">    		block2</span><br><span class="line">    	default :</span><br><span class="line">    		block3</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-</li>
-<li><p>Go 规定，只能有一个<code>default</code>分支</p>
-</li>
-<li><p>一个分支可以有多个值，多个case值使用逗号分开</p>
-</li>
-<li><p><code>case 1, 3, 5:</code></p>
-</li>
-<li><p>分支可以使用表达式判断：</p>
-<ul>
-<li><code>case age&lt;25:</code></li>
-</ul>
-</li>
-<li><p><code>fallthrough</code>语法可以执行满足条件的 case 的下一个 case，为了兼容 C 中的case</p>
-<ul>
-<li>```go<br>func switchDemo5() {<pre><code> s := &quot;a&quot;
- switch &#123;
- case s == &quot;a&quot;:
-     fmt.Println(&quot;a&quot;)
-     fallthrough
- case s == &quot;b&quot;:
-     fmt.Println(&quot;b&quot;)
- case s == &quot;c&quot;:
-     fmt.Println(&quot;c&quot;)
- default:
-     fmt.Println(&quot;...&quot;)
- &#125;
-</code></pre>
-}<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* &#96;&#96;&#96;</span><br><span class="line">  a</span><br><span class="line">  b</span><br></pre></td></tr></table></figure></li>
-</ul>
-</li>
-</ul>
-<h3 id="goto-跳转到指定标签"><a href="#goto-跳转到指定标签" class="headerlink" title="goto 跳转到指定标签"></a>goto 跳转到指定标签</h3><ul>
-<li><code>goto</code>通过标签进行代码间的无条件跳转</li>
-<li>可以在快速跳出循环、避免重复退出上有一定的帮助<br>* </li>
-</ul>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">gotoDemo2</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="number">10</span>; i++ &#123;</span><br><span class="line">		<span class="keyword">for</span> j := <span class="number">0</span>; j &lt; <span class="number">10</span>; j++ &#123;</span><br><span class="line">			<span class="keyword">if</span> j == <span class="number">2</span> &#123;</span><br><span class="line">				<span class="comment">// 设置退出标签</span></span><br><span class="line">				<span class="keyword">goto</span> breakTag</span><br><span class="line">			&#125;</span><br><span class="line">			fmt.Printf(<span class="string">&quot;%v-%v\n&quot;</span>, i, j)</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span></span><br><span class="line">	<span class="comment">// 标签</span></span><br><span class="line">breakTag:</span><br><span class="line">	fmt.Println(<span class="string">&quot;结束for循环&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="break-跳出循环"><a href="#break-跳出循环" class="headerlink" title="break 跳出循环"></a>break 跳出循环</h3><ul>
-<li><p>结束<code>for</code>、<code>switch</code>、<code>select</code> 的代码块</p>
-</li>
-<li><p>可以在<code>break</code>语句后面添加标签：退出某个标签对应的代码块</p>
-<ul>
-<li><p>标签必须定义在对应的<code>for</code>、<code>switch</code>、<code>select</code> 的代码块上</p>
-<ul>
-<li>```go<br>func breakDemo1() {<br>BREAKDEMO1:<pre><code>for i := 0; i &lt; 10; i++ &#123;
-    for j := 0; j &lt; 10; j++ &#123;
-        if j == 2 &#123;
-            break BREAKDEMO1
-        &#125;
-        fmt.Printf(&quot;%v-%v\n&quot;, i, j)
-    &#125;
-&#125;
-fmt.Println(&quot;...&quot;)
-</code></pre>
-}<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">      </span><br><span class="line"></span><br><span class="line">### continue 继续下次循环</span><br><span class="line"></span><br><span class="line">* continue 语句: 结束当前循环，开始下一次循环，仅限在&#96;for&#96;循环内使用</span><br><span class="line"></span><br><span class="line">* 在&#96;continue&#96; 语句后添加标签时，表示开始标签对应的循环</span><br><span class="line"></span><br><span class="line">  * &#96;&#96;&#96;go</span><br><span class="line">    func continueDemo() &#123;</span><br><span class="line">    forloop1:</span><br><span class="line">    	for i :&#x3D; 0; i &lt; 5; i++ &#123;</span><br><span class="line">    		&#x2F;&#x2F; forloop2:</span><br><span class="line">    		for j :&#x3D; 0; j &lt; 5; j++ &#123;</span><br><span class="line">    			if i &#x3D;&#x3D; 2 &amp;&amp; j &#x3D;&#x3D; 2 &#123;</span><br><span class="line">    				continue forloop1</span><br><span class="line">    			&#125;</span><br><span class="line">    			fmt.Printf(&quot;%v-%v\n&quot;, i, j)</span><br><span class="line">    		&#125;</span><br><span class="line">    	&#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="练习题"><a href="#练习题" class="headerlink" title="练习题"></a>练习题</h3><ul>
-<li><p>编写代码打印 99 乘法表</p>
-<ul>
-<li><pre><code class="go">package main
-
-import &quot;fmt&quot;
-
-func main() &#123;
-    for i := 1; i &lt;= 10; i++ &#123;
-        for j := 1; j &lt;= 10; j++ &#123;
-            fmt.Printf(&quot;%d * %d = %d &quot;, i, j, i*j)
-        &#125;
-        fmt.Println()
-    &#125;
-&#125;
-</code></pre>
-</li>
-</ul>
-</li>
-</ul>
-
-          
-        
-      
-    </div>
-   
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/05/05/3%20%E8%BF%90%E7%AE%97%E7%AC%A6/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/stitch.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ZiHao's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2021/05/05/3%20%E8%BF%90%E7%AE%97%E7%AC%A6/" itemprop="url">3 运算符</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-05-05T22:41:19+08:00">
-                2021-05-05
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于&#58;</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2021-05-06T14:21:49+08:00">
-                2021-05-06
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Go-LearningNote/" itemprop="url" rel="index">
-                    <span itemprop="name">-Go LearningNote</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  1.4k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  6
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="3-运算符"><a href="#3-运算符" class="headerlink" title="3 运算符"></a>3 运算符</h2><p>Go 内置运算符：</p>
-<ul>
-<li>算术运算符</li>
-<li>关系运算符</li>
-<li>逻辑运算符</li>
-<li>位运算符</li>
-<li>赋值运算符</li>
-</ul>
-<h3 id="算术运算符"><a href="#算术运算符" class="headerlink" title="算术运算符"></a>算术运算符</h3><table>
-<thead>
-<tr>
-<th>运算符</th>
-<th></th>
-</tr>
-</thead>
-<tbody><tr>
-<td>+</td>
-<td>相加</td>
-</tr>
-<tr>
-<td>-</td>
-<td>相减</td>
-</tr>
-<tr>
-<td>*</td>
-<td>相乘</td>
-</tr>
-<tr>
-<td>/</td>
-<td>相除</td>
-</tr>
-<tr>
-<td>%</td>
-<td>求余</td>
-</tr>
-</tbody></table>
-<p>注意：<code>++</code>和<code>--</code>是Go中单独的语句，而非运算符</p>
-<h3 id="关系运算符"><a href="#关系运算符" class="headerlink" title="关系运算符"></a>关系运算符</h3><table>
-<thead>
-<tr>
-<th>运算符</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>==</td>
-<td>是否相等</td>
-</tr>
-<tr>
-<td>！=</td>
-<td>是否不相等</td>
-</tr>
-<tr>
-<td>&gt;</td>
-<td>左边值是否大于右边值</td>
-</tr>
-<tr>
-<td>&gt;=</td>
-<td>左边值是否大于等于右边值</td>
-</tr>
-<tr>
-<td>&lt;</td>
-<td>左边值是否小于右边值</td>
-</tr>
-<tr>
-<td>&lt;=</td>
-<td>左边值是否小于等于右边值</td>
-</tr>
-</tbody></table>
-<h3 id="逻辑运算符"><a href="#逻辑运算符" class="headerlink" title="逻辑运算符"></a>逻辑运算符</h3><table>
-<thead>
-<tr>
-<th align="left">运算符</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">&amp;&amp;</td>
-<td>逻辑AND运算符</td>
-</tr>
-<tr>
-<td align="left">||</td>
-<td>逻辑OR运算符</td>
-</tr>
-<tr>
-<td align="left">！</td>
-<td>逻辑NOT运算符</td>
-</tr>
-</tbody></table>
-<h3 id="位运算符"><a href="#位运算符" class="headerlink" title="位运算符"></a>位运算符</h3><ul>
-<li>位运算符 <strong>对整数在内存中的二进制位</strong> 进行操作</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>运算符</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>&amp;</td>
-<td>参与运算的两数各对应的二进制位 相与（两位均为1 才为1）</td>
-</tr>
-<tr>
-<td>|</td>
-<td>参与运算的两数各对应的二进制位 相或（两位有一个为1 就为1）</td>
-</tr>
-<tr>
-<td>^</td>
-<td>参与运算的两数各对应的二进制位 相异或（两位相异 则为1）</td>
-</tr>
-<tr>
-<td>&lt;&lt;</td>
-<td>左移n位，即乘以<code>2^n</code></td>
-</tr>
-<tr>
-<td>&gt;&gt;</td>
-<td>右移n位，即除以<code>2^n</code></td>
-</tr>
-</tbody></table>
-<h3 id="赋值运算符"><a href="#赋值运算符" class="headerlink" title="赋值运算符"></a>赋值运算符</h3><table>
-<thead>
-<tr>
-<th>运算符</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>=</td>
-<td>将表达式的值赋给一个左值</td>
-</tr>
-<tr>
-<td>+=</td>
-<td>相加后在赋值</td>
-</tr>
-<tr>
-<td>-=</td>
-<td></td>
-</tr>
-<tr>
-<td>*=</td>
-<td></td>
-</tr>
-<tr>
-<td>/=</td>
-<td></td>
-</tr>
-<tr>
-<td>%=</td>
-<td></td>
-</tr>
-<tr>
-<td>&lt;&lt;=</td>
-<td>左移后赋值</td>
-</tr>
-<tr>
-<td>&gt;&gt;=</td>
-<td>右移后赋值</td>
-</tr>
-<tr>
-<td>&amp;=</td>
-<td>按位与后赋值</td>
-</tr>
-<tr>
-<td>|=</td>
-<td>按位或后赋值</td>
-</tr>
-<tr>
-<td>^=</td>
-<td>按位异或后赋值</td>
-</tr>
-</tbody></table>
-<h3 id="练习题"><a href="#练习题" class="headerlink" title="练习题"></a>练习题</h3><ul>
-<li><p>有一堆数字，如果除了一个数字以外，其他数字都出现了两次，那么如何找到出现一次的数字？</p>
-</li>
-<li><p>目前能想到的是暴力遍历：<br>* </p>
-</li>
-</ul>
-<h2 id="4-流程控制"><a href="#4-流程控制" class="headerlink" title="4 流程控制"></a>4 流程控制</h2><ul>
-<li>流程控制是每种语言控制逻辑走向和执行次序的重要部分</li>
-<li>Go 中有<code>if</code> 和 <code>for</code>, 而<code>switch</code> 和 <code>goto</code>主要是为了简化代码、降低重复代码而生，属于扩展类的流程控制</li>
-</ul>
-<h3 id="if-else分支结构"><a href="#if-else分支结构" class="headerlink" title="if else分支结构"></a>if else分支结构</h3><h4 id="if-条件判断的基本写法"><a href="#if-条件判断的基本写法" class="headerlink" title="if 条件判断的基本写法"></a>if 条件判断的基本写法</h4><ul>
-<li><p>if 条件判断格式</p>
-<ul>
-<li>```go<br>if expr1{<pre><code>block1
-</code></pre>
-}else if expr2{<pre><code>block2
-</code></pre>
-}else {<pre><code>block3
-</code></pre>
-}<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">  * &#x3D;&#x3D;注意：&#x3D;&#x3D;Go 规定，&#96;if&#96;的**左括号**必须与&#96;if expr&#96;放于同一行；**右括号必须与下一个语句在同一行**</span><br><span class="line"></span><br><span class="line">#### if 条件判断特殊写法</span><br><span class="line"></span><br><span class="line">* 可以在 if 表达式前添加一个执行语句，再根据变量值判断</span><br><span class="line"></span><br><span class="line">  * 示例：</span><br><span class="line"></span><br><span class="line">  * &#96;&#96;&#96;go</span><br><span class="line">    package main</span><br><span class="line">    </span><br><span class="line">    import &quot;fmt&quot;</span><br><span class="line">    </span><br><span class="line">    func main() &#123;</span><br><span class="line">    </span><br><span class="line">    	if score :&#x3D; 65; score &gt;&#x3D; 90 &#123;</span><br><span class="line">    		fmt.Println(&quot;A&quot;)</span><br><span class="line">    	&#125; else if score &gt; 75 &#123;</span><br><span class="line">    		fmt.Println(&quot;B&quot;)</span><br><span class="line">    	&#125; else &#123;</span><br><span class="line">    		fmt.Println(&quot;C&quot;)</span><br><span class="line">    	&#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br></pre></td></tr></table></figure></li>
-</ul>
-</li>
-<li><p>思考：区别可能就是作用域不同</p>
-</li>
-</ul>
-<h3 id="for-循环结构"><a href="#for-循环结构" class="headerlink" title="for 循环结构"></a>for 循环结构</h3><ul>
-<li><p>Go 语言中的所有循环类型都可以使用关键字 <code>for</code> 完成</p>
-</li>
-<li><p>基本格式：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">for 初始语句; 循环条件表达式; 结束语句&#123;</span><br><span class="line">	循环体</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure></li>
-<li><p>当<code>循环条件表达式</code> 为<code>true</code> 时进行循环，直到为<code>false</code></p>
-</li>
-<li><p>for 循环的 <code>初始语句</code> 可以被省略，但是<strong>分号必须要写</strong></p>
-<ul>
-<li><code>for ;i&lt;10;i++</code></li>
-</ul>
-</li>
-<li><p>for 循环的初始语句和结束语句都可以被省略, 此时不需要分号</p>
-<ul>
-<li>类似于C中的关键词<code>while</code></li>
-<li><code>for i&lt;10 </code></li>
-</ul>
-</li>
-</ul>
-<h4 id="无限循环"><a href="#无限循环" class="headerlink" title="无限循环"></a>无限循环</h4><ul>
-<li><p>```<br>for {</p>
-<pre><code>循环体
-</code></pre>
-<p>}</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* 可以通过关键字&#96;break&#96; &#96;goto&#96; &#96;return&#96;  &#96;panic&#96;强制退出循环</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### for range 键值循环</span><br><span class="line"></span><br><span class="line">* 可以使用 &#96;for range&#96; 遍历 数组、切片、字符串、map以及通道</span><br><span class="line">  * 数组、切片、字符串 返回 &#96;索引&#96;和&#96;值&#96;</span><br><span class="line">  * map 返回&#96;键&#96;和&#96;值&#96;</span><br><span class="line">  * 通道 只返回&#96;通道内的值&#96;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### switch case</span><br><span class="line"></span><br><span class="line">* 对大量值进行条件判断</span><br><span class="line"></span><br><span class="line">  * &#96;&#96;&#96;go</span><br><span class="line">    i :&#x3D; 1</span><br><span class="line">    switch(i)&#123;</span><br><span class="line">    	case 1:</span><br><span class="line">    		block1</span><br><span class="line">    	case 2:</span><br><span class="line">    		block2</span><br><span class="line">    	default :</span><br><span class="line">    		block3</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-</li>
-<li><p>Go 规定，只能有一个<code>default</code>分支</p>
-</li>
-<li><p>一个分支可以有多个值，多个case值使用逗号分开</p>
-</li>
-<li><p><code>case 1, 3, 5:</code></p>
-</li>
-<li><p>分支可以使用表达式判断：</p>
-<ul>
-<li><code>case age&lt;25:</code></li>
-</ul>
-</li>
-<li><p><code>fallthrough</code>语法可以执行满足条件的 case 的下一个 case，为了兼容 C 中的case</p>
-<ul>
-<li>```go<br>func switchDemo5() {<pre><code> s := &quot;a&quot;
- switch &#123;
- case s == &quot;a&quot;:
-     fmt.Println(&quot;a&quot;)
-     fallthrough
- case s == &quot;b&quot;:
-     fmt.Println(&quot;b&quot;)
- case s == &quot;c&quot;:
-     fmt.Println(&quot;c&quot;)
- default:
-     fmt.Println(&quot;...&quot;)
- &#125;
-</code></pre>
-}<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* &#96;&#96;&#96;</span><br><span class="line">  a</span><br><span class="line">  b</span><br></pre></td></tr></table></figure></li>
-</ul>
-</li>
-</ul>
-<h3 id="goto-跳转到指定标签"><a href="#goto-跳转到指定标签" class="headerlink" title="goto 跳转到指定标签"></a>goto 跳转到指定标签</h3><ul>
-<li><code>goto</code>通过标签进行代码间的无条件跳转</li>
-<li>可以在快速跳出循环、避免重复退出上有一定的帮助<br>* </li>
-</ul>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">gotoDemo2</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="number">10</span>; i++ &#123;</span><br><span class="line">		<span class="keyword">for</span> j := <span class="number">0</span>; j &lt; <span class="number">10</span>; j++ &#123;</span><br><span class="line">			<span class="keyword">if</span> j == <span class="number">2</span> &#123;</span><br><span class="line">				<span class="comment">// 设置退出标签</span></span><br><span class="line">				<span class="keyword">goto</span> breakTag</span><br><span class="line">			&#125;</span><br><span class="line">			fmt.Printf(<span class="string">&quot;%v-%v\n&quot;</span>, i, j)</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span></span><br><span class="line">	<span class="comment">// 标签</span></span><br><span class="line">breakTag:</span><br><span class="line">	fmt.Println(<span class="string">&quot;结束for循环&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="break-跳出循环"><a href="#break-跳出循环" class="headerlink" title="break 跳出循环"></a>break 跳出循环</h3><ul>
-<li><p>结束<code>for</code>、<code>switch</code>、<code>select</code> 的代码块</p>
-</li>
-<li><p>可以在<code>break</code>语句后面添加标签：退出某个标签对应的代码块</p>
-<ul>
-<li><p>标签必须定义在对应的<code>for</code>、<code>switch</code>、<code>select</code> 的代码块上</p>
-<ul>
-<li>```go<br>func breakDemo1() {<br>BREAKDEMO1:<pre><code>for i := 0; i &lt; 10; i++ &#123;
-    for j := 0; j &lt; 10; j++ &#123;
-        if j == 2 &#123;
-            break BREAKDEMO1
-        &#125;
-        fmt.Printf(&quot;%v-%v\n&quot;, i, j)
-    &#125;
-&#125;
-fmt.Println(&quot;...&quot;)
-</code></pre>
-}<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">      </span><br><span class="line"></span><br><span class="line">### continue 继续下次循环</span><br><span class="line"></span><br><span class="line">* continue 语句: 结束当前循环，开始下一次循环，仅限在&#96;for&#96;循环内使用</span><br><span class="line"></span><br><span class="line">* 在&#96;continue&#96; 语句后添加标签时，表示开始标签对应的循环</span><br><span class="line"></span><br><span class="line">  * &#96;&#96;&#96;go</span><br><span class="line">    func continueDemo() &#123;</span><br><span class="line">    forloop1:</span><br><span class="line">    	for i :&#x3D; 0; i &lt; 5; i++ &#123;</span><br><span class="line">    		&#x2F;&#x2F; forloop2:</span><br><span class="line">    		for j :&#x3D; 0; j &lt; 5; j++ &#123;</span><br><span class="line">    			if i &#x3D;&#x3D; 2 &amp;&amp; j &#x3D;&#x3D; 2 &#123;</span><br><span class="line">    				continue forloop1</span><br><span class="line">    			&#125;</span><br><span class="line">    			fmt.Printf(&quot;%v-%v\n&quot;, i, j)</span><br><span class="line">    		&#125;</span><br><span class="line">    	&#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="练习题-1"><a href="#练习题-1" class="headerlink" title="练习题"></a>练习题</h3><ul>
-<li><p>编写代码打印 99 乘法表</p>
-<ul>
-<li><pre><code class="go">package main
-
-import &quot;fmt&quot;
-
-func main() &#123;
-    for i := 1; i &lt;= 10; i++ &#123;
-        for j := 1; j &lt;= 10; j++ &#123;
-            fmt.Printf(&quot;%d * %d = %d &quot;, i, j, i*j)
-        &#125;
-        fmt.Println()
-    &#125;
-&#125;
-</code></pre>
-</li>
-</ul>
-</li>
-</ul>
-
-          
-        
-      
-    </div>
-   
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/05/05/2%20%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/stitch.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ZiHao's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2021/05/05/2%20%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" itemprop="url">2 基本数据类型</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-05-05T22:41:19+08:00">
-                2021-05-05
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于&#58;</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2021-05-06T14:21:50+08:00">
-                2021-05-06
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Go-LearningNote/" itemprop="url" rel="index">
-                    <span itemprop="name">-Go LearningNote</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  1.6k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  7
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="2-基本数据类型"><a href="#2-基本数据类型" class="headerlink" title="2 基本数据类型"></a>2 基本数据类型</h2><p>整型、浮点型、布尔型、字符串</p>
-<p>数组、切片、结构体、函数、map、通道等</p>
-<h3 id="2-1-整型"><a href="#2-1-整型" class="headerlink" title="2.1 整型"></a>2.1 整型</h3><p>分为两个大类：</p>
-<ul>
-<li><strong>长度</strong>：<code>int8</code>, <code>int16</code>, <code>int32</code>, <code>int64</code><ul>
-<li><code>int16</code>: short类型</li>
-<li><code>int64</code>: long 类型</li>
-</ul>
-</li>
-<li><strong>无符号</strong>：<code>uint8</code>，<code>uint16</code>, <code>uint32</code>, <code>uint64</code><ul>
-<li><code>uint8</code>: <code>byte</code>型</li>
-</ul>
-</li>
-</ul>
-<h4 id="2-1-1-特殊整型"><a href="#2-1-1-特殊整型" class="headerlink" title="2.1.1 特殊整型"></a>2.1.1 特殊整型</h4><ul>
-<li>特殊整型<ul>
-<li><code>uint</code>  : 32为操作系统上是<code>uint32</code></li>
-<li><code>int</code> : 32位操作系统上是<code>int32</code></li>
-<li><code>uintptr</code> : 无符号整型，用于存放一个指针</li>
-</ul>
-</li>
-<li>注意：使用<code>int</code>和<code>uint</code>需要考虑不同平台的差异</li>
-<li>注意：获取对象的长度的内建<code>len()</code>函数，返回的长度可以根据不同的平台的字节长度变化<ul>
-<li>实际使用中，切片或map元素数量可以用<code>int</code>表示</li>
-<li>涉及二进制传输、读写文件的结构描述时，不要使用<code>int</code>和<code>uint</code></li>
-</ul>
-</li>
-</ul>
-<h4 id="2-1-2-数字字面量语法-Number-literals-syntax"><a href="#2-1-2-数字字面量语法-Number-literals-syntax" class="headerlink" title="2.1.2 数字字面量语法(Number literals syntax)"></a>2.1.2 数字字面量语法(Number literals syntax)</h4><p>便于开发者<strong>以二进制、八进制、十六进制浮点数的格式</strong> <strong>定义</strong>数字</p>
-<ul>
-<li><code>v := 0b001</code>: 二进制的<code>001</code></li>
-<li><code>v := 0o77</code>: 八进制的77</li>
-<li><code>v := 0xff</code>: 十六进制的ff</li>
-</ul>
-<p>允许使用<code>_</code>分隔数字：<code>v := 12_3</code></p>
-<p>允许开发者使用<strong>相应的占位符</strong>以二进制<code>%b</code>、八进制<code>%o</code>、十进制<code>%d</code>、十六进制<code>%x</code>输出：</p>
-<ul>
-<li>由以上两个性质，我们可以将任意进制数字 以任意进制形式输出</li>
-</ul>
-<p><strong>示例:</strong></p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;fmt&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="comment">//定义</span></span><br><span class="line">    <span class="keyword">var</span> x <span class="keyword">int</span> = <span class="number">10</span></span><br><span class="line">    <span class="keyword">var</span> b <span class="keyword">int</span> = <span class="number">077</span></span><br><span class="line">    <span class="keyword">var</span> c <span class="keyword">int</span> = <span class="number">0xff</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">//输出</span></span><br><span class="line">    <span class="keyword">var</span> a <span class="keyword">int</span> = <span class="number">15</span></span><br><span class="line">	fmt.Printf(<span class="string">&quot;%d\n&quot;</span>, a) <span class="comment">//以十进制形式输出</span></span><br><span class="line">	fmt.Printf(<span class="string">&quot;%b\n&quot;</span>, a) <span class="comment">//以二进制形式输出</span></span><br><span class="line">	fmt.Printf(<span class="string">&quot;%o\n&quot;</span>, a) <span class="comment">//以八进制形式输出</span></span><br><span class="line">	fmt.Printf(<span class="string">&quot;%x\n&quot;</span>, a) <span class="comment">//以十六进制形式输出</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="浮点型"><a href="#浮点型" class="headerlink" title="浮点型"></a>浮点型</h3><p>两种浮点型：都遵循<code>IEEE 754</code>标准</p>
-<ul>
-<li><code>float32</code> : 最大范围<code>3.4e38</code>, 可使用常量定义：<code>math.MaxFloat32</code></li>
-<li><code>float64</code>：最大范围<code>1.8e308</code> ,<code>math.MaxFloat64</code></li>
-</ul>
-<p>打印浮点数，使用占位符<code>%f</code></p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">&quot;fmt&quot;</span></span><br><span class="line">    <span class="string">&quot;math&quot;</span></span><br><span class="line">)</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    fmt.Printf(<span class="string">&quot;%f\n&quot;</span>,math.Pi)</span><br><span class="line">    fmt.Printf(<span class="string">&quot;%.2f\n&quot;</span>,math.Pi)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="复数"><a href="#复数" class="headerlink" title="复数"></a>复数</h3><p>两种：都由 实部与虚部 组成各占一半</p>
-<ul>
-<li><code>complex64</code> : 实部未 32 位，虚部为 32 位</li>
-<li><code>complex128</code></li>
-</ul>
-<p>示例：</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;fmt&quot;</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">var</span> c <span class="keyword">complex64</span> = <span class="number">1</span> + <span class="number">2i</span></span><br><span class="line">    fmt.Println(c)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="布尔型"><a href="#布尔型" class="headerlink" title="布尔型"></a>布尔型</h3><p><code>bool</code> 型两个值：<code>true</code> 、 <code>false</code></p>
-<p>==注意：==</p>
-<ul>
-<li>默认值：<code>false</code></li>
-<li><strong>不允许</strong>将整型强制转换为bool</li>
-<li>bool 无法参与数值运算，无法与其他类型转换</li>
-</ul>
-<h3 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h3><p>Go 中的字符串以原生数据类型出现</p>
-<ul>
-<li>注意：Go 语言的字符串内部实现使用<code>UTF-8</code>编码</li>
-<li>字符串的值为 双引号 中的内容</li>
-<li>可以在Go的源码中直接添加非<code>ASCII</code>码字符<ul>
-<li><code>s1 := &quot;hello&quot;</code></li>
-<li><code>s2 := &quot;你好&quot;</code></li>
-</ul>
-</li>
-</ul>
-<h4 id="字符串转义符"><a href="#字符串转义符" class="headerlink" title="字符串转义符"></a>字符串转义符</h4><table>
-<thead>
-<tr>
-<th>转义符</th>
-<th>含义</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>\r</td>
-<td>回车符（返回行首</td>
-</tr>
-<tr>
-<td>\n</td>
-<td>换行符（直接跳到下一行的同列位置</td>
-</tr>
-<tr>
-<td>\t</td>
-<td>制表符</td>
-</tr>
-<tr>
-<td><code>\&#39;</code></td>
-<td>单引号</td>
-</tr>
-<tr>
-<td><code>\&quot;</code></td>
-<td>双引号</td>
-</tr>
-<tr>
-<td><code>\\</code></td>
-<td>反斜杠，例如文件路径</td>
-</tr>
-</tbody></table>
-<h4 id="多行字符串"><a href="#多行字符串" class="headerlink" title="多行字符串"></a>多行字符串</h4><p>Go 定义一个多行字符串，必须使用反引号` 字符：</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">s := <span class="string">`line1</span></span><br><span class="line"><span class="string">lin2</span></span><br><span class="line"><span class="string">`</span></span><br><span class="line">fmt.Println(s)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-<h4 id="字符串常用操作"><a href="#字符串常用操作" class="headerlink" title="字符串常用操作"></a>字符串常用操作</h4><table>
-<thead>
-<tr>
-<th align="left">方法</th>
-<th align="center">介绍</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">len(str)</td>
-<td align="center">求长度</td>
-</tr>
-<tr>
-<td align="left"><code>+</code> 或者 fmt.Sprintf</td>
-<td align="center">拼接字符串</td>
-</tr>
-<tr>
-<td align="left">strings.Split</td>
-<td align="center">分割</td>
-</tr>
-<tr>
-<td align="left">strings.contains</td>
-<td align="center">判断是否包含</td>
-</tr>
-<tr>
-<td align="left">strings.HasPrefix, strings.HasSuffix</td>
-<td align="center">前缀/后缀判断</td>
-</tr>
-<tr>
-<td align="left">strings.Index(), strings.LastIndex()</td>
-<td align="center">字串出现的位置</td>
-</tr>
-<tr>
-<td align="left">strings.Join(a[]stirng, sep string)</td>
-<td align="center">join操作</td>
-</tr>
-</tbody></table>
-<h3 id="byte-和-rune-类型"><a href="#byte-和-rune-类型" class="headerlink" title="byte 和 rune 类型"></a>byte 和 rune 类型</h3><p><strong>字符串的每个元素</strong>是 字符 ，字符用单引号包裹</p>
-<p>可以通过 <strong>遍历</strong> 或 <strong>单个获取字符串元素</strong> 获得字符</p>
-<p>Go 的字符 有<strong>两种</strong>：</p>
-<ul>
-<li><p><code>uint8</code>, 或叫<code>byte</code>型，代表<code>ASCII</code>码的一个字符</p>
-</li>
-<li><p><code>int32</code>, 或叫<code>rune</code>类型，代表一个<code>UTF-8</code>码的一个字符</p>
-</li>
-<li></li>
-<li><p>处理中文、日文或者其他符合字符：用到<code>rune</code>类型，实际上是一个<code>int32</code></p>
-</li>
-<li><p>Go 使用特殊的 rune 类型处理 Unicode，让基于Unicode的文本处理更方便，也可以使用byte型进行默认字符串处理，性能和扩展性都有照顾：</p>
-<ul>
-<li><p>示例：</p>
-</li>
-<li><p>```Go<br>package main</p>
-<p>import “fmt”</p>
-<p>func main() {</p>
-<pre><code>s := &quot;hello, 世界&quot;
-
-//byte
-for i := 0; i &lt; len(s); i++ &#123;
-    fmt.Printf(&quot;%v %c\n&quot;, s[i], s[i])
-&#125;
-
-//rune
-for _, r := range s &#123;
-    fmt.Printf(&quot;%v %c\n&quot;, r, r)
-&#125;
-</code></pre>
-<p>}</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* 输出：</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>104 h<br>101 e<br>108 l<br>108 l<br>111 o<br>44 ,<br>32<br>228 ä<br>184 ¸<br>150 <br>231 ç<br>149 <br>140 <br>104 h<br>101 e<br>108 l<br>108 l<br>111 o<br>44 ,<br>32<br>19990 世<br>30028 界</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* &#x3D;&#x3D;注意：&#x3D;&#x3D;</span><br><span class="line"></span><br><span class="line">  * &#96;UTF-8&#96; 编码下 一个汉字，由三至四个字节组成，所以不能简单按照字节去遍历 一个包含汉子的字符串</span><br><span class="line">    * rune 用来表示&#96;UTF-8&#96;字符，一个rune 字符由一个或多个byte组成</span><br><span class="line">  * &#x3D;&#x3D;字符串底层&#x3D;&#x3D;：一个&#96;byte&#96;数组，所以可以和&#96;[]byte&#96;类型相互转换</span><br><span class="line">  * 字符串是&#x3D;&#x3D;不能 直接修改&#x3D;&#x3D; 的</span><br><span class="line">  * &#x3D;&#x3D;字符串长度&#x3D;&#x3D;：&#96;byte&#96;数组的长度</span><br><span class="line"></span><br><span class="line">* &#96;for _,r :&#x3D; range s&#96;</span><br><span class="line"></span><br><span class="line">  * </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### 修改字符串</span><br><span class="line"></span><br><span class="line">* 需要将字符串转换成&#96;[]rune&#96;或&#96;[]byte&#96;</span><br><span class="line"></span><br><span class="line">  * 在转换成&#96;string&#96;</span><br><span class="line"></span><br><span class="line">* 转换，都会重新分配内存，并复制字节数组</span><br><span class="line"></span><br><span class="line">* 示例</span><br><span class="line"></span><br><span class="line">  * &#96;&#96;&#96;go</span><br><span class="line">    package main</span><br><span class="line">    </span><br><span class="line">    import &quot;fmt&quot;</span><br><span class="line">    </span><br><span class="line">    func main() &#123;</span><br><span class="line">    	s :&#x3D; &quot;hello world&quot;</span><br><span class="line">    </span><br><span class="line">    	&#x2F;&#x2F;强制类型转换</span><br><span class="line">    	bytes :&#x3D; []byte(s)</span><br><span class="line">    	bytes[0] &#x3D; &#39;p&#39;</span><br><span class="line">    	fmt.Println(string(bytes))</span><br><span class="line">    </span><br><span class="line">    	s2 :&#x3D; &quot;你好，世界&quot;</span><br><span class="line">    	runes2 :&#x3D; []rune(s2)</span><br><span class="line">    	runes2[0] &#x3D; &#39;我&#39;</span><br><span class="line">    	fmt.Println(string(runes2))</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br></pre></td></tr></table></figure></li>
-</ul>
-<p>`</p>
-</li>
-</ul>
-<h3 id="类型转换"><a href="#类型转换" class="headerlink" title="类型转换"></a>类型转换</h3><p>Go 中只有 强制类型转换，无 隐式类型转换</p>
-<p>只在两个类型之间支持相互转换的时候使用</p>
-<ul>
-<li><p>语法：<code>T(expression)</code></p>
-<ul>
-<li>T: 要转换的的类型</li>
-<li>表达式：包括变量、复杂算子、函数返回值等</li>
-</ul>
-</li>
-<li><p>Sqrt 所接受的参数是<code>float64</code>类型</p>
-</li>
-<li><p>示例：</p>
-<ul>
-<li>```go<br>package mainimport (<pre><code>&quot;fmt&quot;
-&quot;math&quot;
-</code></pre>
-)func main() {<pre><code>var a, b = 3, 4
-var c int
-c = int(math.Sqrt(float64(a*a + b*b)))
-fmt.Println(c)
-</code></pre>
-}<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">### 练习题</span><br><span class="line"></span><br><span class="line">#### 练习一</span><br><span class="line"></span><br><span class="line">* 编写代码分别定义一个整型、浮点型、布尔型、字符串型变量，使用&#96;fmt.Printf()&#96;搭配&#96;%T&#96;分别打印出上述变量的值和类型</span><br><span class="line"></span><br><span class="line">* &#96;&#96;&#96;Go</span><br><span class="line">  package main</span><br><span class="line">  </span><br><span class="line">  import &quot;fmt&quot;</span><br><span class="line">  </span><br><span class="line">  func main() &#123;</span><br><span class="line">  	s :&#x3D; &quot;hello&quot;</span><br><span class="line">  	i :&#x3D; 10</span><br><span class="line">  	f :&#x3D; 3.14</span><br><span class="line">  	var b bool &#x3D; true</span><br><span class="line">  	fmt.Printf(&quot;%s %T\n&quot;, s, s)</span><br><span class="line">  	fmt.Printf(&quot;%d %T\n&quot;, i, i)</span><br><span class="line">  	fmt.Printf(&quot;%f %T\n&quot;, f, f)	</span><br><span class="line">  	fmt.Printf(&quot;%t %T\n&quot;, b, b)	\\bool 的占位符：&#96;%t&#96;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br></pre></td></tr></table></figure></li>
-</ul>
-</li>
-</ul>
-<h4 id="练习二"><a href="#练习二" class="headerlink" title="练习二"></a>练习二</h4><ul>
-<li><p>编写代码统计出字符串<code>&quot;hello沙河小王子&quot;</code>中汉字的数量。</p>
-</li>
-<li><pre><code class="go">package main
-
-import &quot;fmt&quot;
-
-func main() &#123;
-    s := &quot;hello沙河小王子&quot;
-    count := 0
-
-    for _, i := range s &#123;            //range
-        if len(string(i)) &gt; 1 &#123;        //
-            count++
-        &#125;
-    &#125;
-    fmt.Println(count)
-&#125;
-</code></pre>
-</li>
-</ul>
-
-          
-        
-      
-    </div>
-   
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/">&lt;i class&#x3D;&quot;fa fa-angle-left&quot;&gt;&lt;&#x2F;i&gt;</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">&lt;i class&#x3D;&quot;fa fa-angle-right&quot;&gt;&lt;&#x2F;i&gt;</a>
+    <a class="extend prev" rel="prev" href="/">&lt;i class&#x3D;&quot;fa fa-angle-left&quot;&gt;&lt;&#x2F;i&gt;</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/">&lt;i class&#x3D;&quot;fa fa-angle-right&quot;&gt;&lt;&#x2F;i&gt;</a>
   </nav>
 
 
@@ -3978,7 +3788,7 @@ func main() &#123;
               
                 <a href="/archives/%7C%7C%20archive">
               
-                  <span class="site-state-item-count">30</span>
+                  <span class="site-state-item-count">33</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -3989,7 +3799,7 @@ func main() &#123;
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -4151,7 +3961,7 @@ show_date_time();
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">80.8k</span>
+    <span title="Site words total count">83.2k</span>
   
 </div>
 
@@ -4179,7 +3989,7 @@ show_date_time();
     <!-- 博客字数统计 -->
     <span class="site-pv">
       <i class="fa fa-pencil"></i>
-      博客全站共： <span class="post-count">80.8k</span> 字
+      博客全站共： <span class="post-count">83.2k</span> 字
     </span>
 </div>
 <!-- 新增访客统计代码 END-->

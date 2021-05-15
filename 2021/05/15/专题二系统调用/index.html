@@ -75,7 +75,7 @@
 
 
 
-  <meta name="keywords" content="-Python," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -88,18 +88,23 @@
 
 
 
-<meta name="description" content="模型是真实数据的简单明确的描述。">
+<meta name="description" content="实验要求：  为Linux内核增加一个系统调用，并编写用户进程的程序来测试。 要求该系统调用能够完成以下功能：  (1) 该系统调用有1个整型参数，接收输入自己的学号；   (2) 若参数为奇数，则返回自己学号的最后5位。如你的学号为16130120101 ，则返回20101；   (3) 若参数为偶数，则返回自己的学号的最后6位。如你的学号为16130120102 ，则返回120102 。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="第二部分">
-<meta property="og:url" content="http://example.com/2021/05/08/%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86/index.html">
+<meta property="og:title" content="专题二系统调用">
+<meta property="og:url" content="http://example.com/2021/05/15/%E4%B8%93%E9%A2%98%E4%BA%8C%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8/index.html">
 <meta property="og:site_name" content="ZiHao&#39;s Blog">
-<meta property="og:description" content="模型是真实数据的简单明确的描述。">
+<meta property="og:description" content="实验要求：  为Linux内核增加一个系统调用，并编写用户进程的程序来测试。 要求该系统调用能够完成以下功能：  (1) 该系统调用有1个整型参数，接收输入自己的学号；   (2) 若参数为奇数，则返回自己学号的最后5位。如你的学号为16130120101 ，则返回20101；   (3) 若参数为偶数，则返回自己的学号的最后6位。如你的学号为16130120102 ，则返回120102 。">
 <meta property="og:locale">
-<meta property="article:published_time" content="2021-05-08T12:15:51.365Z">
-<meta property="article:modified_time" content="2021-05-08T12:15:34.178Z">
+<meta property="og:image" content="e:/Hexo/Blog/source_posts/专题二系统调用.assets/image-20210515141634577-1621059396007.png">
+<meta property="og:image" content="e:/Hexo/Blog/source_posts/专题二系统调用.assets/image-20210515142513417-1621059914414.png">
+<meta property="og:image" content="e:/Hexo/Blog/source_posts/专题二系统调用.assets/image-20210515142702100-1621060023561.png">
+<meta property="og:image" content="e:/Hexo/Blog/source_posts/专题二系统调用.assets/image-20210515151638042-1621062999349.png">
+<meta property="og:image" content="e:/Hexo/Blog/source_posts/专题二系统调用.assets/image-20210515151942744-1621063183723.png">
+<meta property="article:published_time" content="2021-05-15T04:54:44.764Z">
+<meta property="article:modified_time" content="2021-05-15T11:56:01.678Z">
 <meta property="article:author" content="Zihao Ma">
-<meta property="article:tag" content="-Python">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="e:/Hexo/Blog/source_posts/专题二系统调用.assets/image-20210515141634577-1621059396007.png">
 
 
 
@@ -129,13 +134,13 @@
 
 
 
-  <link rel="canonical" href="http://example.com/2021/05/08/第二部分/"/>
+  <link rel="canonical" href="http://example.com/2021/05/15/专题二系统调用/"/>
 
 
 
 
 
-  <title>第二部分 | ZiHao's Blog</title>
+  <title>专题二系统调用 | ZiHao's Blog</title>
   
 
 
@@ -466,7 +471,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/05/08/%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/05/15/%E4%B8%93%E9%A2%98%E4%BA%8C%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -483,7 +488,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">第二部分</h1>
+          <h1 class="post-title" itemprop="name headline">专题二系统调用</h1>
         
 
         <div class="post-meta">
@@ -495,8 +500,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-05-08T20:15:51+08:00">
-                2021-05-08
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-05-15T12:54:44+08:00">
+                2021-05-15
               </time>
             
 
@@ -511,8 +516,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2021-05-08T20:15:34+08:00">
-                2021-05-08
+              <time title="更新于" itemprop="dateModified" datetime="2021-05-15T19:56:01+08:00">
+                2021-05-15
               </time>
             
           </span>
@@ -530,8 +535,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Django/" itemprop="url" rel="index">
-                    <span itemprop="name">-Django</span>
+                  <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E8%AE%BE%E8%AE%A1/" itemprop="url" rel="index">
+                    <span itemprop="name">-操作系统课程设计</span>
                   </a>
                 </span>
 
@@ -589,10 +594,6 @@
           
 
           
-              <div class="post-description">
-                  模型是真实数据的简单明确的描述。
-              </div>
-          
 
         </div>
       </header>
@@ -607,153 +608,216 @@
       
 
       
-        <p>该部分将建立数据库，创建第一个模型module, 并主要关注Django提供的自动生成的管理页面</p>
-<h2 id="数据库配置"><a href="#数据库配置" class="headerlink" title="数据库配置"></a>数据库配置</h2><ul>
-<li><code>mysite/settings.py</code>: 包含了项目配置的python模块</li>
-<li>一般，这个配置文件使用 <code>SQLite</code> 作为默认数据库</li>
-</ul>
-<blockquote>
-<p><strong>更换 数据库</strong> ——[官方文档](<a target="_blank" rel="noopener" href="https://docs.djangoproject.com/zh-hans/3.2/intro/tutorial02/">编写你的第一个 Django 应用，第 2 部分 | Django 文档 | Django (djangoproject.com)</a>)</p>
-<p>如果你想使用其他数据库，你需要安装合适的 <a target="_blank" rel="noopener" href="https://docs.djangoproject.com/zh-hans/3.2/topics/install/#database-installation">database bindings</a> ，然后改变设置文件中 <a target="_blank" rel="noopener" href="https://docs.djangoproject.com/zh-hans/3.2/ref/settings/#std:setting-DATABASES"><code>DATABASES</code></a> <code>&#39;default&#39;</code> 项目中的一些键值：</p>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://docs.djangoproject.com/zh-hans/3.2/ref/settings/#std:setting-DATABASE-ENGINE"><code>ENGINE</code></a> – 可选值有 <code>&#39;django.db.backends.sqlite3&#39;</code>，<code>&#39;django.db.backends.postgresql&#39;</code>，<code>&#39;django.db.backends.mysql&#39;</code>，或 <code>&#39;django.db.backends.oracle&#39;</code>。其它 <a target="_blank" rel="noopener" href="https://docs.djangoproject.com/zh-hans/3.2/ref/databases/#third-party-notes">可用后端</a>。</li>
-<li><a target="_blank" rel="noopener" href="https://docs.djangoproject.com/zh-hans/3.2/ref/settings/#std:setting-NAME"><code>NAME</code></a> – 数据库的名称。如果你使用 SQLite，数据库将是你电脑上的一个文件，在这种情况下，<a target="_blank" rel="noopener" href="https://docs.djangoproject.com/zh-hans/3.2/ref/settings/#std:setting-NAME"><code>NAME</code></a> 应该是此文件完整的绝对路径，包括文件名。默认值 <code>BASE_DIR / &#39;db.sqlite3&#39;</code> 将把数据库文件储存在项目的根目录。</li>
-</ul>
-<p>如果你不使用 SQLite，则必须添加一些额外设置，比如 <a target="_blank" rel="noopener" href="https://docs.djangoproject.com/zh-hans/3.2/ref/settings/#std:setting-USER"><code>USER</code></a> 、 <a target="_blank" rel="noopener" href="https://docs.djangoproject.com/zh-hans/3.2/ref/settings/#std:setting-PASSWORD"><code>PASSWORD</code></a> 、 <a target="_blank" rel="noopener" href="https://docs.djangoproject.com/zh-hans/3.2/ref/settings/#std:setting-HOST"><code>HOST</code></a> 等等。想了解更多数据库设置方面的内容，请看文档：<a target="_blank" rel="noopener" href="https://docs.djangoproject.com/zh-hans/3.2/ref/settings/#std:setting-DATABASES"><code>DATABASES</code></a> 。</p>
-</blockquote>
-<ul>
-<li>在编辑<code>settings.py</code>文件前，需要先设置<code>TIME_ZONE</code>为自己的时区<ul>
-<li><a target="_blank" rel="noopener" href="https://docs.djangoproject.com/zh-hans/3.2/ref/settings/#std:setting-TIME_ZONE">TIME_ZONE</a></li>
-<li>中国时区：<code>CN</code></li>
-</ul>
-</li>
-</ul>
-<ul>
-<li><p><code>setting.py</code>头部<code>INSTALLED_APPS</code>设置项：包括了会在项目中启动的所有应用</p>
-<ul>
-<li><blockquote>
-<p>应用能在多个项目中使用，你也可以打包并且发布应用，让别人使用它们</p>
-</blockquote>
-</li>
-</ul>
-</li>
-<li><p><code>INSTALLED_APPS</code>默认包括了Django自带应用：</p>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://docs.djangoproject.com/zh-hans/3.2/ref/contrib/admin/#module-django.contrib.admin"><code>django.contrib.admin</code></a> – <strong>管理员站点</strong>， 你很快就会使用它。</li>
-<li><a target="_blank" rel="noopener" href="https://docs.djangoproject.com/zh-hans/3.2/topics/auth/#module-django.contrib.auth"><code>django.contrib.auth</code></a> – <strong>认证授权系统</strong>。</li>
-<li><a target="_blank" rel="noopener" href="https://docs.djangoproject.com/zh-hans/3.2/ref/contrib/contenttypes/#module-django.contrib.contenttypes"><code>django.contrib.contenttypes</code></a> – <strong>内容类型框架</strong>。</li>
-<li><a target="_blank" rel="noopener" href="https://docs.djangoproject.com/zh-hans/3.2/topics/http/sessions/#module-django.contrib.sessions"><code>django.contrib.sessions</code></a> – <strong>会话框架</strong>。</li>
-<li><a target="_blank" rel="noopener" href="https://docs.djangoproject.com/zh-hans/3.2/ref/contrib/messages/#module-django.contrib.messages"><code>django.contrib.messages</code></a> – <strong>消息框架</strong>。</li>
-<li><a target="_blank" rel="noopener" href="https://docs.djangoproject.com/zh-hans/3.2/ref/contrib/staticfiles/#module-django.contrib.staticfiles"><code>django.contrib.staticfiles</code></a> – <strong>管理静态文件的框架</strong>。</li>
-</ul>
-</li>
-<li><p>默认开启的应用至少需要一个数据库表，因此需在使用他们之前，在数据库中创建一些表：</p>
-<ul>
-<li>```python<br>py manage.py migrate<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">  * &#96;migrate&#96;命令:  检查 [&#96;INSTALLED_APPS&#96;](https:&#x2F;&#x2F;docs.djangoproject.com&#x2F;zh-hans&#x2F;3.2&#x2F;ref&#x2F;settings&#x2F;#std:setting-INSTALLED_APPS) 设置，为其中的每个应用创建需要的数据表，至于具体会创建什么，这取决于 &#96;mysite&#x2F;settings.py&#96; 设置文件和每个应用的**数据库迁移文件**</span><br><span class="line">    * 该命令会将所**执行**的每个**迁移**操作在终端显示</span><br><span class="line"></span><br><span class="line">## 创建模型</span><br><span class="line"></span><br><span class="line">在Django中写一个数据库驱动的 Web 应用的**第一步**：&#x3D;&#x3D;定义模型&#x3D;&#x3D;——即**数据库结构设计和附加的其他元数据**</span><br><span class="line"></span><br><span class="line">&gt; 模型是真实数据的简单明确的描述</span><br><span class="line">&gt;</span><br><span class="line">&gt; 包含了存储的数据所必要的字段和行为</span><br><span class="line"></span><br><span class="line">在该应用中，将建立两个模型：Question和Choice</span><br><span class="line"></span><br><span class="line">* Question模型：包括两个字段：问题描述和发布时间</span><br><span class="line">* Choice模型：有两个字段，选项描述和当前得票数。每个Choice属于一个问题</span><br><span class="line"></span><br><span class="line">这些概念都可以通过 Python 类来描述：</span><br><span class="line"></span><br><span class="line">编辑&#96;polls&#x2F;models.py&#96;:</span><br><span class="line"></span><br><span class="line">&#96;&#96;&#96;python</span><br><span class="line">from django.db import models</span><br><span class="line"></span><br><span class="line">class Question(models.Model):</span><br><span class="line">    question_text &#x3D; models.CharField(max_length&#x3D;200)</span><br><span class="line">    pub_date &#x3D; models.DateTimeField(&#39;date published&#39;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class Choice(models.Model):</span><br><span class="line">    question &#x3D; models.ForeignKey(Question, on_delete&#x3D;models.CASCADE)</span><br><span class="line">    choice_text &#x3D; models.CharField(max_length&#x3D;200)</span><br><span class="line">    votes &#x3D; models.IntegerField(default&#x3D;0)</span><br></pre></td></tr></table></figure></li>
-</ul>
-</li>
-<li><p>每个模型都被表示为<code>django.db.models.Model</code>类的子类</p>
-<ul>
-<li>子类内有许多类变量：表示模型里的一个<strong>数据库字段</strong></li>
-<li>每个字段都是<code>Field</code>类的实例：将告诉Django每个字段要处理的数据类型<ul>
-<li>字符字段：<code>CharField</code></li>
-<li>日期时间字段：<code>DateTimeField</code></li>
-<li>整型字段：<code>IntegerField</code></li>
-<li>更多<a target="_blank" rel="noopener" href="https://docs.djangoproject.com/zh-hans/3.2/ref/models/fields/#django.db.models.Field"><code>Field</code></a> </li>
-</ul>
-</li>
-<li>每个Field类的实例名也是字段名</li>
-</ul>
-</li>
-<li><p>定义一些 Field 类实例 需要参数：</p>
-<ul>
-<li><code>CharField</code> 需要<code>max_length</code>参数：用于定义数据库结构，也用于验证数据</li>
-</ul>
-</li>
-<li><p>注意，使用<code>ForeignKey</code>定义关系</p>
-<ul>
-<li>这将告诉Django，每一个 Choice 对象都关联到一个 Question 对象</li>
-</ul>
-</li>
-</ul>
-<h2 id="激活模型"><a href="#激活模型" class="headerlink" title="激活模型"></a>激活模型</h2><ul>
-<li>创建模型的代码给予了 Django 许多信息：<ul>
-<li>为应用创建数据库 schema：生成<code>CTEATE TABLE</code>语句</li>
-<li>创建可以与Question和Choice对象 进行交互的<strong>Python数据库API</strong></li>
-</ul>
-</li>
-</ul>
-<p><strong>首先</strong>，将 polls 应用安装至Django项目中</p>
-<ul>
-<li><p>为了工程中包含该应用，在<code>settings.py</code>的 <code>INSTALLED_APPS</code> 中添加设置</p>
-<ul>
-<li><p><code>PollsConfig</code> 类 写在<code>polls/apps.py</code>中，因此点式路径：<code>polls.apps.PollsConfig</code></p>
-</li>
-<li><p>在<code>settings.py</code>的<code>INSTALLED_APPS</code> 子项添加点式路径</p>
-<ul>
-<li>```python<br>INSTALLED_APPS = [<pre><code>&#39;polls.apps.PollsConfig&#39;,
-&#39;django.contrib.admin&#39;,
-&#39;django.contrib.auth&#39;,
-&#39;django.contrib.contenttypes&#39;,
-&#39;django.contrib.sessions&#39;,
-&#39;django.contrib.messages&#39;,
-&#39;django.contrib.staticfiles&#39;,
-</code></pre>
-]<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">现在项目中包含了polls应用</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">**接着**，运行&#96;py manage.py makemigrations polls&#96;</span><br><span class="line"></span><br><span class="line">* **终端输出**：</span><br><span class="line"></span><br><span class="line">  * &#96;&#96;&#96;</span><br><span class="line">    Migrations for &#39;polls&#39;:</span><br><span class="line">      polls&#x2F;migrations&#x2F;0001_initial.py</span><br><span class="line">        - Create model Question</span><br><span class="line">        - Create model Choice</span><br></pre></td></tr></table></figure></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p><code>makemigrations</code> : Django 检测对模型文件<code>polls/models.py</code>的修改，并且将修改的部分<strong>存储</strong>为一次 <strong>迁移</strong></p>
-<ul>
-<li><strong>迁移</strong>是 Django 对于<strong>模型</strong>定义（也就是你的数据库结构）的<strong>变化的储存形式</strong> - 它们其实也只是一些你磁盘上的文件</li>
-</ul>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://docs.djangoproject.com/zh-hans/3.2/ref/django-admin/#django-admin-migrate"><code>migrate</code></a>: 自动<strong>执行数据库迁移</strong> 并 <strong>同步管理数据库结构</strong>的命令。</p>
-<ul>
-<li>迁移命令执行的SQL语句：<a target="_blank" rel="noopener" href="https://docs.djangoproject.com/zh-hans/3.2/ref/django-admin/#django-admin-sqlmigrate"><code>sqlmigrate</code></a>命令接收一个迁移的名称，然后返回对应的SQL<ul>
-<li><code>py manage.py sqlmigrate polls 0001</code></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>输出是迁移所对应的SQL语句</p>
-<ul>
-<li>表名是由应用名和模型名的小写形式连接而成</li>
-<li>主键被自动创建</li>
-</ul>
-</li>
-</ul>
-<p><strong>然后</strong>，运行migrate命令，将在数据库里创建 新定义的模型的数据表：<code>py manage.py migrate</code></p>
-<ul>
-<li><p>该 migrate 命令会选中未执行过的迁移并应用在数据库中</p>
-</li>
-<li><blockquote>
-<p>迁移是非常强大的功能，它能让你在开发过程中持续的改变数据库结构而不需要重新删除和创建表 - 它专注于使数据库平滑升级而不会丢失数据</p>
-</blockquote>
-</li>
-<li><p>注意：改变模型需要三步：</p>
-<ul>
-<li>编辑 models 文件，改变模型</li>
-<li>运行 <code>makemigrations</code> 命令生成迁移</li>
-<li>运行 migrate 命令 应用迁移</li>
-</ul>
-</li>
-</ul>
-<h2 id="初试-API"><a href="#初试-API" class="headerlink" title="初试 API"></a>初试 API</h2><p><strong>首先</strong>，进入 交互式 Python 命令行，以使用Django创建的各种 API</p>
-<ul>
-<li><code>py manage.py shell</code><ul>
-<li>manage 会设置<code>DJANGO_SETTINGS_MODULE</code> 环境变量，根据<code>settings</code>文件设置包的导入路径</li>
-</ul>
-</li>
-</ul>
-<p><strong>然后</strong>，尝试 <a target="_blank" rel="noopener" href="https://docs.djangoproject.com/zh-hans/3.2/topics/db/queries/">数据库 API</a> </p>
-<ul>
-<li><p>```<br>from polls.models import Choice, Question  # Import the model classes we just wrote.<br>from django.utils import timezone<br>q = Question(question_text=”What’s new?”, pub_date=timezone.now())<br>q.save()</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* 编辑模型代码，可以更了解模型对象的细节：给模型增加&#96;__str__()&#96;方法</span><br><span class="line"></span><br><span class="line">  * &#96;&#96;&#96;</span><br><span class="line">    from django.db import models</span><br><span class="line">    </span><br><span class="line">    class Question(models.Model):</span><br><span class="line">        # ...</span><br><span class="line">        def __str__(self):</span><br><span class="line">            return self.question_text</span><br><span class="line">    </span><br><span class="line">    class Choice(models.Model):</span><br><span class="line">        # ...</span><br><span class="line">        def __str__(self):</span><br><span class="line">            return self.choice_text</span><br></pre></td></tr></table></figure></li>
-<li><p>```<br>Question.objects.filter(id=1)<br>q = Question.objects.get(pk=1)<br>q.choice_set.all()<br>q.choice_set.create(choice_text=’Not much’, votes=0)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">## Django 管理页面</span><br><span class="line"></span><br><span class="line">&gt; 为你的员工或客户生成一个用户添加，修改和删除内容的后台是一项缺乏创造性和乏味的工作。因此，Django 全自动地根据模型创建后台界面。</span><br><span class="line"></span><br><span class="line">管理页面默认开启</span><br><span class="line"></span><br><span class="line">### 创建管理员账号</span><br><span class="line"></span><br><span class="line">* &#96;py manage.py createsuperuser&#96;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 启动开发服务器</span><br><span class="line"></span><br><span class="line">* &#96;py manage.py runserver&#96;</span><br><span class="line">* 访问：&#96;http:&#x2F;&#x2F;127.0.0.1:8000&#x2F;admin&#x2F;&#96;</span><br><span class="line"></span><br><span class="line">### 管理站点页面</span><br><span class="line"></span><br><span class="line">* 进入管理页面的索引页后，可编辑的&#96;Groups&#96;和&#96;Users&#96; 是Django 开发的认证框架</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 向管理页面加入投票应用</span><br><span class="line"></span><br><span class="line">* 需要在管理文件&#96;polls&#x2F;admin.py&#96;加入应用的模型</span><br><span class="line"></span><br><span class="line">  * &#96;&#96;&#96;</span><br><span class="line">    from django.contrib import admin</span><br><span class="line">    </span><br><span class="line">    from .models import Question</span><br><span class="line">    </span><br><span class="line">    admin.site.register(Question)</span><br></pre></td></tr></table></figure>
+        <blockquote>
+<p><strong>实验要求：</strong></p>
+<p> 为Linux内核增加一个<strong>系统调用</strong>，并编写<strong>用户进程的程序</strong>来测试。</p>
+<p>要求<strong>该系统调用</strong>能够完成<strong>以下功能</strong>：</p>
+<pre><code> (1) 该系统调用有1个整型参数，接收输入自己的学号；
 
+ (2) 若参数为奇数，则返回自己学号的最后5位。如你的学号为16130120101 ，则返回20101；
+
+ (3) 若参数为偶数，则返回自己的学号的最后6位。如你的学号为16130120102 ，则返回120102 。
+</code></pre>
+<p>提交内容为：</p>
+<p>  <strong>截图1</strong>： 运行结果</p>
+<p>  <strong>截图2</strong>：源代码</p>
+</blockquote>
+<h1 id="1-知识点-什么是系统调用"><a href="#1-知识点-什么是系统调用" class="headerlink" title="1 [知识点] 什么是系统调用"></a>1 [知识点] 什么是系统调用</h1><h2 id="系统调用"><a href="#系统调用" class="headerlink" title="系统调用"></a>系统调用</h2><p>Linux 的<strong>运行空间</strong>：<strong>内核空间</strong> 和 <strong>用户空间</strong></p>
+<ul>
+<li>逻辑上相互隔离</li>
+<li>用户进程通常情况下 不允许 访问<strong>内核数据</strong>，也无法使<strong>用内核函数</strong></li>
+<li>内核 提供了 <strong>用户进程与内核进行交互的一组接口</strong>：用户进程可以通过这组接口来获得操作系统内核提供的服务</li>
+</ul>
+<h2 id="系统调用的作用"><a href="#系统调用的作用" class="headerlink" title="系统调用的作用"></a>系统调用的作用</h2><ul>
+<li>提供<strong>用户模式</strong>的进程和硬件设备的<strong>接口</strong></li>
+<li>保证<strong>系统的稳定和安全</strong></li>
+<li>实现<strong>多任务和虚拟内存</strong></li>
+</ul>
+<h2 id="系统调用的分类"><a href="#系统调用的分类" class="headerlink" title="系统调用的分类"></a>系统调用的分类</h2><ul>
+<li>控制硬件<ul>
+<li>硬件资源 与 用户空间的抽象接口</li>
+<li>读写文件：write/read</li>
+</ul>
+</li>
+<li>进程管理<ul>
+<li>保证系统中的进程能以<strong>多任务在虚拟内存环境下运行</strong></li>
+<li>fork，clone，<code>execve</code></li>
+</ul>
+</li>
+<li>设置系统状态或读取内核数据<br>* </li>
+</ul>
+<h2 id="系统调用和-API-接口"><a href="#系统调用和-API-接口" class="headerlink" title="系统调用和 API 接口"></a>系统调用和 API 接口</h2><ul>
+<li>一般，应用程序通过 <strong>应用程序 API</strong>而不是 直接通过系统调用编程</li>
+<li>应用程序使用的 应用程序API，不需要和内核提供的 系统调用 一一对应<ul>
+<li>一个API 接口可以 用一个或多个 系统调用实现</li>
+</ul>
+</li>
+</ul>
+<h2 id="系统调用和系统命令"><a href="#系统调用和系统命令" class="headerlink" title="系统调用和系统命令"></a>系统调用和系统命令</h2><ul>
+<li><strong>系统命令</strong>比<strong>应用程序接口</strong>更高一层</li>
+<li>每一个系统命令都是一个可执行程序<ul>
+<li>ls</li>
+</ul>
+</li>
+<li><strong>系统命令</strong>的实现调用了系统调用</li>
+<li><code>strace ls</code>可以 查看系统命令所调用的系统调用</li>
+</ul>
+<h2 id="系统调用与内核函数"><a href="#系统调用与内核函数" class="headerlink" title="系统调用与内核函数"></a>系统调用与内核函数</h2><ul>
+<li><strong>内核函数</strong>只是在内核中实现的函数</li>
+<li><strong>系统调用</strong> 是用户进入内核的接口层，本身不是内核函数，是由内核函数实现的</li>
+<li>进入内核后，不同的系统调用 找到 各自对应的内核函数<ul>
+<li>这些内核函数：系统调用的“服务例程”</li>
+<li>Linux 系统调用 对应的 内核例程全部以”sys_” 开头：<code>sys_fork</code> </li>
+</ul>
+</li>
+</ul>
+<h1 id="2-知识点-系统调用实现原理"><a href="#2-知识点-系统调用实现原理" class="headerlink" title="2 [知识点] 系统调用实现原理"></a>2 [知识点] 系统调用实现原理</h1><h2 id="系统调用处理程序"><a href="#系统调用处理程序" class="headerlink" title="系统调用处理程序"></a>系统调用处理程序</h2><ul>
+<li>当用户态的进程 调用一个系统调用时，CPU 切换到内核态，并且执行一个内核函数</li>
+<li><strong>系统调用处理程序</strong>执行的操作：<ul>
+<li>在内核栈 保存大多数寄存器的内容</li>
+<li>调用所谓系统调用的服务例程相应 的 C函数处理系统调用</li>
+<li>通过 <code>ret_from_sys_call</code> 函数从系统调用返回</li>
+</ul>
+</li>
+</ul>
+<h2 id="服务例程"><a href="#服务例程" class="headerlink" title="服务例程"></a>服务例程</h2><ul>
+<li><p>Linux 的<strong>系统调用</strong>有200多个，相应的<strong>服务例程</strong>也是</p>
+</li>
+<li><p>定义<code>_syscall0</code> - <code>_syscall5</code>六个<strong>宏</strong>：对相应的例程进行封装</p>
+<ul>
+<li>每个宏名字 后缀的数字：系统调用 所用的参数个数（系统调用号除外）</li>
+</ul>
+</li>
+<li><p>每个宏：需要<code>2+2*n</code> 个参数</p>
+<ul>
+<li>n : 系统调用的参数个数</li>
+<li>一对参数：系统调用的返回值类型和名字</li>
+<li>n对参数：系统调用参数的类型和名字</li>
+</ul>
+</li>
+<li><p>例如：write() 例程的封装：</p>
+<ul>
+<li><code>_syscall3(int, write, int, fd, const char*, buf, unsigned int, count)</code></li>
+</ul>
+</li>
+<li><p>一般，系统调用于用户程序中，内核态也可以同样调用封装了的系统调用：</p>
+<ul>
+<li>区别：用户态进行系统调用时，需要进行用户态堆栈到内核态堆栈的切换</li>
+</ul>
+</li>
+</ul>
+<h2 id="系统调用过程"><a href="#系统调用过程" class="headerlink" title="系统调用过程"></a>系统调用过程</h2><p><img src="E:\Hexo\Blog\source_posts\专题二系统调用.assets\image-20210515141634577-1621059396007.png" alt="image-20210515141634577"></p>
+<ul>
+<li><p>首先：<strong>软中断</strong>：通过软件指令触发而非外设引发的中断</p>
+<ul>
+<li>时编程人员开发的一种异常</li>
+<li>具体是调用<code>int $0x80</code>汇编指令，产生向量为 0x80 的编程异常</li>
+</ul>
+</li>
+<li><p>然后：内核进行中断服务的处理，并执行<code>system_call</code>函数</p>
+<ul>
+<li>进入系统调用入口的公共处理函数，在这个函数中会按照寄存器<code>eax</code>中的内容识别对应的系统调用</li>
+</ul>
+</li>
+<li><p>进入系统内核后，使用<code>system_call_table</code>和<code>eax</code> 查到真正的系统调用，并执行相应的内核例程</p>
+</li>
+<li><p>最后：从系统调用中返回后，最终执行<code>syscall_exit</code>，并调用<code>resume_userspace</code>返回用户空间</p>
+</li>
+</ul>
+<p><img src="E:\Hexo\Blog\source_posts\专题二系统调用.assets\image-20210515142513417-1621059914414.png" alt="image-20210515142513417"></p>
+<p><img src="E:\Hexo\Blog\source_posts\专题二系统调用.assets\image-20210515142702100-1621060023561.png" alt="image-20210515142702100"></p>
+<ul>
+<li>从用户角度向内核：<ul>
+<li>系统命令</li>
+<li>编程接口</li>
+<li>系统调用</li>
+<li>内核函数</li>
+</ul>
+</li>
+</ul>
+<h2 id="系统调用实现"><a href="#系统调用实现" class="headerlink" title="系统调用实现"></a>系统调用实现</h2><ul>
+<li><p>Linux 中，每个系统调用被赋予一个<code>系统调用号</code></p>
+</li>
+<li><p>通过系统调用号可以关联系统调用</p>
+</li>
+<li><p>内核记录系统调用表中所有已注册的系统调用列表，存储于<code>sys_call_table</code></p>
+</li>
+<li></li>
+<li><p><code>linux-版本号/arch/x86/include/asm/unsted_32.h</code>：定义了所有<strong>系统调用的编号</strong></p>
+</li>
+<li><p>总个数：<code>NR_syscalls</code></p>
+</li>
+<li><p>系统调用号是固定的</p>
+</li>
+</ul>
+<p>1.通过 <strong>异常</strong> 使进程切换到内核模式<code>int 80h</code>指令完成</p>
+<p>​    系统调用中断的入口<code>syscall(系统调用调用号)</code></p>
+<p>2.<strong>系统调用跳转表</strong>：<code>linux/arch/x86/kernel/syscall_table_32.S</code>，并调用相应的函数</p>
+<h1 id="3-添加用户自定义的系统调用"><a href="#3-添加用户自定义的系统调用" class="headerlink" title="3 添加用户自定义的系统调用"></a>3 添加用户自定义的系统调用</h1><blockquote>
+<p>要求<strong>该系统调用</strong>能够完成<strong>以下功能</strong>：</p>
+<pre><code> (1) 该系统调用有1个整型参数，接收输入自己的学号；
+
+ (2) 若参数为奇数，则返回自己学号的最后5位。如你的学号为16130120101 ，则返回20101；
+
+ (3) 若参数为偶数，则返回自己的学号的最后6位。如你的学号为16130120102 ，则返回120102 。
+</code></pre>
+</blockquote>
+<blockquote>
+<p>修改系统调用表文件-&gt; 修改系统调用号文件-&gt;中增加系统调用声明-&gt;添加实现</p>
+</blockquote>
+<ul>
+<li>==需要特别注意的是==：long 型至多表示10位十进制数，而学号是11位，需要使用long long接收参数</li>
+</ul>
+<p><strong>步骤一</strong>：打开 系统调用号表<code>syscall_64.tbl</code>文件，并添加自定义的系统调用</p>
+<ul>
+<li>命令：<code>sudo gedit arch/x86/entry/syscalls/syscall_64.tbl</code></li>
+<li><img src="E:\Hexo\Blog\source_posts\专题二系统调用.assets\image-20210515151638042-1621062999349.png" alt="image-20210515151638042"></li>
+</ul>
+<p><strong>步骤二</strong>：在内核函数声明文件<code>syscalls.h</code>中添加系统调用的内核函数声明：</p>
+<ul>
+<li><p><code>sudo gedit include/linux/syscalls.h</code></p>
+</li>
+<li><p>在最后 函数声明：</p>
+<ul>
+<li><p><img src="E:\Hexo\Blog\source_posts\专题二系统调用.assets\image-20210515151942744-1621063183723.png" alt="image-20210515151942744"></p>
+</li>
+<li><p>```c<br>/* My Own syscall */<br>asmlinkage long sys_mysyscall(long long number);<br>#endif</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">**步骤三**：在内核函数定义文件&#96;sys.c&#96;文件中添加函数定义：</span><br><span class="line"></span><br><span class="line">* &#96;sudo gedit kernel&#x2F;sys.c&#96;</span><br><span class="line"></span><br><span class="line">* ![image-20210515154811000](E:\Hexo\Blog\source\_posts\专题二系统调用.assets\image-20210515154811000-1621064892493.png)</span><br><span class="line"></span><br><span class="line">* &#96;&#96;&#96;c</span><br><span class="line">  &#x2F;* My Own syscall *&#x2F;</span><br><span class="line">  SYSCALL_DEFINE1(mysyscall, long long, number)&#123;</span><br><span class="line">  	long ans&#x3D;0;</span><br><span class="line">  	if(number%2 &#x3D;&#x3D; 0 )&#123;</span><br><span class="line">  		ans &#x3D; number%1000000;</span><br><span class="line">  	&#125;</span><br><span class="line">  	else&#123;</span><br><span class="line">  		ans &#x3D; number%100000;</span><br><span class="line">  	&#125;</span><br><span class="line">  </span><br><span class="line">  	return ans;</span><br><span class="line">  &#125;</span><br><span class="line">  #endif &#x2F;* CONFIG_COMPAT *&#x2F;</span><br><span class="line">  </span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<p><strong>接下来</strong>，==重新编译内核==</p>
+<ul>
+<li><strong>净化内核</strong>：<ul>
+<li><code>make mrproper</code><ul>
+<li>删除所有编译生成文件、内核配置文件等</li>
+</ul>
+</li>
+<li><code>make clean</code><ul>
+<li>删除前一次编译过程残留的数据</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>重新编译安装内核</strong>：：<del>因为 make 太久而在结束的时候忘记 安装操作 的憨憨是我</del><ul>
+<li><code>make menuconfig</code></li>
+<li><code>make </code></li>
+<li><code>make modules_install</code></li>
+<li><code>make install</code></li>
+</ul>
+</li>
+<li><strong>最后重启</strong><code>reboot</code></li>
+</ul>
+<p><strong>接着</strong>可以验证添加的系统调用是否成功：</p>
+<h1 id="4-验证添加的系统调用"><a href="#4-验证添加的系统调用" class="headerlink" title="4 验证添加的系统调用"></a>4 验证添加的系统调用</h1><p>写一段调用系统调用的程序：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;linux/kernel.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/syscall.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc,<span class="keyword">char</span> **argv)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">        <span class="comment">//443:long long sys_mysyscall(long long)</span></span><br><span class="line">    	<span class="keyword">long</span> <span class="keyword">long</span> number;</span><br><span class="line">    	<span class="keyword">long</span> ans;</span><br><span class="line">    	<span class="built_in">printf</span>(<span class="string">&quot;输入学号：\n&quot;</span>);</span><br><span class="line">    	<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;number);</span><br><span class="line">        ans = syscall(<span class="number">443</span>,number);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;mysyscall return %ld\n&quot;</span>,ans);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p><code>gcc -o test.c test</code></p>
+</li>
+<li><p><code>./test</code></p>
+</li>
+<li><p>结果：<br>* </p>
 </li>
 </ul>
 
@@ -777,7 +841,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://example.com/2021/05/08/%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86/" title="第二部分">http://example.com/2021/05/08/%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86/</a>
+    <a href="http://example.com/2021/05/15/%E4%B8%93%E9%A2%98%E4%BA%8C%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8/" title="专题二系统调用">http://example.com/2021/05/15/%E4%B8%93%E9%A2%98%E4%BA%8C%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -790,12 +854,6 @@
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/Python/" rel="tag"><i class="fa fa-tag"></i> -Python</a>
-          
-        </div>
-      
 
       
       
@@ -805,8 +863,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2021/05/08/%E7%BC%96%E5%86%99%E7%AC%AC%E4%B8%80%E4%B8%AA%20Django%20%E5%BA%94%E7%94%A8%EF%BC%8C%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86/" rel="next" title="编写第一个 Django 应用，第一部分">
-                <i class="fa fa-chevron-left"></i> 编写第一个 Django 应用，第一部分
+              <a href="/2021/05/15/%E8%AF%BE%E5%90%8E%E4%B9%A0%E9%A2%9811.14/" rel="next" title="课后习题11.14">
+                <i class="fa fa-chevron-left"></i> 课后习题11.14
               </a>
             
           </div>
@@ -815,8 +873,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2021/05/13/%E4%B8%93%E9%A2%98%E4%B8%80%E5%86%85%E6%A0%B8%E7%BC%96%E8%AF%91/" rel="prev" title="专题一内核编译">
-                专题一内核编译 <i class="fa fa-chevron-right"></i>
+              <a href="/2021/05/15/%E4%B8%93%E9%A2%98%E4%B8%89%E5%86%85%E6%A0%B8%E6%A8%A1%E5%9D%97/" rel="prev" title="专题三内核模块">
+                专题三内核模块 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -1046,7 +1104,7 @@ show_date_time();
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E9%85%8D%E7%BD%AE"><span class="nav-text">数据库配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%BF%80%E6%B4%BB%E6%A8%A1%E5%9E%8B"><span class="nav-text">激活模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9D%E8%AF%95-API"><span class="nav-text">初试 API</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E7%9F%A5%E8%AF%86%E7%82%B9-%E4%BB%80%E4%B9%88%E6%98%AF%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8"><span class="nav-text">1 [知识点] 什么是系统调用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8"><span class="nav-text">系统调用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-text">系统调用的作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E7%9A%84%E5%88%86%E7%B1%BB"><span class="nav-text">系统调用的分类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E5%92%8C-API-%E6%8E%A5%E5%8F%A3"><span class="nav-text">系统调用和 API 接口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E5%92%8C%E7%B3%BB%E7%BB%9F%E5%91%BD%E4%BB%A4"><span class="nav-text">系统调用和系统命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E4%B8%8E%E5%86%85%E6%A0%B8%E5%87%BD%E6%95%B0"><span class="nav-text">系统调用与内核函数</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E7%9F%A5%E8%AF%86%E7%82%B9-%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86"><span class="nav-text">2 [知识点] 系统调用实现原理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E5%A4%84%E7%90%86%E7%A8%8B%E5%BA%8F"><span class="nav-text">系统调用处理程序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E4%BE%8B%E7%A8%8B"><span class="nav-text">服务例程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E8%BF%87%E7%A8%8B"><span class="nav-text">系统调用过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E5%AE%9E%E7%8E%B0"><span class="nav-text">系统调用实现</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-%E6%B7%BB%E5%8A%A0%E7%94%A8%E6%88%B7%E8%87%AA%E5%AE%9A%E4%B9%89%E7%9A%84%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8"><span class="nav-text">3 添加用户自定义的系统调用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-%E9%AA%8C%E8%AF%81%E6%B7%BB%E5%8A%A0%E7%9A%84%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8"><span class="nav-text">4 验证添加的系统调用</span></a></li></ol></div>
             
 
           </div>

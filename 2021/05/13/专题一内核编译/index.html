@@ -96,15 +96,15 @@
 <meta property="og:description" content="[toc]    作业要求：  完成本专题教学内容中的验收测试题并提交验收材料。  验收材料要求:  新内核引导成功前：  \1. 执行命令：uname –a,提交截屏结果1    新内核引导成功后：  \2. 执行命令：uname –a,提交截屏结果2    \3. 进入目录&#x2F;boot，执行命令：ls -l,提交截屏结果3     &#x3D;&#x3D;tips:&#x3D;&#x3D;  在创建虚拟机时，最好分配 50 GB 以上">
 <meta property="og:locale">
 <meta property="og:image" content="e:/Hexo/Blog/source_posts/专题一内核编译/image-20210514211226158-1620997948493.png">
-<meta property="og:image" content="e:/4th_term/OS课设/课题一/专题一内核编译.assets/image-20210514210128321.png">
-<meta property="og:image" content="e:/4th_term/OS课设/课题一/专题一内核编译.assets/image-20210514210310481.png">
+<meta property="og:image" content="e:/Hexo/Blog/source_posts/专题一内核编译.assets/image-20210514222101971-1621002063317.png">
+<meta property="og:image" content="e:/Hexo/Blog/source_posts/专题一内核编译.assets/image-20210514222213871.png">
 <meta property="og:image" content="e:/4th_term/OS课设/课题一/专题一.assets/image-20210511210840223.png">
 <meta property="og:image" content="e:/4th_term/OS课设/课题一/专题一.assets/image-20210511211233011.png">
 <meta property="og:image" content="e:/4th_term/OS课设/课题一/专题一.assets/image-20210512163243691-1620808365518.png">
 <meta property="og:image" content="e:/4th_term/OS课设/课题一/专题一内核编译.assets/image-20210514102943927.png">
 <meta property="og:image" content="https://img2018.cnblogs.com/i-beta/1653979/201911/1653979-20191112233306483-1954394758.png">
 <meta property="article:published_time" content="2021-05-13T05:57:47.367Z">
-<meta property="article:modified_time" content="2021-05-14T13:22:43.037Z">
+<meta property="article:modified_time" content="2021-05-14T14:22:17.210Z">
 <meta property="article:author" content="Zihao Ma">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="e:/Hexo/Blog/source_posts/专题一内核编译/image-20210514211226158-1620997948493.png">
@@ -519,7 +519,7 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2021-05-14T21:22:43+08:00">
+              <time title="更新于" itemprop="dateModified" datetime="2021-05-14T22:22:17+08:00">
                 2021-05-14
               </time>
             
@@ -590,7 +590,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  7
+                  8
                 </span>
               
             </div>
@@ -622,9 +622,9 @@
 <p> <img src="E:\Hexo\Blog\source_posts\专题一内核编译\image-20210514211226158-1620997948493.png" alt="image-20210514211226158"></p>
 <p> <strong>新内核引导成功后</strong>：</p>
 <p> \2. 执行命令：<code>uname –a</code>,提交<strong>截屏结果2</strong></p>
-<p> <img src="E:\4th_term\OS课设\课题一\专题一内核编译.assets\image-20210514210128321.png" alt="image-20210514210128321"></p>
+<p> <img src="E:\Hexo\Blog\source_posts\专题一内核编译.assets\image-20210514222101971-1621002063317.png" alt="image-20210514222101971"></p>
 <p> \3. 进入目录/boot，执行命令：ls -l,提交<strong>截屏结果3</strong></p>
-<p> <img src="E:\4th_term\OS课设\课题一\专题一内核编译.assets\image-20210514210310481.png" alt="image-20210514210310481"></p>
+<p> <img src="E:\Hexo\Blog\source_posts\专题一内核编译.assets\image-20210514222213871.png" alt="image-20210514222213871"></p>
 </blockquote>
 </li>
 <li><p><strong>==tips:==</strong>  在创建虚拟机时，最好分配 50 GB 以上从磁盘空间，四个以上内核</p>
@@ -824,6 +824,12 @@
 <li>solution: </li>
 </ul>
 </blockquote>
+<ul>
+<li>注意：新版本（我的是5.12.2）的Linux内核，不需要手动引导内核，<ul>
+<li>make install 之后直接重启即可</li>
+</ul>
+</li>
+</ul>
 <h1 id="3-知识点-GNU-make和makefile"><a href="#3-知识点-GNU-make和makefile" class="headerlink" title="3 [知识点] GNU make和makefile"></a>3 [知识点] GNU make和makefile</h1><h2 id="什么是-make"><a href="#什么是-make" class="headerlink" title="什么是 make"></a>什么是 make</h2><ul>
 <li><code>make menuconfig</code>: 用命令行模式<strong>配置内核</strong></li>
 <li><code>make</code>: 编译<strong>内核</strong>和<strong>模块</strong></li>
@@ -955,6 +961,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2021/05/15/%E8%AF%BE%E5%90%8E%E4%B9%A0%E9%A2%9811.14/" rel="prev" title="课后习题11.14">
+                课后习题11.14 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -1034,7 +1044,7 @@
               
                 <a href="/archives/%7C%7C%20archive">
               
-                  <span class="site-state-item-count">30</span>
+                  <span class="site-state-item-count">33</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1045,7 +1055,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -1223,7 +1233,7 @@ show_date_time();
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">80.8k</span>
+    <span title="Site words total count">83.2k</span>
   
 </div>
 
@@ -1251,7 +1261,7 @@ show_date_time();
     <!-- 博客字数统计 -->
     <span class="site-pv">
       <i class="fa fa-pencil"></i>
-      博客全站共： <span class="post-count">80.8k</span> 字
+      博客全站共： <span class="post-count">83.2k</span> 字
     </span>
 </div>
 <!-- 新增访客统计代码 END-->

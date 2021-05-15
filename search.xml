@@ -1,6 +1,301 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>专题三内核模块</title>
+    <url>/2021/05/15/%E4%B8%93%E9%A2%98%E4%B8%89%E5%86%85%E6%A0%B8%E6%A8%A1%E5%9D%97/</url>
+    <content><![CDATA[<blockquote>
+<p><strong>实验要求：</strong></p>
+<p><strong>题目一</strong> 编写一个内核模块； 编译该模块； 加载、卸载该模块；</p>
+<p><strong>题目二</strong> 用<strong>内核模块</strong>的方式为系统添加一个系统调用 具体要求同专题二</p>
+<p><strong>提交内容</strong>：</p>
+<p>​        <strong>内核模块加载/卸载截图</strong></p>
+<p><strong>评分标准</strong>： 至少完成题目一（60-80分） 自主完成题目二（90-100分）</p>
+</blockquote>
+<h1 id="1-内核模块概念"><a href="#1-内核模块概念" class="headerlink" title="1 内核模块概念"></a>1 内核模块概念</h1><ul>
+<li>是一段可以 动态加入内核，并且成为内核一部分的代码</li>
+<li>优点：<ul>
+<li>通过动态加载内核模块，使得在运行过程中扩展内核的功能</li>
+<li>减小内核映像大小，增加系统灵活性</li>
+<li>只需要修改内核，而不必重新编译整个内核</li>
+</ul>
+</li>
+</ul>
+<h1 id="2-内核模块相关命令"><a href="#2-内核模块相关命令" class="headerlink" title="2 内核模块相关命令"></a>2 内核模块相关命令</h1><ul>
+<li>加载内核模块：<ul>
+<li><code>#insmod module_name</code></li>
+</ul>
+</li>
+<li>卸载内核模块：<ul>
+<li><code>#rmmod module_name</code></li>
+<li>或者 <code>#modprobe -r module_name</code></li>
+</ul>
+</li>
+<li>查看系统已经加载的模块：<ul>
+<li><code>#lsmod</code></li>
+</ul>
+</li>
+<li>查看系统已经加载的模块信息：<ul>
+<li><code>#modinfo module_name</code></li>
+</ul>
+</li>
+</ul>
+<h1 id="3-内核模块的编写，例子"><a href="#3-内核模块的编写，例子" class="headerlink" title="3 内核模块的编写，例子"></a>3 内核模块的编写，例子</h1><p>内核模块源代码：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;linux/init.h&gt;</span>			<span class="comment">//for module_init()</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;linux/module.h&gt;</span>		<span class="comment">//mustbe included</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;linux/kernel.h&gt;</span>		<span class="comment">//for printk()</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">hello_init</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line">    <span class="comment">//模块入口函数</span></span><br><span class="line">    printk(<span class="string">&quot;Hello module\n&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">hello_exit</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line">    <span class="comment">//模块退出函数</span></span><br><span class="line">    printk(<span class="string">&quot;Goodbye module\n&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">module_init(hello_init);</span><br><span class="line">module_exit(hello_exit);</span><br><span class="line"></span><br><span class="line">MODULE_LICENSE(<span class="string">&quot;GPL&quot;</span>);</span><br><span class="line">MODULE_AUTHOR(<span class="string">&quot;CHUHUA&quot;</span>);</span><br><span class="line">MODULE_DESCRIPTION(<span class="string">&quot;hello&quot;</span>);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="内核模块说明"><a href="#内核模块说明" class="headerlink" title="内核模块说明"></a>内核模块说明</h2><ul>
+<li><code>hello_init()</code>: 模块入口函数<ul>
+<li>由<code>module_init()</code>宏指定</li>
+<li>在模块被加载时被调用</li>
+<li>返回值为0：成功，非零则失败</li>
+</ul>
+</li>
+<li><code>hello_exit()</code>: 模块退出函数<ul>
+<li>由<code>module_exit()</code>宏指定</li>
+<li>在模块被卸载时被调用</li>
+<li>作用：清完成资源的清理，被调用完毕后，模块就被卸载了</li>
+</ul>
+</li>
+<li>一个模块至少有 入口 和 退出函数</li>
+<li>宏<code>MODULE_LICENSE(&quot;GLP&quot;)</code>: 设置模块版权信息</li>
+<li>宏<code>MODULE_DESCRIPTION()</code>: 描述模块的用途</li>
+<li>宏``</li>
+</ul>
+]]></content>
+      <categories>
+        <category>-操作系统课程设计</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>专题二系统调用</title>
+    <url>/2021/05/15/%E4%B8%93%E9%A2%98%E4%BA%8C%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8/</url>
+    <content><![CDATA[<blockquote>
+<p><strong>实验要求：</strong></p>
+<p> 为Linux内核增加一个<strong>系统调用</strong>，并编写<strong>用户进程的程序</strong>来测试。</p>
+<p>要求<strong>该系统调用</strong>能够完成<strong>以下功能</strong>：</p>
+<pre><code> (1) 该系统调用有1个整型参数，接收输入自己的学号；
+
+ (2) 若参数为奇数，则返回自己学号的最后5位。如你的学号为16130120101 ，则返回20101；
+
+ (3) 若参数为偶数，则返回自己的学号的最后6位。如你的学号为16130120102 ，则返回120102 。
+</code></pre>
+<p>提交内容为：</p>
+<p>  <strong>截图1</strong>： 运行结果</p>
+<p>  <strong>截图2</strong>：源代码</p>
+</blockquote>
+<h1 id="1-知识点-什么是系统调用"><a href="#1-知识点-什么是系统调用" class="headerlink" title="1 [知识点] 什么是系统调用"></a>1 [知识点] 什么是系统调用</h1><h2 id="系统调用"><a href="#系统调用" class="headerlink" title="系统调用"></a>系统调用</h2><p>Linux 的<strong>运行空间</strong>：<strong>内核空间</strong> 和 <strong>用户空间</strong></p>
+<ul>
+<li>逻辑上相互隔离</li>
+<li>用户进程通常情况下 不允许 访问<strong>内核数据</strong>，也无法使<strong>用内核函数</strong></li>
+<li>内核 提供了 <strong>用户进程与内核进行交互的一组接口</strong>：用户进程可以通过这组接口来获得操作系统内核提供的服务</li>
+</ul>
+<h2 id="系统调用的作用"><a href="#系统调用的作用" class="headerlink" title="系统调用的作用"></a>系统调用的作用</h2><ul>
+<li>提供<strong>用户模式</strong>的进程和硬件设备的<strong>接口</strong></li>
+<li>保证<strong>系统的稳定和安全</strong></li>
+<li>实现<strong>多任务和虚拟内存</strong></li>
+</ul>
+<h2 id="系统调用的分类"><a href="#系统调用的分类" class="headerlink" title="系统调用的分类"></a>系统调用的分类</h2><ul>
+<li>控制硬件<ul>
+<li>硬件资源 与 用户空间的抽象接口</li>
+<li>读写文件：write/read</li>
+</ul>
+</li>
+<li>进程管理<ul>
+<li>保证系统中的进程能以<strong>多任务在虚拟内存环境下运行</strong></li>
+<li>fork，clone，<code>execve</code></li>
+</ul>
+</li>
+<li>设置系统状态或读取内核数据<br>* </li>
+</ul>
+<h2 id="系统调用和-API-接口"><a href="#系统调用和-API-接口" class="headerlink" title="系统调用和 API 接口"></a>系统调用和 API 接口</h2><ul>
+<li>一般，应用程序通过 <strong>应用程序 API</strong>而不是 直接通过系统调用编程</li>
+<li>应用程序使用的 应用程序API，不需要和内核提供的 系统调用 一一对应<ul>
+<li>一个API 接口可以 用一个或多个 系统调用实现</li>
+</ul>
+</li>
+</ul>
+<h2 id="系统调用和系统命令"><a href="#系统调用和系统命令" class="headerlink" title="系统调用和系统命令"></a>系统调用和系统命令</h2><ul>
+<li><strong>系统命令</strong>比<strong>应用程序接口</strong>更高一层</li>
+<li>每一个系统命令都是一个可执行程序<ul>
+<li>ls</li>
+</ul>
+</li>
+<li><strong>系统命令</strong>的实现调用了系统调用</li>
+<li><code>strace ls</code>可以 查看系统命令所调用的系统调用</li>
+</ul>
+<h2 id="系统调用与内核函数"><a href="#系统调用与内核函数" class="headerlink" title="系统调用与内核函数"></a>系统调用与内核函数</h2><ul>
+<li><strong>内核函数</strong>只是在内核中实现的函数</li>
+<li><strong>系统调用</strong> 是用户进入内核的接口层，本身不是内核函数，是由内核函数实现的</li>
+<li>进入内核后，不同的系统调用 找到 各自对应的内核函数<ul>
+<li>这些内核函数：系统调用的“服务例程”</li>
+<li>Linux 系统调用 对应的 内核例程全部以”sys_” 开头：<code>sys_fork</code> </li>
+</ul>
+</li>
+</ul>
+<h1 id="2-知识点-系统调用实现原理"><a href="#2-知识点-系统调用实现原理" class="headerlink" title="2 [知识点] 系统调用实现原理"></a>2 [知识点] 系统调用实现原理</h1><h2 id="系统调用处理程序"><a href="#系统调用处理程序" class="headerlink" title="系统调用处理程序"></a>系统调用处理程序</h2><ul>
+<li>当用户态的进程 调用一个系统调用时，CPU 切换到内核态，并且执行一个内核函数</li>
+<li><strong>系统调用处理程序</strong>执行的操作：<ul>
+<li>在内核栈 保存大多数寄存器的内容</li>
+<li>调用所谓系统调用的服务例程相应 的 C函数处理系统调用</li>
+<li>通过 <code>ret_from_sys_call</code> 函数从系统调用返回</li>
+</ul>
+</li>
+</ul>
+<h2 id="服务例程"><a href="#服务例程" class="headerlink" title="服务例程"></a>服务例程</h2><ul>
+<li><p>Linux 的<strong>系统调用</strong>有200多个，相应的<strong>服务例程</strong>也是</p>
+</li>
+<li><p>定义<code>_syscall0</code> - <code>_syscall5</code>六个<strong>宏</strong>：对相应的例程进行封装</p>
+<ul>
+<li>每个宏名字 后缀的数字：系统调用 所用的参数个数（系统调用号除外）</li>
+</ul>
+</li>
+<li><p>每个宏：需要<code>2+2*n</code> 个参数</p>
+<ul>
+<li>n : 系统调用的参数个数</li>
+<li>一对参数：系统调用的返回值类型和名字</li>
+<li>n对参数：系统调用参数的类型和名字</li>
+</ul>
+</li>
+<li><p>例如：write() 例程的封装：</p>
+<ul>
+<li><code>_syscall3(int, write, int, fd, const char*, buf, unsigned int, count)</code></li>
+</ul>
+</li>
+<li><p>一般，系统调用于用户程序中，内核态也可以同样调用封装了的系统调用：</p>
+<ul>
+<li>区别：用户态进行系统调用时，需要进行用户态堆栈到内核态堆栈的切换</li>
+</ul>
+</li>
+</ul>
+<h2 id="系统调用过程"><a href="#系统调用过程" class="headerlink" title="系统调用过程"></a>系统调用过程</h2><p><img src="E:\Hexo\Blog\source_posts\专题二系统调用.assets\image-20210515141634577-1621059396007.png" alt="image-20210515141634577"></p>
+<ul>
+<li><p>首先：<strong>软中断</strong>：通过软件指令触发而非外设引发的中断</p>
+<ul>
+<li>时编程人员开发的一种异常</li>
+<li>具体是调用<code>int $0x80</code>汇编指令，产生向量为 0x80 的编程异常</li>
+</ul>
+</li>
+<li><p>然后：内核进行中断服务的处理，并执行<code>system_call</code>函数</p>
+<ul>
+<li>进入系统调用入口的公共处理函数，在这个函数中会按照寄存器<code>eax</code>中的内容识别对应的系统调用</li>
+</ul>
+</li>
+<li><p>进入系统内核后，使用<code>system_call_table</code>和<code>eax</code> 查到真正的系统调用，并执行相应的内核例程</p>
+</li>
+<li><p>最后：从系统调用中返回后，最终执行<code>syscall_exit</code>，并调用<code>resume_userspace</code>返回用户空间</p>
+</li>
+</ul>
+<p><img src="E:\Hexo\Blog\source_posts\专题二系统调用.assets\image-20210515142513417-1621059914414.png" alt="image-20210515142513417"></p>
+<p><img src="E:\Hexo\Blog\source_posts\专题二系统调用.assets\image-20210515142702100-1621060023561.png" alt="image-20210515142702100"></p>
+<ul>
+<li>从用户角度向内核：<ul>
+<li>系统命令</li>
+<li>编程接口</li>
+<li>系统调用</li>
+<li>内核函数</li>
+</ul>
+</li>
+</ul>
+<h2 id="系统调用实现"><a href="#系统调用实现" class="headerlink" title="系统调用实现"></a>系统调用实现</h2><ul>
+<li><p>Linux 中，每个系统调用被赋予一个<code>系统调用号</code></p>
+</li>
+<li><p>通过系统调用号可以关联系统调用</p>
+</li>
+<li><p>内核记录系统调用表中所有已注册的系统调用列表，存储于<code>sys_call_table</code></p>
+</li>
+<li></li>
+<li><p><code>linux-版本号/arch/x86/include/asm/unsted_32.h</code>：定义了所有<strong>系统调用的编号</strong></p>
+</li>
+<li><p>总个数：<code>NR_syscalls</code></p>
+</li>
+<li><p>系统调用号是固定的</p>
+</li>
+</ul>
+<p>1.通过 <strong>异常</strong> 使进程切换到内核模式<code>int 80h</code>指令完成</p>
+<p>​    系统调用中断的入口<code>syscall(系统调用调用号)</code></p>
+<p>2.<strong>系统调用跳转表</strong>：<code>linux/arch/x86/kernel/syscall_table_32.S</code>，并调用相应的函数</p>
+<h1 id="3-添加用户自定义的系统调用"><a href="#3-添加用户自定义的系统调用" class="headerlink" title="3 添加用户自定义的系统调用"></a>3 添加用户自定义的系统调用</h1><blockquote>
+<p>要求<strong>该系统调用</strong>能够完成<strong>以下功能</strong>：</p>
+<pre><code> (1) 该系统调用有1个整型参数，接收输入自己的学号；
+
+ (2) 若参数为奇数，则返回自己学号的最后5位。如你的学号为16130120101 ，则返回20101；
+
+ (3) 若参数为偶数，则返回自己的学号的最后6位。如你的学号为16130120102 ，则返回120102 。
+</code></pre>
+</blockquote>
+<blockquote>
+<p>修改系统调用表文件-&gt; 修改系统调用号文件-&gt;中增加系统调用声明-&gt;添加实现</p>
+</blockquote>
+<ul>
+<li>==需要特别注意的是==：long 型至多表示10位十进制数，而学号是11位，需要使用long long接收参数</li>
+</ul>
+<p><strong>步骤一</strong>：打开 系统调用号表<code>syscall_64.tbl</code>文件，并添加自定义的系统调用</p>
+<ul>
+<li>命令：<code>sudo gedit arch/x86/entry/syscalls/syscall_64.tbl</code></li>
+<li><img src="E:\Hexo\Blog\source_posts\专题二系统调用.assets\image-20210515151638042-1621062999349.png" alt="image-20210515151638042"></li>
+</ul>
+<p><strong>步骤二</strong>：在内核函数声明文件<code>syscalls.h</code>中添加系统调用的内核函数声明：</p>
+<ul>
+<li><p><code>sudo gedit include/linux/syscalls.h</code></p>
+</li>
+<li><p>在最后 函数声明：</p>
+<ul>
+<li><p><img src="E:\Hexo\Blog\source_posts\专题二系统调用.assets\image-20210515151942744-1621063183723.png" alt="image-20210515151942744"></p>
+</li>
+<li><p>```c<br>/* My Own syscall */<br>asmlinkage long sys_mysyscall(long long number);<br>#endif</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">**步骤三**：在内核函数定义文件&#96;sys.c&#96;文件中添加函数定义：</span><br><span class="line"></span><br><span class="line">* &#96;sudo gedit kernel&#x2F;sys.c&#96;</span><br><span class="line"></span><br><span class="line">* ![image-20210515154811000](E:\Hexo\Blog\source\_posts\专题二系统调用.assets\image-20210515154811000-1621064892493.png)</span><br><span class="line"></span><br><span class="line">* &#96;&#96;&#96;c</span><br><span class="line">  &#x2F;* My Own syscall *&#x2F;</span><br><span class="line">  SYSCALL_DEFINE1(mysyscall, long long, number)&#123;</span><br><span class="line">  	long ans&#x3D;0;</span><br><span class="line">  	if(number%2 &#x3D;&#x3D; 0 )&#123;</span><br><span class="line">  		ans &#x3D; number%1000000;</span><br><span class="line">  	&#125;</span><br><span class="line">  	else&#123;</span><br><span class="line">  		ans &#x3D; number%100000;</span><br><span class="line">  	&#125;</span><br><span class="line">  </span><br><span class="line">  	return ans;</span><br><span class="line">  &#125;</span><br><span class="line">  #endif &#x2F;* CONFIG_COMPAT *&#x2F;</span><br><span class="line">  </span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<p><strong>接下来</strong>，==重新编译内核==</p>
+<ul>
+<li><strong>净化内核</strong>：<ul>
+<li><code>make mrproper</code><ul>
+<li>删除所有编译生成文件、内核配置文件等</li>
+</ul>
+</li>
+<li><code>make clean</code><ul>
+<li>删除前一次编译过程残留的数据</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>重新编译安装内核</strong>：：<del>因为 make 太久而在结束的时候忘记 安装操作 的憨憨是我</del><ul>
+<li><code>make menuconfig</code></li>
+<li><code>make </code></li>
+<li><code>make modules_install</code></li>
+<li><code>make install</code></li>
+</ul>
+</li>
+<li><strong>最后重启</strong><code>reboot</code></li>
+</ul>
+<p><strong>接着</strong>可以验证添加的系统调用是否成功：</p>
+<h1 id="4-验证添加的系统调用"><a href="#4-验证添加的系统调用" class="headerlink" title="4 验证添加的系统调用"></a>4 验证添加的系统调用</h1><p>写一段调用系统调用的程序：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;linux/kernel.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/syscall.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc,<span class="keyword">char</span> **argv)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">        <span class="comment">//443:long long sys_mysyscall(long long)</span></span><br><span class="line">    	<span class="keyword">long</span> <span class="keyword">long</span> number;</span><br><span class="line">    	<span class="keyword">long</span> ans;</span><br><span class="line">    	<span class="built_in">printf</span>(<span class="string">&quot;输入学号：\n&quot;</span>);</span><br><span class="line">    	<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;number);</span><br><span class="line">        ans = syscall(<span class="number">443</span>,number);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;mysyscall return %ld\n&quot;</span>,ans);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p><code>gcc -o test.c test</code></p>
+</li>
+<li><p><code>./test</code></p>
+</li>
+<li><p>结果：<br>* </p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>-操作系统课程设计</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>课后习题11.14</title>
+    <url>/2021/05/15/%E8%AF%BE%E5%90%8E%E4%B9%A0%E9%A2%9811.14/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>-OOP</category>
+      </categories>
+  </entry>
+  <entry>
     <title>专题一内核编译</title>
     <url>/2021/05/13/%E4%B8%93%E9%A2%98%E4%B8%80%E5%86%85%E6%A0%B8%E7%BC%96%E8%AF%91/</url>
     <content><![CDATA[<p>[toc]</p>
@@ -14,9 +309,9 @@
 <p> <img src="E:\Hexo\Blog\source_posts\专题一内核编译\image-20210514211226158-1620997948493.png" alt="image-20210514211226158"></p>
 <p> <strong>新内核引导成功后</strong>：</p>
 <p> \2. 执行命令：<code>uname –a</code>,提交<strong>截屏结果2</strong></p>
-<p> <img src="E:\4th_term\OS课设\课题一\专题一内核编译.assets\image-20210514210128321.png" alt="image-20210514210128321"></p>
+<p> <img src="E:\Hexo\Blog\source_posts\专题一内核编译.assets\image-20210514222101971-1621002063317.png" alt="image-20210514222101971"></p>
 <p> \3. 进入目录/boot，执行命令：ls -l,提交<strong>截屏结果3</strong></p>
-<p> <img src="E:\4th_term\OS课设\课题一\专题一内核编译.assets\image-20210514210310481.png" alt="image-20210514210310481"></p>
+<p> <img src="E:\Hexo\Blog\source_posts\专题一内核编译.assets\image-20210514222213871.png" alt="image-20210514222213871"></p>
 </blockquote>
 </li>
 <li><p><strong>==tips:==</strong>  在创建虚拟机时，最好分配 50 GB 以上从磁盘空间，四个以上内核</p>
@@ -216,6 +511,12 @@
 <li>solution: </li>
 </ul>
 </blockquote>
+<ul>
+<li>注意：新版本（我的是5.12.2）的Linux内核，不需要手动引导内核，<ul>
+<li>make install 之后直接重启即可</li>
+</ul>
+</li>
+</ul>
 <h1 id="3-知识点-GNU-make和makefile"><a href="#3-知识点-GNU-make和makefile" class="headerlink" title="3 [知识点] GNU make和makefile"></a>3 [知识点] GNU make和makefile</h1><h2 id="什么是-make"><a href="#什么是-make" class="headerlink" title="什么是 make"></a>什么是 make</h2><ul>
 <li><code>make menuconfig</code>: 用命令行模式<strong>配置内核</strong></li>
 <li><code>make</code>: 编译<strong>内核</strong>和<strong>模块</strong></li>

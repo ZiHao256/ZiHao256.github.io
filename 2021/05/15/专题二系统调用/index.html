@@ -98,10 +98,12 @@
 <meta property="og:image" content="e:/Hexo/Blog/source_posts/专题二系统调用.assets/image-20210515141634577-1621059396007.png">
 <meta property="og:image" content="e:/Hexo/Blog/source_posts/专题二系统调用.assets/image-20210515142513417-1621059914414.png">
 <meta property="og:image" content="e:/Hexo/Blog/source_posts/专题二系统调用.assets/image-20210515142702100-1621060023561.png">
-<meta property="og:image" content="e:/Hexo/Blog/source_posts/专题二系统调用.assets/image-20210515151638042-1621062999349.png">
-<meta property="og:image" content="e:/Hexo/Blog/source_posts/专题二系统调用.assets/image-20210515151942744-1621063183723.png">
+<meta property="og:image" content="e:/Hexo/Blog/source_posts/专题二系统调用.assets/image-20210515210516396-1621083917785.png">
+<meta property="og:image" content="e:/Hexo/Blog/source_posts/专题二系统调用.assets/image-20210515210608651-1621083970352.png">
+<meta property="og:image" content="e:/Hexo/Blog/source_posts/专题二系统调用.assets/image-20210515210743109-1621084064449.png">
+<meta property="og:image" content="e:/Hexo/Blog/source_posts/专题二系统调用.assets/image-20210515210811389-1621084092512.png">
 <meta property="article:published_time" content="2021-05-15T04:54:44.764Z">
-<meta property="article:modified_time" content="2021-05-15T11:56:01.678Z">
+<meta property="article:modified_time" content="2021-05-15T13:08:12.535Z">
 <meta property="article:author" content="Zihao Ma">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="e:/Hexo/Blog/source_posts/专题二系统调用.assets/image-20210515141634577-1621059396007.png">
@@ -516,7 +518,7 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2021-05-15T19:56:01+08:00">
+              <time title="更新于" itemprop="dateModified" datetime="2021-05-15T21:08:12+08:00">
                 2021-05-15
               </time>
             
@@ -771,7 +773,7 @@
 <p><strong>步骤一</strong>：打开 系统调用号表<code>syscall_64.tbl</code>文件，并添加自定义的系统调用</p>
 <ul>
 <li>命令：<code>sudo gedit arch/x86/entry/syscalls/syscall_64.tbl</code></li>
-<li><img src="E:\Hexo\Blog\source_posts\专题二系统调用.assets\image-20210515151638042-1621062999349.png" alt="image-20210515151638042"></li>
+<li><img src="E:\Hexo\Blog\source_posts\专题二系统调用.assets\image-20210515210516396-1621083917785.png" alt="image-20210515210516396"></li>
 </ul>
 <p><strong>步骤二</strong>：在内核函数声明文件<code>syscalls.h</code>中添加系统调用的内核函数声明：</p>
 <ul>
@@ -779,10 +781,10 @@
 </li>
 <li><p>在最后 函数声明：</p>
 <ul>
-<li><p><img src="E:\Hexo\Blog\source_posts\专题二系统调用.assets\image-20210515151942744-1621063183723.png" alt="image-20210515151942744"></p>
+<li><p><img src="E:\Hexo\Blog\source_posts\专题二系统调用.assets\image-20210515210608651-1621083970352.png" alt="image-20210515210608651"></p>
 </li>
 <li><p>```c<br>/* My Own syscall */<br>asmlinkage long sys_mysyscall(long long number);<br>#endif</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">**步骤三**：在内核函数定义文件&#96;sys.c&#96;文件中添加函数定义：</span><br><span class="line"></span><br><span class="line">* &#96;sudo gedit kernel&#x2F;sys.c&#96;</span><br><span class="line"></span><br><span class="line">* ![image-20210515154811000](E:\Hexo\Blog\source\_posts\专题二系统调用.assets\image-20210515154811000-1621064892493.png)</span><br><span class="line"></span><br><span class="line">* &#96;&#96;&#96;c</span><br><span class="line">  &#x2F;* My Own syscall *&#x2F;</span><br><span class="line">  SYSCALL_DEFINE1(mysyscall, long long, number)&#123;</span><br><span class="line">  	long ans&#x3D;0;</span><br><span class="line">  	if(number%2 &#x3D;&#x3D; 0 )&#123;</span><br><span class="line">  		ans &#x3D; number%1000000;</span><br><span class="line">  	&#125;</span><br><span class="line">  	else&#123;</span><br><span class="line">  		ans &#x3D; number%100000;</span><br><span class="line">  	&#125;</span><br><span class="line">  </span><br><span class="line">  	return ans;</span><br><span class="line">  &#125;</span><br><span class="line">  #endif &#x2F;* CONFIG_COMPAT *&#x2F;</span><br><span class="line">  </span><br></pre></td></tr></table></figure></li>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">**步骤三**：在内核函数定义文件&#96;sys.c&#96;文件中添加函数定义：</span><br><span class="line"></span><br><span class="line">* &#96;sudo gedit kernel&#x2F;sys.c&#96;</span><br><span class="line"></span><br><span class="line">* ![image-20210515210709408](E:\Hexo\Blog\source\_posts\专题二系统调用.assets\image-20210515210709408-1621084030357.png)</span><br><span class="line"></span><br><span class="line">* &#96;&#96;&#96;c</span><br><span class="line">  &#x2F;* My Own syscall *&#x2F;</span><br><span class="line">  SYSCALL_DEFINE1(mysyscall, long long, number)&#123;</span><br><span class="line">  	long ans&#x3D;0;</span><br><span class="line">  	if(number%2 &#x3D;&#x3D; 0 )&#123;</span><br><span class="line">  		ans &#x3D; number%1000000;</span><br><span class="line">  	&#125;</span><br><span class="line">  	else&#123;</span><br><span class="line">  		ans &#x3D; number%100000;</span><br><span class="line">  	&#125;</span><br><span class="line">  </span><br><span class="line">  	return ans;</span><br><span class="line">  &#125;</span><br><span class="line">  #endif &#x2F;* CONFIG_COMPAT *&#x2F;</span><br><span class="line">  </span><br></pre></td></tr></table></figure></li>
 </ul>
 </li>
 </ul>
@@ -810,6 +812,7 @@
 </ul>
 <p><strong>接着</strong>可以验证添加的系统调用是否成功：</p>
 <h1 id="4-验证添加的系统调用"><a href="#4-验证添加的系统调用" class="headerlink" title="4 验证添加的系统调用"></a>4 验证添加的系统调用</h1><p>写一段调用系统调用的程序：</p>
+<p><img src="E:\Hexo\Blog\source_posts\专题二系统调用.assets\image-20210515210743109-1621084064449.png" alt="image-20210515210743109"></p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;linux/kernel.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/syscall.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc,<span class="keyword">char</span> **argv)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">        <span class="comment">//443:long long sys_mysyscall(long long)</span></span><br><span class="line">    	<span class="keyword">long</span> <span class="keyword">long</span> number;</span><br><span class="line">    	<span class="keyword">long</span> ans;</span><br><span class="line">    	<span class="built_in">printf</span>(<span class="string">&quot;输入学号：\n&quot;</span>);</span><br><span class="line">    	<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;number);</span><br><span class="line">        ans = syscall(<span class="number">443</span>,number);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;mysyscall return %ld\n&quot;</span>,ans);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <ul>
@@ -817,7 +820,10 @@
 </li>
 <li><p><code>./test</code></p>
 </li>
-<li><p>结果：<br>* </p>
+<li><p><strong>结果</strong>：</p>
+<ul>
+<li><img src="E:\Hexo\Blog\source_posts\专题二系统调用.assets\image-20210515210811389-1621084092512.png" alt="image-20210515210811389"></li>
+</ul>
 </li>
 </ul>
 
@@ -956,7 +962,7 @@
               
                 <a href="/archives/%7C%7C%20archive">
               
-                  <span class="site-state-item-count">33</span>
+                  <span class="site-state-item-count">34</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1145,7 +1151,7 @@ show_date_time();
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">83.2k</span>
+    <span title="Site words total count">83.7k</span>
   
 </div>
 
@@ -1173,7 +1179,7 @@ show_date_time();
     <!-- 博客字数统计 -->
     <span class="site-pv">
       <i class="fa fa-pencil"></i>
-      博客全站共： <span class="post-count">83.2k</span> 字
+      博客全站共： <span class="post-count">83.7k</span> 字
     </span>
 </div>
 <!-- 新增访客统计代码 END-->

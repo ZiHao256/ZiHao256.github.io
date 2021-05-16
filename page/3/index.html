@@ -462,6 +462,281 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/05/05/5%20Array%20%E6%95%B0%E7%BB%84/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/stitch.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ZiHao's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/05/05/5%20Array%20%E6%95%B0%E7%BB%84/" itemprop="url">5 Array</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-05-05T22:41:19+08:00">
+                2021-05-05
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2021-05-06T14:21:44+08:00">
+                2021-05-06
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Go-LearningNote/" itemprop="url" rel="index">
+                    <span itemprop="name">-Go LearningNote</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  687
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  3
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="5-Array-数组"><a href="#5-Array-数组" class="headerlink" title="5 Array 数组"></a>5 Array 数组</h2><ul>
+<li>同一种数据类型的集合</li>
+<li>Go 中，数组从声明时就确定，使用时可以修改数组成员，但是<strong>数组大小不可变</strong><ul>
+<li>语法：<code>var a [3]int</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="数组定义"><a href="#数组定义" class="headerlink" title="数组定义"></a>数组定义</h3><ul>
+<li><code>var name [size]T</code><ul>
+<li>size 必须是常量</li>
+<li>长度是数组类型的一部分，定义后不可变</li>
+<li>不同长度，不可相互赋值</li>
+</ul>
+</li>
+<li>数组可以使用下标访问，<code>0 - size-1</code></li>
+<li>若越界，会触发访问越界，panic</li>
+</ul>
+<h3 id="数组的初始化"><a href="#数组的初始化" class="headerlink" title="数组的初始化"></a>数组的初始化</h3><h4 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h4><ul>
+<li><p>可以使用 初始化列表 设置数组元素的值</p>
+<ul>
+<li>```go<br>var a [3]int                        //数组元素初始化为int类型的0<br>var b = [3]int{1,2}                    //使用指定的初始值完成成初始化<br>var c = [3]string{“北京”,”上海”}     //指定的值完成初始化<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">#### 方法二</span><br><span class="line"></span><br><span class="line">* 我们可以让编译器根据初始值的个数自行推断长度</span><br><span class="line"></span><br><span class="line">  * &#96;&#96;&#96;go</span><br><span class="line">    var a &#x3D; [...]int&#123;1,2&#125;</span><br><span class="line">    var b &#x3D; [...]string&#123;&quot;ss&quot;&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<h4 id="方法三"><a href="#方法三" class="headerlink" title="方法三"></a>方法三</h4><ul>
+<li>使用指定索引值的方式，初始化数组<br>* </li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a := [...]<span class="keyword">int</span>&#123;<span class="number">1</span>:<span class="number">1</span>, <span class="number">3</span>:<span class="number">5</span>&#125;</span><br><span class="line"><span class="comment">//[0 1 0 5]</span></span><br><span class="line"><span class="comment">//type : [4]int</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="数组的遍历"><a href="#数组的遍历" class="headerlink" title="数组的遍历"></a>数组的遍历</h3><p>两种方法</p>
+<ul>
+<li><p>for循环</p>
+<ul>
+<li>```go<br>a := […]string{“x”, “y”}<br>for i:=0; i&lt;len(a); i++{<pre><code>fmt.Println(a[i])
+</code></pre>
+}<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* for range键值循环</span><br><span class="line"></span><br><span class="line">  * &#96;&#96;&#96;go</span><br><span class="line">    a :&#x3D; [...]string&#123;&quot;x&quot;, &quot;y&quot;&#125;</span><br><span class="line">    for index, value :&#x3D; range a&#123;</span><br><span class="line">        fmt.Println(index,value)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<h3 id="多维数组"><a href="#多维数组" class="headerlink" title="多维数组"></a>多维数组</h3><ul>
+<li>Go 支持多维数组，数组中嵌套数组</li>
+</ul>
+<h4 id="二维数组的定义"><a href="#二维数组的定义" class="headerlink" title="二维数组的定义"></a>二维数组的定义</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">a := [<span class="number">3</span>][<span class="number">2</span>]<span class="keyword">string</span>&#123;</span><br><span class="line">	&#123;<span class="string">&quot;x&quot;</span>, <span class="string">&quot;y&quot;</span>&#125;,</span><br><span class="line">	&#123;<span class="string">&quot;z&quot;</span>, <span class="string">&quot;j&quot;</span>&#125;,</span><br><span class="line">	&#123;<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>&#125;,</span><br><span class="line">&#125;</span><br><span class="line">fmt.Println(a[<span class="number">2</span>][<span class="number">1</span>]) <span class="comment">//支持索引取值</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="二维数组的遍历"><a href="#二维数组的遍历" class="headerlink" title="二维数组的遍历"></a>二维数组的遍历</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> _, i := <span class="keyword">range</span> a&#123;</span><br><span class="line">    <span class="keyword">for</span> _, j := <span class="keyword">range</span> i&#123;</span><br><span class="line">        fmt.Printf(<span class="string">&quot;%s\t\n&quot;</span>,j)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>==注意==：多维数组只有第一层可以使用<code>...</code> 来让编译器推导数组的长度</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">a := [...][<span class="number">2</span>]&#123;</span><br><span class="line">    &#123;<span class="string">&quot;x&quot;</span>, <span class="string">&quot;y&quot;</span>&#125;,</span><br><span class="line">	&#123;<span class="string">&quot;z&quot;</span>, <span class="string">&quot;j&quot;</span>&#125;,</span><br><span class="line">	&#123;<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>&#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="数组是值类型"><a href="#数组是值类型" class="headerlink" title="数组是值类型"></a>数组是值类型</h3><ul>
+<li>数组的<strong>赋值和传参</strong>会 <strong>复制整个数组</strong>，改变副本的值不会影响到本身</li>
+<li>==注意：==<ul>
+<li>数组支持<code>==</code> <code>!=</code>操作符，因为<strong>内存总是被初始化过的</strong></li>
+<li><code>[n]*T</code>表示<strong>指针数组</strong>，<code>*[n]T</code>表示<strong>数组指针</strong></li>
+</ul>
+</li>
+</ul>
+<h3 id="练习题"><a href="#练习题" class="headerlink" title="练习题"></a>练习题</h3><h4 id="练习一"><a href="#练习一" class="headerlink" title="练习一"></a>练习一</h4><ul>
+<li>求数组<code>[1, 3, 5, 7, 8]</code>所有元素的和</li>
+</ul>
+<h4 id="练习二"><a href="#练习二" class="headerlink" title="练习二"></a>练习二</h4><ul>
+<li><p>找出数组中和为指定值的两个元素的下标，比如从数组<code>[1, 3, 5, 7, 8]</code>中找出和为8的两个元素的下标分别为<code>(0,3)</code>和<code>(1,2)</code>。</p>
+</li>
+<li><pre><code class="go">package main
+
+import &quot;fmt&quot;
+
+func main() &#123;
+
+    a := [...]int&#123;1, 3, 5, 7, 8&#125;
+    for i := 0; i &lt; len(a); i++ &#123;
+        for j := i + 1; j &lt; len(a); j++ &#123;
+            if a[i]+a[j] == 8 &#123;
+                fmt.Printf(&quot;%d %d\n&quot;, i, j)
+            &#125;
+        &#125;
+
+    &#125;
+&#125;
+</code></pre>
+</li>
+</ul>
+
+          
+        
+      
+    </div>
+   
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/05/05/4%20%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -4708,285 +4983,6 @@ func main() &#123;
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/04/17/Linux%20%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A01/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/stitch.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ZiHao's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2021/04/17/Linux%20%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A01/" itemprop="url">Linux 入门学习1</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-04-17T09:55:13+08:00">
-                2021-04-17
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于&#58;</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2021-05-01T10:15:42+08:00">
-                2021-05-01
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index">
-                    <span itemprop="name">-Linux</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  969
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  3
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="Linux-入门学习1"><a href="#Linux-入门学习1" class="headerlink" title="Linux 入门学习1"></a>Linux 入门学习1</h1><p><a target="_blank" rel="noopener" href="https://jiannan.blog.csdn.net/article/details/79473507">参考博客</a></p>
-<p>[toc]</p>
-<h1 id="1-学习命令基本格式"><a href="#1-学习命令基本格式" class="headerlink" title="1 学习命令基本格式"></a>1 学习命令基本格式</h1><h2 id="1-1-基本格式"><a href="#1-1-基本格式" class="headerlink" title="1.1 基本格式"></a>1.1 基本格式</h2><ul>
-<li><strong>命令</strong>由三部分组成：<code>命令 [-选项] [参数]</code><ul>
-<li><strong>选项</strong>与<strong>参数</strong>可以省略</li>
-<li>有多个选项是可以写在一起的，“-”代表选项</li>
-<li><strong>参数</strong>可以是一个<strong>对象</strong>，也可以是<strong>目录</strong></li>
-</ul>
-</li>
-</ul>
-<p><strong>例：</strong><code>ls -l /</code> 代表<strong>查看目录</strong></p>
-<ul>
-<li><code>ls</code>: <strong>查看目录</strong>。显示目录下的文件或者文件夹（只能看到文件名）</li>
-<li><code>-l</code>: 显示目录下的<strong>详细</strong>文件或者文件夹的信息</li>
-<li><code>/</code>: <strong>根目录</strong>。夹上参数后，表示<strong>查看 根目录 下的文件</strong></li>
-</ul>
-<h2 id="1-2-目录"><a href="#1-2-目录" class="headerlink" title="1.2 目录"></a>1.2 目录</h2><p>​    查看根目录时，可以看到许多文件夹，如下图所示：</p>
-<p><img src="C:\Users\Light\AppData\Roaming\Typora\typora-user-images\image-20210307101148483.png" alt="image-20210307101148483"></p>
-<ol>
-<li><code>/</code>: 根目录，无上一级</li>
-<li><code>/home</code>: 每个用户的家目录，在我们创建一个新用户时，home目录下会创建一个以用户名文名称的文件夹</li>
-<li><code>/tmp</code>: 临时存放文件的地方</li>
-<li><code>/bin</code>: 命令保存的目录</li>
-<li><code>/boot</code>: 启动目录，包含系统启动时的相关文件</li>
-<li><code>/root</code>: root用户的家目录，</li>
-</ol>
-<h1 id="2-ls-目录命令处理"><a href="#2-ls-目录命令处理" class="headerlink" title="2 ls 目录命令处理"></a>2 <code>ls</code> 目录命令处理</h1><p>​    <code>ls</code>目录处理命令，全称: <code>list</code></p>
-<p>​    其他目录命令：</p>
-<ul>
-<li><code>ls -a</code>或<code>ls --all</code>: 查看目录下的全部文件（包括隐藏文件）<ul>
-<li>![image-20210307103745762](E:\LearningNotes\Linux\Linux 入门学习1.assets\image-20210307103745762.png)</li>
-<li><code>ls</code>命令后加<code>-a</code>可以查看到<strong>当前目录</strong>下的<strong>全部文件</strong></li>
-<li>隐藏文件的名称以<code>.</code>开始</li>
-<li>隐藏文件的意义:告诉用户，其是系统的文件，不要随意的更改</li>
-<li><code>-a</code> 是 <code>--all</code> 的简化</li>
-</ul>
-</li>
-<li><code>ls -l</code>: 查看目录下的详细文件信息<ul>
-<li>![image-20210307103816519](E:\LearningNotes\Linux\Linux 入门学习1.assets\image-20210307103816519.png)</li>
-<li>可以查看文件的<strong>大小</strong>,<strong>修改日期</strong>及<strong>文件名</strong>等</li>
-<li>值得注意的是，文件大小<code>1255</code>,<code>26533</code>等，大小单位为<strong>字节</strong></li>
-<li><code>l</code>全称为<code>long</code></li>
-</ul>
-</li>
-<li><code>ls -al</code>: 查看这个目录下全部文件的详细信息<ul>
-<li>![image-20210307103854462](E:\LearningNotes\Linux\Linux 入门学习1.assets\image-20210307103854462.png)</li>
-</ul>
-</li>
-<li><code>ls -al /tmp</code>: 查看 <code>tmp</code> 文件下的全部文件的详细信息<ul>
-<li>![image-20210307103921974](E:\LearningNotes\Linux\Linux 入门学习1.assets\image-20210307103921974.png)</li>
-</ul>
-</li>
-<li><code>ls -alh</code>: 更人性化的显示详细信息<ul>
-<li>![image-20210307104048576](E:\LearningNotes\Linux\Linux 入门学习1.assets\image-20210307104048576.png)</li>
-<li>此时，对文件大小标注了单位</li>
-<li>我们来看上图第一行，<code>dr-xr-x---.  2 root root 4.0K Mar 7 05:37     </code>，对其进行解读：<ul>
-<li><code>dr-xr-x---</code>代表<strong>文件类型及权限</strong>，应拆成<strong>四部分</strong>：<code>d r-x r-x ---</code>:<ul>
-<li>第一部分<code>d</code>: <strong>代表是什么文件</strong>，<code>directory</code>目录的首字母，代表这是一个目录文件。<ul>
-<li>若第一个字母为<code>l</code>：是<code>link</code>的首字母，代表这是一个<strong>软连接文件</strong></li>
-<li>若第一个字母为<code>-</code>：代表这是一个<strong>二进制文件</strong></li>
-</ul>
-</li>
-<li>第二部分<code>r-x</code>: 代表<strong>所有者</strong>拥有某个权限：读和执行<ul>
-<li><code>r</code>: 代表读的权限</li>
-<li><code>w</code>: 代表写的权限</li>
-<li><code>x</code>: 代表执行的权限</li>
-</ul>
-</li>
-<li>第三部分<code>r-x</code>: 代表<strong>所属组</strong>拥有的权限：读和执行</li>
-<li>第四部分<code>---</code>: 代表<strong>其他人</strong>拥有的权限：<code>null</code></li>
-</ul>
-</li>
-<li><code>2</code> : 代表是一个<strong>引用技术</strong>，代表这个文件被引用了<code>2</code>次</li>
-<li><code>root</code>: 代表这个文件的所有者</li>
-<li><code>root</code>: 代表这个文件的所属组</li>
-<li><code>4.0K</code>: 代表这个文件的大小</li>
-<li><code>Mar 7 05:37</code>: 代表这个文件的修改时间</li>
-<li>``: 代表这个文件的名称</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><code>ls -i</code>: 显示每个文件的<code>i</code>节点<ul>
-<li>![image-20210307111054562](E:\LearningNotes\Linux\Linux 入门学习1.assets\image-20210307111054562.png)</li>
-<li>在 Linux 中，每个文件都有一个属于自己的<code>i</code>节点，类似于每个人的身份证号</li>
-<li><code>i</code>节点可以对应多个文件</li>
-</ul>
-</li>
-</ul>
-<h1 id="3-所有者、所属组及其他人"><a href="#3-所有者、所属组及其他人" class="headerlink" title="3 所有者、所属组及其他人"></a>3 所有者、所属组及其他人</h1><ul>
-<li>所有者：创建了这个文件的人。但所有者可以转换</li>
-<li>所属组：很多人组成的组</li>
-<li>其他人：所有者和所属组之外的用户</li>
-</ul>
-
-          
-        
-      
-    </div>
-   
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -5041,7 +5037,7 @@ func main() &#123;
               
                 <a href="/archives/%7C%7C%20archive">
               
-                  <span class="site-state-item-count">33</span>
+                  <span class="site-state-item-count">34</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -5214,7 +5210,7 @@ show_date_time();
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">83.2k</span>
+    <span title="Site words total count">83.7k</span>
   
 </div>
 
@@ -5242,7 +5238,7 @@ show_date_time();
     <!-- 博客字数统计 -->
     <span class="site-pv">
       <i class="fa fa-pencil"></i>
-      博客全站共： <span class="post-count">83.2k</span> 字
+      博客全站共： <span class="post-count">83.7k</span> 字
     </span>
 </div>
 <!-- 新增访客统计代码 END-->

@@ -462,6 +462,272 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/05/16/%E5%88%9B%E5%BB%BA%E8%BF%9B%E7%A8%8B%E3%80%81%E5%AD%90%E8%BF%9B%E7%A8%8B%E5%92%8C%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/stitch.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ZiHao's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/05/16/%E5%88%9B%E5%BB%BA%E8%BF%9B%E7%A8%8B%E3%80%81%E5%AD%90%E8%BF%9B%E7%A8%8B%E5%92%8C%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1/" itemprop="url">创建进程、子进程和进程间通信</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-05-16T22:41:20+08:00">
+                2021-05-16
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2021-05-16T22:41:20+08:00">
+                2021-05-16
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">-Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  533
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="fork-方法"><a href="#fork-方法" class="headerlink" title="fork() 方法"></a>fork() 方法</h1><p>fork 原型：</p>
+<ul>
+<li><code>pid_t fork(void)</code></li>
+</ul>
+<p>fork的定义：</p>
+<p>父进程在调用 fork 派生子进程，实际上相当于创建了一个进程拷贝</p>
+<ul>
+<li>调用一次 fork() 会返回两次<ul>
+<li>一次：在调用该方法的进程中返回 <strong>子进程的 id</strong></li>
+<li>二次：在子进程中返回 0</li>
+<li>若在调用该方法时返回 -1 则表示调用失败</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>根据 fork 的返回值判断当前进程是父进程还是子进程：</p>
+<ul>
+<li><pre><code class="c">#include&lt;stdio.h&gt;
+#include&lt;unistd.h&gt;
+int main()&#123;
+
+    pid_t pid = fork();
+    if(pid == 0)&#123;
+        printf(&quot;child\n&quot;);
+    &#125;
+    else&#123;
+        printf(&quot;father\n&quot;);
+    &#125;
+    
+    return 0;
+    
+&#125;
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="进程间通信-IPC"><a href="#进程间通信-IPC" class="headerlink" title="进程间通信 IPC"></a>进程间通信 IPC</h1><p><code>Inter-Process Communication</code>: 多个进程之间相互沟通的一种方法</p>
+<p>管道、命名管道、消息队列、信号、信号量、共享内存、内存映射、套接字</p>
+<h2 id="管道-PIPE"><a href="#管道-PIPE" class="headerlink" title="管道 PIPE"></a>管道 PIPE</h2><ul>
+<li>管道：用于进程间通信 的一段共享内存<ul>
+<li>创建管道的进程：管道服务器</li>
+<li>连接到的一个管道的进程：管道客户机</li>
+</ul>
+</li>
+<li>一个进程，在向管道写入数据后，另一个进程就可以从管道的另一端读取</li>
+</ul>
+<p>管道的特点：</p>
+<ul>
+<li>单向通信：数据只能向一个方向流动，<ul>
+<li>需要双方交流时，创建两个管道</li>
+</ul>
+</li>
+<li>只能用于具有亲缘关系的进程：<ul>
+<li>fork 或者 exec</li>
+</ul>
+</li>
+<li>管道只能在本地计算机使用，不能用于网络间的通信</li>
+</ul>
+<h3 id="使用："><a href="#使用：" class="headerlink" title="使用："></a>使用：</h3><ul>
+<li>函数原型：<code>int pipe(int fd[2]);</code><ul>
+<li>返回0 成功，返回-1出错</li>
+</ul>
+</li>
+<li>fa参数返回两个<strong>文件描述符：</strong><ul>
+<li>fd[0] 指向管道的<strong>读端</strong></li>
+<li>fd[1]指向管道的<strong>写端</strong></li>
+</ul>
+</li>
+</ul>
+<p><strong>实现进程间通信的步骤：</strong></p>
+<ul>
+<li>父进程创建 管道，得到两个描述符，指向管道的两端</li>
+<li>父进程 fork 子进程，子进程也有两个文件描述符指向同一个管道两端</li>
+<li>一个进程关闭写端，另一个进程关闭读端，即可实现通信<ul>
+<li> 使用<code>close()</code> 关闭fd[]</li>
+</ul>
+</li>
+<li>关闭读端的进程使用<code>write(fd[1], )</code> 来写入管道信息</li>
+<li>关闭写端的进程使用<code>read(fd[0], ) </code>来读取管道中的信息</li>
+</ul>
+
+          
+        
+      
+    </div>
+   
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/05/15/%E4%B8%93%E9%A2%98%E4%B8%89%E5%86%85%E6%A0%B8%E6%A8%A1%E5%9D%97/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -753,7 +1019,7 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2021-05-15T19:56:01+08:00">
+              <time title="更新于" itemprop="dateModified" datetime="2021-05-15T21:08:12+08:00">
                 2021-05-15
               </time>
             
@@ -1005,7 +1271,7 @@
 <p><strong>步骤一</strong>：打开 系统调用号表<code>syscall_64.tbl</code>文件，并添加自定义的系统调用</p>
 <ul>
 <li>命令：<code>sudo gedit arch/x86/entry/syscalls/syscall_64.tbl</code></li>
-<li><img src="E:\Hexo\Blog\source_posts\专题二系统调用.assets\image-20210515151638042-1621062999349.png" alt="image-20210515151638042"></li>
+<li><img src="E:\Hexo\Blog\source_posts\专题二系统调用.assets\image-20210515210516396-1621083917785.png" alt="image-20210515210516396"></li>
 </ul>
 <p><strong>步骤二</strong>：在内核函数声明文件<code>syscalls.h</code>中添加系统调用的内核函数声明：</p>
 <ul>
@@ -1013,10 +1279,10 @@
 </li>
 <li><p>在最后 函数声明：</p>
 <ul>
-<li><p><img src="E:\Hexo\Blog\source_posts\专题二系统调用.assets\image-20210515151942744-1621063183723.png" alt="image-20210515151942744"></p>
+<li><p><img src="E:\Hexo\Blog\source_posts\专题二系统调用.assets\image-20210515210608651-1621083970352.png" alt="image-20210515210608651"></p>
 </li>
 <li><p>```c<br>/* My Own syscall */<br>asmlinkage long sys_mysyscall(long long number);<br>#endif</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">**步骤三**：在内核函数定义文件&#96;sys.c&#96;文件中添加函数定义：</span><br><span class="line"></span><br><span class="line">* &#96;sudo gedit kernel&#x2F;sys.c&#96;</span><br><span class="line"></span><br><span class="line">* ![image-20210515154811000](E:\Hexo\Blog\source\_posts\专题二系统调用.assets\image-20210515154811000-1621064892493.png)</span><br><span class="line"></span><br><span class="line">* &#96;&#96;&#96;c</span><br><span class="line">  &#x2F;* My Own syscall *&#x2F;</span><br><span class="line">  SYSCALL_DEFINE1(mysyscall, long long, number)&#123;</span><br><span class="line">  	long ans&#x3D;0;</span><br><span class="line">  	if(number%2 &#x3D;&#x3D; 0 )&#123;</span><br><span class="line">  		ans &#x3D; number%1000000;</span><br><span class="line">  	&#125;</span><br><span class="line">  	else&#123;</span><br><span class="line">  		ans &#x3D; number%100000;</span><br><span class="line">  	&#125;</span><br><span class="line">  </span><br><span class="line">  	return ans;</span><br><span class="line">  &#125;</span><br><span class="line">  #endif &#x2F;* CONFIG_COMPAT *&#x2F;</span><br><span class="line">  </span><br></pre></td></tr></table></figure></li>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">**步骤三**：在内核函数定义文件&#96;sys.c&#96;文件中添加函数定义：</span><br><span class="line"></span><br><span class="line">* &#96;sudo gedit kernel&#x2F;sys.c&#96;</span><br><span class="line"></span><br><span class="line">* ![image-20210515210709408](E:\Hexo\Blog\source\_posts\专题二系统调用.assets\image-20210515210709408-1621084030357.png)</span><br><span class="line"></span><br><span class="line">* &#96;&#96;&#96;c</span><br><span class="line">  &#x2F;* My Own syscall *&#x2F;</span><br><span class="line">  SYSCALL_DEFINE1(mysyscall, long long, number)&#123;</span><br><span class="line">  	long ans&#x3D;0;</span><br><span class="line">  	if(number%2 &#x3D;&#x3D; 0 )&#123;</span><br><span class="line">  		ans &#x3D; number%1000000;</span><br><span class="line">  	&#125;</span><br><span class="line">  	else&#123;</span><br><span class="line">  		ans &#x3D; number%100000;</span><br><span class="line">  	&#125;</span><br><span class="line">  </span><br><span class="line">  	return ans;</span><br><span class="line">  &#125;</span><br><span class="line">  #endif &#x2F;* CONFIG_COMPAT *&#x2F;</span><br><span class="line">  </span><br></pre></td></tr></table></figure></li>
 </ul>
 </li>
 </ul>
@@ -1044,6 +1310,7 @@
 </ul>
 <p><strong>接着</strong>可以验证添加的系统调用是否成功：</p>
 <h1 id="4-验证添加的系统调用"><a href="#4-验证添加的系统调用" class="headerlink" title="4 验证添加的系统调用"></a>4 验证添加的系统调用</h1><p>写一段调用系统调用的程序：</p>
+<p><img src="E:\Hexo\Blog\source_posts\专题二系统调用.assets\image-20210515210743109-1621084064449.png" alt="image-20210515210743109"></p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;linux/kernel.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/syscall.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc,<span class="keyword">char</span> **argv)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">        <span class="comment">//443:long long sys_mysyscall(long long)</span></span><br><span class="line">    	<span class="keyword">long</span> <span class="keyword">long</span> number;</span><br><span class="line">    	<span class="keyword">long</span> ans;</span><br><span class="line">    	<span class="built_in">printf</span>(<span class="string">&quot;输入学号：\n&quot;</span>);</span><br><span class="line">    	<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>,&amp;number);</span><br><span class="line">        ans = syscall(<span class="number">443</span>,number);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;mysyscall return %ld\n&quot;</span>,ans);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <ul>
@@ -1051,7 +1318,10 @@
 </li>
 <li><p><code>./test</code></p>
 </li>
-<li><p>结果：<br>* </p>
+<li><p><strong>结果</strong>：</p>
+<ul>
+<li><img src="E:\Hexo\Blog\source_posts\专题二系统调用.assets\image-20210515210811389-1621084092512.png" alt="image-20210515210811389"></li>
+</ul>
 </li>
 </ul>
 
@@ -3452,428 +3722,6 @@ fmt.Println(a)
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/05/07/14%20%E6%8E%A5%E5%8F%A3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/stitch.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ZiHao's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2021/05/07/14%20%E6%8E%A5%E5%8F%A3/" itemprop="url">14 接口</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-05-07T19:25:46+08:00">
-                2021-05-07
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于&#58;</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2021-05-07T19:27:25+08:00">
-                2021-05-07
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Go-LearningNote/" itemprop="url" rel="index">
-                    <span itemprop="name">-Go LearningNote</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  2.5k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  10
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="14-接口"><a href="#14-接口" class="headerlink" title="14 接口"></a>14 接口</h1><p>[toc]</p>
-<ul>
-<li><code>Interface</code> 定义了<strong>一个对象的行为规范</strong>，</li>
-<li>只定义规范而不实现，由<strong>具体的对象来实现规范的细节</strong></li>
-</ul>
-<h1 id="接口类型"><a href="#接口类型" class="headerlink" title="接口类型"></a>接口类型</h1><ul>
-<li>`Interface ·是一种抽象的类型</li>
-<li><code>Interface</code>  是一组<code>method</code>的集合，是<code>duck-type programming</code>的一种体现</li>
-<li>接口的作用：定义一个协定(规则)，<ul>
-<li>不用关心其数据，和方法具体是什么</li>
-</ul>
-</li>
-<li>`Interface· 是一种类型</li>
-</ul>
-<h1 id="为什么使用接口"><a href="#为什么使用接口" class="headerlink" title="为什么使用接口"></a>为什么使用接口</h1><ul>
-<li><p>```go<br>type Cat struct{}</p>
-<p>func (c Cat) Say() string { return “喵喵喵” }</p>
-<p>type Dog struct{}</p>
-<p>func (d Dog) Say() string { return “汪汪汪” }</p>
-<p>func main() {</p>
-<pre><code>c := Cat&#123;&#125;
-fmt.Println(&quot;猫:&quot;, c.Say())
-d := Dog&#123;&#125;
-fmt.Println(&quot;狗:&quot;, d.Say())
-</code></pre>
-<p>}</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* 共同特点：都会叫</span><br><span class="line">  </span><br><span class="line">  * 有重复代码</span><br><span class="line">* 为了解决 有共同特点而导致的代码重复，设计了接口</span><br><span class="line">* 接口是一种抽象的类型，</span><br><span class="line">  </span><br><span class="line">  * 看到一个接口，只知道通过它的方法能做什么</span><br><span class="line"></span><br><span class="line"># 接口的定义</span><br><span class="line"></span><br><span class="line">* Go 提倡面向接口编程</span><br><span class="line"></span><br><span class="line">* 每个接口由数个方法组成，定义格式:</span><br><span class="line"></span><br><span class="line">  * &#96;&#96;&#96;go</span><br><span class="line">    type 接口类型名 interface&#123;</span><br><span class="line">        方法名1(参数列表) 返回值列表</span><br><span class="line">        方法名2(参数列表) 返回值列表</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><p><strong>接口名</strong>：自定义的类型名</p>
-<ul>
-<li>一般命名时，在单词后<code>er</code> , 接口名最好能突出该接口的类型含义</li>
-</ul>
-</li>
-<li><p><strong>方法名：</strong>当接口名首字母是大写，并且方法名首字母也是大写时，方法可以被接口是所在的包 之外的代码访问</p>
-</li>
-<li><p><strong>参数列表、返回值列表：</strong>其中的参数变量名可以省略</p>
-</li>
-</ul>
-</li>
-</ul>
-<h1 id="实现接口的条件"><a href="#实现接口的条件" class="headerlink" title="实现接口的条件"></a>实现接口的条件</h1><ul>
-<li><p>接口 是一个<strong>需要实现的方法列表</strong></p>
-</li>
-<li><p>实现了接口中所有方法，就实现了这个接口</p>
-</li>
-<li><p>示例：</p>
-<ul>
-<li><p>定义<code>Sayer</code> 接口：</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Sayer <span class="keyword">interface</span>&#123;</span><br><span class="line">	say()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-<li><p>定义结构体</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> dog <span class="keyword">struct</span>&#123;&#125;</span><br><span class="line"><span class="keyword">type</span> cat <span class="keyword">struct</span>&#123;&#125;</span><br></pre></td></tr></table></figure></li>
-<li><p>需要<strong>对dog和cat</strong>分别实现<code>say</code>方法，即可实现Sayer接口</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// dog实现了Sayer接口</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(d dog)</span> <span class="title">say</span><span class="params">()</span></span> &#123;</span><br><span class="line">	fmt.Println(<span class="string">&quot;汪汪汪&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// cat实现了Sayer接口</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(c cat)</span> <span class="title">say</span><span class="params">()</span></span> &#123;</span><br><span class="line">	fmt.Println(<span class="string">&quot;喵喵喵&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-</ul>
-</li>
-</ul>
-<h1 id="接口类型变量"><a href="#接口类型变量" class="headerlink" title="接口类型变量"></a>接口类型变量</h1><ul>
-<li><p><strong>接口类型变量</strong> 能<strong>存储所有实现了该接口的实例</strong></p>
-<ul>
-<li><p>例如，<code>Sayer</code> 类型的变量能存储<code>dog</code>和<code>cat</code>类型的变量</p>
-</li>
-<li><p>```go<br>func main() {</p>
-<pre><code>var x Sayer // 声明一个Sayer类型的变量x
-a := cat&#123;&#125;  // 实例化一个cat
-b := dog&#123;&#125;  // 实例化一个dog
-x = a       // 可以把cat实例直接赋值给x
-x.say()     // 喵喵喵
-x = b       // 可以把dog实例直接赋值给x
-x.say()     // 汪汪汪
-</code></pre>
-<p>}</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* &#96;&#96;&#96;go</span><br><span class="line">  &#x2F;&#x2F; 摘自gin框架routergroup.go</span><br><span class="line">  type IRouter interface&#123; ... &#125;</span><br><span class="line">  </span><br><span class="line">  type RouterGroup struct &#123; ... &#125;</span><br><span class="line">  </span><br><span class="line">  var _ IRouter &#x3D; &amp;RouterGroup&#123;&#125;  &#x2F;&#x2F; 确保RouterGroup实现了接口IRouter</span><br></pre></td></tr></table></figure></li>
-</ul>
-</li>
-<li><p>确保 <code>RouterGroup</code> 一定实现了<code>IRouter</code></p>
-</li>
-</ul>
-<h1 id="值接收者-和-指针接收者-实现接口的区别"><a href="#值接收者-和-指针接收者-实现接口的区别" class="headerlink" title="值接收者 和 指针接收者 实现接口的区别"></a>值接收者 和 指针接收者 实现接口的区别</h1><ul>
-<li><p>示例，一个<code>Mover</code> 接口和<code>dog</code> 结构体</p>
-<ul>
-<li>```go<br>type Mover interface {<pre><code>move()
-</code></pre>
-}type dog struct {}<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">## 值接收者实现接口</span><br><span class="line"></span><br><span class="line">* dog 类型实现接口：</span><br><span class="line">  * &#96;&#96;&#96;go</span><br><span class="line">    func (d dog) move() &#123;</span><br><span class="line">    	fmt.Println(&quot;狗会动&quot;)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></li>
-</ul>
-</li>
-<li><p>```go<br>func main() {</p>
-<pre><code>var x Mover
-var wangcai = dog&#123;&#125; // 旺财是dog类型
-x = wangcai         // x可以接收dog类型
-var fugui = &amp;dog&#123;&#125;  // 富贵是*dog类型
-x = fugui           // x可以接收*dog类型
-x.move()
-</code></pre>
-<p>}</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* 使用值接收者实现接口 后，d**og 结构体和结构体指针类型的变量** 都可以赋值给该接口变量</span><br><span class="line">  </span><br><span class="line">  * 由于Go中有对指针类型变量求值的语法糖，指针类型内部会自动求值</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 指针接收者实现接口</span><br><span class="line"></span><br><span class="line">&#96;&#96;&#96;go</span><br><span class="line">func (d *dog) move() &#123;</span><br><span class="line">	fmt.Println(&quot;狗会动&quot;)</span><br><span class="line">&#125;</span><br><span class="line">func main() &#123;</span><br><span class="line">	var x Mover</span><br><span class="line">	var wangcai &#x3D; dog&#123;&#125; &#x2F;&#x2F; 旺财是dog类型</span><br><span class="line">	x &#x3D; wangcai         &#x2F;&#x2F; x不可以接收dog类型</span><br><span class="line">	var fugui &#x3D; &amp;dog&#123;&#125;  &#x2F;&#x2F; 富贵是*dog类型</span><br><span class="line">	x &#x3D; fugui           &#x2F;&#x2F; x可以接收*dog类型</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-<li><p>此时实现<code>Mover</code> 接口的是<code>*dog</code>类型，所以不能给 x 传入 dog类型的wangcai，此时x只能存储*dog类型的值</p>
-</li>
-</ul>
-<h3 id="面试题"><a href="#面试题" class="headerlink" title="面试题"></a>面试题</h3><ul>
-<li><p>能否通过编译</p>
-</li>
-<li><p>```go<br>type People interface {</p>
-<pre><code>Speak(string) string
-</code></pre>
-<p>}</p>
-<p>type Student struct{}</p>
-<p>func (stu *Student) Speak(think string) (talk string) {</p>
-<pre><code>if think == &quot;sb&quot; &#123;
-    talk = &quot;你是个大帅比&quot;
-&#125; else &#123;
-    talk = &quot;您好&quot;
-&#125;
-return
-</code></pre>
-<p>}</p>
-<p>func main() {</p>
-<pre><code>var peo People = Student&#123;&#125;
-think := &quot;bitch&quot;
-fmt.Println(peo.Speak(think))
-</code></pre>
-<p>}</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* 不能。可能是因为&#96;var peo People &#x3D; Student&#123;&#125;&#96;</span><br><span class="line">  </span><br><span class="line">  * 实现People接口的是&#96;*Student&#96;类型</span><br><span class="line">* 将其修改后：&#96;您好&#96;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 类型与接口的关系</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 一个类型实现多个接口</span><br><span class="line"></span><br><span class="line">* **一个类型**可以**同时实现多个接口**，而接口间彼此独立，不知道对方的实现</span><br><span class="line"></span><br><span class="line">  * 例如，狗可以叫，也可以动。定义&#96;Sayer&#96; 和&#96;Mover&#96; 接口：</span><br><span class="line"></span><br><span class="line">    * &#96;&#96;&#96;go</span><br><span class="line">      &#x2F;&#x2F; Sayer 接口</span><br><span class="line">      type Sayer interface &#123;</span><br><span class="line">      	say()</span><br><span class="line">      &#125;</span><br><span class="line">      </span><br><span class="line">      &#x2F;&#x2F; Mover 接口</span><br><span class="line">      type Mover interface &#123;</span><br><span class="line">      	move()</span><br><span class="line">      &#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><p>对 dog 实现<code>Sayer</code> 和 <code>Mover</code> 接口</p>
-<ul>
-<li>```go<br>type dog struct {<pre><code>name string
-</code></pre>
-}// 实现Sayer接口<br>func (d dog) say() {<pre><code>fmt.Printf(&quot;%s会叫汪汪汪\n&quot;, d.name)
-</code></pre>
-}// 实现Mover接口<br>func (d dog) move() {<pre><code>fmt.Printf(&quot;%s会动\n&quot;, d.name)
-</code></pre>
-}func main() {<pre><code>var x Sayer
-var y Mover
-
-var a = dog&#123;name: &quot;旺财&quot;&#125;
-x = a
-y = a
-x.say()
-y.move()
-</code></pre>
-}<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 多个类型实现统一接口</span><br><span class="line"></span><br><span class="line">* **不同的类型** 可以 **实现统一接口**</span><br><span class="line"></span><br><span class="line">  * 定义一个&#96;Mover&#96;接口，有一个 move 方法</span><br><span class="line"></span><br><span class="line">    * &#96;&#96;&#96;go</span><br><span class="line">      &#x2F;&#x2F; Mover 接口</span><br><span class="line">      type Mover interface &#123;</span><br><span class="line">      	move()</span><br><span class="line">      &#125;</span><br></pre></td></tr></table></figure></li>
-</ul>
-</li>
-<li><p>多个类型实现<code>Mover</code>的方法<code>move</code></p>
-<ul>
-<li>```go<br>type dog struct {<pre><code>name string
-</code></pre>
-}type car struct {<pre><code>brand string
-</code></pre>
-}// dog类型实现Mover接口<br>func (d dog) move() {<pre><code>fmt.Printf(&quot;%s会跑\n&quot;, d.name)
-</code></pre>
-}// car类型实现Mover接口<br>func (c car) move() {<pre><code>fmt.Printf(&quot;%s速度70迈\n&quot;, c.brand)
-</code></pre>
-}<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">  </span><br><span class="line">* 在代码中，就可以把不同的类型，当成拥有同一特性的物体处理，不需要关注具体是什么，</span><br><span class="line"></span><br><span class="line">  * &#96;&#96;&#96;go</span><br><span class="line">    func main() &#123;</span><br><span class="line">    	var x Mover</span><br><span class="line">    	var a &#x3D; dog&#123;name: &quot;旺财&quot;&#125;</span><br><span class="line">    	var b &#x3D; car&#123;brand: &quot;保时捷&quot;&#125;</span><br><span class="line">    	x &#x3D; a</span><br><span class="line">    	x.move()</span><br><span class="line">    	x &#x3D; b</span><br><span class="line">    	x.move()</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>一个接口的方法，不一定需要由一个类型完全实现，接口的方法可以通过在类型中嵌入其他类型或者结构体来实现</p>
-<ul>
-<li>```go<br>// WashingMachine 洗衣机<br>type WashingMachine interface {<pre><code>wash()
-dry()
-</code></pre>
-}// 甩干器<br>type dryer struct{}// 实现WashingMachine接口的dry()方法<br>func (d dryer) dry() {<pre><code>fmt.Println(&quot;甩一甩&quot;)
-</code></pre>
-}// 海尔洗衣机<br>type haier struct {<pre><code>dryer //嵌入甩干器
-</code></pre>
-}// 实现WashingMachine接口的wash()方法<br>func (h haier) wash() {<pre><code>fmt.Println(&quot;洗刷刷&quot;)
-</code></pre>
-}<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"># 接口嵌套</span><br><span class="line"></span><br><span class="line">* 接口与接口 间 可以通过 嵌套创造新的接口</span><br><span class="line">  * &#96;&#96;&#96;go</span><br><span class="line">    &#x2F;&#x2F; Sayer 接口</span><br><span class="line">    type Sayer interface &#123;</span><br><span class="line">    	say()</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    &#x2F;&#x2F; Mover 接口</span><br><span class="line">    type Mover interface &#123;</span><br><span class="line">    	move()</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    &#x2F;&#x2F; 接口嵌套</span><br><span class="line">    type animal interface &#123;</span><br><span class="line">    	Sayer</span><br><span class="line">    	Mover</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></li>
-</ul>
-</li>
-<li><p>嵌套得到的接口 使用与普通接口一致，</p>
-<ul>
-<li>```go<br>type cat struct {<pre><code>name string
-</code></pre>
-}func (c cat) say() {<pre><code>fmt.Println(&quot;喵喵喵&quot;)
-</code></pre>
-}func (c cat) move() {<pre><code>fmt.Println(&quot;猫会动&quot;)
-</code></pre>
-}func main() {<pre><code>var x animal
-x = cat&#123;name: &quot;花花&quot;&#125;
-x.move()
-x.say()
-</code></pre>
-}<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"># 空接口</span><br><span class="line"></span><br><span class="line">## 空接口的定义</span><br><span class="line"></span><br><span class="line">* 没有指定任何方法的接口，**任何类型都实现了空接口**</span><br><span class="line"></span><br><span class="line">* **空接口类型的变量**可以**存储任意类型的变量**</span><br><span class="line"></span><br><span class="line">  * &#96;&#96;&#96;go</span><br><span class="line">    func main() &#123;</span><br><span class="line">    	&#x2F;&#x2F; 定义一个空接口x</span><br><span class="line">    	var x interface&#123;&#125;</span><br><span class="line">    	s :&#x3D; &quot;Hello 沙河&quot;</span><br><span class="line">    	x &#x3D; s</span><br><span class="line">    	fmt.Printf(&quot;type:%T value:%v\n&quot;, x, x)</span><br><span class="line">    	i :&#x3D; 100</span><br><span class="line">    	x &#x3D; i</span><br><span class="line">    	fmt.Printf(&quot;type:%T value:%v\n&quot;, x, x)</span><br><span class="line">    	b :&#x3D; true</span><br><span class="line">    	x &#x3D; b</span><br><span class="line">    	fmt.Printf(&quot;type:%T value:%v\n&quot;, x, x)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></li>
-</ul>
-</li>
-</ul>
-<h2 id="空接口的应用"><a href="#空接口的应用" class="headerlink" title="空接口的应用"></a>空接口的应用</h2><h3 id="空接口作为函数的参数"><a href="#空接口作为函数的参数" class="headerlink" title="空接口作为函数的参数"></a>空接口作为函数的参数</h3><ul>
-<li><p>使用空接口可以实现接受 <strong>任意类型的函数参数</strong></p>
-<ul>
-<li>```go<br>// 空接口作为函数参数<br>func show(a interface{}) {<pre><code>fmt.Printf(&quot;type:%T value:%v\n&quot;, a, a)
-</code></pre>
-}<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### 空接口作为 map 的值</span><br><span class="line"></span><br><span class="line">* 使用空接口实现 可以**保存任意值的字典**</span><br><span class="line"></span><br><span class="line">  * &#96;&#96;&#96;go</span><br><span class="line">    &#x2F;&#x2F; 空接口作为map值</span><br><span class="line">    	var studentInfo &#x3D; make(map[string]interface&#123;&#125;)</span><br><span class="line">    	studentInfo[&quot;name&quot;] &#x3D; &quot;沙河娜扎&quot;</span><br><span class="line">    	studentInfo[&quot;age&quot;] &#x3D; 18</span><br><span class="line">    	studentInfo[&quot;married&quot;] &#x3D; false</span><br><span class="line">    	fmt.Println(studentInfo)</span><br></pre></td></tr></table></figure></li>
-</ul>
-</li>
-</ul>
-<h1 id="类型断言"><a href="#类型断言" class="headerlink" title="类型断言"></a>类型断言</h1><ul>
-<li>空接口实现，可以使得map存储任意类型的值，</li>
-<li>如何获取存储的具体数据</li>
-</ul>
-<h2 id="接口值"><a href="#接口值" class="headerlink" title="接口值"></a>接口值</h2><ul>
-<li><p>一个接口的值 <strong>简称为接口值</strong>。<del>废话</del></p>
-</li>
-<li><p><strong>接口值</strong> ： <code>一个具体的类型</code> 和 <code>具体类型的值</code> 组成</p>
-<ul>
-<li>称为 接口的<code>动态类型</code> 和 <code>动态值</code></li>
-</ul>
-</li>
-<li><p><strong>示例：</strong></p>
-<ul>
-<li><p>```go<br>var w io.Writer<br>w = os.Stdout<br>w = new(bytes.Buffer)<br>w = nil</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">  * ![接口值图解](E:\LearningNotes\Go\14 接口.assets\interface.png)</span><br><span class="line"></span><br><span class="line">* **判断空接口中的值**，使用类型断言，格式</span><br><span class="line">  * &#96;x.(T)&#96;</span><br><span class="line">  * &#96;x&#96; : 表示类型为&#96;interface&#123;&#125;&#96; 的变量</span><br><span class="line">  * &#96;T &#96;：表示断言 x 可能是的类型</span><br><span class="line">* 该语法返回两个参数</span><br><span class="line">  * **第一个：**x 转化为 T 类型后的变量</span><br><span class="line">  * **第二个 ：**布尔值，若为&#96;true&#96; 表示断言成功</span><br><span class="line"></span><br><span class="line">* 示例：</span><br><span class="line"></span><br><span class="line">  * &#96;&#96;&#96;go</span><br><span class="line">    func main() &#123;</span><br><span class="line">    	var x interface&#123;&#125;</span><br><span class="line">    	x &#x3D; &quot;Hello 沙河&quot;</span><br><span class="line">    	v, ok :&#x3D; x.(string)</span><br><span class="line">    	if ok &#123;</span><br><span class="line">    		fmt.Println(v)</span><br><span class="line">    	&#125; else &#123;</span><br><span class="line">    		fmt.Println(&quot;类型断言失败&quot;)</span><br><span class="line">    	&#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></li>
-<li><p>使用<code>switch</code> 语句实现：</p>
-<ul>
-<li>```go<br>func justifyType(x interface{}) {<pre><code>switch v := x.(type) &#123;
-case string:
-    fmt.Printf(&quot;x is a string，value is %v\n&quot;, v)
-case int:
-    fmt.Printf(&quot;x is a int is %v\n&quot;, v)
-case bool:
-    fmt.Printf(&quot;x is a bool is %v\n&quot;, v)
-default:
-    fmt.Println(&quot;unsupport type！&quot;)
-&#125;
-</code></pre>
-}<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* &#x3D;&#x3D;空接口 可以存储任意类型值&#x3D;&#x3D;</span><br><span class="line">* **注意**：只有当两个以上的**具体类型必须以相同的方式处理**时，才需要定义接口</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 练习题</span><br><span class="line"></span><br><span class="line">* 使用接口的方式实现一个既可以往终端写日志也可以往文件写日志的简易日志库</span><br><span class="line"></span><br><span class="line">* &#96;os&#96; 和 &#96;io&#96; 包的学习：</span><br><span class="line"></span><br><span class="line">  * &#96;os&#96;</span><br><span class="line"></span><br><span class="line">  * &#96;io&#96;</span><br><span class="line"></span><br><span class="line">    * &#96;io.Writer&#96; ：表示一个编写器，从缓冲区读取数据，并将数据写入目标资源</span><br><span class="line"></span><br><span class="line">      * 必须实现&#96;io.Writer&#96;接口的唯一方法&#96;Write(p []byte)&#96; </span><br><span class="line"></span><br><span class="line">      * &#96;&#96;&#96;go</span><br><span class="line">        type Writer interface &#123;</span><br><span class="line">            Write(p []byte) (n int, err error) &#x2F;&#x2F;返回写入到目标资源的字节数，发生错误时的错误</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-          
-        
-      
-    </div>
-   
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -3928,7 +3776,7 @@ default:
               
                 <a href="/archives/%7C%7C%20archive">
               
-                  <span class="site-state-item-count">33</span>
+                  <span class="site-state-item-count">34</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -4101,7 +3949,7 @@ show_date_time();
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">83.2k</span>
+    <span title="Site words total count">83.7k</span>
   
 </div>
 
@@ -4129,7 +3977,7 @@ show_date_time();
     <!-- 博客字数统计 -->
     <span class="site-pv">
       <i class="fa fa-pencil"></i>
-      博客全站共： <span class="post-count">83.2k</span> 字
+      博客全站共： <span class="post-count">83.7k</span> 字
     </span>
 </div>
 <!-- 新增访客统计代码 END-->

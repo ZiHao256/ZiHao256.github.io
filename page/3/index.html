@@ -462,6 +462,412 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/05/06/6%20%E5%88%87%E7%89%87/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/stitch.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ZiHao's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/05/06/6%20%E5%88%87%E7%89%87/" itemprop="url">6 切片</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-05-06T14:22:06+08:00">
+                2021-05-06
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2021-05-06T14:25:34+08:00">
+                2021-05-06
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Go-LearningNote/" itemprop="url" rel="index">
+                    <span itemprop="name">-Go LearningNote</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2.4k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  10
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="6-切片"><a href="#6-切片" class="headerlink" title="6 切片"></a>6 切片</h2><ul>
+<li><p>数组长度是固定的，数组的长度也属于类型的一部分，有许多局限性</p>
+<ul>
+<li>例如，函数传参时只能支持一种数组类型</li>
+<li>例如，不能再继续向数组中添加元素</li>
+</ul>
+</li>
+<li><p><code>Slice</code> 是一个拥有<strong>相同类型元素的可变长度序列</strong></p>
+<ul>
+<li>是基于数组类型做的一层封装</li>
+<li>十分灵活，支持自动扩容</li>
+</ul>
+</li>
+<li><p>切片是一个 <strong>引用类型</strong>,不支持直接比较，只能和<code>nil</code>比较</p>
+<ul>
+<li>内部结构包含 <code>地址</code>、<code>长度</code>、<code>容量</code></li>
+</ul>
+</li>
+<li><p>一般用于<strong>快速的</strong>操作<strong>一块数据集合</strong></p>
+</li>
+</ul>
+<h3 id="切片的定义"><a href="#切片的定义" class="headerlink" title="切片的定义"></a>切片的定义</h3><ul>
+<li><p>基本语法：<code>var name []T</code></p>
+<ul>
+<li>name : 变量名</li>
+<li>T : 切片中的元素类型</li>
+</ul>
+</li>
+<li><p>示例：</p>
+<ul>
+<li>```<br>var a []string<br>var b = []int{}<br>var c = []bool{false, true}<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">#### 切片的长度和容量</span><br><span class="line"></span><br><span class="line">* 切片拥有自己的长度和容量：</span><br><span class="line">  * &#96;len()&#96; 求长度</span><br><span class="line">  * &#96;cap()&#96; 求容量</span><br><span class="line"></span><br><span class="line">#### 切片的表达式</span><br><span class="line"></span><br><span class="line">* 切片表达式 从&#96;字符串、数组、指向数组或切片的指针&#96; 构造 子字符串或切片</span><br><span class="line">* 两种变体</span><br><span class="line">  * 指定&#96;low&#96;和&#96;high&#96;两个索引界限值的简单形式</span><br><span class="line">  * 除了&#96;low&#96;和&#96;high&#96;索引界限值外，还指定容量 的完整形式</span><br><span class="line"></span><br><span class="line">##### 简单切片表达式</span><br><span class="line"></span><br><span class="line">* 切片的底层就是一个数组</span><br><span class="line"></span><br><span class="line">* 可以**基于 数组** 通过切片表达式得到切片</span><br><span class="line"></span><br><span class="line">* &#96;[low , high)&#96;: 左包含，右不包含</span><br><span class="line"></span><br><span class="line">  * 得到的**切片长度** &#96;high - low&#96;</span><br><span class="line"></span><br><span class="line">  * 得到的**切片容量是** 操作数数组下标从&#96;low&#96; 到最后一个元素所组成的数组的长度</span><br><span class="line"></span><br><span class="line">  * 示例：</span><br><span class="line"></span><br><span class="line">    * &#96;&#96;&#96;go</span><br><span class="line">      a :&#x3D; [5]int&#123;1,2,3,4,5&#125;</span><br><span class="line">      s :&#x3D; a[1:3]  </span><br><span class="line">      fmt.Pritf(&quot;s:%v len(s):%v cap(s): %v&quot;,s,len(s),cap(s))</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>切片表达式中的任何索引可以省略：</p>
+<ul>
+<li><code>low</code>默认为 <strong>0</strong></li>
+<li><code>high</code>默认为 <strong>切片操作数的长度</strong></li>
+<li><code>a[2:] </code> : <code>high</code> = len(a)</li>
+<li><code>a[:3]</code>: <code>low</code> = 0</li>
+<li><code>a[:]</code> low = 0, high = len(a)</li>
+</ul>
+</li>
+<li><p>==注意：==</p>
+<ul>
+<li>对于数组和字符串：若<code>0&lt;=low&lt;=high&lt;=len(a)</code> 则索引合法，否则<strong>索引越界</strong>，运行时会<code>panic</code></li>
+<li>对 切片 再执行切片表达式(切片在切片时)，<ul>
+<li><code>high</code> 的上限是 切片的容量<code>cap(s)</code>，而非长度<code>len(s)</code></li>
+</ul>
+</li>
+<li><strong>常量索引</strong>必须是非负，int类型</li>
+</ul>
+</li>
+<li></li>
+</ul>
+<h5 id="完整切片表达式"><a href="#完整切片表达式" class="headerlink" title="完整切片表达式"></a>完整切片表达式</h5><ul>
+<li><em>数组，指向数组的指针，或切片</em> 支持完整切片表达式<ul>
+<li>注意，<strong>字符串不支持</strong></li>
+</ul>
+</li>
+<li>格式 <code>a[low : high : max]</code></li>
+<li>构造与简单切片表达式<code>a[low,high]</code> <ul>
+<li>相同类型、相同长度、相同元素</li>
+<li>将切片的容量设置为<code>max-low</code> </li>
+</ul>
+</li>
+<li>在完整切片表达式中，只有第一个索引值<code>low</code>可以省略，默认为 0<ul>
+<li>示例</li>
+<li></li>
+</ul>
+</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a := [<span class="number">5</span>]<span class="keyword">int</span>&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>&#125;</span><br><span class="line">t := a[<span class="number">1</span>:<span class="number">3</span>:<span class="number">5</span>]</span><br><span class="line"><span class="comment">//t: [2 3] len(t):2 cap(t):4</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>完整切片表达式 需满足<ul>
+<li><code>0 &lt;= low &lt;= high &lt;= max &lt;= cap(a)</code></li>
+</ul>
+</li>
+</ul>
+<h4 id="使用-make-函数构造切片"><a href="#使用-make-函数构造切片" class="headerlink" title="使用 make() 函数构造切片"></a>使用 make() 函数构造切片</h4><ul>
+<li><p>除了基于数组构造切片，还可以动态创建切片</p>
+</li>
+<li><p>make 格式：<code>make ([]T, size, cap)</code></p>
+<ul>
+<li><code>T</code> : 切片内元素类型</li>
+<li><code>size</code> ：切片中元素数量</li>
+<li><code>cap</code> ：切片容量</li>
+</ul>
+</li>
+<li><p>示例：</p>
+<ul>
+<li><p>```go<br>a := make([]int, 2, 10)<br>//a: [0 0] len(a):2 cap(a): 10</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">  * a切片的内部存储空间分配了10，实际上只用了2个</span><br><span class="line"></span><br><span class="line">  * 容量不会影响当前元素的个数</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### 切片的本质</span><br><span class="line"></span><br><span class="line">* **本质：**对底层数组的封装，包含三个信息</span><br><span class="line"></span><br><span class="line">  * 底层数组的指针</span><br><span class="line">  * 切片的长度</span><br><span class="line">  * 切片的容量</span><br><span class="line"></span><br><span class="line">* 例如</span><br><span class="line"></span><br><span class="line">  &#96;&#96;&#96;go</span><br><span class="line">  a :&#x3D; [8]int&#123;0,1,2,3,4,5,6,7&#125;</span><br><span class="line">  s1 :&#x3D; a[:5]</span><br></pre></td></tr></table></figure></li>
+<li><p><img src="E:\LearningNotes\Go\GoLearning.assets\slice_01.png" alt="slice_01"></p>
+</li>
+<li><p>切片<code>s2 := a[3:6]</code></p>
+<ul>
+<li><img src="E:\LearningNotes\Go\GoLearning.assets\slice_02.png" alt="slice_02"></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="判断切片是否为空"><a href="#判断切片是否为空" class="headerlink" title="判断切片是否为空"></a>判断切片是否为空</h4><ul>
+<li>最好使用切片的长度 <code>len(s)==0</code> 来判断</li>
+</ul>
+<h3 id="切片不能直接比较"><a href="#切片不能直接比较" class="headerlink" title="切片不能直接比较"></a>切片不能直接比较</h3><ul>
+<li><p>不能使用 <code>==</code> 操作符判断切片是否全部元素相等</p>
+</li>
+<li><p>切片唯一合法的比较操作：和<code>nil</code>比较</p>
+</li>
+<li><p>一个<code>nil</code>值的切片，没有底层数组</p>
+<ul>
+<li>切片长度和容量都是 0</li>
+</ul>
+</li>
+<li><p>但是一个长度和容量都是0的切片不一定是<code>nil</code></p>
+<ul>
+<li><p>示例</p>
+</li>
+<li><p>```go<br>var s1 []int         //len(s1)=0;cap(s1)=0;s1==nil<br>s2 := []int{}        //len(s2)=0;cap(s2)=0;s2!=nil<br>s3 := make([]int, 0) //len(s3)=0;cap(s3)=0;s3!=nil</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">* 因此判断切片是否为空主要用&#96;len(s)&#x3D;&#x3D;0&#96;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 切片的赋值拷贝</span><br><span class="line"></span><br><span class="line">* 一个切片 **拷贝赋值** 另一个切片，两个切片会共享底层数组，因此对一个切片的修改会影响另一个切片</span><br><span class="line"></span><br><span class="line">  * 示例</span><br><span class="line"></span><br><span class="line">  * &#96;&#96;&#96;go</span><br><span class="line">    	s1 :&#x3D; make([]int, 3) &#x2F;&#x2F;[0 0 0]</span><br><span class="line">    	s2 :&#x3D; s1             &#x2F;&#x2F;将s1直接赋值给s2，s1和s2共用一个底层数组</span><br><span class="line">    	s2[0] &#x3D; 100</span><br><span class="line">    	fmt.Println(s1) &#x2F;&#x2F;[100 0 0]</span><br><span class="line">    	fmt.Println(s2) &#x2F;&#x2F;[100 0 0]</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<h3 id="切片遍历"><a href="#切片遍历" class="headerlink" title="切片遍历"></a>切片遍历</h3><ul>
+<li>支持下标索引遍历和<code>for range</code>键值遍历</li>
+</ul>
+<h3 id="append-方法为切片添加元素"><a href="#append-方法为切片添加元素" class="headerlink" title="append() 方法为切片添加元素"></a>append() 方法为切片添加元素</h3><ul>
+<li><p>Go 中的内置函数<code>append()</code> 可以为切片动态添加元素</p>
+<ul>
+<li>添加一个：<code>s = append(s,1)</code></li>
+<li>添加多个：<code>s = append(s,1,2,3)</code></li>
+<li>添加另一个切片中的元素 ：<code>s = append(s, s2...)</code></li>
+</ul>
+</li>
+<li><p>==注意：==通过<strong>var声明</strong>的 <code>零值切片</code> 可以在<code>append()</code> 直接使用，无需初始化</p>
+<ul>
+<li><p>```go<br>var s []int   //声明后直接使用<br>s = append(s,1,2)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* 每个切片指向一个**底层数组**，</span><br><span class="line"></span><br><span class="line">  * 这个数组的**容量够用**就直接在该数组新增元素</span><br><span class="line">  * 当**容量不够用**时，切片**按照一定的规则进行扩容**。此时该切片指向的**底层数组会更换**</span><br><span class="line">  * **扩容操作**发生在&#96;append&#96;时，因此需要用原变量接收函数返回值</span><br><span class="line"></span><br><span class="line">* &#96;append&#96;:</span><br><span class="line"></span><br><span class="line">  * 将元素追加到切片的最后并返回该切片</span><br><span class="line">  * 切片扩容的规则都是扩容前的两倍</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 切片的扩容策略</span><br><span class="line"></span><br><span class="line">* 查看源码：</span><br><span class="line"></span><br><span class="line">  * &#96;&#96;&#96;go</span><br><span class="line">    newcap :&#x3D; old.cap</span><br><span class="line">    doublecap :&#x3D; newcap + newcap</span><br><span class="line">    if cap &gt; doublecap &#123;</span><br><span class="line">    	newcap &#x3D; cap</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">    	if old.len &lt; 1024 &#123;</span><br><span class="line">    		newcap &#x3D; doublecap</span><br><span class="line">    	&#125; else &#123;</span><br><span class="line">    		&#x2F;&#x2F; Check 0 &lt; newcap to detect overflow</span><br><span class="line">    		&#x2F;&#x2F; and prevent an infinite loop.</span><br><span class="line">    		for 0 &lt; newcap &amp;&amp; newcap &lt; cap &#123;</span><br><span class="line">    			newcap +&#x3D; newcap &#x2F; 4</span><br><span class="line">    		&#125;</span><br><span class="line">    		&#x2F;&#x2F; Set newcap to the requested cap when</span><br><span class="line">    		&#x2F;&#x2F; the newcap calculation overflowed.</span><br><span class="line">    		if newcap &lt;&#x3D; 0 &#123;</span><br><span class="line">    			newcap &#x3D; cap</span><br><span class="line">    		&#125;</span><br><span class="line">    	&#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><p>首先判断，若新申请(cap)大于两倍的旧容量(old.cap)，最终容量(newcap)就是新申请的容量</p>
+</li>
+<li><p>否则判断，若旧切片的长度小于1024，最终容量就是旧容量的两倍，</p>
+</li>
+<li><p>否则判断，若旧切片的长度大于等于1024，最终容量从旧容量开始循增加原来的1/4，直到最终容量大于等于新申请的容量</p>
+</li>
+<li><p>如果最终容量计算值溢出，则最终容量就是新申请的容量</p>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p>注意：切片扩容会根据切片中元素类型的不同而作不同处理</p>
+</li>
+</ul>
+<h3 id="使用-copy-函数复制切片"><a href="#使用-copy-函数复制切片" class="headerlink" title="使用 copy() 函数复制切片"></a>使用 copy() 函数复制切片</h3><ul>
+<li><p>由于切片是引用类型，拷贝赋值时，两个切片都指向同一块内存地址</p>
+<ul>
+<li><p>示例</p>
+</li>
+<li><p>```go</p>
+<pre><code>a := []int&#123;1, 2, 3, 4, 5&#125;
+b := a
+fmt.Println(a) //[1 2 3 4 5]
+fmt.Println(b) //[1 2 3 4 5]
+b[0] = 1000
+fmt.Println(a) //[1000 2 3 4 5]
+fmt.Println(b) //[1000 2 3 4 5]
+</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">* 可以使用内置函数&#96;copy()&#96;迅速地将一个切片的数据复制到另外一个切片空间中，</span><br><span class="line"></span><br><span class="line">  * &#96;copy(destSlice, srcSlice []T)&#96;</span><br><span class="line"></span><br><span class="line">    * srcSlice：数据来源切片</span><br><span class="line">    * dextSlice:目标切片</span><br><span class="line"></span><br><span class="line">  * 示例：</span><br><span class="line"></span><br><span class="line">  * &#96;&#96;&#96;go</span><br><span class="line">    	a :&#x3D; []int&#123;1, 2, 3, 4, 5&#125;</span><br><span class="line">    	c :&#x3D; make([]int, 5, 5)</span><br><span class="line">    	copy(c, a)     &#x2F;&#x2F;使用copy()函数将切片a中的元素复制到切片c</span><br><span class="line">    	fmt.Println(a) &#x2F;&#x2F;[1 2 3 4 5]</span><br><span class="line">    	fmt.Println(c) &#x2F;&#x2F;[1 2 3 4 5]</span><br><span class="line">    	c[0] &#x3D; 1000</span><br><span class="line">    	fmt.Println(a) &#x2F;&#x2F;[1 2 3 4 5]</span><br><span class="line">    	fmt.Println(c) &#x2F;&#x2F;[1000 2 3 4 5]</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<h3 id="从切片中删除元素"><a href="#从切片中删除元素" class="headerlink" title="从切片中删除元素"></a>从切片中删除元素</h3><ul>
+<li><p>Go 中无删除切片元素的专用方法，需要使用切片本身特性：</p>
+<ul>
+<li><p>若要删除下表为<code>index</code>: <code>s = append(s[:index],s[index+1:]...)</code></p>
+</li>
+<li><p>```go<br>func main() {</p>
+<pre><code>// 从切片中删除元素
+a := []int&#123;30, 31, 32, 33, 34, 35, 36, 37&#125;
+// 要删除索引为2的元素
+a = append(a[:2], a[3:]...)
+fmt.Println(a) //[30 31 33 34 35 36 37]
+</code></pre>
+<p>}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 练习题</span><br><span class="line"></span><br><span class="line">#### 练习一</span><br><span class="line"></span><br><span class="line">请写出下面代码的输出结果。</span><br><span class="line"></span><br><span class="line">&#96;&#96;&#96;go</span><br><span class="line">func main() &#123;</span><br><span class="line">    var a &#x3D; make([]string, 5, 10)&#x2F;&#x2F;a : [0 0 0 0 0 0 0 0 0 0 ],len 5, cap 10</span><br><span class="line">	for i :&#x3D; 0; i &lt; 10; i++ &#123;</span><br><span class="line">		a &#x3D; append(a, fmt.Sprintf(&quot;%v&quot;, i)) &#x2F;&#x2F;[0 0 0 0 0 &quot;0&quot; &quot;1&quot; ...&quot;9&quot;]</span><br><span class="line">	&#125;</span><br><span class="line">	fmt.Println(a)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>直接分析：[0 0 0 0 0 “0” “1” …”9”]</p>
+</li>
+<li><p>run ：<code>[   0 1 2 3 4 5 6 7 8 9]</code></p>
+<ul>
+<li>前面五个空字符串</li>
+</ul>
+</li>
+</ul>
+<h4 id="练习二"><a href="#练习二" class="headerlink" title="练习二"></a>练习二</h4><p>请使用内置的<code>sort</code>包对数组<code>var a = [...]int&#123;3, 7, 8, 9, 1&#125;</code>进行排序（附加题，自行查资料解答）。</p>
+<ul>
+<li><p><code>sort</code> 包主要针对[]int., []float64,[]string 以及其他自定义切片的排序</p>
+<ul>
+<li><p>内部实现了：插入排序、归并排序、堆排序、快速排序</p>
+</li>
+<li><p>sort 会依据实际数据自动选择最优的排序方法</p>
+</li>
+<li><p>我们只需要考虑实现 <code>sort.Interface</code>类型</p>
+<ul>
+<li>```go<br>type Interface interface {<pre><code>Len() int           // Len方法返回集合中的元素个数
+Less(i, j int) bool // i&gt;j，该方法返回索引i的元素是否比索引j的元素小、
+Swap(i, j int)      // 交换i, j的值
+</code></pre>
+}<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* 例如：</span><br><span class="line"></span><br><span class="line">  * &#96;&#96;&#96;go</span><br><span class="line">    package main</span><br><span class="line">     </span><br><span class="line">    import (</span><br><span class="line">        &quot;fmt&quot;</span><br><span class="line">        &quot;sort&quot;</span><br><span class="line">    )</span><br><span class="line">     </span><br><span class="line">    type IntSlice []int</span><br><span class="line">     </span><br><span class="line">    func (s IntSlice) Len() int &#123; </span><br><span class="line">        return len(s) </span><br><span class="line">    &#125;</span><br><span class="line">    func (s IntSlice) Swap(i, j int)&#123;</span><br><span class="line">        s[i], s[j] &#x3D; s[j], s[i] </span><br><span class="line">    &#125;</span><br><span class="line">    func (s IntSlice) Less(i, j int) bool &#123;</span><br><span class="line">        return s[i] &lt; s[j] </span><br><span class="line">    &#125;</span><br><span class="line">     </span><br><span class="line">    func main() &#123;</span><br><span class="line">        a :&#x3D; []int&#123;4,3,2,1,5,9,8,7,6&#125;</span><br><span class="line">        sort.Sort(IntSlice(a))</span><br><span class="line">        fmt.Println(&quot;After sorted: &quot;, a)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          
+        
+      
+    </div>
+   
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/05/05/5%20Array%20%E6%95%B0%E7%BB%84/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -4728,261 +5134,6 @@ func main() &#123;
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/04/17/Linux%20%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A02/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/stitch.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ZiHao's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2021/04/17/Linux%20%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A02/" itemprop="url">Linux 入门学习2</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-04-17T09:55:13+08:00">
-                2021-04-17
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于&#58;</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2021-05-01T10:16:03+08:00">
-                2021-05-01
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index">
-                    <span itemprop="name">-Linux</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  394
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="Linux-入门学习2"><a href="#Linux-入门学习2" class="headerlink" title="Linux 入门学习2"></a>Linux 入门学习2</h1><p><a target="_blank" rel="noopener" href="https://jiannan.blog.csdn.net/article/details/79512948">参考博客</a></p>
-<p>[toc]</p>
-<p>学习如何创建文件、文件夹、以及文件的复制粘贴剪切等操作。</p>
-<h1 id="1-文件、文件夹的创建"><a href="#1-文件、文件夹的创建" class="headerlink" title="1 文件、文件夹的创建"></a>1 文件、文件夹的创建</h1><h2 id="1-1-创建文件夹"><a href="#1-1-创建文件夹" class="headerlink" title="1.1 创建文件夹"></a>1.1 创建文件夹</h2><ul>
-<li>命令：<code>mkdir</code> make directories</li>
-<li>默认登陆所在目录是<code>root</code>的<code>home</code>目录</li>
-<li>指定在某个目录下创建：<code>mkdir /目录名/文件夹名</code></li>
-<li>创建文件夹的同时创建子文件夹：<code>mkdir -p 文件夹名/子文件夹名</code><ul>
-<li><code>-p</code>选项：递归创建</li>
-</ul>
-</li>
-</ul>
-<h2 id="1-2-创建文件"><a href="#1-2-创建文件" class="headerlink" title="1.2 创建文件"></a>1.2 创建文件</h2><ul>
-<li>命令：<code>touch</code></li>
-<li>语法：<code>touch /目录/文件名</code><ul>
-<li>在目录下创建文件</li>
-</ul>
-</li>
-<li>注意：<ul>
-<li><code>目录</code>需要写绝对路径</li>
-</ul>
-</li>
-</ul>
-<h1 id="2-查看当前目录以及切换目录"><a href="#2-查看当前目录以及切换目录" class="headerlink" title="2 查看当前目录以及切换目录"></a>2 查看当前目录以及切换目录</h1><h2 id="2-1-查看当前目录"><a href="#2-1-查看当前目录" class="headerlink" title="2.1 查看当前目录"></a>2.1 查看当前目录</h2><ul>
-<li>命令：<code>pwd</code></li>
-</ul>
-<h2 id="2-2-切换目录"><a href="#2-2-切换目录" class="headerlink" title="2.2 切换目录"></a>2.2 切换目录</h2><ul>
-<li>命令：<code>cd</code>,<code>change directories</code></li>
-<li>语法：<code>cd /目录</code></li>
-</ul>
-<h1 id="3-对文件进行复制、粘贴、删除操作"><a href="#3-对文件进行复制、粘贴、删除操作" class="headerlink" title="3 对文件进行复制、粘贴、删除操作"></a>3 对文件进行复制、粘贴、删除操作</h1><h2 id="3-1-复制"><a href="#3-1-复制" class="headerlink" title="3.1 复制"></a>3.1 复制</h2><ul>
-<li>命令：<code>cp</code>,copy</li>
-<li>语法：<code>cp 原文件路径 目标路径</code></li>
-<li>选项：<ul>
-<li><code>-r</code>: 复制一个目录</li>
-<li><code>-p</code>: 复制文件的属性与之前原文件一致</li>
-</ul>
-</li>
-<li>复制改名一起完成：再复制的目标路径最后写上文件名</li>
-</ul>
-<h2 id="3-2-删除"><a href="#3-2-删除" class="headerlink" title="3.2 删除"></a>3.2 删除</h2><ul>
-<li>删除空目录<ul>
-<li>命令：<code>rmdir</code>，删除<strong>空目录</strong></li>
-</ul>
-</li>
-<li>删除文件<ul>
-<li>命令：<code>rm</code></li>
-<li>选项<ul>
-<li><code>-f</code>: 无确认提示</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>删除目录：必须进行递归操作，需要加上选项<code>-r</code><ul>
-<li>命令：<code>rm -r 目录</code><ul>
-<li>会一个一个提示是否删除里面的文件</li>
-</ul>
-</li>
-<li>命令：<code>rm -rf 目录</code><ul>
-<li>不会提示</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="3-3-剪切"><a href="#3-3-剪切" class="headerlink" title="3.3 剪切"></a>3.3 剪切</h2><ul>
-<li>命令：<code>mv</code>,move</li>
-<li>语法：<code>mv 原文件路径 目标路径</code></li>
-<li>剪切同时改名：最后写上文件名</li>
-</ul>
-
-          
-        
-      
-    </div>
-   
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -5037,7 +5188,7 @@ func main() &#123;
               
                 <a href="/archives/%7C%7C%20archive">
               
-                  <span class="site-state-item-count">34</span>
+                  <span class="site-state-item-count">35</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -5048,7 +5199,7 @@ func main() &#123;
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">10</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -5210,7 +5361,7 @@ show_date_time();
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">83.7k</span>
+    <span title="Site words total count">84k</span>
   
 </div>
 
@@ -5238,7 +5389,7 @@ show_date_time();
     <!-- 博客字数统计 -->
     <span class="site-pv">
       <i class="fa fa-pencil"></i>
-      博客全站共： <span class="post-count">83.7k</span> 字
+      博客全站共： <span class="post-count">84k</span> 字
     </span>
 </div>
 <!-- 新增访客统计代码 END-->

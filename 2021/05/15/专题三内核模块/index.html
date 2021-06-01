@@ -96,7 +96,7 @@
 <meta property="og:description" content="实验要求： 题目一 编写一个内核模块； 编译该模块； 加载、卸载该模块； 题目二 用内核模块的方式为系统添加一个系统调用 具体要求同专题二 提交内容： ​        内核模块加载&#x2F;卸载截图 评分标准： 至少完成题目一（60-80分） 自主完成题目二（90-100分）  1 内核模块概念 是一段可以 动态加入内核，并且成为内核一部分的代码 优点： 通过动态加载内核模块，使得在运行过程中扩展内核">
 <meta property="og:locale">
 <meta property="article:published_time" content="2021-05-15T08:02:43.927Z">
-<meta property="article:modified_time" content="2021-05-15T09:09:04.677Z">
+<meta property="article:modified_time" content="2021-05-22T12:30:20.803Z">
 <meta property="article:author" content="Zihao Ma">
 <meta name="twitter:card" content="summary">
 
@@ -510,8 +510,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2021-05-15T17:09:04+08:00">
-                2021-05-15
+              <time title="更新于" itemprop="dateModified" datetime="2021-05-22T20:30:20+08:00">
+                2021-05-22
               </time>
             
           </span>
@@ -565,7 +565,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  460
+                  517
                 </span>
               
 
@@ -581,7 +581,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  2
                 </span>
               
             </div>
@@ -661,6 +661,7 @@
 <li>宏<code>MODULE_DESCRIPTION()</code>: 描述模块的用途</li>
 <li>宏``</li>
 </ul>
+<h1 id="4-通过-module-进行内核添加系统调用"><a href="#4-通过-module-进行内核添加系统调用" class="headerlink" title="4  通过 module 进行内核添加系统调用"></a>4  通过 module 进行内核添加系统调用</h1><p><a href="%5B(5%E6%9D%A1%E6%B6%88%E6%81%AF">参考博客</a> Linux/Ubuntu18.04 下添加系统调用的两种方法 (内核编译法｜模块添加)_Egqawkq的博客-CSDN博客](<a target="_blank" rel="noopener" href="https://blog.csdn.net/egqawkq/article/details/88970390">https://blog.csdn.net/egqawkq/article/details/88970390</a>))</p>
 
       
     </div>
@@ -797,7 +798,7 @@
               
                 <a href="/archives/%7C%7C%20archive">
               
-                  <span class="site-state-item-count">35</span>
+                  <span class="site-state-item-count">37</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -808,7 +809,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -945,7 +946,7 @@ show_date_time();
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E5%86%85%E6%A0%B8%E6%A8%A1%E5%9D%97%E6%A6%82%E5%BF%B5"><span class="nav-text">1 内核模块概念</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E5%86%85%E6%A0%B8%E6%A8%A1%E5%9D%97%E7%9B%B8%E5%85%B3%E5%91%BD%E4%BB%A4"><span class="nav-text">2 内核模块相关命令</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-%E5%86%85%E6%A0%B8%E6%A8%A1%E5%9D%97%E7%9A%84%E7%BC%96%E5%86%99%EF%BC%8C%E4%BE%8B%E5%AD%90"><span class="nav-text">3 内核模块的编写，例子</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%85%E6%A0%B8%E6%A8%A1%E5%9D%97%E8%AF%B4%E6%98%8E"><span class="nav-text">内核模块说明</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E5%86%85%E6%A0%B8%E6%A8%A1%E5%9D%97%E6%A6%82%E5%BF%B5"><span class="nav-text">1 内核模块概念</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E5%86%85%E6%A0%B8%E6%A8%A1%E5%9D%97%E7%9B%B8%E5%85%B3%E5%91%BD%E4%BB%A4"><span class="nav-text">2 内核模块相关命令</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-%E5%86%85%E6%A0%B8%E6%A8%A1%E5%9D%97%E7%9A%84%E7%BC%96%E5%86%99%EF%BC%8C%E4%BE%8B%E5%AD%90"><span class="nav-text">3 内核模块的编写，例子</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%85%E6%A0%B8%E6%A8%A1%E5%9D%97%E8%AF%B4%E6%98%8E"><span class="nav-text">内核模块说明</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-%E9%80%9A%E8%BF%87-module-%E8%BF%9B%E8%A1%8C%E5%86%85%E6%A0%B8%E6%B7%BB%E5%8A%A0%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8"><span class="nav-text">4  通过 module 进行内核添加系统调用</span></a></li></ol></div>
             
 
           </div>
@@ -986,7 +987,7 @@ show_date_time();
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">84k</span>
+    <span title="Site words total count">85.3k</span>
   
 </div>
 
@@ -1014,7 +1015,7 @@ show_date_time();
     <!-- 博客字数统计 -->
     <span class="site-pv">
       <i class="fa fa-pencil"></i>
-      博客全站共： <span class="post-count">84k</span> 字
+      博客全站共： <span class="post-count">85.3k</span> 字
     </span>
 </div>
 <!-- 新增访客统计代码 END-->

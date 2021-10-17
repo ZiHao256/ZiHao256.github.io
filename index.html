@@ -462,7 +462,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/05/30/%E6%B8%85-%E8%AF%B4/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/p/4b288195.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -481,7 +481,273 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2021/05/30/%E6%B8%85-%E8%AF%B4/" itemprop="url">清 说</a></h1>
+                <a class="post-title-link" href="/p/4b288195.html" itemprop="url">专题四设备驱动</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-05-31T20:13:14+08:00">
+                2021-05-31
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2021-10-17T15:06:15+08:00">
+                2021-10-17
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E2%80%98-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E8%AE%BE%E8%AE%A1%E2%80%99/" itemprop="url" rel="index">
+                    <span itemprop="name">‘-操作系统课程设计’</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  536
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>完善例子中的字符设备程序，使之满足以下功能：</p>
+<p> i.安装设备后从设备中读出字符串为你的学号；</p>
+<p> ii. 设备支持每次写入字符不超过1024个，超过部分被丢弃；</p>
+<p> iii. 用户可以读出最近写入到设备中的字符；</p>
+<p> iv. 设备关闭前不能被多次打开；</p>
+<p> v. 设备支持系统调用ioctl(int d, int req,…),req = 0x909090, 清除设备中写入的字符串;</p>
+<p> 自己编写测试程序，验证以上功能</p>
+<p>提交内容： 测试过程截图</p>
+</blockquote>
+<h1 id="1-概念"><a href="#1-概念" class="headerlink" title="1 概念"></a>1 概念</h1><ul>
+<li><p>操作系统中<strong>直接控制设备的程序</strong></p>
+</li>
+<li><p>Linux 将设备看成是一种特殊的文件（<strong>设备文件</strong>）</p>
+<ul>
+<li><strong>字符型</strong>设备</li>
+<li>块设备</li>
+</ul>
+</li>
+<li><p>Linux 打开读写或关闭设备文件时，在<strong>与设备驱动进行交互</strong></p>
+</li>
+</ul>
+<h1 id="2-设计"><a href="#2-设计" class="headerlink" title="2 设计"></a>2 设计</h1><ul>
+<li>用户进程请求设备服务流程图<ul>
+<li><img src="E:\Hexo\Blog\source_posts\专题四设备驱动.assets\image-20210531201244104.png" alt="image-20210531201244104"></li>
+<li><ol>
+<li>用户进程发出<strong>IO请求</strong>，系统将处理下传到<strong>VFS</strong>上</li>
+<li>VFS 通过驱动程序提供的接口将<strong>任务分配</strong>到<strong>驱动程序</strong></li>
+<li>驱动程序根据需要，<strong>对设备控制器进行操作</strong></li>
+<li>设备控制器去控制设备</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><strong>设备驱动程序设计</strong><ul>
+<li>VFS 管理<strong>字符设备</strong>的接口：<code>struct file_operations</code><ul>
+<li>重要的接口函数：<code>open,read,write,release,ioctl</code></li>
+<li><strong>接口的实现</strong>都由<strong>设备驱动</strong>提供</li>
+</ul>
+</li>
+<li>与VFS的对接：<ul>
+<li><code>register_chrdev</code></li>
+<li><strong>原理</strong>：由数组chrdevs[255]管理字符设备驱动与VFS的对接接口，主设备号是他的下标</li>
+</ul>
+</li>
+<li><strong>设备驱动</strong>与设备的对接<ul>
+<li>设备就是一块内存，仅读写</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="3-实现"><a href="#3-实现" class="headerlink" title="3 实现"></a>3 实现</h1><ul>
+<li>实验内容：<ul>
+<li>实现一个用内存模拟的字符设备的驱动程序，功能<ul>
+<li>用户可以向设备写入字符串</li>
+<li>用户可以从设备中读出写入的字符串</li>
+<li>用户可以通过系统调用<code>ioctl</code>清除设备中写入的字符串</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="3-2-设备驱动的实现——用模块实现"><a href="#3-2-设备驱动的实现——用模块实现" class="headerlink" title="3.2 设备驱动的实现——用模块实现"></a>3.2 设备驱动的实现——用模块实现</h2><ul>
+<li>模块初始化</li>
+<li>模块退出时的清理</li>
+<li>open close</li>
+<li>read</li>
+<li>write</li>
+<li>ioctl</li>
+</ul>
+<p>打开失败</p>
+<p>读取失败</p>
+<p>文件结束</p>
+<p>写入失败</p>
+<p>写 bytes</p>
+<p>clean 失败</p>
+<p>清除!</p>
+<p>写设备error</p>
+
+          
+        
+      
+    </div>
+   
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/p/90d31b3c.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/stitch.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ZiHao's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/p/90d31b3c.html" itemprop="url">清 说</a></h1>
         
 
         <div class="post-meta">
@@ -509,8 +775,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2021-05-30T18:26:27+08:00">
-                2021-05-30
+              <time title="更新于" itemprop="dateModified" datetime="2021-10-17T15:03:23+08:00">
+                2021-10-17
               </time>
             
           </span>
@@ -628,7 +894,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/05/22/VS2019-C++-MySQL/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/p/22861f12.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -647,7 +913,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2021/05/22/VS2019-C++-MySQL/" itemprop="url">VS2019 下 C++ 项目访问MySQL数据库</a></h1>
+                <a class="post-title-link" href="/p/22861f12.html" itemprop="url">VS2019 下 C++ 项目访问MySQL数据库</a></h1>
         
 
         <div class="post-meta">
@@ -675,8 +941,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2021-05-27T18:11:11+08:00">
-                2021-05-27
+              <time title="更新于" itemprop="dateModified" datetime="2021-10-17T15:03:23+08:00">
+                2021-10-17
               </time>
             
           </span>
@@ -931,7 +1197,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/05/22/%E6%88%91%E6%8B%BF%E4%BB%80%E4%B9%88%E7%95%99%E4%BD%8F%E4%BD%A0/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/p/d1fbce69.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -950,7 +1216,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2021/05/22/%E6%88%91%E6%8B%BF%E4%BB%80%E4%B9%88%E7%95%99%E4%BD%8F%E4%BD%A0/" itemprop="url">我用什么才能留住你</a></h1>
+                <a class="post-title-link" href="/p/d1fbce69.html" itemprop="url">我用什么才能留住你</a></h1>
         
 
         <div class="post-meta">
@@ -978,7 +1244,7 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2021-10-17T14:44:10+08:00">
+              <time title="更新于" itemprop="dateModified" datetime="2021-10-17T15:03:23+08:00">
                 2021-10-17
               </time>
             
@@ -1123,7 +1389,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/05/16/%E5%88%9B%E5%BB%BA%E8%BF%9B%E7%A8%8B%E3%80%81%E5%AD%90%E8%BF%9B%E7%A8%8B%E5%92%8C%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/p/a3ec7244.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -1142,7 +1408,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2021/05/16/%E5%88%9B%E5%BB%BA%E8%BF%9B%E7%A8%8B%E3%80%81%E5%AD%90%E8%BF%9B%E7%A8%8B%E5%92%8C%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1/" itemprop="url">创建进程、子进程和进程间通信</a></h1>
+                <a class="post-title-link" href="/p/a3ec7244.html" itemprop="url">创建进程、子进程和进程间通信</a></h1>
         
 
         <div class="post-meta">
@@ -1170,8 +1436,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2021-05-16T22:41:20+08:00">
-                2021-05-16
+              <time title="更新于" itemprop="dateModified" datetime="2021-10-17T15:03:23+08:00">
+                2021-10-17
               </time>
             
           </span>
@@ -1389,7 +1655,7 @@ int main()&#123;
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/05/15/%E4%B8%93%E9%A2%98%E4%B8%89%E5%86%85%E6%A0%B8%E6%A8%A1%E5%9D%97/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/p/69488089.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -1408,7 +1674,7 @@ int main()&#123;
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2021/05/15/%E4%B8%93%E9%A2%98%E4%B8%89%E5%86%85%E6%A0%B8%E6%A8%A1%E5%9D%97/" itemprop="url">专题三内核模块</a></h1>
+                <a class="post-title-link" href="/p/69488089.html" itemprop="url">专题三内核模块</a></h1>
         
 
         <div class="post-meta">
@@ -1436,8 +1702,8 @@ int main()&#123;
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2021-05-22T20:30:20+08:00">
-                2021-05-22
+              <time title="更新于" itemprop="dateModified" datetime="2021-10-17T15:03:23+08:00">
+                2021-10-17
               </time>
             
           </span>
@@ -1634,7 +1900,7 @@ int main()&#123;
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/05/15/%E4%B8%93%E9%A2%98%E4%BA%8C%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/p/6e049acd.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -1653,7 +1919,7 @@ int main()&#123;
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2021/05/15/%E4%B8%93%E9%A2%98%E4%BA%8C%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8/" itemprop="url">专题二系统调用</a></h1>
+                <a class="post-title-link" href="/p/6e049acd.html" itemprop="url">专题二系统调用</a></h1>
         
 
         <div class="post-meta">
@@ -1681,8 +1947,8 @@ int main()&#123;
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2021-05-15T21:08:12+08:00">
-                2021-05-15
+              <time title="更新于" itemprop="dateModified" datetime="2021-10-17T15:03:23+08:00">
+                2021-10-17
               </time>
             
           </span>
@@ -2035,7 +2301,7 @@ int main()&#123;
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/05/15/%E8%AF%BE%E5%90%8E%E4%B9%A0%E9%A2%9811.14/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/p/e7a2a7fa.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -2054,7 +2320,7 @@ int main()&#123;
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2021/05/15/%E8%AF%BE%E5%90%8E%E4%B9%A0%E9%A2%9811.14/" itemprop="url">课后习题11.14</a></h1>
+                <a class="post-title-link" href="/p/e7a2a7fa.html" itemprop="url">课后习题11.14</a></h1>
         
 
         <div class="post-meta">
@@ -2082,8 +2348,8 @@ int main()&#123;
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2021-05-15T10:57:43+08:00">
-                2021-05-15
+              <time title="更新于" itemprop="dateModified" datetime="2021-10-17T15:03:23+08:00">
+                2021-10-17
               </time>
             
           </span>
@@ -2220,7 +2486,7 @@ int main()&#123;
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/05/13/%E4%B8%93%E9%A2%98%E4%B8%80%E5%86%85%E6%A0%B8%E7%BC%96%E8%AF%91/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/p/d1d6ca89.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -2239,7 +2505,7 @@ int main()&#123;
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2021/05/13/%E4%B8%93%E9%A2%98%E4%B8%80%E5%86%85%E6%A0%B8%E7%BC%96%E8%AF%91/" itemprop="url">专题一内核编译</a></h1>
+                <a class="post-title-link" href="/p/d1d6ca89.html" itemprop="url">专题一内核编译</a></h1>
         
 
         <div class="post-meta">
@@ -2267,8 +2533,8 @@ int main()&#123;
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2021-05-14T22:22:17+08:00">
-                2021-05-14
+              <time title="更新于" itemprop="dateModified" datetime="2021-10-17T15:03:23+08:00">
+                2021-10-17
               </time>
             
           </span>
@@ -2702,7 +2968,7 @@ int main()&#123;
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/05/08/%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/p/77fbe329.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -2721,7 +2987,7 @@ int main()&#123;
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2021/05/08/%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86/" itemprop="url">第二部分</a></h1>
+                <a class="post-title-link" href="/p/77fbe329.html" itemprop="url">第二部分</a></h1>
         
 
         <div class="post-meta">
@@ -2749,8 +3015,8 @@ int main()&#123;
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2021-05-08T20:15:34+08:00">
-                2021-05-08
+              <time title="更新于" itemprop="dateModified" datetime="2021-10-17T15:03:23+08:00">
+                2021-10-17
               </time>
             
           </span>
@@ -2840,197 +3106,7 @@ int main()&#123;
           模型是真实数据的简单明确的描述。
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2021/05/08/%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86/">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-   
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/05/08/%E7%BC%96%E5%86%99%E7%AC%AC%E4%B8%80%E4%B8%AA%20Django%20%E5%BA%94%E7%94%A8%EF%BC%8C%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/stitch.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ZiHao's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2021/05/08/%E7%BC%96%E5%86%99%E7%AC%AC%E4%B8%80%E4%B8%AA%20Django%20%E5%BA%94%E7%94%A8%EF%BC%8C%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86/" itemprop="url">编写第一个 Django 应用，第一部分</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-05-08T18:41:02+08:00">
-                2021-05-08
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于&#58;</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2021-05-08T18:40:37+08:00">
-                2021-05-08
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Django/" itemprop="url" rel="index">
-                    <span itemprop="name">-Django</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  1.7k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  7
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          Django 最初被设计用于具有快速开发需求的新闻类站点，目的是要实现简单快捷的网站开发
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2021/05/08/%E7%BC%96%E5%86%99%E7%AC%AC%E4%B8%80%E4%B8%AA%20Django%20%E5%BA%94%E7%94%A8%EF%BC%8C%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86/">
+            <a class="btn" href="/p/77fbe329.html">
               阅读全文 &raquo;
             </a>
           </div>
@@ -3123,7 +3199,7 @@ int main()&#123;
               
                 <a href="/archives/%7C%7C%20archive">
               
-                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-count">38</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -3134,7 +3210,7 @@ int main()&#123;
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-count">12</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -3296,7 +3372,7 @@ show_date_time();
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">85.3k</span>
+    <span title="Site words total count">85.8k</span>
   
 </div>
 
@@ -3324,7 +3400,7 @@ show_date_time();
     <!-- 博客字数统计 -->
     <span class="site-pv">
       <i class="fa fa-pencil"></i>
-      博客全站共： <span class="post-count">85.3k</span> 字
+      博客全站共： <span class="post-count">85.8k</span> 字
     </span>
 </div>
 <!-- 新增访客统计代码 END-->

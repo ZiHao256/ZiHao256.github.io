@@ -1,0 +1,1579 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="ZiHao's Blog" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="参考博客 MySQL数据库—VS019 C++访问MySQL_买代码的小猪猪的博客-CSDN博客](https:&#x2F;&#x2F;blog.csdn.net&#x2F;weixin_49324123&#x2F;article&#x2F;details&#x2F;116493884)) CMD 命令行窗口进入mysql数据库： mysql -hlocalhost -uroot -p:  -hlocalhost：-h表示服务器名, localhost表示">
+<meta property="og:type" content="article">
+<meta property="og:title" content="VS2019 下 C++ 项目访问MySQL数据库">
+<meta property="og:url" content="http://example.com/p/22861f12.html">
+<meta property="og:site_name" content="ZiHao&#39;s Blog">
+<meta property="og:description" content="参考博客 MySQL数据库—VS019 C++访问MySQL_买代码的小猪猪的博客-CSDN博客](https:&#x2F;&#x2F;blog.csdn.net&#x2F;weixin_49324123&#x2F;article&#x2F;details&#x2F;116493884)) CMD 命令行窗口进入mysql数据库： mysql -hlocalhost -uroot -p:  -hlocalhost：-h表示服务器名, localhost表示">
+<meta property="og:locale">
+<meta property="og:image" content="e:/Hexo/Blog/source_posts/VS2019-C++-MySQL.assets/image-20210522160110645.png">
+<meta property="og:image" content="e:/Hexo/Blog/source_posts/VS2019-C++-MySQL.assets/image-20210522160248341.png">
+<meta property="article:published_time" content="2021-05-22T07:03:11.402Z">
+<meta property="article:modified_time" content="2021-10-17T07:03:23.417Z">
+<meta property="article:author" content="Zihao Ma">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="e:/Hexo/Blog/source_posts/VS2019-C++-MySQL.assets/image-20210522160110645.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://example.com/p/22861f12.html"/>
+
+
+
+
+
+  <title>VS2019 下 C++ 项目访问MySQL数据库 | ZiHao's Blog</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"><style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}</style></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <a target="_blank" rel="noopener" href="https://GitHub.com/ZiHao256" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; left: 0; transform: scale(-1, 1);" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style></a>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">ZiHao's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+        <li> <a title="把这个链接拖到你的Chrome收藏夹工具栏中" href='javascript:(function() {
+      function c() {
+          var e = document.createElement("link");
+          e.setAttribute("type", "text/css");
+          e.setAttribute("rel", "stylesheet");
+          e.setAttribute("href", f);
+          e.setAttribute("class", l);
+          document.body.appendChild(e)
+      }
+  
+      function h() {
+          var e = document.getElementsByClassName(l);
+          for (var t = 0; t < e.length; t++) {
+              document.body.removeChild(e[t])
+          }
+      }
+  
+      function p() {
+          var e = document.createElement("div");
+          e.setAttribute("class", a);
+          document.body.appendChild(e);
+          setTimeout(function() {
+              document.body.removeChild(e)
+          }, 100)
+      }
+  
+      function d(e) {
+          return {
+              height : e.offsetHeight,
+              width : e.offsetWidth
+          }
+      }
+  
+      function v(i) {
+          var s = d(i);
+          return s.height > e && s.height < n && s.width > t && s.width < r
+      }
+  
+      function m(e) {
+          var t = e;
+          var n = 0;
+          while (!!t) {
+              n += t.offsetTop;
+              t = t.offsetParent
+          }
+          return n
+      }
+  
+      function g() {
+          var e = document.documentElement;
+          if (!!window.innerWidth) {
+              return window.innerHeight
+          } else if (e && !isNaN(e.clientHeight)) {
+              return e.clientHeight
+          }
+          return 0
+      }
+  
+      function y() {
+          if (window.pageYOffset) {
+              return window.pageYOffset
+          }
+          return Math.max(document.documentElement.scrollTop, document.body.scrollTop)
+      }
+  
+      function E(e) {
+          var t = m(e);
+          return t >= w && t <= b + w
+      }
+  
+      function S() {
+          var e = document.createElement("audio");
+          e.setAttribute("class", l);
+          e.src = i;
+          e.loop = false;
+          e.addEventListener("canplay", function() {
+              setTimeout(function() {
+                  x(k)
+              }, 500);
+              setTimeout(function() {
+                  N();
+                  p();
+                  for (var e = 0; e < O.length; e++) {
+                      T(O[e])
+                  }
+              }, 15500)
+          }, true);
+          e.addEventListener("ended", function() {
+              N();
+              h()
+          }, true);
+          e.innerHTML = " <p>If you are reading this, it is because your browser does not support the audio element. We recommend that you get a new browser.</p> <p>";
+          document.body.appendChild(e);
+          e.play()
+      }
+  
+      function x(e) {
+          e.className += " " + s + " " + o
+      }
+  
+      function T(e) {
+          e.className += " " + s + " " + u[Math.floor(Math.random() * u.length)]
+      }
+  
+      function N() {
+          var e = document.getElementsByClassName(s);
+          var t = new RegExp("\\b" + s + "\\b");
+          for (var n = 0; n < e.length; ) {
+              e[n].className = e[n].className.replace(t, "")
+          }
+      }
+  
+      var e = 30;
+      var t = 30;
+      var n = 350;
+      var r = 350;
+      var i = "//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake.mp3";
+      var s = "mw-harlem_shake_me";
+      var o = "im_first";
+      var u = ["im_drunk", "im_baked", "im_trippin", "im_blown"];
+      var a = "mw-strobe_light";
+      var f = "//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake-style.css";
+      var l = "mw_added_css";
+      var b = g();
+      var w = y();
+      var C = document.getElementsByTagName("*");
+      var k = null;
+      for (var L = 0; L < C.length; L++) {
+          var A = C[L];
+          if (v(A)) {
+              if (E(A)) {
+                  k = A;
+                  break
+              }
+          }
+      }
+      if (A === null) {
+          console.warn("Could not find a node of the right size. Please try a different page.");
+          return
+      }
+      c();
+      S();
+      var O = [];
+      for (var L = 0; L < C.length; L++) {
+          var A = C[L];
+          if (v(A)) {
+              O.push(A)
+          }
+      }
+  })()    '>High一下</a> </li>
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heart"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/p/22861f12.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/stitch.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ZiHao's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">VS2019 下 C++ 项目访问MySQL数据库</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-05-22T15:03:11+08:00">
+                2021-05-22
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2021-10-17T15:03:23+08:00">
+                2021-10-17
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/SQL/" itemprop="url" rel="index">
+                    <span itemprop="name">-SQL</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.2k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  4
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><a href="%5B(5%E6%9D%A1%E6%B6%88%E6%81%AF">参考博客</a> MySQL数据库—VS019 C++访问MySQL_买代码的小猪猪的博客-CSDN博客](<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_49324123/article/details/116493884">https://blog.csdn.net/weixin_49324123/article/details/116493884</a>))</p>
+<p>CMD 命令行窗口进入mysql数据库：</p>
+<p><code>mysql -hlocalhost -uroot -p</code>:</p>
+<ul>
+<li><code>-hlocalhost</code>：-h表示服务器名, localhost表示本地</li>
+<li><code>-uroot</code>: -u表示数据库用户名，root是MySQL默认用户名</li>
+<li><code>-p</code>: 为密码</li>
+</ul>
+<h1 id="1-配置"><a href="#1-配置" class="headerlink" title="1 配置"></a>1 配置</h1><ul>
+<li><p>项目-&gt;属性-&gt;==平台为 <code>x64</code>==</p>
+</li>
+<li><p>项目 -&gt; 属性 -&gt; VC++ 目录</p>
+<ul>
+<li>将所安装的MySQL目录下的<code>include</code> <code>lib</code>文件夹目录分别输入包含目录库目录</li>
+<li><img src="E:\Hexo\Blog\source_posts\VS2019-C++-MySQL.assets\image-20210522160110645.png" alt="image-20210522160110645"></li>
+</ul>
+</li>
+<li><p>链接器 -&gt; 输入</p>
+<ul>
+<li>将 MySQL 的lib目录下的<code>libmysql.lib</code>文件名输入附加依赖项，只需输入文件名</li>
+<li><img src="E:\Hexo\Blog\source_posts\VS2019-C++-MySQL.assets\image-20210522160248341.png" alt="image-20210522160248341"></li>
+</ul>
+</li>
+<li><p>将 lib 目录下的<code>libmysql.dll</code> 文件复制<code>C:\Windows\System32</code>目录下</p>
+</li>
+</ul>
+<h1 id="2-C-中-MySQL-的基本操作"><a href="#2-C-中-MySQL-的基本操作" class="headerlink" title="2 C++ 中 MySQL 的基本操作"></a>2 C++ 中 MySQL 的基本操作</h1><p>一个对已创建的数据库的访问代码，例如：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;mysql.h&gt;</span> <span class="comment">// mysql文件</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	MYSQL mysql;    <span class="comment">//数据库句柄</span></span><br><span class="line">	MYSQL_RES* res; <span class="comment">//查询结果集</span></span><br><span class="line">	MYSQL_ROW row;  <span class="comment">//记录结构体</span></span><br><span class="line">	<span class="comment">//初始化数据库</span></span><br><span class="line">	<span class="built_in">mysql_init</span>(&amp;mysql);</span><br><span class="line">	<span class="comment">//设置字符编码</span></span><br><span class="line">	<span class="built_in">mysql_options</span>(&amp;mysql, MYSQL_SET_CHARSET_NAME, <span class="string">&quot;gbk&quot;</span>);</span><br><span class="line">	<span class="comment">//连接数据库</span></span><br><span class="line">	<span class="keyword">if</span> (<span class="built_in">mysql_real_connect</span>(&amp;mysql, <span class="string">&quot;127.0.0.1&quot;</span>, <span class="string">&quot;root&quot;</span>, <span class="string">&quot;qazedc12&quot;</span>, <span class="string">&quot;test&quot;</span>, <span class="number">3306</span>, <span class="literal">NULL</span>, <span class="number">0</span>) == <span class="literal">NULL</span>) &#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;错误原因： %s\n&quot;</span>, <span class="built_in">mysql_error</span>(&amp;mysql));</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;连接失败！\n&quot;</span>);</span><br><span class="line">		<span class="built_in">exit</span>(<span class="number">-1</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//查询数据</span></span><br><span class="line">	<span class="keyword">int</span> ret = <span class="built_in">mysql_query</span>(&amp;mysql, <span class="string">&quot;select * from students;&quot;</span>);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;ret: %d\n&quot;</span>, ret);</span><br><span class="line">	<span class="comment">//获取结果集</span></span><br><span class="line">	res = <span class="built_in">mysql_store_result</span>(&amp;mysql);</span><br><span class="line">	<span class="comment">//给ROW赋值，判断ROW是否为空，不为空就打印数据。</span></span><br><span class="line">	<span class="keyword">while</span> (row = <span class="built_in">mysql_fetch_row</span>(res))</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;%s  &quot;</span>, row[<span class="number">0</span>]);   <span class="comment">//打印ID</span></span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;%s  &quot;</span>, row[<span class="number">1</span>]);   <span class="comment">//打印姓名</span></span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;%s  &quot;</span>, row[<span class="number">2</span>]);  <span class="comment">//打印班级</span></span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;%s  &quot;</span>, row[<span class="number">3</span>]);  <span class="comment">//打印性别</span></span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//释放结果集</span></span><br><span class="line">	<span class="built_in">mysql_free_result</span>(res);</span><br><span class="line">	<span class="comment">//关闭数据库</span></span><br><span class="line">	<span class="built_in">mysql_close</span>(&amp;mysql);</span><br><span class="line">	<span class="built_in">system</span>(<span class="string">&quot;pause&quot;</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>从实例代码中可以了解到访问数据库的步骤：</p>
+<ul>
+<li><p>需要包含的<strong>头文件</strong> <code>mysql.h</code></p>
+</li>
+<li><p><strong>初始化</strong>数据库：</p>
+<ul>
+<li><strong>数据库句柄</strong> <code>MYSQL mysql</code></li>
+<li>定义<strong>查询结果集</strong> <code>MYSQL_RES* res</code></li>
+<li>定义<strong>记录结构体</strong> <code>MYSQL_ROW row</code></li>
+<li>初始化数据库： <code>mysql_init(&amp;mysql)</code></li>
+</ul>
+</li>
+<li><p>设置字符编码：<code>mysql_options(&amp;mysql, MYSQL_SET_CHARSET_NAME, &quot;gbk&quot;);</code></p>
+</li>
+<li><p>连接数据库：<code>mysql_real_connect(&amp;mysql, &quot;127.0.0.1&quot;, &quot;root&quot;, &quot;123456Aa&quot;, &quot;school&quot;, 3306, NULL, 0)</code></p>
+</li>
+<li><p>查询数据：<code>mysql_query(&amp;mysql, &quot;select * from students;&quot;)</code></p>
+</li>
+<li><p>获取结果集<code>res = mysql_store_result(&amp;mysql)</code></p>
+</li>
+<li><p>打印数据：<code>while(row = mysql_fetch_row(res))</code></p>
+</li>
+<li><p>释放结果集：<code>mysql_free_result(res)</code></p>
+</li>
+<li><p>关闭数据库：<code>mysql_close(&amp;mysql)</code></p>
+</li>
+</ul>
+<h2 id="常用的连接-MySQL-和-从MySQL中取出数据的API"><a href="#常用的连接-MySQL-和-从MySQL中取出数据的API" class="headerlink" title="常用的连接 MySQL 和 从MySQL中取出数据的API"></a>常用的连接 MySQL 和 从MySQL中取出数据的API</h2><p><code>mysql_real_connect()</code></p>
+<ul>
+<li><strong>函数原型</strong>：<code>MYSQL *mysql_real_connect(MYSQL *mysql, const char *host, const char* user, const char* password, const char* db, unsigned int port, const char* unix_socket, unsigned int client_flag)</code><ul>
+<li>mysql: 现存MYSQL结构的地址</li>
+<li>host : 一个主机名或IP地址</li>
+<li>user: 用户ID</li>
+<li>password: 用户密码</li>
+<li>db: 数据库名 </li>
+<li>port: 若非0，则作TCP/IP 连接用作端口号</li>
+<li>unix_socket: 若非NULL，则指定套接字或应该被使用的命名管道</li>
+<li>clident_flag: 通常为0</li>
+</ul>
+</li>
+<li>返回值：<ul>
+<li>成功：MYSQL* 连接句柄</li>
+<li>失败：NULL</li>
+</ul>
+</li>
+</ul>
+<p><code>mysql_select_db()</code></p>
+<ul>
+<li><strong>函数原型</strong>：<code>int mysql_select_db(MYSQL* mysql, const char *db)</code><ul>
+<li>使得由 <strong>db 指定的数据库</strong>成为在由 mysql 指定的连接上的当前数据库</li>
+</ul>
+</li>
+<li>返回值：<ul>
+<li>成功：0</li>
+<li>失败：非零</li>
+</ul>
+</li>
+</ul>
+<p><code>mysql_query</code></p>
+<ul>
+<li>函数原型：<code>int mysql_query(MYSQL* mysql, const char*query)</code><ul>
+<li>执行由 query 指向的 <strong>SQL查询语句</strong></li>
+<li>必须包含一条的 SQL 语句；若允许多语句执行，字符串可包含多条由分号隔开的语句</li>
+<li>不需要加终止的分号</li>
+<li><strong>注意</strong>：对于包含二进制数据的查询，你必须使用mysql_real_query()而不是mysql_query()，因为二进制代码数据可能包含“\0”字符，而且，mysql_real_query()比mysql_query()更快，因为它对查询字符串调用strlen()</li>
+</ul>
+</li>
+</ul>
+<p><code>mysql_store_result</code></p>
+<ul>
+<li><p>函数原型：<code>MYSQL_RES *mysql_store_result(MYSQL *mysql)</code></p>
+</li>
+<li><p>对于成功检索了数据的每个查询（SELECT, SHOW, DESCRIBE,等），必须调用mysql_store_result 或 mysql_use_result</p>
+</li>
+<li><p>对于其他查询，不需要调用mysql_store_result 或</p>
+</li>
+<li><blockquote>
+<p>mysql_store_result()将查询的全部结果读取到客户端，分配1个MYSQL_RES结构，并将结果置于该结构中。</p>
+<p>如果查询未返回结果集，mysql_store_result()将返回Null指针（例如，如果查询是INSERT语句）。</p>
+<p>如果读取结果集失败，mysql_store_result()还会返回Null指针。通过检查mysql_error()是否返回非空字符串，mysql_errno()是否返回非0值，或mysql_field_count()是否返回0，可以检查是否出现了错误。</p>
+<p>如果未返回行，将返回空的结果集。（空结果集设置不同于作为返回值的空指针）。</p>
+<p>一旦调用了mysql_store_result()并获得了不是Null指针的结果，可调用mysql_num_rows()来找出结果集中的行数。</p>
+<p>可以调用mysql_fetch_row()来获取结果集中的行，或调用mysql_row_seek()和mysql_row_tell()来获取或设置结果集中的当前行位置。</p>
+<p>一旦完成了对结果集的操作，必须调用mysql_free_result()。</p>
+</blockquote>
+</li>
+</ul>
+<p><code>mysql_fetch_row</code></p>
+<h2 id="INSERT-、UPDATE语句"><a href="#INSERT-、UPDATE语句" class="headerlink" title="INSERT 、UPDATE语句"></a>INSERT 、UPDATE语句</h2><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/fnlingnzb-learner/p/5829556.htmls">参考博客</a></p>
+
+      
+    </div>
+   
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Zihao Ma
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://example.com/p/22861f12.html" title="VS2019 下 C++ 项目访问MySQL数据库">http://example.com/p/22861f12.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/p/d1fbce69.html" rel="next" title="我用什么才能留住你">
+                <i class="fa fa-chevron-left"></i> 我用什么才能留住你
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/p/90d31b3c.html" rel="prev" title="清 说">
+                清 说 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/stitch.jpg"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">38</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/ZiHao256" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://twitter.com/AlexMa49844688" target="_blank" title="Twitter">
+                      
+                        <i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.facebook.com/profile.php?id=100067079873449" target="_blank" title="FB Page">
+                      
+                        <i class="fa fa-fw fa-facebook"></i>FB Page</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://blog.csdn.net/zihao123w?spm=1000.2115.3001.5343" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-user"></i>CSDN</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:2638779206@qq.com" target="_blank" title="E-Mail-1">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail-1</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="zihao626@gmail.com" target="_blank" title="E-Mail-2">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail-2</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://warmchay.github.io/" title="WarmChay" target="_blank">WarmChay</a>
+                  </li>
+                
+              </ul>
+              <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=300 src="//music.163.com/outchain/player?type=0&id=6738460302&auto=0&height=430"></iframe>
+
+
+<!-- 文件位置：~/blog/themes/next/layout/_custom/sidebar.swig -->
+
+<div id="days"></div>
+<script>
+function show_date_time(){
+    window.setTimeout("show_date_time()", 1000);
+    BirthDay=new Date("05/02/2021 12:00:00");
+    today=new Date();
+    timeold=(today.getTime()-BirthDay.getTime());
+    sectimeold=timeold/1000
+    secondsold=Math.floor(sectimeold);
+    msPerDay=24*60*60*1000
+    e_daysold=timeold/msPerDay
+    daysold=Math.floor(e_daysold);
+    e_hrsold=(e_daysold-daysold)*24;
+    hrsold=setzero(Math.floor(e_hrsold));
+    e_minsold=(e_hrsold-hrsold)*60;
+    minsold=setzero(Math.floor((e_hrsold-hrsold)*60));
+    seconds=setzero(Math.floor((e_minsold-minsold)*60));
+    document.getElementById('days').innerHTML="已运行 "+daysold+" 天 "+hrsold+" 小时 "+minsold+" 分 "+seconds+" 秒";
+}
+function setzero(i) {
+    if (i<10) {
+        i="0" + i
+    };
+    return i;
+}
+show_date_time();
+</script>
+
+            </div>
+          
+
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E9%85%8D%E7%BD%AE"><span class="nav-text">1 配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-C-%E4%B8%AD-MySQL-%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C"><span class="nav-text">2 C++ 中 MySQL 的基本操作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E7%9A%84%E8%BF%9E%E6%8E%A5-MySQL-%E5%92%8C-%E4%BB%8EMySQL%E4%B8%AD%E5%8F%96%E5%87%BA%E6%95%B0%E6%8D%AE%E7%9A%84API"><span class="nav-text">常用的连接 MySQL 和 从MySQL中取出数据的API</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#INSERT-%E3%80%81UPDATE%E8%AF%AD%E5%8F%A5"><span class="nav-text">INSERT 、UPDATE语句</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love" id="heart">
+    <i class="fa fa-heartbeat"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zihao Ma</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">85.8k</span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+<!-- 新增访客统计代码 -->
+
+<div class="busuanzi-count">
+    <script async="" src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      访问用户： <span class="busuanzi-value" id="busuanzi_value_site_uv"></span> 人
+    </span>
+    <div class="powered-by"></div>
+    <span class="site-uv">
+      <i class="fa fa-eye"></i>
+      访问次数： <span class="busuanzi-value" id="busuanzi_value_site_pv"></span> 次
+    </span>
+    <!-- 博客字数统计 -->
+    <span class="site-pv">
+      <i class="fa fa-pencil"></i>
+      博客全站共： <span class="post-count">85.8k</span> 字
+    </span>
+</div>
+<!-- 新增访客统计代码 END-->
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"left","width":140,"height":240,"hOffset":80,"vOffset":-50},"mobile":null,"show":true,"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

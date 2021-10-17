@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2021-05-30T10:26:27.702Z</updated>
+  <updated>2021-10-17T07:06:15.264Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -17,11 +17,35 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>专题四设备驱动</title>
+    <link href="http://example.com/p/4b288195.html"/>
+    <id>http://example.com/p/4b288195.html</id>
+    <published>2021-05-31T12:13:14.913Z</published>
+    <updated>2021-10-17T07:06:15.264Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;完善例子中的字符设备程序，使之满足以下功能：&lt;/p&gt;
+&lt;p&gt; i.安装设备后从设备中读出字符串为你的学号；&lt;/p&gt;
+&lt;p&gt; ii. 设备支持每次写入字符不超过1024个，超过部分被丢弃；&lt;/p&gt;
+&lt;p&gt; iii. 用户可以读出最近写入到设备中的字符</summary>
+      
+    
+    
+    
+    <category term="‘-操作系统课程设计’" scheme="http://example.com/categories/%E2%80%98-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E8%AE%BE%E8%AE%A1%E2%80%99/"/>
+    
+    
+  </entry>
+  
+  <entry>
     <title>清 说</title>
-    <link href="http://example.com/2021/05/30/%E6%B8%85-%E8%AF%B4/"/>
-    <id>http://example.com/2021/05/30/%E6%B8%85-%E8%AF%B4/</id>
+    <link href="http://example.com/p/90d31b3c.html"/>
+    <id>http://example.com/p/90d31b3c.html</id>
     <published>2021-05-30T10:26:27.702Z</published>
-    <updated>2021-05-30T10:26:27.702Z</updated>
+    <updated>2021-10-17T07:03:23.427Z</updated>
     
     
       
@@ -39,10 +63,10 @@
   
   <entry>
     <title>VS2019 下 C++ 项目访问MySQL数据库</title>
-    <link href="http://example.com/2021/05/22/VS2019-C++-MySQL/"/>
-    <id>http://example.com/2021/05/22/VS2019-C++-MySQL/</id>
+    <link href="http://example.com/p/22861f12.html"/>
+    <id>http://example.com/p/22861f12.html</id>
     <published>2021-05-22T07:03:11.402Z</published>
-    <updated>2021-05-27T10:11:11.057Z</updated>
+    <updated>2021-10-17T07:03:23.417Z</updated>
     
     
       
@@ -59,10 +83,10 @@
   
   <entry>
     <title>我用什么才能留住你</title>
-    <link href="http://example.com/2021/05/22/%E6%88%91%E6%8B%BF%E4%BB%80%E4%B9%88%E7%95%99%E4%BD%8F%E4%BD%A0/"/>
-    <id>http://example.com/2021/05/22/%E6%88%91%E6%8B%BF%E4%BB%80%E4%B9%88%E7%95%99%E4%BD%8F%E4%BD%A0/</id>
+    <link href="http://example.com/p/d1fbce69.html"/>
+    <id>http://example.com/p/d1fbce69.html</id>
     <published>2021-05-22T06:00:29.184Z</published>
-    <updated>2021-10-17T06:44:10.013Z</updated>
+    <updated>2021-10-17T07:03:23.426Z</updated>
     
     
       
@@ -79,10 +103,10 @@
   
   <entry>
     <title>创建进程、子进程和进程间通信</title>
-    <link href="http://example.com/2021/05/16/%E5%88%9B%E5%BB%BA%E8%BF%9B%E7%A8%8B%E3%80%81%E5%AD%90%E8%BF%9B%E7%A8%8B%E5%92%8C%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1/"/>
-    <id>http://example.com/2021/05/16/%E5%88%9B%E5%BB%BA%E8%BF%9B%E7%A8%8B%E3%80%81%E5%AD%90%E8%BF%9B%E7%A8%8B%E5%92%8C%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1/</id>
+    <link href="http://example.com/p/a3ec7244.html"/>
+    <id>http://example.com/p/a3ec7244.html</id>
     <published>2021-05-16T14:41:20.894Z</published>
-    <updated>2021-05-16T14:41:20.895Z</updated>
+    <updated>2021-10-17T07:03:23.423Z</updated>
     
     
       
@@ -101,10 +125,10 @@
   
   <entry>
     <title>专题三内核模块</title>
-    <link href="http://example.com/2021/05/15/%E4%B8%93%E9%A2%98%E4%B8%89%E5%86%85%E6%A0%B8%E6%A8%A1%E5%9D%97/"/>
-    <id>http://example.com/2021/05/15/%E4%B8%93%E9%A2%98%E4%B8%89%E5%86%85%E6%A0%B8%E6%A8%A1%E5%9D%97/</id>
+    <link href="http://example.com/p/69488089.html"/>
+    <id>http://example.com/p/69488089.html</id>
     <published>2021-05-15T08:02:43.927Z</published>
-    <updated>2021-05-22T12:30:20.803Z</updated>
+    <updated>2021-10-17T07:03:23.420Z</updated>
     
     
       
@@ -124,10 +148,10 @@
   
   <entry>
     <title>专题二系统调用</title>
-    <link href="http://example.com/2021/05/15/%E4%B8%93%E9%A2%98%E4%BA%8C%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8/"/>
-    <id>http://example.com/2021/05/15/%E4%B8%93%E9%A2%98%E4%BA%8C%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8/</id>
+    <link href="http://example.com/p/6e049acd.html"/>
+    <id>http://example.com/p/6e049acd.html</id>
     <published>2021-05-15T04:54:44.764Z</published>
-    <updated>2021-05-15T13:08:12.535Z</updated>
+    <updated>2021-10-17T07:03:23.421Z</updated>
     
     
       
@@ -147,10 +171,10 @@
   
   <entry>
     <title>课后习题11.14</title>
-    <link href="http://example.com/2021/05/15/%E8%AF%BE%E5%90%8E%E4%B9%A0%E9%A2%9811.14/"/>
-    <id>http://example.com/2021/05/15/%E8%AF%BE%E5%90%8E%E4%B9%A0%E9%A2%9811.14/</id>
+    <link href="http://example.com/p/e7a2a7fa.html"/>
+    <id>http://example.com/p/e7a2a7fa.html</id>
     <published>2021-05-15T02:57:43.081Z</published>
-    <updated>2021-05-15T02:57:43.082Z</updated>
+    <updated>2021-10-17T07:03:23.430Z</updated>
     
     
     
@@ -162,10 +186,10 @@
   
   <entry>
     <title>专题一内核编译</title>
-    <link href="http://example.com/2021/05/13/%E4%B8%93%E9%A2%98%E4%B8%80%E5%86%85%E6%A0%B8%E7%BC%96%E8%AF%91/"/>
-    <id>http://example.com/2021/05/13/%E4%B8%93%E9%A2%98%E4%B8%80%E5%86%85%E6%A0%B8%E7%BC%96%E8%AF%91/</id>
+    <link href="http://example.com/p/d1d6ca89.html"/>
+    <id>http://example.com/p/d1d6ca89.html</id>
     <published>2021-05-13T05:57:47.367Z</published>
-    <updated>2021-05-14T14:22:17.210Z</updated>
+    <updated>2021-10-17T07:03:23.418Z</updated>
     
     
       
@@ -188,10 +212,10 @@
   
   <entry>
     <title>第二部分</title>
-    <link href="http://example.com/2021/05/08/%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86/"/>
-    <id>http://example.com/2021/05/08/%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86/</id>
+    <link href="http://example.com/p/77fbe329.html"/>
+    <id>http://example.com/p/77fbe329.html</id>
     <published>2021-05-08T12:15:51.365Z</published>
-    <updated>2021-05-08T12:15:34.178Z</updated>
+    <updated>2021-10-17T07:03:23.432Z</updated>
     
     
     <summary type="html">模型是真实数据的简单明确的描述。</summary>
@@ -207,10 +231,10 @@
   
   <entry>
     <title>编写第一个 Django 应用，第一部分</title>
-    <link href="http://example.com/2021/05/08/%E7%BC%96%E5%86%99%E7%AC%AC%E4%B8%80%E4%B8%AA%20Django%20%E5%BA%94%E7%94%A8%EF%BC%8C%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86/"/>
-    <id>http://example.com/2021/05/08/%E7%BC%96%E5%86%99%E7%AC%AC%E4%B8%80%E4%B8%AA%20Django%20%E5%BA%94%E7%94%A8%EF%BC%8C%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86/</id>
+    <link href="http://example.com/p/497f9043.html"/>
+    <id>http://example.com/p/497f9043.html</id>
     <published>2021-05-08T10:41:02.018Z</published>
-    <updated>2021-05-08T10:40:37.454Z</updated>
+    <updated>2021-10-17T07:03:23.429Z</updated>
     
     
     <summary type="html">Django 最初被设计用于具有快速开发需求的新闻类站点，目的是要实现简单快捷的网站开发</summary>
@@ -226,10 +250,10 @@
   
   <entry>
     <title>17 网络编程</title>
-    <link href="http://example.com/2021/05/08/17%20%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/"/>
-    <id>http://example.com/2021/05/08/17%20%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/</id>
+    <link href="http://example.com/p/527606cb.html"/>
+    <id>http://example.com/p/527606cb.html</id>
     <published>2021-05-08T07:59:12.594Z</published>
-    <updated>2021-05-08T07:59:57.459Z</updated>
+    <updated>2021-10-17T07:03:23.384Z</updated>
     
     
       
@@ -248,10 +272,10 @@
   
   <entry>
     <title>16 并发</title>
-    <link href="http://example.com/2021/05/08/16%20%E5%B9%B6%E5%8F%91/"/>
-    <id>http://example.com/2021/05/08/16%20%E5%B9%B6%E5%8F%91/</id>
+    <link href="http://example.com/p/a4216756.html"/>
+    <id>http://example.com/p/a4216756.html</id>
     <published>2021-05-08T07:59:12.590Z</published>
-    <updated>2021-05-08T07:59:42.149Z</updated>
+    <updated>2021-10-17T07:03:23.436Z</updated>
     
     
       
@@ -270,10 +294,10 @@
   
   <entry>
     <title>15 反射</title>
-    <link href="http://example.com/2021/05/07/15%20%E5%8F%8D%E5%B0%84/"/>
-    <id>http://example.com/2021/05/07/15%20%E5%8F%8D%E5%B0%84/</id>
+    <link href="http://example.com/p/16e69ce4.html"/>
+    <id>http://example.com/p/16e69ce4.html</id>
     <published>2021-05-07T11:25:46.252Z</published>
-    <updated>2021-05-07T11:27:38.862Z</updated>
+    <updated>2021-10-17T07:03:23.382Z</updated>
     
     
       
@@ -291,10 +315,10 @@
   
   <entry>
     <title>14 接口</title>
-    <link href="http://example.com/2021/05/07/14%20%E6%8E%A5%E5%8F%A3/"/>
-    <id>http://example.com/2021/05/07/14%20%E6%8E%A5%E5%8F%A3/</id>
+    <link href="http://example.com/p/f9eadfe2.html"/>
+    <id>http://example.com/p/f9eadfe2.html</id>
     <published>2021-05-07T11:25:46.250Z</published>
-    <updated>2021-05-07T11:27:25.299Z</updated>
+    <updated>2021-10-17T07:03:23.380Z</updated>
     
     
       
@@ -313,10 +337,10 @@
   
   <entry>
     <title>13 包</title>
-    <link href="http://example.com/2021/05/07/13%20%E5%8C%85/"/>
-    <id>http://example.com/2021/05/07/13%20%E5%8C%85/</id>
+    <link href="http://example.com/p/9d9aaa60.html"/>
+    <id>http://example.com/p/9d9aaa60.html</id>
     <published>2021-05-07T11:25:46.246Z</published>
-    <updated>2021-05-07T11:27:11.928Z</updated>
+    <updated>2021-10-17T07:03:23.379Z</updated>
     
     
       
@@ -336,10 +360,10 @@
   
   <entry>
     <title>12 结构体</title>
-    <link href="http://example.com/2021/05/07/12%20%E7%BB%93%E6%9E%84%E4%BD%93/"/>
-    <id>http://example.com/2021/05/07/12%20%E7%BB%93%E6%9E%84%E4%BD%93/</id>
+    <link href="http://example.com/p/9a7f2d8e.html"/>
+    <id>http://example.com/p/9a7f2d8e.html</id>
     <published>2021-05-07T11:25:46.243Z</published>
-    <updated>2021-05-07T11:26:53.817Z</updated>
+    <updated>2021-10-17T07:03:23.434Z</updated>
     
     
       
@@ -357,10 +381,10 @@
   
   <entry>
     <title>11 指针</title>
-    <link href="http://example.com/2021/05/07/11%20%E6%8C%87%E9%92%88/"/>
-    <id>http://example.com/2021/05/07/11%20%E6%8C%87%E9%92%88/</id>
+    <link href="http://example.com/p/9b3b896b.html"/>
+    <id>http://example.com/p/9b3b896b.html</id>
     <published>2021-05-07T11:25:46.240Z</published>
-    <updated>2021-05-07T11:26:22.337Z</updated>
+    <updated>2021-10-17T07:03:23.376Z</updated>
     
     
       
@@ -379,10 +403,10 @@
   
   <entry>
     <title>Lab1</title>
-    <link href="http://example.com/2021/05/07/lab1/"/>
-    <id>http://example.com/2021/05/07/lab1/</id>
+    <link href="http://example.com/p/bf869091.html"/>
+    <id>http://example.com/p/bf869091.html</id>
     <published>2021-05-07T03:07:31.941Z</published>
-    <updated>2021-05-07T03:10:09.870Z</updated>
+    <updated>2021-10-17T07:03:23.437Z</updated>
     
     
       
@@ -402,10 +426,10 @@
   
   <entry>
     <title>10 内置函数介绍</title>
-    <link href="http://example.com/2021/05/06/10%20%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0%E4%BB%8B%E7%BB%8D/"/>
-    <id>http://example.com/2021/05/06/10%20%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0%E4%BB%8B%E7%BB%8D/</id>
+    <link href="http://example.com/p/bacdba6b.html"/>
+    <id>http://example.com/p/bacdba6b.html</id>
     <published>2021-05-06T06:26:06.000Z</published>
-    <updated>2021-05-06T06:27:26.779Z</updated>
+    <updated>2021-10-17T07:03:23.374Z</updated>
     
     
       
@@ -415,26 +439,6 @@
 &lt;tr&gt;
 &lt;th&gt;内置函数&lt;/th&gt;
 &lt;th&gt;介绍&lt;/th</summary>
-      
-    
-    
-    
-    <category term="-Go LearningNote" scheme="http://example.com/categories/Go-LearningNote/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>9 函数进阶</title>
-    <link href="http://example.com/2021/05/06/9%20%E5%87%BD%E6%95%B0%E8%BF%9B%E9%98%B6/"/>
-    <id>http://example.com/2021/05/06/9%20%E5%87%BD%E6%95%B0%E8%BF%9B%E9%98%B6/</id>
-    <published>2021-05-06T06:25:06.000Z</published>
-    <updated>2021-05-06T06:26:34.044Z</updated>
-    
-    
-      
-      
-    <summary type="html">&lt;h2 id=&quot;9-函数进阶&quot;&gt;&lt;a href=&quot;#9-函数进阶&quot; class=&quot;headerlink&quot; title=&quot;9 函数进阶&quot;&gt;&lt;/a&gt;9 函数进阶&lt;/h2&gt;&lt;h3 id=&quot;变量作用域&quot;&gt;&lt;a href=&quot;#变量作用域&quot; class=&quot;headerlink&quot; title=</summary>
       
     
     

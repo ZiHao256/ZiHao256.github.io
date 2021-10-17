@@ -90,7 +90,7 @@
 
 <meta property="og:type" content="website">
 <meta property="og:title" content="ZiHao&#39;s Blog">
-<meta property="og:url" content="http://example.com/page/2/index.html">
+<meta property="og:url" content="https://zihao256.github.io/page/2/index.html">
 <meta property="og:site_name" content="ZiHao&#39;s Blog">
 <meta property="og:locale">
 <meta property="article:author" content="Zihao Ma">
@@ -124,7 +124,7 @@
 
 
 
-  <link rel="canonical" href="http://example.com/page/2/"/>
+  <link rel="canonical" href="https://zihao256.github.io/page/2/"/>
 
 
 
@@ -462,7 +462,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://example.com/p/497f9043.html">
+    <link itemprop="mainEntityOfPage" href="https://zihao256.github.io/p/497f9043.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -652,7 +652,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://example.com/p/527606cb.html">
+    <link itemprop="mainEntityOfPage" href="https://zihao256.github.io/p/527606cb.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -1036,7 +1036,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://example.com/p/a4216756.html">
+    <link itemprop="mainEntityOfPage" href="https://zihao256.github.io/p/a4216756.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -1662,7 +1662,7 @@ wg.Wait()
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://example.com/p/16e69ce4.html">
+    <link itemprop="mainEntityOfPage" href="https://zihao256.github.io/p/16e69ce4.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -1967,7 +1967,7 @@ fmt.Println(a)
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://example.com/p/f9eadfe2.html">
+    <link itemprop="mainEntityOfPage" href="https://zihao256.github.io/p/f9eadfe2.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -2389,7 +2389,7 @@ default:
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://example.com/p/9d9aaa60.html">
+    <link itemprop="mainEntityOfPage" href="https://zihao256.github.io/p/9d9aaa60.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -2676,7 +2676,7 @@ fmt.Println(Age)
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://example.com/p/9a7f2d8e.html">
+    <link itemprop="mainEntityOfPage" href="https://zihao256.github.io/p/9a7f2d8e.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -2854,4 +2854,1943 @@ fmt.Println(Age)
 </li>
 <li>Go 通过struct实现面向对象</li>
 </ul>
-<h3 id="结构�
+<h3 id="结构体的定义"><a href="#结构体的定义" class="headerlink" title="结构体的定义"></a>结构体的定义</h3><ul>
+<li><p>使用<code>type</code> 和 <code>struct</code></p>
+<ul>
+<li>```go<br>type 类型名 struct{<pre><code>字段名 字段类型
+字段名 字段类型
+</code></pre>
+}<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">  * 类型名：同一个包内不能重复</span><br><span class="line"></span><br><span class="line">  * 字段名：字段名必须唯一，同样字段类型的字段名可写在同一行</span><br><span class="line"></span><br><span class="line">  * 字段类型：结构体字段的具体类型</span><br><span class="line"></span><br><span class="line">### 结构体实例化</span><br><span class="line"></span><br><span class="line">* 只有当结构体实例化时，才会真正的分配内存，才能使用结构体的字段</span><br><span class="line">* 使用关键字&#96;var&#96;声明：&#96;var 结构体实例 结构体类型&#96;</span><br><span class="line"></span><br><span class="line">#### 基本实例化</span><br><span class="line"></span><br><span class="line">* 声明后，使用操作符&#96;.&#96;访问结构体字段（成员变量）进行初始化</span><br><span class="line"></span><br><span class="line">* &#96;&#96;&#96;go</span><br><span class="line">  type person struct &#123;</span><br><span class="line">  	name string</span><br><span class="line">  	city string</span><br><span class="line">  	age  int8</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  func main() &#123;</span><br><span class="line">  	var p1 person</span><br><span class="line">  	p1.name &#x3D; &quot;沙河娜扎&quot;</span><br><span class="line">  	p1.city &#x3D; &quot;北京&quot;</span><br><span class="line">  	p1.age &#x3D; 18</span><br><span class="line">  	fmt.Printf(&quot;p1&#x3D;%v\n&quot;, p1)  &#x2F;&#x2F;p1&#x3D;&#123;沙河娜扎 北京 18&#125;</span><br><span class="line">  	fmt.Printf(&quot;p1&#x3D;%#v\n&quot;, p1) &#x2F;&#x2F;p1&#x3D;main.person&#123;name:&quot;沙河娜扎&quot;, city:&quot;北京&quot;, age:18&#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<h4 id="匿名结构体"><a href="#匿名结构体" class="headerlink" title="匿名结构体"></a>匿名结构体</h4><ul>
+<li><p>定义一些临时数据结构，使用匿名结构体</p>
+<p><code>var user struct&#123;Name string; Age int&#125;</code></p>
+</li>
+</ul>
+<h4 id="创建指针类型结构体"><a href="#创建指针类型结构体" class="headerlink" title="创建指针类型结构体"></a>创建指针类型结构体</h4><ul>
+<li><p>可以使用<code>new</code> 对结构体进行实例化，得到结构体的地址</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> p2 = <span class="built_in">new</span>(person)</span><br><span class="line">fmt.Printf(<span class="string">&quot;%T&quot;</span>,p2) <span class="comment">//*main.person</span></span><br><span class="line">fmt.Printf(<span class="string">&quot;%#v&quot;</span>,p2) <span class="comment">//&amp;main.person(..)</span></span><br></pre></td></tr></table></figure></li>
+<li><p><code>p2</code> 是一个结构体指针</p>
+</li>
+<li><p>注意：Go 支持<strong>对结构体指针</strong>直接使用<code>.</code>访问结构体成员</p>
+</li>
+</ul>
+<h4 id="取结构体的地址实例化"><a href="#取结构体的地址实例化" class="headerlink" title="取结构体的地址实例化"></a>取结构体的地址实例化</h4><ul>
+<li><p>使用<code>&amp;</code> 对结构体进行取地址操作，相当于对该结构体类型 进行了一次<code>new</code>实例化操作</p>
+</li>
+<li><p>```go<br>p3 := &amp;person()<br>p3.name = “qimi”</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* &#96;p3.name &#x3D; &quot;qimi&quot;&#96; 在底层 是&#96;(*p3).name &#x3D; &quot;qimi&quot;&#96;</span><br><span class="line"></span><br><span class="line">  * 是 Go 帮我们实现的语法糖</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 结构体初始化</span><br><span class="line"></span><br><span class="line">* **未初始化的结构体**，其成员变量都是对应其类型的零值</span><br><span class="line"></span><br><span class="line">* &#96;&#96;&#96;go</span><br><span class="line">  type person struct &#123;</span><br><span class="line">  	name string</span><br><span class="line">  	city string</span><br><span class="line">  	age  int8</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  func main() &#123;</span><br><span class="line">  	var p4 person</span><br><span class="line">  	fmt.Printf(&quot;p4&#x3D;%#v\n&quot;, p4) &#x2F;&#x2F;p4&#x3D;main.person&#123;name:&quot;&quot;, city:&quot;&quot;, age:0&#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="使用键值对初始化"><a href="#使用键值对初始化" class="headerlink" title="使用键值对初始化"></a>使用键值对初始化</h4><ul>
+<li><p>键对应结构体的字段</p>
+</li>
+<li><p>值对应该字段的初始值</p>
+<ul>
+<li>```go<br>p5 := person{<pre><code>name : &quot;小王子&quot;,
+city : &quot;beijing&quot;,
+age : 18,
+</code></pre>
+}<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* 对结构体指针进行键值对初始化：</span><br><span class="line"></span><br><span class="line">  * &#96;&#96;&#96;go</span><br><span class="line">    p6 :&#x3D; &amp;person&#123;</span><br><span class="line">    	name: &quot;小王子&quot;,</span><br><span class="line">    	city: &quot;北京&quot;,</span><br><span class="line">    	age:  18,</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>未指定初始值的字段的值为该字段类型的零值</p>
+<ul>
+<li><p>```go<br>p7 := &amp;person{</p>
+<pre><code>city: &quot;北京&quot;,
+</code></pre>
+<p>}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### 使用值得列表初始化</span><br><span class="line"></span><br><span class="line">* 初始化结构体时，直接写值：</span><br><span class="line"></span><br><span class="line">  * &#96;&#96;&#96;go</span><br><span class="line">    p8 :&#x3D; &amp;person&#123;</span><br><span class="line">    	&quot;沙河娜扎&quot;,</span><br><span class="line">    	&quot;北京&quot;,</span><br><span class="line">    	28,</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>必须要初始化结构体的所有字段</p>
+</li>
+<li><p>初始值的填充顺序必须与字段，在结构体中的声明顺序一致</p>
+</li>
+<li><p>不能和键值对初始化混用</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="结构体内存布局"><a href="#结构体内存布局" class="headerlink" title="结构体内存布局"></a>结构体内存布局</h3><ul>
+<li>结构体占用一块 <strong>连续的内存</strong></li>
+</ul>
+<h4 id="空结构体"><a href="#空结构体" class="headerlink" title="空结构体"></a>空结构体</h4><ul>
+<li>空结构体不占用空间</li>
+</ul>
+<p><code>fmt.Printf(unsafe.Sizeof(v))</code> //0</p>
+<h3 id="面试题"><a href="#面试题" class="headerlink" title="面试题"></a>面试题</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> student <span class="keyword">struct</span> &#123;</span><br><span class="line">	name <span class="keyword">string</span></span><br><span class="line">	age  <span class="keyword">int</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	m := <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">string</span>]*student)</span><br><span class="line">	stus := []student&#123;</span><br><span class="line">		&#123;name: <span class="string">&quot;小王子&quot;</span>, age: <span class="number">18</span>&#125;,</span><br><span class="line">		&#123;name: <span class="string">&quot;娜扎&quot;</span>, age: <span class="number">23</span>&#125;,</span><br><span class="line">		&#123;name: <span class="string">&quot;大王八&quot;</span>, age: <span class="number">9000</span>&#125;,</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> _, stu := <span class="keyword">range</span> stus &#123;</span><br><span class="line">        m[stu.name] = &amp;stu  <span class="comment">//m : &quot;小王子&quot;：&amp;student&#123;name: &quot;小王子&quot;, age: 18&#125;</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> k, v := <span class="keyword">range</span> m &#123;</span><br><span class="line">		fmt.Println(k, <span class="string">&quot;=&gt;&quot;</span>, v.name)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>执行结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">小王子 &#x3D;&gt; 小王子</span><br><span class="line">娜扎 &#x3D;&gt; 娜扎</span><br><span class="line">大王八 &#x3D;&gt; 大王八</span><br></pre></td></tr></table></figure></li>
+<li><p>运行结果:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">大王八 &#x3D;&gt; 大王八</span><br><span class="line">小王子 &#x3D;&gt; 大王八</span><br><span class="line">娜扎 &#x3D;&gt; 大王八</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h3><ul>
+<li><p>Go 结构体没有构造函数，需要<strong>自己实现</strong></p>
+</li>
+<li><p><code>struct</code> 是值类型，值拷贝性能开销比较大，所以<strong>构造函数返回的是结构体指针类型</strong></p>
+<ul>
+<li>```go<br>func newPerson(name, city string, age int8) *person {<pre><code>return &amp;person&#123;
+    name: name,
+    city: city,
+    age:  age,
+&#125;
+</code></pre>
+}<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* 调用：</span><br><span class="line"></span><br><span class="line">  * &#96;&#96;&#96;go</span><br><span class="line">    p9 :&#x3D; newPerson(&quot;张三&quot;, &quot;沙河&quot;, 90)</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<h3 id="方法和接收者"><a href="#方法和接收者" class="headerlink" title="方法和接收者"></a>方法和接收者</h3><ul>
+<li><p>Go 中的<strong>方法（Method）</strong>：一种作用于<strong>特定类型变量</strong>的函数</p>
+<ul>
+<li>这种特定类型变量叫做<code>接收者Receiver</code></li>
+<li>接收者的概念类似于<code>this</code>, <code>self</code></li>
+</ul>
+</li>
+<li><p>方法的<strong>定义格式</strong>：</p>
+<ul>
+<li>```go<br>func (接收者变量 接收者类型) 方法名(参数列表) (返回参数) {<pre><code>函数体
+</code></pre>
+}<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">  * **接收者变量：**接收者中的参数变量名在命名时，官方建议使用接收者类型名称首字母的小写，而不是&#96;self&#96;、&#96;this&#96;之类的命名</span><br><span class="line">  * **接收者类型：**接收者类型和参数类似，可以是**指针类型和非指针类型**</span><br><span class="line">  * **方法名、参数列表、返回参数：** 与函数定义相同</span><br><span class="line">  </span><br><span class="line">* 示例：</span><br><span class="line"></span><br><span class="line">  &#96;&#96;&#96;go</span><br><span class="line">  &#x2F;&#x2F;Person 结构体</span><br><span class="line">  type Person struct &#123;</span><br><span class="line">  	name string</span><br><span class="line">  	age  int8</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  &#x2F;&#x2F;NewPerson 构造函数</span><br><span class="line">  func NewPerson(name string, age int8) *Person &#123;</span><br><span class="line">  	return &amp;Person&#123;</span><br><span class="line">  		name: name,</span><br><span class="line">  		age:  age,</span><br><span class="line">  	&#125;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  &#x2F;&#x2F;Dream Person做梦的方法</span><br><span class="line">  func (p Person) Dream() &#123;</span><br><span class="line">  	fmt.Printf(&quot;%s的梦想是学好Go语言！\n&quot;, p.name)</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  func main() &#123;</span><br><span class="line">  	p1 :&#x3D; NewPerson(&quot;小王子&quot;, 25)</span><br><span class="line">  	p1.Dream()</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>方法与函数的区别：</p>
+<ul>
+<li>函数<strong>不属于任何类型</strong></li>
+<li>方法<strong>属于特定类型</strong></li>
+</ul>
+</li>
+</ul>
+<h4 id="指针类型的接收者"><a href="#指针类型的接收者" class="headerlink" title="指针类型的接收者"></a>指针类型的接收者</h4><ul>
+<li><p>指针类型的接收者 ： 结构体的指针</p>
+</li>
+<li><p>调用方法时，修改接收者指针的任意成员变量，都是有效的</p>
+<ul>
+<li>接近于其他面向对象中的<code>this</code>, <code>self</code></li>
+</ul>
+</li>
+<li><p>示例：一个方法：修改实例变量的年龄</p>
+<ul>
+<li>```go<br>// SetAge 设置p的年龄<br>// 使用指针接收者<br>func (p *Person) SetAge(newAge int8) {<pre><code>p.age = newAge
+</code></pre>
+}<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* &#96;&#96;&#96;go</span><br><span class="line">  func main() &#123;</span><br><span class="line">  	p1 :&#x3D; NewPerson(&quot;小王子&quot;, 25)</span><br><span class="line">  	fmt.Println(p1.age) &#x2F;&#x2F; 25</span><br><span class="line">  	p1.SetAge(30)</span><br><span class="line">  	fmt.Println(p1.age) &#x2F;&#x2F; 30</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<h4 id="值类型的接收者"><a href="#值类型的接收者" class="headerlink" title="值类型的接收者"></a>值类型的接收者</h4><ul>
+<li><p>方法作用于 值类型接收者时，Go 会在运行前将<strong>接收者的值复制一份</strong></p>
+</li>
+<li><p>在值类型接收者的方法中，可以获取接收者的成员值，但无法修改接收者变量本身</p>
+<ul>
+<li>```go<br>// SetAge2 设置p的年龄<br>// 使用值接收者<br>func (p Person) SetAge2(newAge int8) {<pre><code>p.age = newAge
+</code></pre>
+}func main() {<pre><code>p1 := NewPerson(&quot;小王子&quot;, 25)
+p1.Dream()
+fmt.Println(p1.age) // 25
+p1.SetAge2(30) // (*p1).SetAge2(30)
+fmt.Println(p1.age) // 25
+</code></pre>
+}<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">#### 何时使用 指针类型的接收者</span><br><span class="line"></span><br><span class="line">* 需要修改接收者的成员值</span><br><span class="line">* 接收者是 拷贝代价比较大的大对象</span><br><span class="line">* 保证一致性，若有个方法使用了指针接收者，其他也应该同步</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 任意类型添加方法</span><br><span class="line"></span><br><span class="line">* 在Go中，**任何类型**都可以拥有方法，**接收者可以是任何类型**</span><br><span class="line"></span><br><span class="line">  * 例如：将内置类型&#96;int&#96; 使用关键字type，定义为新的自定义类型，可以为其添加方法</span><br><span class="line"></span><br><span class="line">  * &#96;&#96;&#96;go</span><br><span class="line">    &#x2F;&#x2F;MyInt 将int定义为自定义MyInt类型</span><br><span class="line">    type MyInt int</span><br><span class="line">    </span><br><span class="line">    &#x2F;&#x2F;SayHello 为MyInt添加一个SayHello的方法</span><br><span class="line">    func (m MyInt) SayHello() &#123;</span><br><span class="line">    	fmt.Println(&quot;Hello, 我是一个int。&quot;)</span><br><span class="line">    &#125;</span><br><span class="line">    func main() &#123;</span><br><span class="line">    	var m1 MyInt</span><br><span class="line">    	m1.SayHello() &#x2F;&#x2F;Hello, 我是一个int。</span><br><span class="line">    	m1 &#x3D; 100</span><br><span class="line">    	fmt.Printf(&quot;%#v  %T\n&quot;, m1, m1) &#x2F;&#x2F;100  main.MyInt</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>注意：不能给其他包的 类型定义方法</p>
+</li>
+</ul>
+<h3 id="结构体的匿名字段"><a href="#结构体的匿名字段" class="headerlink" title="结构体的匿名字段"></a>结构体的匿名字段</h3><ul>
+<li><p>结构体 允许 其成员字段在声明时，<strong>没有字段名，只有类型</strong></p>
+</li>
+<li><p>==注意：==Go 会默认采用类型名作为字段名，<strong>结构体要求字段名称必须唯一</strong></p>
+<ul>
+<li>因此，一个结构体中，同种类型的匿名字段只能有一个</li>
+</ul>
+</li>
+<li><p>```go<br>//Person 结构体Person类型<br>type Person struct {</p>
+<pre><code>string
+int
+</code></pre>
+<p>}</p>
+<p>func main() {</p>
+<pre><code>p1 := Person&#123;
+    &quot;小王子&quot;,
+    18,
+&#125;
+fmt.Printf(&quot;%#v\n&quot;, p1)        //main.Person&#123;string:&quot;北京&quot;, int:18&#125;
+fmt.Println(p1.string, p1.int) //北京 18
+</code></pre>
+<p>}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* </span><br><span class="line"></span><br><span class="line">### 嵌套结构体</span><br><span class="line"></span><br><span class="line">* 结构体中，可以**嵌套包含** 另一个结构体或结构体指针</span><br><span class="line"></span><br><span class="line">  * 示例</span><br><span class="line"></span><br><span class="line">    &#96;&#96;&#96;go</span><br><span class="line">    &#x2F;&#x2F;Address 地址结构体</span><br><span class="line">    type Address struct &#123;</span><br><span class="line">    	Province string</span><br><span class="line">    	City     string</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    &#x2F;&#x2F;User 用户结构体</span><br><span class="line">    type User struct &#123;</span><br><span class="line">    	Name    string</span><br><span class="line">    	Gender  string</span><br><span class="line">    	Address Address</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    func main() &#123;</span><br><span class="line">    	user1 :&#x3D; User&#123;</span><br><span class="line">    		Name:   &quot;小王子&quot;,</span><br><span class="line">    		Gender: &quot;男&quot;,</span><br><span class="line">    		Address: Address&#123;</span><br><span class="line">    			Province: &quot;山东&quot;,</span><br><span class="line">    			City:     &quot;威海&quot;,</span><br><span class="line">    		&#125;,</span><br><span class="line">    	&#125;</span><br><span class="line">    	fmt.Printf(&quot;user1&#x3D;%#v\n&quot;, user1)&#x2F;&#x2F;user1&#x3D;main.User&#123;Name:&quot;小王子&quot;, Gender:&quot;男&quot;, Address:main.Address&#123;Province:&quot;山东&quot;, City:&quot;威海&quot;&#125;&#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="嵌套匿名字段"><a href="#嵌套匿名字段" class="headerlink" title="嵌套匿名字段"></a>嵌套匿名字段</h4><ul>
+<li><p>嵌套的结构体也可采用匿名字段：</p>
+<ul>
+<li>```go<br>//Address 地址结构体<br>type Address struct {<pre><code>Province string
+City     string
+</code></pre>
+}//User 用户结构体<br>type User struct {<pre><code>Name    string
+Gender  string
+Address //匿名字段
+</code></pre>
+}func main() {<pre><code>var user2 User
+user2.Name = &quot;小王子&quot;
+user2.Gender = &quot;男&quot;
+user2.Address.Province = &quot;山东&quot;    // 匿名字段默认使用类型名作为字段名
+user2.City = &quot;威海&quot;                // 匿名字段可以省略
+fmt.Printf(&quot;user2=%#v\n&quot;, user2) //user2=main.User&#123;Name:&quot;小王子&quot;, Gender:&quot;男&quot;, Address:main.Address&#123;Province:&quot;山东&quot;, City:&quot;威海&quot;&#125;&#125;
+</code></pre>
+}<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* 当访问结构体成员时，现在结构体中查找该字段，再去嵌套的匿名字段找</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### 嵌套结构体的字段名冲突</span><br><span class="line"></span><br><span class="line">* 嵌套结构体内部可能存在相同的字段名。在这种情况下为了避免歧义需要通过指定具体的内嵌结构体字段名。</span><br><span class="line"></span><br><span class="line">  &#96;&#96;&#96;go</span><br><span class="line">  &#x2F;&#x2F;Address 地址结构体</span><br><span class="line">  type Address struct &#123;</span><br><span class="line">  	Province   string</span><br><span class="line">  	City       string</span><br><span class="line">  	CreateTime string</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  &#x2F;&#x2F;Email 邮箱结构体</span><br><span class="line">  type Email struct &#123;</span><br><span class="line">  	Account    string</span><br><span class="line">  	CreateTime string</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  &#x2F;&#x2F;User 用户结构体</span><br><span class="line">  type User struct &#123;</span><br><span class="line">  	Name   string</span><br><span class="line">  	Gender string</span><br><span class="line">  	Address</span><br><span class="line">  	Email</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  func main() &#123;</span><br><span class="line">  	var user3 User</span><br><span class="line">  	user3.Name &#x3D; &quot;沙河娜扎&quot;</span><br><span class="line">  	user3.Gender &#x3D; &quot;男&quot;</span><br><span class="line">  	&#x2F;&#x2F; user3.CreateTime &#x3D; &quot;2019&quot; &#x2F;&#x2F;ambiguous selector user3.CreateTime</span><br><span class="line">  	user3.Address.CreateTime &#x3D; &quot;2000&quot; &#x2F;&#x2F;指定Address结构体中的CreateTime</span><br><span class="line">  	user3.Email.CreateTime &#x3D; &quot;2000&quot;   &#x2F;&#x2F;指定Email结构体中的CreateTime</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<h3 id="结构体的-“继承”"><a href="#结构体的-“继承”" class="headerlink" title="结构体的 “继承”"></a>结构体的 “继承”</h3><ul>
+<li><p>Go 中使用结构体，可以实现其他面向对象中的 继承</p>
+<ul>
+<li>```go<br>//Animal 动物<br>type Animal struct {<pre><code>name string
+</code></pre>
+}func (a *Animal) move() {<pre><code>fmt.Printf(&quot;%s会动！\n&quot;, a.name)
+</code></pre>
+}//Dog 狗<br>type Dog struct {<pre><code>Feet    int8
+*Animal //通过嵌套匿名结构体实现继承
+</code></pre>
+}func (d *Dog) wang() {<pre><code>fmt.Printf(&quot;%s会汪汪汪~\n&quot;, d.name)
+</code></pre>
+}func main() {<pre><code>d1 := &amp;Dog&#123;
+    Feet: 4,
+    Animal: &amp;Animal&#123; //注意嵌套的是结构体指针
+        name: &quot;乐乐&quot;,
+    &#125;,
+&#125;
+d1.wang() //乐乐会汪汪汪~
+d1.move() //乐乐会动！
+</code></pre>
+}<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 结构体字段的可见性</span><br><span class="line"></span><br><span class="line">* 结构体中：</span><br><span class="line">  * **大写**开头表示**可公开访问**</span><br><span class="line">  * **小写**表示**私有**(仅在定义当前结构体的包中访问)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 结构体 与 JSON 序列化</span><br><span class="line"></span><br><span class="line">* &#96;JSON&#96; ：&#96;JavaScript Object Notation&#96;</span><br><span class="line"></span><br><span class="line">  * 轻量级的**数据交换格式**</span><br><span class="line">  * 易于 阅读和编写</span><br><span class="line">  * 易于 机器解析和生成</span><br><span class="line"></span><br><span class="line">* JSON 键值对：用于保存 JS 对象的一种方式</span><br><span class="line"></span><br><span class="line">  * 键&#x2F;值对 格式：&#96;&quot;键名&quot; : 值, &#96;</span><br><span class="line"></span><br><span class="line">  * &#96;&#96;&#96;go</span><br><span class="line">    &#x2F;&#x2F;Student 学生</span><br><span class="line">    type Student struct &#123;</span><br><span class="line">    	ID     int</span><br><span class="line">    	Gender string</span><br><span class="line">    	Name   string</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    &#x2F;&#x2F;Class 班级</span><br><span class="line">    type Class struct &#123;</span><br><span class="line">    	Title    string</span><br><span class="line">    	Students []*Student</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    func main() &#123;</span><br><span class="line">    	c :&#x3D; &amp;Class&#123;</span><br><span class="line">    		Title:    &quot;101&quot;,</span><br><span class="line">    		Students: make([]*Student, 0, 200),</span><br><span class="line">    	&#125;</span><br><span class="line">    	for i :&#x3D; 0; i &lt; 10; i++ &#123;</span><br><span class="line">    		stu :&#x3D; &amp;Student&#123;</span><br><span class="line">    			Name:   fmt.Sprintf(&quot;stu%02d&quot;, i),</span><br><span class="line">    			Gender: &quot;男&quot;,</span><br><span class="line">    			ID:     i,</span><br><span class="line">    		&#125;</span><br><span class="line">    		c.Students &#x3D; append(c.Students, stu)</span><br><span class="line">    	&#125;</span><br><span class="line">    	&#x2F;&#x2F;JSON序列化：结构体--&gt;JSON格式的字符串</span><br><span class="line">    	data, err :&#x3D; json.Marshal(c)</span><br><span class="line">    	if err !&#x3D; nil &#123;</span><br><span class="line">    		fmt.Println(&quot;json marshal failed&quot;)</span><br><span class="line">    		return</span><br><span class="line">    	&#125;</span><br><span class="line">    	fmt.Printf(&quot;json:%s\n&quot;, data)</span><br><span class="line">    	&#x2F;&#x2F;JSON反序列化：JSON格式的字符串--&gt;结构体</span><br><span class="line">    	str :&#x3D; &#96;&#123;&quot;Title&quot;:&quot;101&quot;,&quot;Students&quot;:[&#123;&quot;ID&quot;:0,&quot;Gender&quot;:&quot;男&quot;,&quot;Name&quot;:&quot;stu00&quot;&#125;,&#123;&quot;ID&quot;:1,&quot;Gender&quot;:&quot;男&quot;,&quot;Name&quot;:&quot;stu01&quot;&#125;,&#123;&quot;ID&quot;:2,&quot;Gender&quot;:&quot;男&quot;,&quot;Name&quot;:&quot;stu02&quot;&#125;,&#123;&quot;ID&quot;:3,&quot;Gender&quot;:&quot;男&quot;,&quot;Name&quot;:&quot;stu03&quot;&#125;,&#123;&quot;ID&quot;:4,&quot;Gender&quot;:&quot;男&quot;,&quot;Name&quot;:&quot;stu04&quot;&#125;,&#123;&quot;ID&quot;:5,&quot;Gender&quot;:&quot;男&quot;,&quot;Name&quot;:&quot;stu05&quot;&#125;,&#123;&quot;ID&quot;:6,&quot;Gender&quot;:&quot;男&quot;,&quot;Name&quot;:&quot;stu06&quot;&#125;,&#123;&quot;ID&quot;:7,&quot;Gender&quot;:&quot;男&quot;,&quot;Name&quot;:&quot;stu07&quot;&#125;,&#123;&quot;ID&quot;:8,&quot;Gender&quot;:&quot;男&quot;,&quot;Name&quot;:&quot;stu08&quot;&#125;,&#123;&quot;ID&quot;:9,&quot;Gender&quot;:&quot;男&quot;,&quot;Name&quot;:&quot;stu09&quot;&#125;]&#125;&#96;</span><br><span class="line">    	c1 :&#x3D; &amp;Class&#123;&#125;</span><br><span class="line">    	err &#x3D; json.Unmarshal([]byte(str), c1)</span><br><span class="line">    	if err !&#x3D; nil &#123;</span><br><span class="line">    		fmt.Println(&quot;json unmarshal failed!&quot;)</span><br><span class="line">    		return</span><br><span class="line">    	&#125;</span><br><span class="line">    	fmt.Printf(&quot;%#v\n&quot;, c1)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<h3 id="结构体标签-Tag"><a href="#结构体标签-Tag" class="headerlink" title="结构体标签(Tag)"></a>结构体标签(Tag)</h3><ul>
+<li><p><code>Tag</code> 是结构体中的 <strong>元信息</strong>，运行的时候通过反射机制读取出来</p>
+<ul>
+<li><p><code>Tag</code> 在<strong>结构体字段的后方</strong>定义，用==反引号==包裹</p>
+</li>
+<li><p>```<br><code>key1:&quot;balue1&quot; key2:&quot;value2&quot;</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* 结构体&#96;tag&#96; 有一个或多个键值对组成</span><br><span class="line"></span><br><span class="line">  * 键与值是用冒号分隔，值使用双引号括起来</span><br><span class="line">  * 同一个结构体字段可以设置多个键值对，不同键值对使用空格分隔</span><br><span class="line"></span><br><span class="line">* &#x3D;&#x3D;注意： &#x3D;&#x3D;为结构体编写&#96;Tag&#96;时，必须严格遵守键值对的规则。结构体标签的解析代码的容错能力很差，一旦格式写错，编译和运行时都不会提示任何错误，通过反射也无法正确取值。例如**不要在key和value之间添加空格。**</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">* 示例：每个字段定义json序列化时使用的 Tag</span><br><span class="line"></span><br><span class="line">  * &#96;&#96;&#96;go</span><br><span class="line">    &#x2F;&#x2F;Student 学生</span><br><span class="line">    type Student struct &#123;</span><br><span class="line">    	ID     int    &#96;json:&quot;id&quot;&#96; &#x2F;&#x2F;通过指定tag实现json序列化该字段时的key</span><br><span class="line">    	Gender string &#x2F;&#x2F;json序列化是默认使用字段名作为key</span><br><span class="line">    	name   string &#x2F;&#x2F;私有不能被json包访问</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    func main() &#123;</span><br><span class="line">    	s1 :&#x3D; Student&#123;</span><br><span class="line">    		ID:     1,</span><br><span class="line">    		Gender: &quot;男&quot;,</span><br><span class="line">    		name:   &quot;沙河娜扎&quot;,</span><br><span class="line">    	&#125;</span><br><span class="line">    	data, err :&#x3D; json.Marshal(s1)</span><br><span class="line">    	if err !&#x3D; nil &#123;</span><br><span class="line">    		fmt.Println(&quot;json marshal failed!&quot;)</span><br><span class="line">    		return</span><br><span class="line">    	&#125;</span><br><span class="line">    	fmt.Printf(&quot;json str:%s\n&quot;, data) &#x2F;&#x2F;json str:&#123;&quot;id&quot;:1,&quot;Gender&quot;:&quot;男&quot;&#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<h3 id="结构体和方法补充知识点"><a href="#结构体和方法补充知识点" class="headerlink" title="结构体和方法补充知识点"></a>结构体和方法补充知识点</h3><ul>
+<li><p>slice 和 map都包含了指向底层数据的指针，在复制时需要特别注意</p>
+<ul>
+<li><p>```go<br>type Person struct {</p>
+<pre><code>name   string
+age    int8
+dreams []string
+</code></pre>
+<p>}</p>
+<p>func (p *Person) SetDreams(dreams []string) {</p>
+<pre><code>p.dreams = dreams
+</code></pre>
+<p>}</p>
+<p>func main() {</p>
+<pre><code>p1 := Person&#123;name: &quot;小王子&quot;, age: 18&#125;
+data := []string&#123;&quot;吃饭&quot;, &quot;睡觉&quot;, &quot;打豆豆&quot;&#125;
+p1.SetDreams(data)
+
+// 你真的想要修改 p1.dreams 吗？
+data[1] = &quot;不睡觉&quot;
+fmt.Println(p1.dreams)  // ?
+</code></pre>
+<p>}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* 正确的做法：在方法中使用传入的 slice 的拷贝，进行结构体赋值</span><br><span class="line"></span><br><span class="line">  * &#96;&#96;&#96;go</span><br><span class="line">    func (p *Person) SetDreams(dreams []string) &#123;</span><br><span class="line">    	p.dreams &#x3D; make([]string, len(dreams))</span><br><span class="line">    	copy(p.dreams, dreams)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>同样的问题：返回值 slice 和 map情况</p>
+</li>
+</ul>
+</li>
+</ul>
+
+          
+        
+      
+    </div>
+   
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zihao256.github.io/p/9b3b896b.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/stitch.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ZiHao's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/p/9b3b896b.html" itemprop="url">11 指针</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-05-07T19:25:46+08:00">
+                2021-05-07
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2021-10-17T15:03:23+08:00">
+                2021-10-17
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Go-LearningNote/" itemprop="url" rel="index">
+                    <span itemprop="name">-Go LearningNote</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  809
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  3
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="11-指针"><a href="#11-指针" class="headerlink" title="11 指针"></a>11 指针</h2><ul>
+<li>与C/C++ 中的指针不同，Go 中的指针不能进行偏移和运算，是安全指针<ul>
+<li>取地址符：<code>&amp;</code></li>
+<li>根据指针取值：<code>*</code></li>
+</ul>
+</li>
+<li>需要知道：指针地址、指针类型、指针取值</li>
+</ul>
+<h3 id="指针地址和指针类型"><a href="#指针地址和指针类型" class="headerlink" title="指针地址和指针类型"></a>指针地址和指针类型</h3><ul>
+<li>每个变量运行时都有一个地址，代表变量在内存中的位置</li>
+<li>指针类型：<code>*int</code>…</li>
+<li>取变量指针的语法：<code>ptr := &amp;v</code><ul>
+<li><code>v</code> : <strong>被取地址的变量</strong></li>
+<li><code>ptr</code> ：<strong>接收地址的变量</strong>，ptr 的类型就为<code>*T</code>，称为T的指针类型</li>
+</ul>
+</li>
+</ul>
+<h3 id="指针取值"><a href="#指针取值" class="headerlink" title="指针取值"></a>指针取值</h3><ul>
+<li>对普通变量使用 <code>&amp;</code> 取地址后，会获得这个变量的指针<ul>
+<li>可以对指针使用<code>*</code>操作，对指针取值</li>
+<li>根据指针去内存取值</li>
+</ul>
+</li>
+</ul>
+<p><strong>总结：</strong> 取地址操作符<code>&amp;</code>和取值操作符<code>*</code>是一对互补操作符，<code>&amp;</code>取出地址，<code>*</code>根据地址取出地址指向的值。</p>
+<p><strong>变量、指针地址、指针变量、取地址、取值</strong>的相互关系和特性如下：</p>
+<ul>
+<li>对变量进行<strong>取地址（&amp;）操作</strong>，可以获得这个变量的<strong>指针变量</strong>。</li>
+<li>指针变量的值是<strong>指针地址</strong>。</li>
+<li>对指针变量进行<strong>取值（*）操作</strong>，可以获得指针变量指向的原变量的值。</li>
+</ul>
+<ul>
+<li>定义函数时，可以传入地址，使用<strong>指针传值</strong></li>
+</ul>
+<h3 id="new-和-make"><a href="#new-和-make" class="headerlink" title="new 和 make"></a>new 和 make</h3><ul>
+<li><p>Go 中对于<strong>引用类型的变量</strong>，我们在使用时，不仅要声明它，还要<strong>为其分配内存</strong>，否则其值无法存储</p>
+</li>
+<li><p>对于<strong>值类型的声明</strong>，不需要分配内存空间，因为他们在声明的时候，已经<strong>默认分配好了</strong>内存空间</p>
+<ul>
+<li>```go<br>func main() {<pre><code>var a *int
+*a = 100
+fmt.Println(*a)
+
+var b map[string]int
+b[&quot;沙河娜扎&quot;] = 100
+fmt.Println(b)
+</code></pre>
+}<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* &#96;new&#96;, &#96;make&#96; 用来分配内存</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### new</span><br><span class="line"></span><br><span class="line">* 内置函数</span><br><span class="line"></span><br><span class="line">* 函数原型：&#96;func new(Type) *Type&#96;</span><br><span class="line"></span><br><span class="line">  * Type : new 只接受一个参数，是一个类型</span><br><span class="line">  * *Type ：new函数返回一个指向该类型内存地址的指针</span><br><span class="line"></span><br><span class="line">* 使用&#96;new&#96;得到是一个指针，并且该指针对应的值，为**该类型的零值**</span><br><span class="line"></span><br><span class="line">  * 示例：</span><br><span class="line"></span><br><span class="line">    &#96;&#96;&#96;go</span><br><span class="line">    func main() &#123;</span><br><span class="line">    	a :&#x3D; new(int)</span><br><span class="line">    	b :&#x3D; new(bool)</span><br><span class="line">    	fmt.Printf(&quot;%T\n&quot;, a) &#x2F;&#x2F; *int</span><br><span class="line">    	fmt.Printf(&quot;%T\n&quot;, b) &#x2F;&#x2F; *bool</span><br><span class="line">    	fmt.Println(*a)       &#x2F;&#x2F; 0</span><br><span class="line">    	fmt.Println(*b)       &#x2F;&#x2F; false</span><br><span class="line">    &#125;	</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>对于<code>var a *int</code>: </p>
+<ul>
+<li>只是声明了一个指针变量，但未初始化, 不能被赋值</li>
+<li>指针是引用类型，需要初始化才有内存空间</li>
+<li></li>
+</ul>
+</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a *<span class="keyword">int</span></span><br><span class="line">a = <span class="built_in">new</span>(<span class="keyword">int</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="make"><a href="#make" class="headerlink" title="make"></a>make</h4><ul>
+<li><p>也是<strong>用于内存分配</strong>，</p>
+</li>
+<li><p>与 <code>new</code> 不同，只用于<code>slice</code> , <code>map</code> , <code>chan</code> 的内存创建</p>
+</li>
+<li><p>而且函数返回的类型就是类型本身, 而非指针类型，因为这三种类型就是引用类型，所以没必要返回他们的指针</p>
+</li>
+<li><p><code>make</code> 的原型：<code>func make(t Type, size ...InterType) Type</code></p>
+</li>
+<li><p>需要使用make 对<code>slice</code>, <code>map</code>,<code>channel</code> 进行初始化</p>
+<ul>
+<li><pre><code class="go">m := make(map[string]int,10)
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="new-和-make-的区别"><a href="#new-和-make-的区别" class="headerlink" title="new 和 make 的区别"></a>new 和 make 的区别</h4><ul>
+<li>二者都是用于内存分配</li>
+<li><code>make</code> 只用于<code>slice</code>, <code>map</code>, <code>channel</code> 的初始化，并且返回的还是这<strong>三个引用类型的本身</strong></li>
+<li><code>new</code> 用于类型的内存分配，并且内存对应的值为 该类型的零值，**返回的是指向该类型的指针</li>
+</ul>
+
+          
+        
+      
+    </div>
+   
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zihao256.github.io/p/bf869091.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/stitch.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ZiHao's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/p/bf869091.html" itemprop="url">Lab1</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-05-07T11:07:31+08:00">
+                2021-05-07
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2021-10-17T15:03:23+08:00">
+                2021-10-17
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/XDU-OS/" itemprop="url" rel="index">
+                    <span itemprop="name">-XDU OS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  4.7k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  18
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="lab1"><a href="#lab1" class="headerlink" title="lab1"></a>lab1</h1><p>[toc]</p>
+<h1 id="1-Producer-Consumer-problem"><a href="#1-Producer-Consumer-problem" class="headerlink" title="1 Producer-Consumer problem"></a>1 Producer-Consumer problem</h1><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/zhou1021jian/article/details/71514738">参考博客1</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/a2ade02979d1">参考博客2</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/linhaostudy/p/7554942.html">参考博客3</a></p>
+<p><a href="">参考博客4</a></p>
+<ul>
+<li><p>也称 有限缓冲问题 <code>Bounded-buffer problem</code></p>
+</li>
+<li><p>多线程同步的问题</p>
+</li>
+</ul>
+<h2 id="1-1-信号量配合互斥锁"><a href="#1-1-信号量配合互斥锁" class="headerlink" title="1.1 信号量配合互斥锁"></a>1.1 信号量配合互斥锁</h2><ul>
+<li>信号量特性：<ul>
+<li>非负整数，对共享资源和线程的控制</li>
+<li>通过信号量的线程会使得信号量减一，当为零时，所有试图通过的线程等待</li>
+<li>操作：<ul>
+<li>Wait：线程调用该函数时<ul>
+<li>要么得到资源并将信号量减一</li>
+<li>要么线程进入等待队列，直到信号量大于零</li>
+</ul>
+</li>
+<li>Release：在信号量上执行加一<ul>
+<li>释放由信号量守护的资源</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Wait，Release再Linux中：<ul>
+<li><code>int sem_wait(sem_t* sem)</code></li>
+<li><code>int sem_post(sem_t* sem)</code></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>针对该问题：<ul>
+<li>设定两个信号量：<ul>
+<li><code>empty</code>: 空槽的个数</li>
+<li><code>full</code>: 占有的个数</li>
+</ul>
+</li>
+<li>生产者 向任务队列 放资源时，调用<code>sem_wait(&amp;empty)</code> 检查队列是否已满，<ul>
+<li>若满，就阻塞，直到有消费者从队列里取资源</li>
+<li>若不满，就放入资源，并通知消费者取</li>
+</ul>
+</li>
+<li>消费者 从任务队列 取资源时，调用<code>sem_wait(&amp;full)</code> 检查任务队列是否已空<ul>
+<li>若已空，就阻塞，直到生产者向里面放入资源在苏醒</li>
+<li>若非空，就取资源，并通知生产者来放入</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>互斥锁是对任务队列进行保护</li>
+</ul>
+<ul>
+<li><p>```C</p>
+<p>#include &lt;stdio.h&gt;<br>#include &lt;pthread.h&gt;            //pthread_mutex_t, pthread_mutex_lock/unlock, pthread_t，pthread_create(), pthread_join()<br>#include &lt;semaphore.h&gt;            //sem_wait, sem_post, sem_init</p>
+<p>#define MAX 5  //队列长度</p>
+<p>pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;<br>sem_t full;     //填充的个数<br>sem_t empty;     //空槽的个数</p>
+<p>int top = 0;     //队尾<br>int bottom = 0;  //队头</p>
+<p>void* produce(void* arg)<br>{</p>
+<pre><code>int i;
+for ( i = 0; i &lt; MAX*2; i++)
+&#123;
+    printf(&quot;producer is preparing data\n&quot;);
+    sem_wait(&amp;empty);//若空槽个数低于0阻塞
+    
+    pthread_mutex_lock(&amp;mutex);
+    
+    top = (top+1) % MAX;
+    printf(&quot;now top is %d\n&quot;, top);
+
+    pthread_mutex_unlock(&amp;mutex);
+    
+    sem_post(&amp;full);
+&#125;
+return (void*)1;
+</code></pre>
+<p>}</p>
+<p>void* consume(void* arg)<br>{</p>
+<pre><code>int i;
+for ( i = 0; i &lt; MAX*2; i++)
+&#123;
+    printf(&quot;consumer is preparing data\n&quot;);
+    sem_wait(&amp;full);//若填充个数低于0阻塞
+
+    pthread_mutex_lock(&amp;mutex);
+    
+    bottom = (bottom+1) % MAX;
+    printf(&quot;now bottom is %d\n&quot;, bottom);
+
+    pthread_mutex_unlock(&amp;mutex);
+    
+    sem_post(&amp;empty);
+&#125;
+
+return (void*)2;
+</code></pre>
+<p>}</p>
+<p>int main(int argc, char *argv[])<br>{</p>
+<pre><code>pthread_t thid1;        //创建四个线程，unsigned long int
+pthread_t thid2;
+pthread_t thid3;
+pthread_t thid4;
+
+int  ret1;
+int  ret2;
+int  ret3;
+int  ret4;
+
+sem_init(&amp;full, 0, 0);            //初始化信号量full为0
+sem_init(&amp;empty, 0, MAX);        //初始化信号量empty为MAX=5
+
+pthread_create(&amp;thid1, NULL, produce, NULL);        //
+pthread_create(&amp;thid2, NULL, consume, NULL);
+pthread_create(&amp;thid3, NULL, produce, NULL);
+pthread_create(&amp;thid4, NULL, consume, NULL);
+
+pthread_join(thid1, (void**)&amp;ret1);                    //
+pthread_join(thid2, (void**)&amp;ret2);
+pthread_join(thid3, (void**)&amp;ret3);
+pthread_join(thid4, (void**)&amp;ret4);
+
+return 0;
+</code></pre>
+<p>}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">  * 若将&#96;sem_wait()&#96;， &#96;sem_post()&#96;放于lock和unlock之间</span><br><span class="line">  * 死锁，因为我们不能预知线程进入共享区顺序，如果消费者线程先对mutex加锁，并进入，sem_wait()发现队列为空，阻塞，而生产者在对mutex加锁时，发现已上锁也阻塞，双方永远无法唤醒对方。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">* </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">* &#96;sem_init&#96;: 长整型</span><br><span class="line">  * &#96;int sem_init(sem_t *sem, int pshared, unsigned int value);&#96;</span><br><span class="line">    * sem: 指向信号量结构的一个指针</span><br><span class="line">    * pshared不为零时，信号量在进程间共享，否则只能为当前进程的线程共享</span><br><span class="line">    * value为信号量的初始值</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 1.2 Pthread</span><br><span class="line"></span><br><span class="line">* linux下用C语言开发多线程程序，Linux系统下的多线程遵循POSIX线程接口，称为pthread。</span><br><span class="line"></span><br><span class="line">* &#96;pthread_create()&#96;：创建子线程</span><br><span class="line">  * Linux 下创建的线程的 API 接口</span><br><span class="line">  * &#96;int pthread_create(pthread_t *thread, const pthread_attr_t *attr, void *(*start_routine)(void *), void *arg);&#96;</span><br><span class="line">  * 参数：</span><br><span class="line">    * thread: 返回成功时，由 thread 指向的内存单元被设置为新创建线程的线程ID</span><br><span class="line">    * attr：线程属性，默认使用NULL</span><br><span class="line">    * start_routine: 新创建的线程从&#96;start_routine&#96;函数的地址开始运行，该函数只有一个万能参数arg，如果需要向&#96;start_rutine&#96;函数传递的参数不止一个，那么需要把这些参数放到一个结构中，然后把这个结构的地址作为arg的参数传入。</span><br><span class="line">    * arg: 子线程处理函数的参数</span><br><span class="line">  * 简单来说：</span><br><span class="line">    * 第一个参数为指向线程 [标识符](http:&#x2F;&#x2F;baike.baidu.com&#x2F;item&#x2F;标识符)的 [指针](http:&#x2F;&#x2F;baike.baidu.com&#x2F;item&#x2F;指针)。</span><br><span class="line">    * 第二个参数用来设置线程属性。</span><br><span class="line">    * 第三个参数是线程运行函数的起始地址。</span><br><span class="line">    * 最后一个参数是运行函数的参数。</span><br><span class="line">  * 返回值：</span><br><span class="line">    * 成功返回0，失败返回错误号</span><br><span class="line">  </span><br><span class="line">* &#96;pthread_join()&#96;: 子线程合入主线程</span><br><span class="line">  * &#96; int pthread_join(pthread_t thread, void **retval);&#96;</span><br><span class="line">  * 主线程阻塞，等待子线程结束，然后回收子线程资源</span><br><span class="line">  * 以阻塞的方式，等待thread指定的线程结束</span><br><span class="line">    * 当函数返回时，被等待线程的资源被回收</span><br><span class="line">    * 若线程已经结束，该函数立即返回</span><br><span class="line">  * 参数：</span><br><span class="line">    * thread : 线程标识符，线程id</span><br><span class="line">    * retval：指向一个指向被连接线程的返回码的指针的指针</span><br><span class="line">  * 返回值，0成功，错误号失败</span><br><span class="line">  </span><br><span class="line">* &gt; 在很多情况下，主线程生成并起动了子线程，如果子线程里要进行大量的耗时的运算，主线程往往将于子线程之前结束，但是如果主线程处理完其他的事务后，需要用到子线程的处理结果，也就是主线程需要等待子线程执行完成之后再结束，这个时候就要用到pthread_join()方法了。</span><br><span class="line">  &gt;  即pthread_join()的作用可以这样理解：主线程等待子线程的终止。也就是在子线程调用了pthread_join()方法后面的代码，只有等到子线程结束了才能执行。</span><br><span class="line"></span><br><span class="line">* 如果没有加pthread_join()方法，main线程里面直接就执行起走了，加了之后是等待线程执行了之后才执行的后面的代码。</span><br><span class="line"></span><br><span class="line">![image-20210505195248476](E:\4th_term\操作系统OS\Lab1\lab1.assets\image-20210505195248476.png)</span><br><span class="line"></span><br><span class="line">![image-20210505195202511](E:\4th_term\操作系统OS\Lab1\lab1.assets\image-20210505195202511.png)</span><br><span class="line"></span><br><span class="line"># 2 用共享内存的多进程实现生产者消费者问题</span><br><span class="line"></span><br><span class="line">## .1 前置知识</span><br><span class="line"></span><br><span class="line">### 2.1.1 共享内存</span><br><span class="line"></span><br><span class="line">  共享内存是不同进程间为了通信而申请的可以被不同进程共同访问的内存区域。在Linux 中，共享内存的相关API由POSIX提供。</span><br><span class="line"></span><br><span class="line">\1. shmget函数：</span><br><span class="line"></span><br><span class="line">函数原型：int shmget(key_t key, size_t size, int shmflg);</span><br><span class="line"></span><br><span class="line">参数：</span><br><span class="line"></span><br><span class="line">  Key: 用于共享内存命名，不同进程通过key进行共享内存识别;</span><br><span class="line"></span><br><span class="line">  Size: 需要的共享内存大小；</span><br><span class="line"></span><br><span class="line">  shmflg: 权限标志。Key标识的内存不存在时，该参数为IPC_CREAT。</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">\2. shmat 函数：创建完共享内存后，不能被进程访问，需要调用shmat启动该共享内存的访问，并把共享内存连接到当前进程的地址空间</span><br><span class="line"></span><br><span class="line">函数原型：void *shmat(int shm_id, const void *shm_addr, int shmflg);</span><br><span class="line"></span><br><span class="line">参数：</span><br><span class="line"></span><br><span class="line">  Shm_id: shmget返回的描述符</span><br><span class="line"></span><br><span class="line">  Shm_addr: 指定共享内存链接到当前进程中的地址位置，通常为空，让系统自己选择</span><br><span class="line"></span><br><span class="line">  Shmflg: 标志位，通常为0</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">\3. shmctl 函数：控制共享内存</span><br><span class="line"></span><br><span class="line">函数原型：int shmctl(int shm_id, int command, struct shmid_ds *buf);</span><br><span class="line"></span><br><span class="line">参数：</span><br><span class="line"></span><br><span class="line">  Shm_id: 同上</span><br><span class="line"></span><br><span class="line">  Command: 要采取的操作</span><br><span class="line"></span><br><span class="line">  Buf: 结构体指针，指向共享内存的 shmid_ds 结构。</span><br><span class="line"></span><br><span class="line">### 2.1.2 信号量</span><br><span class="line"></span><br><span class="line">​    信号量是一个特殊的变量，程序对其访问都是原子操作，且只允许对它进行等待（即P(信号变量))和发送（即V(信号变量))信息操作。最简单的信号量是只能取0和1的变量，这也是信号量最常见的一种形式，叫做二进制信号量。而可以取多个正整数的信号量被称为通用信号量。</span><br><span class="line"></span><br><span class="line">Linux中对信号量的操作在我们小组的课题《Linux中信号量的实现机制》中详细讲过，接下来简单介绍：</span><br><span class="line"></span><br><span class="line">函数semget创建一个新信号量或取得一个已有信号量；</span><br><span class="line"></span><br><span class="line">函数semop 对信号量进行操作；</span><br><span class="line"></span><br><span class="line">函数 semctl 控制信号量的销毁等</span><br><span class="line"></span><br><span class="line">## 2.2 思路</span><br><span class="line"></span><br><span class="line">  该 Task 涉及进程管理和进程间共享内存通信，可将main函数当成主进程，fork出多个子进程，并负责创建共享内存和信号量。将子进程分为两部分，生产者和消费者，通过信号量对共享内存进行互斥读写。</span><br><span class="line"></span><br><span class="line">  生产者和消费者的操作都类似于Task1中的操作，不再赘述。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 3 测试有名&#x2F;匿名，共有&#x2F;私有内存映射</span><br><span class="line"></span><br><span class="line">## 内存映射</span><br><span class="line"></span><br><span class="line">## .1 前置知识</span><br><span class="line"></span><br><span class="line">​    内存映射 mmap 是Linux 内核的一个重要机制，和虚拟内存管理以及文件IO都有直接关系。</span><br><span class="line"></span><br><span class="line">  Linux 的虚拟内存管理是基于 mmap 实现的，vm_area_struct 在mmap 创建时创建，代表了一段连续的虚拟地址，这些虚拟地址相应的映射到一个后备文件或者匿名文件的虚拟页。一个vm_area_struct映射到一组连续的页表项，页表项映射物理内存page frame，这样文件和物理内存页相映射。</span><br><span class="line"></span><br><span class="line">### 3.1.1 mmap 和 虚拟内存管理</span><br><span class="line"></span><br><span class="line">  Linux内核的用户进程虚拟内存管理：内核定义了mm_struct 结构表示一个用户进程的虚拟内存地址空间。</span><br><span class="line"></span><br><span class="line">  mm**_**struct**结构**：</span><br><span class="line"></span><br><span class="line">​                           ![image-20210507110545709](E:\4th_term\操作系统OS\Lab1\lab1.assets\image-20210507110545709.png)    </span><br><span class="line"></span><br><span class="line">\1.  start_code, end_code: 指定了进程的代码段的边界；</span><br><span class="line"></span><br><span class="line">\2.  start_data, end_data: 指定了进程数据段的边界；</span><br><span class="line"></span><br><span class="line">\3.  start_brk指定了堆的起始地址; brk指定了堆的结束位置；</span><br><span class="line"></span><br><span class="line">\4.  start_stack: 指定了站的起始位置；</span><br><span class="line"></span><br><span class="line">\5.  mmap_base: 指定了用户进程虚拟地址空间中 用作内存映射部分的地址的基地址，</span><br><span class="line"></span><br><span class="line">\6.  task_size: 指定了用户进程地址空间的长度。</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">进程的mm_struct 除了包含**进程虚拟内存地址空间布局**，还包含了**虚拟内存区域**vm_area_struct信息。虚拟内存区域是内核管理用户进程虚拟地址空间的方式，数据段、代码段、共享库等都是通过vm_area_atruct管理。</span><br><span class="line"></span><br><span class="line">vm_area_struct结构：</span><br><span class="line"></span><br><span class="line"> ![image-20210507110550648](E:\4th_term\操作系统OS\Lab1\lab1.assets\image-20210507110550648.png)</span><br><span class="line"></span><br><span class="line">\1. vm_start, vm_end表示区域的开始位置和结束位置，确定了区域的边界。两个vm_area_struct不会出现交叉的情况</span><br><span class="line"></span><br><span class="line">\2. vm_page_prot 表示这个区域的页的访问权限</span><br><span class="line"></span><br><span class="line">\3. shared结构处理有后备文件的内存映射，和后备文件的address_space地址空间关联起来</span><br><span class="line"></span><br><span class="line">\4. anon_vma_node, anon_vma处理匿名文件共享内存映射的情况，映射到同一物理内存页的映射都保存在一个链表中</span><br><span class="line"></span><br><span class="line">\5. vm_pgoff, vm_file都是处理有后备文件内存映射的情况，获得该映射在文件的页偏移量，以及打开文件file实例的信息</span><br><span class="line"></span><br><span class="line">## 3.2 mmap 的四种类型</span><br><span class="line"></span><br><span class="line">mmap分为**后备文件的映射**和**匿名文件的映射**，这两种映射又有**私有映射和共享映射**之分，所以mmap可以创建4种类型的映射</span><br><span class="line"></span><br><span class="line">\1. **后备文件的共享映射**，多个进程的vm_area_struct指向同一个物理内存区域，一个进程对文件内容的修改，会被其他进程可见。对文件内容的修改会被写回到后备文件。</span><br><span class="line"></span><br><span class="line"> ![image-20210507110514289](E:\4th_term\操作系统OS\Lab1\lab1.assets\image-20210507110514289.png)</span><br><span class="line"></span><br><span class="line">\2. **后备文件的私有映射**，多个进程的vm_area_struct指向同一个物理内存区域，采用写时拷贝的方式，当一个进程对文件内容做修改，不会被其他进程看到。另外对文件内的修改也不会被写回到后备文件。当内存不够需要进行页回收时，私有映射的页被交换到交换区。一般用在加载共享代码库</span><br><span class="line"></span><br><span class="line"> ![image-20210507110518143](E:\4th_term\操作系统OS\Lab1\lab1.assets\image-20210507110518143.png)</span><br><span class="line"></span><br><span class="line">\3. **匿名文件的共享映射**，内核创建一个初始都是0的物理内存区域，然后多个进程的vm_area_struct指向这个共享的物理内存区域，对该区域内容的修改对所有进程可见。匿名文件在页回收时被交换到交换区</span><br><span class="line"></span><br><span class="line"> ![image-20210507110530695](E:\4th_term\操作系统OS\Lab1\lab1.assets\image-20210507110530695.png)</span><br><span class="line"></span><br><span class="line">\4. **匿名文件的私有映射**，内核创建一个初始都是0的物理内存区域，对该区域内容的修改只对创建者进程可见。匿名文件在页回收时被交换到交换区。malloc()底层是用了匿名文件的私有映射来分配大块内存。</span><br><span class="line"></span><br><span class="line"> ![image-20210507110535432](E:\4th_term\操作系统OS\Lab1\lab1.assets\image-20210507110535432.png)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 4 共享库的创建和使用</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 4.1 前置知识：源代码到运行程序的过程</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">1. 预处理：对所有预处理指令进行处理。以#开始的语句</span><br><span class="line">2. 编译：通常指 程序构建的过程，称为&#96;compilation proper&#96;, 将c源代码文件转换成object文件</span><br><span class="line">3. 连接：将 object文件和库 串联起来，称为可执行程序</span><br><span class="line">   1. 静态库已经植入程序中</span><br><span class="line">   2. 共享库，只在程序中对其引用</span><br><span class="line">4. 加载：加载 发生在可执行程序启动时。</span><br><span class="line">   1. 首先，扫描程序，来引用共享库</span><br><span class="line">   2. 然后所有引用都立即生效，对应的库也被映射到程序中</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">* 一个程序函数库：一个文件包含了一些编译好的代码和数据，可供其他程序使用</span><br><span class="line">* 可以使得整个程序更加模块化，更容易重新编译，方便升级</span><br><span class="line">* 程序函数库分为3类：</span><br><span class="line">  * 静态函数库(static libraries): 在程序执行前就加入到了目标程序中</span><br><span class="line">  * 共享函数库(shared libraries)：&#96;.so&#96;</span><br><span class="line">  * 动态加载函数库(dynamically loaded libraries)：&#96;.dll&#96;, 与共享函数库是一样的，在l Windows 中叫动态加载函数库</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 4.2 静态函数库</span><br><span class="line"></span><br><span class="line">### 4.2.1 生成静态函数库</span><br><span class="line"></span><br><span class="line">* 简单的一个普通的目标文件的集合，&#96;.a&#96;后缀文件</span><br><span class="line">* 允许程序员把程序 link 起来而不用重新编译代码，节省了重新编译代码的时间</span><br><span class="line">  * 如今该优势不再那么明显</span><br><span class="line">* 静态函数库对开发者来说还是很有用的，例如你想把自己提供的函数给别人使用，但是又想对函数的源代码进行保密</span><br><span class="line">* 理论上说，使用ELF格式的静态库函数生成的代码可以比使用共享函数库（或者动态函数库）的程序运行速度上快一些，大概1－5％。 </span><br><span class="line">* &#96;ar rcs my_library.a file.o file1.o&#96;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 4.2.2 使用静态函数库</span><br><span class="line"></span><br><span class="line">* 把它作为你编译和连接过程中的一部分用来生成你的可执行代码</span><br><span class="line">* 用gcc来编译产生可执行代码的话，你可以用“-l”参数来指定这个库函数。你也可以用ld来做，使用它的“-l”和“-L”参数选项。具体用法可以参考info:gcc。 </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 4.3 共享函数库</span><br><span class="line"></span><br><span class="line">* **作用：**共享函数库中的函数是在当一个可执行程序在启动的时候被加载</span><br><span class="line">* 如果一个共享函数库正常安装，所有的程序在重新运行的时候都可以自动加载最新的函数库中的函数。对于Linux系统还有更多可以实现的功能：</span><br><span class="line">  * 升级了函数库但是仍然允许程序使用老版本的函数库</span><br><span class="line">  * 当执行某个特定程序的时候可以覆盖某个特定的库或者库中指定的函数</span><br><span class="line">  * 可以在库函数被使用的过程中修改这些函数库</span><br><span class="line"></span><br><span class="line">### 4.3.1 约定</span><br><span class="line"></span><br><span class="line">* 为了编写的共享函数库支持所有有用的特性，必须遵循一系列约定</span><br><span class="line"></span><br><span class="line">#### 4.3.1.1 命名</span><br><span class="line"></span><br><span class="line">* 每个共享函数库的**特殊名字**, 称作&#96;soname&#96;</span><br><span class="line">  * 以&#96;lib&#96;为前缀，然后是函数名</span><br><span class="line">  * 以&#96;.so&#96;为后缀</span><br><span class="line">  * 最后是版本号信息</span><br><span class="line">* 特例：非常底层的C库函数都不是以lib开头命名</span><br><span class="line">* 每个共享函数库都有一个**真正名字**，称为&#96;real name&#96;</span><br><span class="line">  * 包含真正函数代码的文件</span><br><span class="line">  * 真名有一个主版本号和一个发行主版号（可有可无）</span><br><span class="line">    * 知道安装了什么版本的函数库</span><br><span class="line">* 还有一个名字，**编译器编译时需要的函数库名字**：简单的soname，不包含任何版本号信息</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 4.4 函数库如何使用</span><br><span class="line"></span><br><span class="line">* 基于GNU glibc的系统中，启动一个ELF格式的二进制可执行文件，会自动启动和运行一个program loader</span><br><span class="line"></span><br><span class="line">  * 对于Linux 系统，loader的名字是&#96;&#x2F;lib&#x2F;ld-linux.so.X（版本号）&#96;</span><br><span class="line">  * loader启动后，会load 其他本程序要使用的共享库</span><br><span class="line"></span><br><span class="line">  </span><br><span class="line"></span><br><span class="line">## 4.5 创建一个共享库</span><br><span class="line"></span><br><span class="line">示例：</span><br><span class="line"></span><br><span class="line">* &#96;foo.h&#96;: 定义接口，连接动态库</span><br><span class="line"></span><br><span class="line">  * ![image-20210506205836103](E:\4th_term\操作系统OS\Lab1\lab1.assets\image-20210506205836103-1620305918992.png)</span><br><span class="line"></span><br><span class="line">  * &#96;&#96;&#96;</span><br><span class="line">    #ifndef foo_h__</span><br><span class="line">    #define foo_h__</span><br><span class="line">    </span><br><span class="line">    extern void foo(void);</span><br><span class="line">    </span><br><span class="line">    #endif  &#x2F;&#x2F; foo_h__</span><br></pre></td></tr></table></figure></li>
+<li><p><code>foo.c</code>：对接口foo()的实现</p>
+<ul>
+<li><p><img src="E:\4th_term\操作系统OS\Lab1\lab1.assets\image-20210506205941576.png" alt="image-20210506205941576"></p>
+</li>
+<li><p>```<br>#include &lt;stdio.h&gt;</p>
+<p>void foo(void)<br>{</p>
+<pre><code>puts(&quot;Hello, I&#39;m a shared library&quot;);
+</code></pre>
+<p>}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* &#96;main.c&#96;： 库的驱动程序</span><br><span class="line"></span><br><span class="line">  * &#96;&#96;&#96;</span><br><span class="line">    #include &lt;stdio.h&gt;</span><br><span class="line">    #include &quot;foo.h&quot;</span><br><span class="line">     </span><br><span class="line">    int main(void)</span><br><span class="line">    &#123;</span><br><span class="line">        puts(&quot;This is a shared library test...&quot;);</span><br><span class="line">        foo();</span><br><span class="line">        return 0;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>首先，编译位置无关代码，即创建object文件</p>
+<ul>
+<li>通过<code>gcc -fPIC</code>参数加入到共享函数库中：<code>PIC</code>: 位置无关代码</li>
+</ul>
+</li>
+<li><p>然后，将对象文件创建共享库，</p>
+</li>
+<li><p>例如：创建a.0, b.o, 然后创建一个包含a.o, b.o的共享库</p>
+<ul>
+<li><code>gcc -fPIC -g -c -Wall a.c</code></li>
+<li><code>gcc -fPIC -g -c -Wall b.c</code></li>
+<li><code>gcc -shared -WL -libmath.so -o  a.o b.o -lc</code></li>
+</ul>
+</li>
+<li><p>通常，动态函数库的符号表里面包含了这些动态的对象的符号。这个选项在创建ELF格式的文件时候，会将所有的符号加入到动态符号表中。可以参考ld的帮助获得更详细的说明。</p>
+</li>
+</ul>
+<h2 id="4-6-安装和使用共享库"><a href="#4-6-安装和使用共享库" class="headerlink" title="4.6 安装和使用共享库"></a>4.6 安装和使用共享库</h2><h3 id="方法一：将共享库拷贝入标准目录-usr-lib或-usr-local-lib"><a href="#方法一：将共享库拷贝入标准目录-usr-lib或-usr-local-lib" class="headerlink" title="方法一：将共享库拷贝入标准目录(/usr/lib或/usr/local/lib)"></a>方法一：将共享库拷贝入标准目录(/usr/lib或/usr/local/lib)</h3><ul>
+<li><p>需要有权限</p>
+</li>
+<li><p>使得系统上所有用户都可以使用该共享库</p>
+</li>
+</ul>
+<p>方法：</p>
+<ul>
+<li><p>首先，以root权限，将库放到标准位置（/usr/lib或/usr/local/lib）</p>
+<ul>
+<li><code>sudo cp /home/zihao/task4/libfoo.so /usr/lib</code></li>
+</ul>
+</li>
+<li><p>然后，以root权限更新缓存，告诉加载器 库文件可用，</p>
+<ul>
+<li><code>sudo ldconfig</code>: 检查一块存在的库文件，然后创建soname符号链接到真正的函数库</li>
+<li>将创建链接到共享库，并且更新缓存以便可立即生效</li>
+<li>使用<code>ldconfig -p | grep foo</code>，核实创建了链接</li>
+</ul>
+</li>
+<li><p>其次，重新连接可执行程序</p>
+<ul>
+<li><code>gcc -Wall -o main.c -lfoo</code></li>
+</ul>
+</li>
+<li><p>最后，运行程序</p>
+<ul>
+<li><code>./test</code></li>
+</ul>
+</li>
+</ul>
+
+          
+        
+      
+    </div>
+   
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zihao256.github.io/p/bacdba6b.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/stitch.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ZiHao's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/p/bacdba6b.html" itemprop="url">10 内置函数介绍</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-05-06T14:26:06+08:00">
+                2021-05-06
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2021-10-17T15:03:23+08:00">
+                2021-10-17
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Go-LearningNote/" itemprop="url" rel="index">
+                    <span itemprop="name">-Go LearningNote</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  717
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  3
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="10-内置函数介绍"><a href="#10-内置函数介绍" class="headerlink" title="10 内置函数介绍"></a>10 内置函数介绍</h2><table>
+<thead>
+<tr>
+<th>内置函数</th>
+<th>介绍</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>close</td>
+<td>关闭 channel</td>
+</tr>
+<tr>
+<td>len</td>
+<td>求长度(string, array, slice, map, channel)</td>
+</tr>
+<tr>
+<td>new</td>
+<td>分配内存，主要用来分配值类型，int，struct。返回的是指针</td>
+</tr>
+<tr>
+<td>make</td>
+<td>分配内存，主要用来分配引用类型，chan，map, slice</td>
+</tr>
+<tr>
+<td>append</td>
+<td>用来追加元素到数组、slice</td>
+</tr>
+<tr>
+<td>panic, recover</td>
+<td>做错误处理</td>
+</tr>
+</tbody></table>
+<h4 id="panic-recover"><a href="#panic-recover" class="headerlink" title="panic/recover"></a>panic/recover</h4><ul>
+<li><p>Go 无异常机制，但是使用 <code>panic/recover</code> 模式来处理错误</p>
+</li>
+<li><p><code>panic</code> 可在<strong>任何地方引发</strong>，但<code>recover</code> 只有在**<code>defer</code> 调用的函数中**有效</p>
+<ul>
+<li><p>例子：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">funcA</span><span class="params">()</span></span> &#123;</span><br><span class="line">	fmt.Println(<span class="string">&quot;func A&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">funcB</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="built_in">panic</span>(<span class="string">&quot;panic in B&quot;</span>)		<span class="comment">//panic</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">funcC</span><span class="params">()</span></span> &#123;</span><br><span class="line">	fmt.Println(<span class="string">&quot;func C&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	funcA()</span><br><span class="line">	funcB()</span><br><span class="line">	funcC()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>输出：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">A</span></span></span><br><span class="line"><span class="built_in">panic</span>: <span class="built_in">panic</span> in B</span><br><span class="line"></span><br><span class="line">goroutine <span class="number">1</span> [running]:</span><br><span class="line">main.funcB(...)</span><br><span class="line">	e:/LearningNotes/Go/_function/<span class="built_in">panic</span>.<span class="keyword">go</span>:<span class="number">10</span></span><br><span class="line">main.main()</span><br><span class="line">	e:/LearningNotes/Go/_function/<span class="built_in">panic</span>.<span class="keyword">go</span>:<span class="number">18</span> +<span class="number">0xa5</span></span><br><span class="line">exit status <span class="number">2</span></span><br></pre></td></tr></table></figure></li>
+<li><p>调用函数 funcB 时，引发了<code>panic</code>导致程序崩溃异常退出</p>
+</li>
+<li><p>此时，我们可以使用 <code>recover</code> 将程序恢复，继续执行</p>
+<ul>
+<li>```go<br>func funcA() {<pre><code>fmt.Println(&quot;func A&quot;)
+</code></pre>
+}func funcB() {<pre><code>defer func() &#123;
+    err := recover()
+    //如果程序出出现了panic错误,可以通过recover恢复过来
+    if err != nil &#123;
+        fmt.Println(&quot;recover in B&quot;)
+    &#125;
+&#125;()
+panic(&quot;panic in B&quot;)
+</code></pre>
+}func funcC() {<pre><code>fmt.Println(&quot;func C&quot;)
+</code></pre>
+}<br>func main() {<pre><code>funcA()
+funcB()
+funcC()
+</code></pre>
+}<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">  * 注意：</span><br><span class="line"></span><br><span class="line">    * &#96;recoer()&#96; 必须搭配 &#96;defer&#96; 使用</span><br><span class="line">    * &#96;defer&#96; 一定要在可能引发 &#96;panic&#96; **的语句前定义**</span><br><span class="line"></span><br><span class="line">### 练习题</span><br><span class="line"></span><br><span class="line">* **分金币**</span><br><span class="line"></span><br><span class="line">* &#96;&#96;&#96;go</span><br><span class="line">  &#x2F;*</span><br><span class="line">  你有50枚金币，需要分配给以下几个人：Matthew,Sarah,Augustus,Heidi,Emilie,Peter,Giana,Adriano,Aaron,Elizabeth。</span><br><span class="line">  分配规则如下：</span><br><span class="line">  a. 名字中每包含1个&#39;e&#39;或&#39;E&#39;分1枚金币</span><br><span class="line">  b. 名字中每包含1个&#39;i&#39;或&#39;I&#39;分2枚金币</span><br><span class="line">  c. 名字中每包含1个&#39;o&#39;或&#39;O&#39;分3枚金币</span><br><span class="line">  d: 名字中每包含1个&#39;u&#39;或&#39;U&#39;分4枚金币</span><br><span class="line">  写一个程序，计算每个用户分到多少金币，以及最后剩余多少金币？</span><br><span class="line">  程序结构如下，请实现 ‘dispatchCoin’ 函数</span><br><span class="line">  *&#x2F;</span><br><span class="line">  var (</span><br><span class="line">  	coins &#x3D; 50</span><br><span class="line">  	users &#x3D; []string&#123;</span><br><span class="line">  		&quot;Matthew&quot;, &quot;Sarah&quot;, &quot;Augustus&quot;, &quot;Heidi&quot;, &quot;Emilie&quot;, &quot;Peter&quot;, &quot;Giana&quot;, &quot;Adriano&quot;, &quot;Aaron&quot;, &quot;Elizabeth&quot;,</span><br><span class="line">  	&#125;</span><br><span class="line">  	distribution &#x3D; make(map[string]int, len(users))</span><br><span class="line">  )</span><br><span class="line">  </span><br><span class="line">  func main() &#123;</span><br><span class="line">  	left :&#x3D; dispatchCoin()</span><br><span class="line">  	fmt.Println(&quot;剩下：&quot;, left)</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>我的答案：</p>
+</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;fmt&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> (</span><br><span class="line">	coins = <span class="number">50</span></span><br><span class="line">	users = []<span class="keyword">string</span>&#123;</span><br><span class="line">		<span class="string">&quot;Matthew&quot;</span>, <span class="string">&quot;Sarah&quot;</span>, <span class="string">&quot;Augustus&quot;</span>, <span class="string">&quot;Heidi&quot;</span>, <span class="string">&quot;Emilie&quot;</span>, <span class="string">&quot;Peter&quot;</span>, <span class="string">&quot;Giana&quot;</span>, <span class="string">&quot;Adriano&quot;</span>, <span class="string">&quot;Aaron&quot;</span>, <span class="string">&quot;Elizabeth&quot;</span>,</span><br><span class="line">	&#125;</span><br><span class="line">	distribution = <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">int</span>, <span class="built_in">len</span>(users))</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">dispatchCoin</span><span class="params">()</span> <span class="title">int</span></span> &#123;</span><br><span class="line"></span><br><span class="line">	ans := <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">int</span>, <span class="number">10</span>)</span><br><span class="line">	<span class="keyword">for</span> _, i := <span class="keyword">range</span> users &#123;</span><br><span class="line">		<span class="keyword">for</span> _, j := <span class="keyword">range</span> i &#123;</span><br><span class="line">			k := j</span><br><span class="line">			<span class="keyword">switch</span> k &#123;</span><br><span class="line">			<span class="keyword">case</span> <span class="string">&#x27;e&#x27;</span>, <span class="string">&#x27;E&#x27;</span>:</span><br><span class="line">				ans[i] += <span class="number">1</span></span><br><span class="line">				coins -= <span class="number">1</span></span><br><span class="line">			<span class="keyword">case</span> <span class="string">&#x27;i&#x27;</span>, <span class="string">&#x27;I&#x27;</span>:</span><br><span class="line">				ans[i] += <span class="number">2</span></span><br><span class="line">				coins -= <span class="number">2</span></span><br><span class="line">			<span class="keyword">case</span> <span class="string">&#x27;o&#x27;</span>, <span class="string">&#x27;O&#x27;</span>:</span><br><span class="line">				ans[i] += <span class="number">3</span></span><br><span class="line">				coins -= <span class="number">3</span></span><br><span class="line">			<span class="keyword">case</span> <span class="string">&#x27;u&#x27;</span>, <span class="string">&#x27;U&#x27;</span>:</span><br><span class="line">				ans[i] += <span class="number">4</span></span><br><span class="line">				coins -= <span class="number">4</span></span><br><span class="line">			<span class="keyword">default</span>:</span><br><span class="line">				<span class="keyword">continue</span></span><br><span class="line"></span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	fmt.Println(ans)</span><br><span class="line">	<span class="keyword">return</span> (coins)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	left := dispatchCoin()</span><br><span class="line">	fmt.Println(<span class="string">&quot;剩下：&quot;</span>, left)</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+          
+        
+      
+    </div>
+   
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+  </section>
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/">&lt;i class&#x3D;&quot;fa fa-angle-left&quot;&gt;&lt;&#x2F;i&gt;</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/">&lt;i class&#x3D;&quot;fa fa-angle-right&quot;&gt;&lt;&#x2F;i&gt;</a>
+  </nav>
+
+
+
+          </div>
+          
+
+
+          
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/stitch.jpg"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">38</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/ZiHao256" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://twitter.com/AlexMa49844688" target="_blank" title="Twitter">
+                      
+                        <i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.facebook.com/profile.php?id=100067079873449" target="_blank" title="FB Page">
+                      
+                        <i class="fa fa-fw fa-facebook"></i>FB Page</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://blog.csdn.net/zihao123w?spm=1000.2115.3001.5343" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-user"></i>CSDN</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:2638779206@qq.com" target="_blank" title="E-Mail-1">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail-1</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="zihao626@gmail.com" target="_blank" title="E-Mail-2">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail-2</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://warmchay.github.io/" title="WarmChay" target="_blank">WarmChay</a>
+                  </li>
+                
+              </ul>
+              <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=300 src="//music.163.com/outchain/player?type=0&id=6738460302&auto=0&height=430"></iframe>
+
+
+<!-- 文件位置：~/blog/themes/next/layout/_custom/sidebar.swig -->
+
+<div id="days"></div>
+<script>
+function show_date_time(){
+    window.setTimeout("show_date_time()", 1000);
+    BirthDay=new Date("05/02/2021 12:00:00");
+    today=new Date();
+    timeold=(today.getTime()-BirthDay.getTime());
+    sectimeold=timeold/1000
+    secondsold=Math.floor(sectimeold);
+    msPerDay=24*60*60*1000
+    e_daysold=timeold/msPerDay
+    daysold=Math.floor(e_daysold);
+    e_hrsold=(e_daysold-daysold)*24;
+    hrsold=setzero(Math.floor(e_hrsold));
+    e_minsold=(e_hrsold-hrsold)*60;
+    minsold=setzero(Math.floor((e_hrsold-hrsold)*60));
+    seconds=setzero(Math.floor((e_minsold-minsold)*60));
+    document.getElementById('days').innerHTML="已运行 "+daysold+" 天 "+hrsold+" 小时 "+minsold+" 分 "+seconds+" 秒";
+}
+function setzero(i) {
+    if (i<10) {
+        i="0" + i
+    };
+    return i;
+}
+show_date_time();
+</script>
+
+            </div>
+          
+
+
+        </div>
+      </section>
+
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love" id="heart">
+    <i class="fa fa-heartbeat"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zihao Ma</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">85.8k</span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+<!-- 新增访客统计代码 -->
+
+<div class="busuanzi-count">
+    <script async="" src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      访问用户： <span class="busuanzi-value" id="busuanzi_value_site_uv"></span> 人
+    </span>
+    <div class="powered-by"></div>
+    <span class="site-uv">
+      <i class="fa fa-eye"></i>
+      访问次数： <span class="busuanzi-value" id="busuanzi_value_site_pv"></span> 次
+    </span>
+    <!-- 博客字数统计 -->
+    <span class="site-pv">
+      <i class="fa fa-pencil"></i>
+      博客全站共： <span class="post-count">85.8k</span> 字
+    </span>
+</div>
+<!-- 新增访客统计代码 END-->
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"left","width":140,"height":240,"hOffset":80,"vOffset":-50},"mobile":null,"show":true,"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

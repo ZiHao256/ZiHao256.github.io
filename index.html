@@ -654,272 +654,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zihao256.github.io/p/4b288195.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/stitch.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ZiHao's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/p/4b288195.html" itemprop="url">专题四设备驱动</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-05-31T20:13:14+08:00">
-                2021-05-31
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于&#58;</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2021-10-17T15:09:46+08:00">
-                2021-10-17
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E8%AE%BE%E8%AE%A1/" itemprop="url" rel="index">
-                    <span itemprop="name">-操作系统课程设计</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  536
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p>完善例子中的字符设备程序，使之满足以下功能：</p>
-<p> i.安装设备后从设备中读出字符串为你的学号；</p>
-<p> ii. 设备支持每次写入字符不超过1024个，超过部分被丢弃；</p>
-<p> iii. 用户可以读出最近写入到设备中的字符；</p>
-<p> iv. 设备关闭前不能被多次打开；</p>
-<p> v. 设备支持系统调用ioctl(int d, int req,…),req = 0x909090, 清除设备中写入的字符串;</p>
-<p> 自己编写测试程序，验证以上功能</p>
-<p>提交内容： 测试过程截图</p>
-</blockquote>
-<h1 id="1-概念"><a href="#1-概念" class="headerlink" title="1 概念"></a>1 概念</h1><ul>
-<li><p>操作系统中<strong>直接控制设备的程序</strong></p>
-</li>
-<li><p>Linux 将设备看成是一种特殊的文件（<strong>设备文件</strong>）</p>
-<ul>
-<li><strong>字符型</strong>设备</li>
-<li>块设备</li>
-</ul>
-</li>
-<li><p>Linux 打开读写或关闭设备文件时，在<strong>与设备驱动进行交互</strong></p>
-</li>
-</ul>
-<h1 id="2-设计"><a href="#2-设计" class="headerlink" title="2 设计"></a>2 设计</h1><ul>
-<li>用户进程请求设备服务流程图<ul>
-<li><img src="E:\Hexo\Blog\source_posts\专题四设备驱动.assets\image-20210531201244104.png" alt="image-20210531201244104"></li>
-<li><ol>
-<li>用户进程发出<strong>IO请求</strong>，系统将处理下传到<strong>VFS</strong>上</li>
-<li>VFS 通过驱动程序提供的接口将<strong>任务分配</strong>到<strong>驱动程序</strong></li>
-<li>驱动程序根据需要，<strong>对设备控制器进行操作</strong></li>
-<li>设备控制器去控制设备</li>
-</ol>
-</li>
-</ul>
-</li>
-</ul>
-<ul>
-<li><strong>设备驱动程序设计</strong><ul>
-<li>VFS 管理<strong>字符设备</strong>的接口：<code>struct file_operations</code><ul>
-<li>重要的接口函数：<code>open,read,write,release,ioctl</code></li>
-<li><strong>接口的实现</strong>都由<strong>设备驱动</strong>提供</li>
-</ul>
-</li>
-<li>与VFS的对接：<ul>
-<li><code>register_chrdev</code></li>
-<li><strong>原理</strong>：由数组chrdevs[255]管理字符设备驱动与VFS的对接接口，主设备号是他的下标</li>
-</ul>
-</li>
-<li><strong>设备驱动</strong>与设备的对接<ul>
-<li>设备就是一块内存，仅读写</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h1 id="3-实现"><a href="#3-实现" class="headerlink" title="3 实现"></a>3 实现</h1><ul>
-<li>实验内容：<ul>
-<li>实现一个用内存模拟的字符设备的驱动程序，功能<ul>
-<li>用户可以向设备写入字符串</li>
-<li>用户可以从设备中读出写入的字符串</li>
-<li>用户可以通过系统调用<code>ioctl</code>清除设备中写入的字符串</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="3-2-设备驱动的实现——用模块实现"><a href="#3-2-设备驱动的实现——用模块实现" class="headerlink" title="3.2 设备驱动的实现——用模块实现"></a>3.2 设备驱动的实现——用模块实现</h2><ul>
-<li>模块初始化</li>
-<li>模块退出时的清理</li>
-<li>open close</li>
-<li>read</li>
-<li>write</li>
-<li>ioctl</li>
-</ul>
-<p>打开失败</p>
-<p>读取失败</p>
-<p>文件结束</p>
-<p>写入失败</p>
-<p>写 bytes</p>
-<p>clean 失败</p>
-<p>清除!</p>
-<p>写设备error</p>
-
-          
-        
-      
-    </div>
-   
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://zihao256.github.io/p/90d31b3c.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1340,6 +1074,272 @@
 </ul>
 <p><code>mysql_fetch_row</code></p>
 <h2 id="INSERT-、UPDATE语句"><a href="#INSERT-、UPDATE语句" class="headerlink" title="INSERT 、UPDATE语句"></a>INSERT 、UPDATE语句</h2><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/fnlingnzb-learner/p/5829556.htmls">参考博客</a></p>
+
+          
+        
+      
+    </div>
+   
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zihao256.github.io/p/4b288195.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/stitch.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ZiHao's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/p/4b288195.html" itemprop="url">专题四设备驱动</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-05-19T12:00:00+08:00">
+                2021-05-19
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2021-10-17T20:15:18+08:00">
+                2021-10-17
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E8%AE%BE%E8%AE%A1/" itemprop="url" rel="index">
+                    <span itemprop="name">-操作系统课程设计</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  536
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>完善例子中的字符设备程序，使之满足以下功能：</p>
+<p> i.安装设备后从设备中读出字符串为你的学号；</p>
+<p> ii. 设备支持每次写入字符不超过1024个，超过部分被丢弃；</p>
+<p> iii. 用户可以读出最近写入到设备中的字符；</p>
+<p> iv. 设备关闭前不能被多次打开；</p>
+<p> v. 设备支持系统调用ioctl(int d, int req,…),req = 0x909090, 清除设备中写入的字符串;</p>
+<p> 自己编写测试程序，验证以上功能</p>
+<p>提交内容： 测试过程截图</p>
+</blockquote>
+<h1 id="1-概念"><a href="#1-概念" class="headerlink" title="1 概念"></a>1 概念</h1><ul>
+<li><p>操作系统中<strong>直接控制设备的程序</strong></p>
+</li>
+<li><p>Linux 将设备看成是一种特殊的文件（<strong>设备文件</strong>）</p>
+<ul>
+<li><strong>字符型</strong>设备</li>
+<li>块设备</li>
+</ul>
+</li>
+<li><p>Linux 打开读写或关闭设备文件时，在<strong>与设备驱动进行交互</strong></p>
+</li>
+</ul>
+<h1 id="2-设计"><a href="#2-设计" class="headerlink" title="2 设计"></a>2 设计</h1><ul>
+<li>用户进程请求设备服务流程图<ul>
+<li><img src="E:\Hexo\Blog\source_posts\专题四设备驱动.assets\image-20210531201244104.png" alt="image-20210531201244104"></li>
+<li><ol>
+<li>用户进程发出<strong>IO请求</strong>，系统将处理下传到<strong>VFS</strong>上</li>
+<li>VFS 通过驱动程序提供的接口将<strong>任务分配</strong>到<strong>驱动程序</strong></li>
+<li>驱动程序根据需要，<strong>对设备控制器进行操作</strong></li>
+<li>设备控制器去控制设备</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><strong>设备驱动程序设计</strong><ul>
+<li>VFS 管理<strong>字符设备</strong>的接口：<code>struct file_operations</code><ul>
+<li>重要的接口函数：<code>open,read,write,release,ioctl</code></li>
+<li><strong>接口的实现</strong>都由<strong>设备驱动</strong>提供</li>
+</ul>
+</li>
+<li>与VFS的对接：<ul>
+<li><code>register_chrdev</code></li>
+<li><strong>原理</strong>：由数组chrdevs[255]管理字符设备驱动与VFS的对接接口，主设备号是他的下标</li>
+</ul>
+</li>
+<li><strong>设备驱动</strong>与设备的对接<ul>
+<li>设备就是一块内存，仅读写</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="3-实现"><a href="#3-实现" class="headerlink" title="3 实现"></a>3 实现</h1><ul>
+<li>实验内容：<ul>
+<li>实现一个用内存模拟的字符设备的驱动程序，功能<ul>
+<li>用户可以向设备写入字符串</li>
+<li>用户可以从设备中读出写入的字符串</li>
+<li>用户可以通过系统调用<code>ioctl</code>清除设备中写入的字符串</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="3-2-设备驱动的实现——用模块实现"><a href="#3-2-设备驱动的实现——用模块实现" class="headerlink" title="3.2 设备驱动的实现——用模块实现"></a>3.2 设备驱动的实现——用模块实现</h2><ul>
+<li>模块初始化</li>
+<li>模块退出时的清理</li>
+<li>open close</li>
+<li>read</li>
+<li>write</li>
+<li>ioctl</li>
+</ul>
+<p>打开失败</p>
+<p>读取失败</p>
+<p>文件结束</p>
+<p>写入失败</p>
+<p>写 bytes</p>
+<p>clean 失败</p>
+<p>清除!</p>
+<p>写设备error</p>
 
           
         

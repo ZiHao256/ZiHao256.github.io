@@ -13,12 +13,12 @@ feed:
   content:
 
 live2d:
-  enable: true  #开启宠物
+  enable: false  #开启宠物
   scriptFrom: local
   model:
     use: 
     # live2d-widget-model-shizuku  #shizuku
-     live2d-widget-model-wanko #是一只趴在碗里的狗狗
+    # live2d-widget-model-wanko #是一只趴在碗里的狗狗
     # hibiki #是一个御姐
 
 

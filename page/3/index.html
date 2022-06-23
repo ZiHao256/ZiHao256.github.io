@@ -462,6 +462,263 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zihao256.github.io/p/bacdba6b.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/stitch.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ZiHao's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/p/bacdba6b.html" itemprop="url">10 内置函数介绍</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-05-06T14:26:06+08:00">
+                2021-05-06
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2021-10-17T15:03:23+08:00">
+                2021-10-17
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Go-LearningNote/" itemprop="url" rel="index">
+                    <span itemprop="name">-Go LearningNote</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  717
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  3
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="10-内置函数介绍"><a href="#10-内置函数介绍" class="headerlink" title="10 内置函数介绍"></a>10 内置函数介绍</h2><table>
+<thead>
+<tr>
+<th>内置函数</th>
+<th>介绍</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>close</td>
+<td>关闭 channel</td>
+</tr>
+<tr>
+<td>len</td>
+<td>求长度(string, array, slice, map, channel)</td>
+</tr>
+<tr>
+<td>new</td>
+<td>分配内存，主要用来分配值类型，int，struct。返回的是指针</td>
+</tr>
+<tr>
+<td>make</td>
+<td>分配内存，主要用来分配引用类型，chan，map, slice</td>
+</tr>
+<tr>
+<td>append</td>
+<td>用来追加元素到数组、slice</td>
+</tr>
+<tr>
+<td>panic, recover</td>
+<td>做错误处理</td>
+</tr>
+</tbody></table>
+<h4 id="panic-recover"><a href="#panic-recover" class="headerlink" title="panic/recover"></a>panic/recover</h4><ul>
+<li><p>Go 无异常机制，但是使用 <code>panic/recover</code> 模式来处理错误</p>
+</li>
+<li><p><code>panic</code> 可在<strong>任何地方引发</strong>，但<code>recover</code> 只有在**<code>defer</code> 调用的函数中**有效</p>
+<ul>
+<li><p>例子：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">funcA</span><span class="params">()</span></span> &#123;</span><br><span class="line">	fmt.Println(<span class="string">&quot;func A&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">funcB</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="built_in">panic</span>(<span class="string">&quot;panic in B&quot;</span>)		<span class="comment">//panic</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">funcC</span><span class="params">()</span></span> &#123;</span><br><span class="line">	fmt.Println(<span class="string">&quot;func C&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	funcA()</span><br><span class="line">	funcB()</span><br><span class="line">	funcC()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>输出：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">A</span></span></span><br><span class="line"><span class="built_in">panic</span>: <span class="built_in">panic</span> in B</span><br><span class="line"></span><br><span class="line">goroutine <span class="number">1</span> [running]:</span><br><span class="line">main.funcB(...)</span><br><span class="line">	e:/LearningNotes/Go/_function/<span class="built_in">panic</span>.<span class="keyword">go</span>:<span class="number">10</span></span><br><span class="line">main.main()</span><br><span class="line">	e:/LearningNotes/Go/_function/<span class="built_in">panic</span>.<span class="keyword">go</span>:<span class="number">18</span> +<span class="number">0xa5</span></span><br><span class="line">exit status <span class="number">2</span></span><br></pre></td></tr></table></figure></li>
+<li><p>调用函数 funcB 时，引发了<code>panic</code>导致程序崩溃异常退出</p>
+</li>
+<li><p>此时，我们可以使用 <code>recover</code> 将程序恢复，继续执行</p>
+<ul>
+<li>```go<br>func funcA() {<pre><code>fmt.Println(&quot;func A&quot;)
+</code></pre>
+}func funcB() {<pre><code>defer func() &#123;
+    err := recover()
+    //如果程序出出现了panic错误,可以通过recover恢复过来
+    if err != nil &#123;
+        fmt.Println(&quot;recover in B&quot;)
+    &#125;
+&#125;()
+panic(&quot;panic in B&quot;)
+</code></pre>
+}func funcC() {<pre><code>fmt.Println(&quot;func C&quot;)
+</code></pre>
+}<br>func main() {<pre><code>funcA()
+funcB()
+funcC()
+</code></pre>
+}<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">  * 注意：</span><br><span class="line"></span><br><span class="line">    * &#96;recoer()&#96; 必须搭配 &#96;defer&#96; 使用</span><br><span class="line">    * &#96;defer&#96; 一定要在可能引发 &#96;panic&#96; **的语句前定义**</span><br><span class="line"></span><br><span class="line">### 练习题</span><br><span class="line"></span><br><span class="line">* **分金币**</span><br><span class="line"></span><br><span class="line">* &#96;&#96;&#96;go</span><br><span class="line">  &#x2F;*</span><br><span class="line">  你有50枚金币，需要分配给以下几个人：Matthew,Sarah,Augustus,Heidi,Emilie,Peter,Giana,Adriano,Aaron,Elizabeth。</span><br><span class="line">  分配规则如下：</span><br><span class="line">  a. 名字中每包含1个&#39;e&#39;或&#39;E&#39;分1枚金币</span><br><span class="line">  b. 名字中每包含1个&#39;i&#39;或&#39;I&#39;分2枚金币</span><br><span class="line">  c. 名字中每包含1个&#39;o&#39;或&#39;O&#39;分3枚金币</span><br><span class="line">  d: 名字中每包含1个&#39;u&#39;或&#39;U&#39;分4枚金币</span><br><span class="line">  写一个程序，计算每个用户分到多少金币，以及最后剩余多少金币？</span><br><span class="line">  程序结构如下，请实现 ‘dispatchCoin’ 函数</span><br><span class="line">  *&#x2F;</span><br><span class="line">  var (</span><br><span class="line">  	coins &#x3D; 50</span><br><span class="line">  	users &#x3D; []string&#123;</span><br><span class="line">  		&quot;Matthew&quot;, &quot;Sarah&quot;, &quot;Augustus&quot;, &quot;Heidi&quot;, &quot;Emilie&quot;, &quot;Peter&quot;, &quot;Giana&quot;, &quot;Adriano&quot;, &quot;Aaron&quot;, &quot;Elizabeth&quot;,</span><br><span class="line">  	&#125;</span><br><span class="line">  	distribution &#x3D; make(map[string]int, len(users))</span><br><span class="line">  )</span><br><span class="line">  </span><br><span class="line">  func main() &#123;</span><br><span class="line">  	left :&#x3D; dispatchCoin()</span><br><span class="line">  	fmt.Println(&quot;剩下：&quot;, left)</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>我的答案：</p>
+</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;fmt&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> (</span><br><span class="line">	coins = <span class="number">50</span></span><br><span class="line">	users = []<span class="keyword">string</span>&#123;</span><br><span class="line">		<span class="string">&quot;Matthew&quot;</span>, <span class="string">&quot;Sarah&quot;</span>, <span class="string">&quot;Augustus&quot;</span>, <span class="string">&quot;Heidi&quot;</span>, <span class="string">&quot;Emilie&quot;</span>, <span class="string">&quot;Peter&quot;</span>, <span class="string">&quot;Giana&quot;</span>, <span class="string">&quot;Adriano&quot;</span>, <span class="string">&quot;Aaron&quot;</span>, <span class="string">&quot;Elizabeth&quot;</span>,</span><br><span class="line">	&#125;</span><br><span class="line">	distribution = <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">int</span>, <span class="built_in">len</span>(users))</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">dispatchCoin</span><span class="params">()</span> <span class="title">int</span></span> &#123;</span><br><span class="line"></span><br><span class="line">	ans := <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">int</span>, <span class="number">10</span>)</span><br><span class="line">	<span class="keyword">for</span> _, i := <span class="keyword">range</span> users &#123;</span><br><span class="line">		<span class="keyword">for</span> _, j := <span class="keyword">range</span> i &#123;</span><br><span class="line">			k := j</span><br><span class="line">			<span class="keyword">switch</span> k &#123;</span><br><span class="line">			<span class="keyword">case</span> <span class="string">&#x27;e&#x27;</span>, <span class="string">&#x27;E&#x27;</span>:</span><br><span class="line">				ans[i] += <span class="number">1</span></span><br><span class="line">				coins -= <span class="number">1</span></span><br><span class="line">			<span class="keyword">case</span> <span class="string">&#x27;i&#x27;</span>, <span class="string">&#x27;I&#x27;</span>:</span><br><span class="line">				ans[i] += <span class="number">2</span></span><br><span class="line">				coins -= <span class="number">2</span></span><br><span class="line">			<span class="keyword">case</span> <span class="string">&#x27;o&#x27;</span>, <span class="string">&#x27;O&#x27;</span>:</span><br><span class="line">				ans[i] += <span class="number">3</span></span><br><span class="line">				coins -= <span class="number">3</span></span><br><span class="line">			<span class="keyword">case</span> <span class="string">&#x27;u&#x27;</span>, <span class="string">&#x27;U&#x27;</span>:</span><br><span class="line">				ans[i] += <span class="number">4</span></span><br><span class="line">				coins -= <span class="number">4</span></span><br><span class="line">			<span class="keyword">default</span>:</span><br><span class="line">				<span class="keyword">continue</span></span><br><span class="line"></span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	fmt.Println(ans)</span><br><span class="line">	<span class="keyword">return</span> (coins)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	left := dispatchCoin()</span><br><span class="line">	fmt.Println(<span class="string">&quot;剩下：&quot;</span>, left)</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+          
+        
+      
+    </div>
+   
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://zihao256.github.io/p/a3f04df4.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -3478,469 +3735,6 @@ func main() &#123;
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zihao256.github.io/p/e9b15daf.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/stitch.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ZiHao's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/p/e9b15daf.html" itemprop="url">Hexo LearningNote</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-05-05T22:40:01+08:00">
-                2021-05-05
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于&#58;</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2021-10-17T15:03:23+08:00">
-                2021-10-17
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Blog/" itemprop="url" rel="index">
-                    <span itemprop="name">-Blog</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  3k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  13
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="Hexo-博客"><a href="#Hexo-博客" class="headerlink" title="Hexo 博客"></a>Hexo 博客</h1><p><a target="_blank" rel="noopener" href="https://io-oi.me/tech/hexo-next-optimization/">最全详细（🗡）</a></p>
-<p>[toc]</p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/gdutxiaoxu/article/details/53576018?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522161853970416780255223015%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&request_id=161853970416780255223015&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduend~default-1-53576018.first_rank_v2_pc_rank_v29&utm_term=Hexo+Github">参考博客</a></p>
-<h1 id="环境搭建的准备"><a href="#环境搭建的准备" class="headerlink" title="环境搭建的准备"></a>环境搭建的准备</h1><ul>
-<li><p><strong>Node.js 的安装和准备</strong></p>
-<ul>
-<li><img src="C:\Users\Light\AppData\Roaming\Typora\typora-user-images\image-20210416102842874.png" alt="image-20210416102842874"></li>
-</ul>
-</li>
-<li><p>关于<code>Node.js</code>和<code>npm</code>的介绍: <a target="_blank" rel="noopener" href="https://www.cnblogs.com/duanweishi/p/7729292.html">参考博客</a></p>
-<ul>
-<li><p>npm 是 javascript 的<strong>包管理工具</strong></p>
-</li>
-<li><p>npm 与 Node.js 一起发布</p>
-<ul>
-<li>npm 更新频率快，需单独更新npm<code>npm install npm@latest -g</code></li>
-</ul>
-</li>
-<li><p><strong>安装包</strong>：安装对应的包至当前目录，并创建<code>node_modules</code>文件，下载包进去</p>
-<ul>
-<li><code>npm install &lt;package_name</code></li>
-</ul>
-</li>
-<li><p><strong><code>package.json</code>:</strong></p>
-<ul>
-<li>可以知道项目中用了什么包</li>
-<li>基本的<code>package.json</code>文件：至少包含<ul>
-<li>包名 name</li>
-<li>版本信息 version</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p><strong>创建 <code>package.json</code></strong></p>
-<ul>
-<li><code>npm init</code> : 初始化<code>package.json</code>文件<ul>
-<li>运行后，如实回答基本信息</li>
-</ul>
-</li>
-<li>主要字段含义：<ul>
-<li>name : 模块名，</li>
-<li>version: 模块版本信息</li>
-<li>description:关于模块功能简单描述，若为空，默认葱当前目录的<code>README.md</code>或者<code>README</code>读取第一行作为默认值</li>
-<li>main : 模块被引入后，首先加载的文件，默认为<code>index.js</code></li>
-<li>scripts : 定义一些常用命令入口</li>
-</ul>
-</li>
-<li>npm 可以进行简单配置常用信息<ul>
-<li><code>npm set init.author.email &quot;2638779206@qq.com&quot;</code></li>
-<li><code>npm set init.author.name &quot;zihao&quot;</code> </li>
-<li><code>npm set init.license &quot;XDU&quot;</code></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p><strong>安装模块</strong></p>
-<ul>
-<li><code>npm install</code> 会读取<code>package.json</code>以安装模块<ul>
-<li>安装的模块分为两类: 生产环境需要的安装包<code>dependencies</code>.， 开发环境需要的安装包<code>devDependencies</code></li>
-</ul>
-</li>
-<li>在安装模块时，修改<code>package.json</code><ul>
-<li><code>npm install &lt;packagename&gt; --save</code></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p><strong>配置npm源：</strong></p>
-<ul>
-<li><p>配置国内镜像加快下载速度</p>
-</li>
-<li><p>临时使用 </p>
-<ul>
-<li>通过<code>--registry</code>: <code>npm install express --registry https://registry.npm.taobao.org</code></li>
-</ul>
-</li>
-<li><p>全局使用：</p>
-<ul>
-<li>```bash<br>config set registry <a target="_blank" rel="noopener" href="https://registry.npm.taobao.org/">https://registry.npm.taobao.org</a><br>  // 配置后可通过下面方式来验证是否成功<br>  npm config get registry<br>  // 或<br>  npm info express<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">* **git 的安装和准备**</span><br><span class="line">  * ![image-20210416102902488](C:\Users\Light\AppData\Roaming\Typora\typora-user-images\image-20210416102902488.png)</span><br><span class="line">* **Github账户的配置**</span><br><span class="line">  * 使用了佛跳墙VPN，解决了加载Github慢的问题</span><br><span class="line">  * 注册</span><br><span class="line">  * 创建代码库</span><br><span class="line">  * 代码库设置</span><br><span class="line">    * &#96;Setting&#96;</span><br><span class="line">    * &#96;Pages&#96;</span><br><span class="line">    * &#96;Automatic page generator&#96;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 安装 Hexo</span><br><span class="line"></span><br><span class="line">* 创建&#96;Hexo&#96; 目录</span><br><span class="line">* &#96;gitbash&#96; 该目录：</span><br><span class="line">  * &#96;npm install hexo-cli -g&#96; ： </span><br><span class="line">    * hexo 本身是一个静态博客生成工具，具备编译markdown、凭借主题模板、生成HTML、上传Gti等基本功能，&#96;hexo-cli&#96;将这些功能封装为命令，提供给用户通过&#96;hexo s&#96;等命令调用的模块</span><br><span class="line">    * problem:![image-20210416110241054](C:\Users\Light\AppData\Roaming\Typora\typora-user-images\image-20210416110241054.png)</span><br><span class="line">    * solution ：[博客](https:&#x2F;&#x2F;blog.csdn.net&#x2F;m0_46256147&#x2F;article&#x2F;details&#x2F;104725439)</span><br><span class="line">  * &#96;npm install hexo --save&#96;</span><br><span class="line">    * problem :![image-20210416110617131](C:\Users\Light\AppData\Roaming\Typora\typora-user-images\image-20210416110617131.png)</span><br><span class="line">    * solution [参考博客](![image-20210416110631231](C:\Users\Light\AppData\Roaming\Typora\typora-user-images\image-20210416110631231.png))</span><br><span class="line">    * problem ![image-20210416110804200](C:\Users\Light\AppData\Roaming\Typora\typora-user-images\image-20210416110804200.png)</span><br><span class="line">    * solution [参考](https:&#x2F;&#x2F;blog.csdn.net&#x2F;JZevin&#x2F;article&#x2F;details&#x2F;107865683)</span><br><span class="line">    * problem ![image-20210416113337859](C:\Users\Light\AppData\Roaming\Typora\typora-user-images\image-20210416113337859.png)</span><br><span class="line">    * solution : [参考](https:&#x2F;&#x2F;blog.csdn.net&#x2F;weixin_42677762&#x2F;article&#x2F;details&#x2F;112554832?utm_medium&#x3D;distribute.pc_relevant.none-task-blog-baidujs_title-0&amp;spm&#x3D;1001.2101.3001.4242)</span><br><span class="line">  * &#96;hexo -v&#96; 检查是否安装好</span><br><span class="line">    * ![image-20210416113525387](C:\Users\Light\AppData\Roaming\Typora\typora-user-images\image-20210416113525387.png)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 相关配置</span><br><span class="line"></span><br><span class="line">进行本地的配置</span><br><span class="line"></span><br><span class="line">* **初始化 Hexo**</span><br><span class="line"></span><br><span class="line">  * &#96;hexo init&#96;</span><br><span class="line"></span><br><span class="line">    * problem : ![image-20210416113819617](C:\Users\Light\AppData\Roaming\Typora\typora-user-images\image-20210416113819617.png)</span><br><span class="line"></span><br><span class="line">      * 该博客说接着上面的操作，但是上面的操作创建了json文件等，不是空的，是否可以直接在该目录下在创建一个新的文件？</span><br><span class="line"></span><br><span class="line">    * problem : 创建新文件夹后：&#96;hexo init&#96;</span><br><span class="line"></span><br><span class="line">      * ![image-20210416114034172](C:\Users\Light\AppData\Roaming\Typora\typora-user-images\image-20210416114034172.png)</span><br><span class="line"></span><br><span class="line">        &#96;fatal: unable to access &#39;https:&#x2F;&#x2F;github.com&#x2F;hexojs&#x2F;hexo-starter.git&#x2F;&#39;: Failed to connect to github.com port 443: Timed out&#96;</span><br><span class="line"></span><br><span class="line">      * solution : [参考博客](https:&#x2F;&#x2F;blog.csdn.net&#x2F;weixin_44041700&#x2F;article&#x2F;details&#x2F;115599817)</span><br><span class="line"></span><br><span class="line">        * 果真是网络的问题，再查查看完此博客后，再次输入&#96;hexo init&#96; </span><br><span class="line">        * ![image-20210416115639944](C:\Users\Light\AppData\Roaming\Typora\typora-user-images\image-20210416115639944.png)</span><br><span class="line"></span><br><span class="line">      * 但是很慢</span><br><span class="line"></span><br><span class="line">        * 可以切换npm源至淘宝源加速：</span><br><span class="line">          * &#96;npm install express --registry https:&#x2F;&#x2F;registry.npm.taobao.org&#96;</span><br><span class="line">        * 半分钟就好：</span><br><span class="line">          * ![image-20210416121021641](C:\Users\Light\AppData\Roaming\Typora\typora-user-images\image-20210416121021641.png)</span><br><span class="line"></span><br><span class="line">  * &#96;npm install&#96;自动安装组件</span><br><span class="line"></span><br><span class="line">    * 无报错</span><br><span class="line"></span><br><span class="line">* **首次体验hexo**</span><br><span class="line"></span><br><span class="line">  * &#96;hexo g&#96;：generate 生成网站静态文件至 public 文件夹</span><br><span class="line">    * 便于查看网站生成的静态文件或者手动部署网站</span><br><span class="line">  * &#96;hexo s&#96;：server 启动本地服务器，用于预览主题</span><br><span class="line">    * 默认地址 : http:&#x2F;&#x2F;localhost:4000&#x2F;</span><br><span class="line">    * 预览的同时可以修改文章内容或主题代码，保存后刷新页面即可</span><br><span class="line">    * 对 Hexo 根目录 &#96;_config.yml&#96; 的修改，需要重启本地服务器后才能预览效果</span><br><span class="line">  * &#96;hexo new&quot;学习笔记 一&quot; &#96;</span><br><span class="line">    * 新建标题为的文章</span><br><span class="line">    * 文章标题可在对应的md文件改</span><br><span class="line">  * &#96;hexo d &#96;deploy</span><br><span class="line">    * 自动生成网站静态文件，并部署到设定的仓库</span><br><span class="line">  * &#96;hexo clean&#96;</span><br><span class="line">    * 清除缓存文件 &#96;db.json&#96; 和已生成的静态文件&#96;public&#96;</span><br><span class="line"></span><br><span class="line"># 将 hexo 与 github page 联系起来</span><br><span class="line"></span><br><span class="line">* **配置 git 个人信息**</span><br><span class="line"></span><br><span class="line">  * 设置 GIT 的 user name 和 email</span><br><span class="line"></span><br><span class="line">    * &#96;&#96;&#96;bash</span><br><span class="line">      git config --global user.name &quot;ZiHao256&quot;</span><br><span class="line">      git config --global user.email &quot;2638779206@qq.com&quot;</span><br></pre></td></tr></table></figure></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>生成密钥</p>
-<ul>
-<li>```bash<br> ssh-keygen -t rsa -C “<a href="mailto:&#x32;&#x36;&#x33;&#56;&#55;&#x37;&#57;&#50;&#x30;&#54;&#x40;&#x71;&#x71;&#46;&#x63;&#x6f;&#x6d;">&#x32;&#x36;&#x33;&#56;&#55;&#x37;&#57;&#50;&#x30;&#54;&#x40;&#x71;&#x71;&#46;&#x63;&#x6f;&#x6d;</a>“<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">      </span><br><span class="line"></span><br><span class="line">* **配置 Deployment**</span><br><span class="line"></span><br><span class="line">  * 在&#96;_config.yml&#96;文件中，找到Deployment：</span><br><span class="line"></span><br><span class="line">    * &#96;&#96;&#96;bash</span><br><span class="line">      deploy:</span><br><span class="line">        type: git</span><br><span class="line">        repo: git@github.com:ZiHao256&#x2F;ZiHao256.github.io.git</span><br><span class="line">        branch: master</span><br></pre></td></tr></table></figure></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h1 id="写博客、发布文章"><a href="#写博客、发布文章" class="headerlink" title="写博客、发布文章"></a>写博客、发布文章</h1><ul>
-<li><p>新建一篇博客</p>
-<ul>
-<li><code>hexo new post &quot;title&quot;</code></li>
-<li>可在<code>source\_posts</code> 中看到<code>title.md</code>文件</li>
-</ul>
-</li>
-<li><p>新建好后，修改md文件</p>
-</li>
-<li><p>运行生成、部署文章：</p>
-<ul>
-<li><p>生成：<code>hexo g</code></p>
-</li>
-<li><p>部署：<code>hexo d</code></p>
-<ul>
-<li><p>problem 1 : </p>
-<p>![image-20210416124223198](E:\LearningNotes\Hexo\Hexo 博客.assets\image-20210416124223198.png)</p>
-</li>
-<li><p>solution : 未安装<code>hexo-deployer-git</code>插件，在<strong>站点目录</strong>(hexo init 目录)输入<code>npm install hexo-deployer-git --save</code></p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_21808961/article/details/84476504">参考博客</a></p>
-</li>
-<li><p>problem 2:</p>
-<p>![image-20210416125451770](E:\LearningNotes\Hexo\Hexo 博客.assets\image-20210416125451770.png) solution:    <code>Please make sure you have the correct access rights and the repository exist</code>: 确保您具有正确的访问权限并且存储库存在</p>
-<p>原因：公钥出现问题</p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_43705131/article/details/107965888">参考博客</a></p>
-<ol>
-<li>删除.ssh文件</li>
-<li>重新设置用户名和邮箱</li>
-<li>重新生成ssh公钥</li>
-<li>配置github</li>
-</ol>
-</li>
-</ul>
-</li>
-<li><p>或直接在部署前生成：</p>
-<ul>
-<li><code>hexo d -g #在部署前先生成</code></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>部署成功后，在<code>https://ZiHao256.github.io</code>看到生成的文章</p>
-</li>
-</ul>
-<h1 id="主题推荐"><a href="#主题推荐" class="headerlink" title="主题推荐"></a>主题推荐</h1><ul>
-<li>主题配置文件在<code>_config.yml</code></li>
-</ul>
-<h2 id="NexT主题配置"><a href="#NexT主题配置" class="headerlink" title="NexT主题配置"></a>NexT主题配置</h2><ul>
-<li>简洁美观</li>
-<li>支持不同风格</li>
-<li>提供完善配置说明</li>
-<li>Hexo 两份主要配置文件：名称都是<code>_config.yml</code><ul>
-<li><strong>站点配置文件</strong>站点根目录下 ：Hexo 本身的配置</li>
-<li><strong>主题配置文件</strong>主题目录下 ：由主题作者提供，用于配置主题相关选项</li>
-</ul>
-</li>
-</ul>
-<h3 id="1-安装NexT"><a href="#1-安装NexT" class="headerlink" title="1 安装NexT"></a>1 安装NexT</h3><ul>
-<li>只需要将主题文件拷贝至 <code>themes</code> 目录下，然后修改一下配置文件</li>
-<li>若熟悉 git ，建议使用 克隆最新版本的方式，之后更新可以使用 <code>git pull</code> 快速更新</li>
-<li>定位至Hexo 站点目录 <code>cd 至站点目录文件</code></li>
-<li>使用git checkout <code>git clone https://github.com/iissnan/hexo-theme-next themes/next</code><ul>
-<li><strong>problem</strong> : git clone 很慢</li>
-<li><strong>solution</strong>  : 使用国内镜像网站:<code>github.com.cnpnjs.org</code><ul>
-<li>将命令中的<code>github.com</code>换成这个</li>
-<li>效果拔群</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="2-启用主题"><a href="#2-启用主题" class="headerlink" title="2 启用主题"></a>2 启用主题</h3><ul>
-<li>当 克隆/下载 至<code>themes</code>下后，打开 <strong>站点配置文件</strong>，找到 <strong>theme</strong> 字段，将其值改为<strong>主题名</strong></li>
-<li>验证是否启用成功之前，需要使用<code>hexo clean</code>清除缓存</li>
-</ul>
-<h3 id="3-验证主题"><a href="#3-验证主题" class="headerlink" title="3 验证主题"></a>3 验证主题</h3><ul>
-<li>首先，<code>hexo g</code>生成静态文件</li>
-<li>其次，启动 Hexo 本地站点，并开启调试模式(<code>--debug</code>)<ul>
-<li><code>hexo s --debug</code>, 若有异常可从命令行输出，帮助debug</li>
-</ul>
-</li>
-<li>然后，<code>https://localhost:4000</code>，检查是否运行正常</li>
-<li><strong>problem:</strong> ![image-20210416144717418](E:\LearningNotes\Hexo\Hexo 博客.assets\image-20210416144717418.png)<ul>
-<li><strong>solution</strong> : ![image-20210416145430740](E:\LearningNotes\Hexo\Hexo 博客.assets\image-20210416145430740.png)</li>
-<li><ol>
-<li>手动配置：文件名和配置文件都无问题</li>
-<li>更新主题文件：</li>
-</ol>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="4-主题设定"><a href="#4-主题设定" class="headerlink" title="4 主题设定"></a>4 主题设定</h3><ul>
-<li>scheme : NexT 提供的一种特性，可提供多种外观<ul>
-<li>Muse - 默认 Scheme，这是 NexT 最初的版本，黑白主调，大量留白 </li>
-<li>Mist - Muse 的紧凑版本，整洁有序的单栏外观 </li>
-<li>Pisces - 双栏 Scheme，小家碧玉似的清新</li>
-</ul>
-</li>
-</ul>
-<h3 id="5-设置语言"><a href="#5-设置语言" class="headerlink" title="5 设置语言"></a>5 设置语言</h3><ul>
-<li>编辑站点配置文件，将<code>language</code>字段设置成需要的语言：<ul>
-<li><code>language: zh-Hans</code></li>
-</ul>
-</li>
-</ul>
-<h3 id="6-设置菜单"><a href="#6-设置菜单" class="headerlink" title="6 设置菜单"></a>6 设置菜单</h3><ul>
-<li><p><strong>菜单配置</strong>三个部分：<strong>主题配置文件</strong> 中 对应的字段<code>menu</code></p>
-<ul>
-<li><strong>菜单项：</strong>名称和链接<ul>
-<li><code>item name:link</code><ul>
-<li>item name 是一个名称，不直接显示在页面，而是用于匹配图标和翻译</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><strong>菜单项的显示文本</strong></li>
-<li><strong>菜单项对应的图标</strong><ul>
-<li>NexT 使用 <code>Font Awesome</code>提供的图标</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>示例：若站点在子目录中，去掉连接前的 <code>/</code></p>
-<ul>
-<li>```<br>menu:<br>  home: /<br>  archives: /archives<br>  #about: /about<br>  #categories: /categories<br>  tags: /tags<br>  #commonweal: /404.html<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* **NexT 默认的菜单项：**</span><br><span class="line"></span><br><span class="line">  * *键值*：**home**</span><br><span class="line">    * *设定值*：home:&#x2F;</span><br><span class="line">    * *显示文本*：主页</span><br><span class="line">  * **archives**</span><br><span class="line">    * archives:&#x2F;archives</span><br><span class="line">    * 归档页</span><br><span class="line">  * **categories**</span><br><span class="line">    * categories:&#x2F;categories</span><br><span class="line">    * 分类页</span><br><span class="line">  * **tags**</span><br><span class="line">    * tags:&#x2F;tags</span><br><span class="line">    * 标签页</span><br><span class="line">  * **about**</span><br><span class="line">    * about:&#x2F;about</span><br><span class="line">    * 关于页</span><br><span class="line">  * **commonweal**</span><br><span class="line">    * commonweal:&#x2F;404.html</span><br><span class="line">    * 公益 404</span><br><span class="line"></span><br><span class="line">* 设置菜单项的**显示文本：**</span><br><span class="line"></span><br><span class="line">  * Hexo 生成的时候，使用**菜单项的名称**查找对应的语言翻译，并且提取显示文本</span><br><span class="line">  * 显示文本在NexT 主题目录下的&#96;language&#x2F;&#123;language&#125;.yml&#96;</span><br><span class="line"></span><br><span class="line">* 设置菜单项的**图标**，对应的字段&#96;menu_icons&#96;</span><br><span class="line"></span><br><span class="line">  * 设定格式&#96;item name:icon name&#96;</span><br><span class="line"></span><br><span class="line">    * icon name是Font Awesome 图表的名字</span><br><span class="line">    * enable 可用于是否显示图标</span><br><span class="line"></span><br><span class="line">  * 示例</span><br><span class="line"></span><br><span class="line">    * &#96;&#96;&#96;</span><br><span class="line">      menu_icons:</span><br><span class="line">        enable: true</span><br><span class="line">        # Icon Mapping.</span><br><span class="line">        home: home</span><br><span class="line">        about: user</span><br><span class="line">        categories: th</span><br><span class="line">        tags: tags</span><br><span class="line">        archives: archive</span><br><span class="line">        commonweal: heartbeat</span><br><span class="line">      </span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="7-侧栏"><a href="#7-侧栏" class="headerlink" title="7 侧栏"></a>7 侧栏</h3><ul>
-<li><p><strong>默认情况</strong>：侧栏仅在文章页面（拥有目录列表时）才显示，放于右侧</p>
-</li>
-<li><p>可通过控制 主题配置文件 <code>sidebar</code>字段控制侧栏</p>
-<ul>
-<li><p><strong>侧栏的位置</strong>，<code>sidebar.position</code>, 目前仅Pisces Scheme支持</p>
-<ul>
-<li>left</li>
-<li>right</li>
-</ul>
-</li>
-<li><p><strong>侧栏显示的时机</strong>，<code>sidebar.display</code></p>
-<ul>
-<li><p><strong>post :</strong> 默认行为，在文章页面（拥有目录列表）时显示</p>
-</li>
-<li><p><strong>always:</strong> 在所有页面中都显示</p>
-</li>
-<li><p><strong>remove:</strong> 完全移除</p>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="8-头像"><a href="#8-头像" class="headerlink" title="8 头像"></a>8 头像</h3><ul>
-<li>编辑 站点配置文件， 新增<code>avatar</code>字段，将其值设置为头像的链接地址：<ul>
-<li>完整的互联网URL：</li>
-<li>站点内的地址：<code>将头像放置主题目录下的 source/uploads/ （新建uploads目录若不存在） 配置为：avatar: /uploads/avatar.png 或者 放置在 source/images/ 目录下 , 配置为：avatar: /images/avatar.png</code></li>
-</ul>
-</li>
-</ul>
-<h1 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h1><h2 id="生成-分类-页并添加-type-属性"><a href="#生成-分类-页并添加-type-属性" class="headerlink" title="生成 分类 页并添加 type 属性"></a>生成 分类 页并添加 type 属性</h2><ul>
-<li><code>hexo new page categories</code>: 生成分类页</li>
-<li>找到<code>source/categories/index.md</code><ul>
-<li>添加<code>type: &quot;xxx&quot;</code></li>
-</ul>
-</li>
-</ul>
-<h2 id="给文章添加-categories-属性"><a href="#给文章添加-categories-属性" class="headerlink" title="给文章添加 categories 属性"></a>给文章添加 categories 属性</h2><ul>
-<li>打开文章，写入<code>categories : -xxx</code></li>
-<li>hexo 不会产生两个分类，<strong>而是把分类嵌套</strong></li>
-</ul>
-<h1 id="标签"><a href="#标签" class="headerlink" title="标签"></a>标签</h1><p>与分类类似</p>
-<h1 id="个人博客主题优化"><a href="#个人博客主题优化" class="headerlink" title="个人博客主题优化"></a>个人博客主题优化</h1><p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/efbeddc5eb19">参考博客</a></p>
-<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/60424755">参考博客</a></p>
-<p><a target="_blank" rel="noopener" href="https://itrhx.blog.csdn.net/article/details/85420403?utm_medium=distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromMachineLearnPai2~default-2.control&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromMachineLearnPai2~default-2.control">cankao</a></p>
-<h2 id="统计站点的总访问量"><a href="#统计站点的总访问量" class="headerlink" title="统计站点的总访问量"></a>统计站点的总访问量</h2><h2 id="让百度收录-blog"><a href="#让百度收录-blog" class="headerlink" title="让百度收录 blog"></a>让百度收录 blog</h2><h2 id="底部小心心增加点击动画"><a href="#底部小心心增加点击动画" class="headerlink" title="底部小心心增加点击动画"></a>底部小心心增加点击动画</h2><p>博客1：</p>
-<h3 id="3-1-添加头像"><a href="#3-1-添加头像" class="headerlink" title="3.1 添加头像"></a>3.1 添加头像</h3><h3 id="3-2-设置头像边框为圆形"><a href="#3-2-设置头像边框为圆形" class="headerlink" title="3.2 设置头像边框为圆形"></a>3.2 设置头像边框为圆形</h3><h3 id="3-3-特效：鼠标放置头像上旋转"><a href="#3-3-特效：鼠标放置头像上旋转" class="headerlink" title="3.3 特效：鼠标放置头像上旋转"></a>3.3 特效：鼠标放置头像上旋转</h3><h2 id="4-浏览页面时，显示当前浏览进度"><a href="#4-浏览页面时，显示当前浏览进度" class="headerlink" title="4 浏览页面时，显示当前浏览进度"></a>4 浏览页面时，显示当前浏览进度</h2><h2 id="5-侧边栏设置"><a href="#5-侧边栏设置" class="headerlink" title="5 侧边栏设置"></a>5 侧边栏设置</h2><h3 id="5-1-设置侧边栏社交链接"><a href="#5-1-设置侧边栏社交链接" class="headerlink" title="5.1 设置侧边栏社交链接"></a>5.1 设置侧边栏社交链接</h3><h3 id="5-2-设置侧边栏社交图标"><a href="#5-2-设置侧边栏社交图标" class="headerlink" title="5.2 设置侧边栏社交图标"></a>5.2 设置侧边栏社交图标</h3><h3 id="5-3-RSS"><a href="#5-3-RSS" class="headerlink" title="5.3 RSS"></a>5.3 RSS</h3><p>配置</p>
-<h3 id="5-4-友情链接"><a href="#5-4-友情链接" class="headerlink" title="5.4 友情链接"></a>5.4 友情链接</h3><h2 id="6-主页文章添加边框阴影效果"><a href="#6-主页文章添加边框阴影效果" class="headerlink" title="6 主页文章添加边框阴影效果"></a>6 主页文章添加边框阴影效果</h2><h2 id="7-修改文章间分割线"><a href="#7-修改文章间分割线" class="headerlink" title="7 修改文章间分割线"></a>7 修改文章间分割线</h2><h2 id="8-代码块自定义样式"><a href="#8-代码块自定义样式" class="headerlink" title="8 代码块自定义样式"></a>8 代码块自定义样式</h2><h2 id="9-开启版权声明"><a href="#9-开启版权声明" class="headerlink" title="9 开启版权声明"></a>9 开启版权声明</h2><h2 id="10-自定义文章底部版权声明"><a href="#10-自定义文章底部版权声明" class="headerlink" title="10 自定义文章底部版权声明"></a>10 自定义文章底部版权声明</h2><h2 id="11-在右上角或者左上角实现fork-me-on-github"><a href="#11-在右上角或者左上角实现fork-me-on-github" class="headerlink" title="11 在右上角或者左上角实现fork me on github"></a>11 在右上角或者左上角实现<code>fork me on github</code></h2><h2 id="12-修改文章底部带-号的标签"><a href="#12-修改文章底部带-号的标签" class="headerlink" title="12 修改文章底部带 # 号的标签"></a>12 修改文章底部带 # 号的标签</h2><h2 id="13-添加顶部加载条"><a href="#13-添加顶部加载条" class="headerlink" title="13 添加顶部加载条"></a>13 添加顶部加载条</h2><h2 id="14"><a href="#14" class="headerlink" title="14"></a>14</h2><h2 id="15-修改网页底部"><a href="#15-修改网页底部" class="headerlink" title="15 修改网页底部"></a>15 修改网页底部</h2><h3 id="1-修改桃心"><a href="#1-修改桃心" class="headerlink" title="1 修改桃心"></a>1 修改桃心</h3><h2 id="16"><a href="#16" class="headerlink" title="16"></a>16</h2><h2 id="23-新建404界面"><a href="#23-新建404界面" class="headerlink" title="23 新建404界面"></a>23 新建404界面</h2><h2 id="32-修改打赏字体不闪动"><a href="#32-修改打赏字体不闪动" class="headerlink" title="32 修改打赏字体不闪动"></a>32 修改打赏字体不闪动</h2><h2 id="39-添加网易云音乐"><a href="#39-添加网易云音乐" class="headerlink" title="39 添加网易云音乐"></a>39 添加网易云音乐</h2><h2 id="设置显示目录"><a href="#设置显示目录" class="headerlink" title="设置显示目录"></a>设置显示目录</h2><h2 id="统计字数"><a href="#统计字数" class="headerlink" title="统计字数"></a>统计字数</h2><p>博客2</p>
-<h2 id="加宠物"><a href="#加宠物" class="headerlink" title="加宠物"></a>加宠物</h2><h2 id="网页底部的动态桃心图像"><a href="#网页底部的动态桃心图像" class="headerlink" title="网页底部的动态桃心图像"></a>网页底部的动态桃心图像</h2><h2 id="404-页面"><a href="#404-页面" class="headerlink" title="404 页面"></a>404 页面</h2><h1 id="访客数访问次数"><a href="#访客数访问次数" class="headerlink" title="访客数访问次数"></a>访客数访问次数</h1><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/baidu_34310405/article/details/102665373">https://blog.csdn.net/baidu_34310405/article/details/102665373</a></p>
-<h1 id="添加背景图片"><a href="#添加背景图片" class="headerlink" title="添加背景图片"></a>添加背景图片</h1><p><a target="_blank" rel="noopener" href="https://tding.top/archives/761b6f4d.html">https://tding.top/archives/761b6f4d.html</a></p>
-<h1 id="添加跳动的心"><a href="#添加跳动的心" class="headerlink" title="添加跳动的心"></a>添加跳动的心</h1><p><a target="_blank" rel="noopener" href="https://io-oi.me/tech/hexo-next-optimization/#%E8%AE%A9%E9%A1%B5%E8%84%9A%E7%9A%84%E5%BF%83%E8%B7%B3%E5%8A%A8%E8%B5%B7%E6%9D%A5">https://io-oi.me/tech/hexo-next-optimization/#%E8%AE%A9%E9%A1%B5%E8%84%9A%E7%9A%84%E5%BF%83%E8%B7%B3%E5%8A%A8%E8%B5%B7%E6%9D%A5</a></p>
-<h1 id="侧栏加入运行时间"><a href="#侧栏加入运行时间" class="headerlink" title="侧栏加入运行时间"></a>侧栏加入运行时间</h1><p><a target="_blank" rel="noopener" href="https://io-oi.me/tech/hexo-next-optimization/#%E4%BE%A7%E6%A0%8F%E5%8A%A0%E5%85%A5%E5%B7%B2%E8%BF%90%E8%A1%8C%E7%9A%84%E6%97%B6%E9%97%B4">https://io-oi.me/tech/hexo-next-optimization/#%E4%BE%A7%E6%A0%8F%E5%8A%A0%E5%85%A5%E5%B7%B2%E8%BF%90%E8%A1%8C%E7%9A%84%E6%97%B6%E9%97%B4</a></p>
-<h1 id="本地搜索"><a href="#本地搜索" class="headerlink" title="本地搜索"></a>本地搜索</h1><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/266119565">https://zhuanlan.zhihu.com/p/266119565</a></p>
-<h1 id="夜间模式切换‘"><a href="#夜间模式切换‘" class="headerlink" title="夜间模式切换‘"></a>夜间模式切换‘</h1><p><a target="_blank" rel="noopener" href="https://www.techgrow.cn/posts/abf4aee1.html">https://www.techgrow.cn/posts/abf4aee1.html</a></p>
-
-          
-        
-      
-    </div>
-   
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -3995,7 +3789,7 @@ func main() &#123;
               
                 <a href="/archives/%7C%7C%20archive">
               
-                  <span class="site-state-item-count">38</span>
+                  <span class="site-state-item-count">39</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -4160,7 +3954,7 @@ show_date_time();
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+        <div class="copyright">&copy; 2021 &mdash; <span itemprop="copyrightYear">2022</span>
   <span class="with-love" id="heart">
     <i class="fa fa-heartbeat"></i>
   </span>

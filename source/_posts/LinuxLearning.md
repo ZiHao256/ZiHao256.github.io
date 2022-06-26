@@ -1,6 +1,7 @@
 ---
 title: LinuxLearning
-categories: '-Linux'
+categories: 
+  - Linux
 abbrlink: 9750b399
 ---
 

@@ -1,7 +1,9 @@
 ---
 title: SQL
-categories: '-分布式数据库'
-tags: '-SQL'
+categories: 
+  - 数据库应用
+tags: 
+  - SQL
 abbrlink: 4d712855
 ---
 

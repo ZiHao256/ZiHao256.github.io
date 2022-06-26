@@ -1,6 +1,7 @@
 ---
 title: Linux 入门学习3
-categories: '-Linux'
+categories: 
+  - Linux
 abbrlink: a525d295
 ---
 

@@ -1,6 +1,7 @@
 ---
 title: Hexo LearningNote
-categories: '-Blog'
+categories: 
+  - Blog
 abbrlink: e9b15daf
 ---
 

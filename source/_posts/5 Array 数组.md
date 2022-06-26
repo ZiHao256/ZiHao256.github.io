@@ -1,7 +1,9 @@
 ---
 title: 5 Array
-categories: '-Go LearningNote'
+categories: 
+  - Go LearningNote
 abbrlink: c6746613
+date: 2021-05-06 10:22:06
 ---
 
 

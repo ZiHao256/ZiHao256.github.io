@@ -1,7 +1,9 @@
 ---
 title: Lab 0
-categories: '-uCore'
-tags: '-操作系统'
+categories: 
+  - uCore
+tags: 
+  - 操作系统
 abbrlink: 20b5d973
 ---
 

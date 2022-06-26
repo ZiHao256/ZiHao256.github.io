@@ -1,7 +1,9 @@
 ---
 title: Lab1
-categories: '-XDU OS'
-tags: '-操作系统'
+categories: 
+  - XDU OS
+tags: 
+  - 操作系统
 abbrlink: bf869091
 ---
 

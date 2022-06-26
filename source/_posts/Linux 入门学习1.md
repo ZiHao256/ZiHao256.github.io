@@ -1,6 +1,7 @@
 ---
 title: Linux 入门学习1
-categories: '-Linux'
+categories: 
+  - Linux
 abbrlink: 4b2bb3b9
 ---
 

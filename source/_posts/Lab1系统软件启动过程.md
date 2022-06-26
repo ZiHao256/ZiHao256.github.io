@@ -1,7 +1,9 @@
 ---
 title: Lab 1 系统软件启动过程
-categories: '-uCore'
-tags: '-操作系统'
+categories: 
+  - uCore
+tags: 
+  - 操作系统
 abbrlink: 32a74a00
 ---
 

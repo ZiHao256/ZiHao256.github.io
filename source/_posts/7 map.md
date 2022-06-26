@@ -1,6 +1,7 @@
 ---
 title: 7 map
-categories: '-Go LearningNote'
+categories: 
+  - Go LearningNote
 abbrlink: 19fd4f1c
 date: 2021-05-06 14:23:30
 typora-copy-images-to:

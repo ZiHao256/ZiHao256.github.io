@@ -1,6 +1,7 @@
 ---
 title: Linux 入门学习2
-categories: '-Linux'
+categories: 
+  - Linux
 abbrlink: d222e203
 ---
 

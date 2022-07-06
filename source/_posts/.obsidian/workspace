@@ -4,7 +4,7 @@
     "type": "split",
     "children": [
       {
-        "id": "4e2dd87e28cc2f53",
+        "id": "070d7acfb4f23bc7",
         "type": "leaf",
         "state": {
           "type": "empty",
@@ -82,6 +82,8 @@
     "width": 300,
     "collapsed": true
   },
-  "active": "4e2dd87e28cc2f53",
-  "lastOpenFiles": []
+  "active": "070d7acfb4f23bc7",
+  "lastOpenFiles": [
+    "我用什么留住你.md"
+  ]
 }

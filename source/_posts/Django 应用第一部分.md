@@ -1,9 +1,11 @@
 ---
-title: 编写第一个 Django 应用，第一部分
+title: Django 应用第一部分
 categories: 
-  - Django
+  - 个人提升
+  - 开发框架学习
 tags: 
   - Python
+  - Django
 description: Django 最初被设计用于具有快速开发需求的新闻类站点，目的是要实现简单快捷的网站开发
 abbrlink: 497f9043
 ---

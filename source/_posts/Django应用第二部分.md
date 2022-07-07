@@ -1,9 +1,11 @@
 ---
-title: 第二部分
+title: Django应用第二部分
 categories: 
-  - Django
+  - 个人提升
+  - 开发框架学习
 tags: 
   - Python
+  - Django
 description: 模型是真实数据的简单明确的描述。
 abbrlink: 77fbe329
 ---

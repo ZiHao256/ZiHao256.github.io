@@ -1,7 +1,8 @@
 ---
 title: Lab 1 系统软件启动过程
 categories: 
-  - uCore
+  - 个人提升
+  - 课程实验
 tags: 
   - 操作系统
 abbrlink: 32a74a00

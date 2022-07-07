@@ -1,7 +1,8 @@
 ---
 title: SQL
 categories: 
-  - 数据库应用
+  - 个人提升
+  - 编程语言学习
 tags: 
   - SQL
 abbrlink: 4d712855

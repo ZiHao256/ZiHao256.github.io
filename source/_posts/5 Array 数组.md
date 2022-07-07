@@ -1,7 +1,10 @@
 ---
 title: 5 Array
 categories: 
-  - Go LearningNote
+  - 个人提升
+  - 编程语言学习
+tags:
+  - The Go Programming Language
 abbrlink: c6746613
 date: 2021-05-06 10:22:06
 ---

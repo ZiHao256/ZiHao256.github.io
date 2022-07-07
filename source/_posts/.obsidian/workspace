@@ -4,11 +4,15 @@
     "type": "split",
     "children": [
       {
-        "id": "070d7acfb4f23bc7",
+        "id": "c41258a9ccc201b8",
         "type": "leaf",
         "state": {
-          "type": "empty",
-          "state": {}
+          "type": "markdown",
+          "state": {
+            "file": "Obsidian.md",
+            "mode": "source",
+            "source": false
+          }
         }
       }
     ],
@@ -36,7 +40,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "tag:#科研",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -49,7 +53,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 200
   },
   "right": {
     "id": "cb79c3cb11651054",
@@ -65,6 +69,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "Obsidian.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -82,8 +87,17 @@
     "width": 300,
     "collapsed": true
   },
-  "active": "070d7acfb4f23bc7",
+  "active": "c41258a9ccc201b8",
   "lastOpenFiles": [
-    "我用什么留住你.md"
+    "Obsidian.md",
+    "Obsdian/Pasted image 20220707094200.png",
+    "Obsdian/Pasted image 20220707094034.png",
+    "Pasted image 20220707093510.png",
+    "Pasted image 20220707093819.png",
+    "LinuxLearning.md",
+    "Linux 入门学习1.md",
+    "专题二系统调用.md",
+    "专题三内核模块.md",
+    "专题四设备驱动.md"
   ]
 }

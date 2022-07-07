@@ -1,6 +1,10 @@
 ---
 title: LinuxLearning
 categories: 
+  - 个人提升
+  - 操作系统学习
+tags:
+  - 操作系统
   - Linux
 abbrlink: 9750b399
 ---

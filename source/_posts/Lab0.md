@@ -1,7 +1,8 @@
 ---
 title: Lab 0
 categories: 
-  - uCore
+  - 个人提升
+  - 课程实验
 tags: 
   - 操作系统
 abbrlink: 20b5d973

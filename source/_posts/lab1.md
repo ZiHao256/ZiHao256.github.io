@@ -1,7 +1,8 @@
 ---
 title: Lab1
 categories: 
-  - XDU OS
+  - 个人提升
+  - XDU OS课程设计
 tags: 
   - 操作系统
 abbrlink: bf869091

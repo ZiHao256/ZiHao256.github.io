@@ -1,8 +1,9 @@
 ---
 title: Lab 2 物理内存管理
 categories: 
-  - uCore
-tag: 
+  - 个人提升
+  - 课程实验
+tags: 
   - 操作系统
 abbrlink: e2bef277
 ---

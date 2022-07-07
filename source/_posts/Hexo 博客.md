@@ -1,7 +1,10 @@
 ---
 title: Hexo LearningNote
 categories: 
+  - 自我管理
+tags:
   - Blog
+  - DIY
 abbrlink: e9b15daf
 ---
 

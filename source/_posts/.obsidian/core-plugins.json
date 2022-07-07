@@ -10,6 +10,8 @@
   "editor-status",
   "markdown-importer",
   "word-count",
+  "slides",
   "open-with-default-app",
-  "file-recovery"
+  "file-recovery",
+  "sync"
 ]

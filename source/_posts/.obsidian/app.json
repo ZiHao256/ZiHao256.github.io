@@ -4,5 +4,6 @@
   "promptDelete": false,
   "newLinkFormat": "relative",
   "attachmentFolderPath": "./Obsidian",
-  "useMarkdownLinks": true
+  "useMarkdownLinks": true,
+  "alwaysUpdateLinks": true
 }

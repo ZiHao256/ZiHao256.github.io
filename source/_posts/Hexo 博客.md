@@ -1,6 +1,7 @@
 ---
 title: Hexo LearningNote
 categories: 
+  - 个人提升
   - 自我管理
 tags:
   - Blog

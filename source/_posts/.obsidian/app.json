@@ -5,5 +5,7 @@
   "newLinkFormat": "relative",
   "attachmentFolderPath": "./Obsidian",
   "useMarkdownLinks": true,
-  "alwaysUpdateLinks": true
+  "alwaysUpdateLinks": true,
+  "showFrontmatter": true,
+  "defaultViewMode": "preview"
 }

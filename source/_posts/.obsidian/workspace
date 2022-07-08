@@ -4,15 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "d14a9971c6e29c1c",
+        "id": "969f59480e512a05",
         "type": "leaf",
         "state": {
-          "type": "markdown",
-          "state": {
-            "file": "MIT6-824准备.md",
-            "mode": "source",
-            "source": false
-          }
+          "type": "empty",
+          "state": {}
         }
       }
     ],
@@ -69,7 +65,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "MIT6-824准备.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -87,8 +82,10 @@
     "width": 300,
     "collapsed": true
   },
-  "active": "d14a9971c6e29c1c",
+  "active": "969f59480e512a05",
   "lastOpenFiles": [
+    "Preparation-For-MIT6-824.md",
+    "MIT6.824准备.md",
     "MIT6-824准备.md",
     "Hexo-Butterfly.md",
     "Hexo 博客.md",
@@ -96,8 +93,6 @@
     "Obsidian和Zotero联动.md",
     "Obsidian.md",
     "Obsidian和Typora之间的权衡.md",
-    "专题二系统调用.assets/image-20210515141634577.png",
-    "8 函数.md",
-    "专题一内核编译.md"
+    "专题二系统调用.assets/image-20210515141634577.png"
   ]
 }

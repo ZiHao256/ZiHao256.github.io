@@ -1,6 +1,6 @@
 ---
-title: MIT6.824准备
-typora-copy-images-to: MIT6.824准备
+title: Preparation-For-MIT6.824
+typora-copy-images-to: Preparation-For-MIT6.824
 toc: true
 categories:
   - 个人提升
@@ -8,7 +8,7 @@ categories:
 tags:
   - Database System
   - Distributed
-abbrlink: 2618739b
+abbrlink: c9d8503f
 date: 2022-07-07 19:20:29
 ---
 

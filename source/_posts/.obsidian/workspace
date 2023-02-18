@@ -4,7 +4,7 @@
     "type": "split",
     "children": [
       {
-        "id": "969f59480e512a05",
+        "id": "253f3218af263a96",
         "type": "leaf",
         "state": {
           "type": "empty",
@@ -36,7 +36,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "tag:#笔记",
+                "query": "obsdian",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -45,7 +45,8 @@
               }
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -82,17 +83,17 @@
     "width": 300,
     "collapsed": true
   },
-  "active": "969f59480e512a05",
+  "active": "253f3218af263a96",
   "lastOpenFiles": [
+    "Obsidian和Zotero联动.md",
+    "CMU-15-445-Preparation.md",
+    "CMU15-445.md",
+    "”CMU15-445.md",
+    "”CMU15-445-Preparation“.md",
     "Preparation-For-MIT6-824.md",
     "MIT6.824准备.md",
     "MIT6-824准备.md",
     "Hexo-Butterfly.md",
-    "Hexo 博客.md",
-    "LinuxLearning.md",
-    "Obsidian和Zotero联动.md",
-    "Obsidian.md",
-    "Obsidian和Typora之间的权衡.md",
-    "专题二系统调用.assets/image-20210515141634577.png"
+    "Hexo 博客.md"
   ]
 }

@@ -3,8 +3,8 @@ title: Obsidian和Zotero联动
 typora-copy-images-to: Obsidian和Zotero联动
 toc: true
 categories:
-  - 个人提升
-  - 自我管理
+  - 利器酷
+  - 工具方法
 tags:
   - 笔记
   - 论文
@@ -22,6 +22,12 @@ date: 2022-07-07 15:36:47
 # Obsidian MarkMind 插件
 [mac版obsidian markmind基础教程_哔哩哔哩_bilibili](https://www.bilibili.com/video/av381778544?vd_source=de5d636c079ac45214bd34891ede8c4b)
 
+使用步骤：
+1. 在一个 markdown 文件的 fontmatter 中加入 `mindmap-plugin: basic` 生成一个思维导图文件
+2. 打开为 markdown 文件
+3. 使用 obsidian 的语法 `[[`加入一本 pdf 文件
+4. 进入**预览模式**，点击 pdf 文件，生成并打开 pdf 注释文件
+5. 在该注释文件中 注释会自动将内容复制到剪切板中，复制到原 markdown 中即可。
 
 # 最终效果
 1. 所有文献的 pdf/md 附件都保存在 `OneDrive` 中，不需要占用 `Zotero` 的空间；

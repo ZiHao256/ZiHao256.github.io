@@ -2,7 +2,7 @@
 title: Hexo LearningNote
 categories: 
   - 个人提升
-  - 自我管理
+  - 博客更新
 tags:
   - Blog
   - DIY

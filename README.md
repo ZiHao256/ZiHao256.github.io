@@ -1,3 +1,3 @@
 # ZiHao256.github.io
 
-环境文件
+Hexo 博客仓库

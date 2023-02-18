@@ -27,7 +27,7 @@ date: 2023-02-18 23:29:43
 # 思考
 
 - 看报错是被github.com服务器的22端口关闭了连接，可能和这个端口有关
-- VPN 有关？
+- ~~VPN 有关？~~关闭VPN 的话，操作超时
 
 
 
@@ -40,6 +40,12 @@ date: 2023-02-18 23:29:43
 
 
 
+# 解决方法2
+
+把 rsa 密钥删掉，关闭VPN，重新创建 rsa 密钥对，并将公钥加入github，重新用ssh连接。
+
+可以成功连接。。。
+
 
 
 # **refs：**
@@ -48,10 +54,20 @@ date: 2023-02-18 23:29:43
 
 [ssh远程登录报错：kex_exchange_identification: Connection closed by remote host - 腾讯云开发者社区-腾讯云 (tencent.com)](https://cloud.tencent.com/developer/article/1946906)
 
+
+
 官方解决方法：
 
 - [【求助】开启OpenClash之后，无法使用 git clone/push，kex ssh 密钥错误 · Issue #1960 · vernesong/OpenClash (github.com)](https://github.com/vernesong/OpenClash/issues/1960#issuecomment-1115732292)
   - [Using SSH over the HTTPS port - GitHub Docs](https://docs.github.com/en/authentication/troubleshooting-ssh/using-ssh-over-the-https-port)
+
+
+
+方法2:
+
+[(252条消息) 连接GitHub提示远程主机关闭连接_week@eight的博客-CSDN博客_github 关闭连接](https://blog.csdn.net/qq_43431735/article/details/106031021)
+
+
 
 对`SSH`的拓展知识
 

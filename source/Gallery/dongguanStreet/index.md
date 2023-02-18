@@ -1,8 +1,8 @@
-{% gallery  %}
+{% gallery true %}
 
-![Z30_0156_1](Z30_0156_1.JPG)
+![Z30_0156_1](https://raw.githubusercontent.com/ZiHao256/Gallery/master/uPic/2023/02/Z30_0156_1.JPG)
 
-![Z30_0168](Z30_0168.JPG)
+![Z30_0168](https://raw.githubusercontent.com/ZiHao256/Gallery/master/uPic/2023/02/Z30_0168.JPG)
 
 ![Z30_0173](https://raw.githubusercontent.com/ZiHao256/Gallery/master/uPic/2023/02/Z30_0173.JPG)
 

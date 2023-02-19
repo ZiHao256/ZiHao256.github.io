@@ -18,5 +18,8 @@ date: 2023-02-19 17:57:13
 但是，使用`git reset --hard`[1]命令回溯到以上配置文件未改动后，依然发现不会生成`index.html`，咋么回事。。。
 
 refs:
+
+学会`git log`, `git reset`等命令
+
 [1]: https://blog.csdn.net/luobeihai/article/details/128171764?utm_medium=distribute.pc_relevant.none-task-blog-2~default~baidujs_baidulandingword~default-1-128171764-blog-108067196.pc_relevant_vip_default&spm=1001.2101.3001.4242.1&utm_relevant_index=4
 

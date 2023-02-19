@@ -7,6 +7,7 @@ categories:
 tags:
   - Blog
   - Bug
+abbrlink: fab1518
 date: 2023-02-18 23:29:43
 ---
 
@@ -35,7 +36,7 @@ date: 2023-02-18 23:29:43
 
 `attempt to clone using an SSH connection made over the HTTPS port.`
 
-通过[^官方解法]
+通过官方给出的解决方法[^1]如下：
 
 - 可以成功访问主机名为`ssh.github.com`的端口`443`
   - 但不知为何，访问响应时间很久。。。。。。。。。。。。。。。。
@@ -44,9 +45,7 @@ date: 2023-02-18 23:29:43
 
 # 解决方法2
 
-通过[^方法2]
-
-把 rsa 密钥删掉。在关闭VPN的情况下，重新创建 rsa 密钥对，并将公钥加入github，重新用ssh连接。
+通过文章[^2]把 rsa 密钥删掉。在关闭VPN的情况下，重新创建 rsa 密钥对，并将公钥加入github，重新用ssh连接。
 
 可以成功连接。。。
 
@@ -56,18 +55,14 @@ date: 2023-02-18 23:29:43
 
 情况与下文一致：
 
-[ssh远程登录报错：kex_exchange_identification: Connection closed by remote host - 腾讯云开发者社区-腾讯云 (tencent.com)](https://cloud.tencent.com/developer/article/1946906)
+- [ssh远程登录报错：kex_exchange_identification: Connection closed by remote host - 腾讯云开发者社区-腾讯云 (tencent.com)](https://cloud.tencent.com/developer/article/1946906)
 
 
+两种解法：
 
-[^官方解法]:如下
+[^1]: https://github.com/vernesong/OpenClash/issues/1960#issuecomment-1115732292
 
-- [【求助】开启OpenClash之后，无法使用 git clone/push，kex ssh 密钥错误 · Issue #1960 · vernesong/OpenClash (github.com)](https://github.com/vernesong/OpenClash/issues/1960#issuecomment-1115732292)
-  - [Using SSH over the HTTPS port - GitHub Docs](https://docs.github.com/en/authentication/troubleshooting-ssh/using-ssh-over-the-https-port)
-
-
-
-[^方法2]:[(252条消息) 连接GitHub提示远程主机关闭连接_week@eight的博客-CSDN博客_github 关闭连接](https://blog.csdn.net/qq_43431735/article/details/106031021)
+[^2]: https://blog.csdn.net/qq_43431735/article/details/106031021
 
 
 

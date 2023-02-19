@@ -8,6 +8,8 @@ type: timeline
 <!-- timeline 02-19 -->
 
 - 增加 `Log` 页面，使用 `timeline` 标签更直观的展示更新历史
+- 增加全局吸底 `Aplayer` 模块
+  - refs: [Butterfly添加全局吸底Aplayer教程](https://butterfly.js.org/posts/507c070f/#%E6%8F%92%E5%85%A5-Aplayer-html)
 
 <!-- endtimeline -->
 

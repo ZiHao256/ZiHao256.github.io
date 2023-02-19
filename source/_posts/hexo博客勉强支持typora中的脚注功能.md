@@ -1,5 +1,5 @@
 ---
-title: hexo博客使用markdown脚注语法
+title: hexo博客勉强支持typora中的脚注功能：)
 toc: true
 categories:
   - 个人提升
@@ -19,7 +19,7 @@ typora 支持的markdown脚注功能，但实际上markdown原生语法中并不
 - butterfly[^1]: 可以使用markdown的 `Links` 来实现类似的功能：
   - 引用处使用`[连接的文本，可不填][x]`，被引用处使用`[x]: Links`
 
-这使得使用 typora 脚注语法后，在hexo博客里不会显示被引用的链接。尽管很奇怪，但是好在可以统一写法。
+这使得使用脚注语法后，在typora和导出的pdf中可以很优雅地通过点击引用处的符号x来跳转到文章最底部存放所有被引用文献处。但是在hexo博客里不会显示被引用的链接。尽管很奇怪，但是好在可以稍微统一写法。
 
 
 refs:

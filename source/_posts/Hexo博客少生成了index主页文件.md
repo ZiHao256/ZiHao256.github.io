@@ -11,11 +11,22 @@ abbrlink: 6de7b885
 date: 2023-02-19 17:57:13
 ---
 
+# 问题描述
+
 在进行 `node` 和 `npm` 的版本更新之后，再以此运行`hexo g`和`hexo s`，发现访问主页为`404`，而其他页面均正常。
+
+# 思考
 
 对比近几次的`commit`发现少生成了`index.html`文件，并且在`package.json`等文件中少了一行`generator-inex`，可能和`node`及`npm`的更新相关？
 
 但是，使用`git reset --hard`[1]命令回溯到以上配置文件未改动后，依然发现不会生成`index.html`，咋么回事。。。
+
+
+# 解决方法
+
+使用 `npm install hexo-generator-index` 命令将依赖包重新下载回来。。。（
+
+很快找到缺少了依赖包，但是并没有立刻对依赖包进行下载，而是兜兜转转了一下午（比较两个`commit`）
 
 refs:
 

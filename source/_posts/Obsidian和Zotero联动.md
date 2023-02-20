@@ -4,7 +4,7 @@ typora-copy-images-to: Obsidian和Zotero联动
 toc: true
 categories:
   - 利器酷
-  - 工具方法
+  - 方法
 tags:
   - 笔记
   - 论文

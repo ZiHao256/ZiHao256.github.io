@@ -3,7 +3,7 @@ title: Obsidian和Typora之间的权衡
 toc: true
 categories:
   - 利器酷
-  - 工具方法
+  - 方法
 tags:
   - 笔记
   - 论文

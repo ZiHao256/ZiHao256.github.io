@@ -4,7 +4,7 @@ typora-copy-images-to: Zotero
 toc: true
 categories:
   - 利器酷
-  - 工具收录
+  - 工具
 tags:
   - 科研
   - 论文

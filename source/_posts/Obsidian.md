@@ -4,7 +4,7 @@ post_asset_folder: true
 toc: true
 categories:
   - 利器酷 
-  - 工具方法
+  - 方法
 tags:
   - 科研
   - 论文

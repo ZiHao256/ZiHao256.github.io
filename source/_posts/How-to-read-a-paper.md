@@ -76,16 +76,15 @@ date: 2023-02-20 09:36:07
 
   - if their conclusion is true, what can you expect? (如果他们的结论是对的，这个结论能带来什么改变呢?)
 
-![1676858471978](image/How-to-read-a-paper/1676858471978.png)
+![ask questions, be suspicious](https://raw.githubusercontent.com/ZiHao256/Gallery/master/uPic/2023/02/image-20230220101228708.png)
 
-![]()![]()![]()
 
 - > 如果所读的论文没有解决问题，那么我能解决么？我能采用比论文中更简单的方法解决么？
   >
   > 所以，一旦进入仔细阅读的状态，要在读论文之前对自己说：这篇论文可能有问题，我要找出来。
-  >
 
-![1676858514492](image/How-to-read-a-paper/1676858514492.png)
+![get stuck?](https://raw.githubusercontent.com/ZiHao256/Gallery/master/uPic/2023/02/image-20230220101240115.png)
+
 
 - 多**找一些背景知识阅读**，多**做笔记**，多**在网上搜索相关论文**，然后**再次通读所卡壳的论文**，并试着把它**与其他论文相联系起来**，如此坚持下去，定能渡过难关。
 - 另一个建议是，**找熟悉这方面工作的人帮忙**，让他们解释你遇到的难点。
@@ -97,23 +96,27 @@ date: 2023-02-20 09:36:07
 
 > 创造性的阅读需要**把你所读的论文和其他相关的论文建立联系**，从而**产生一些新的想法**，这些想法可以支撑你进行三个月到五个月的研究。
 
-![1676858530111](image/How-to-read-a-paper/1676858530111.png)
+![positive thinking](https://raw.githubusercontent.com/ZiHao256/Gallery/master/uPic/2023/02/image-20230220101253208.png)
+
 
 - 这篇文章中的**好想法**
 - 可能产生重要的实际差异的**改进**
 - 作者没有想到的 **应用/扩展**
 - 这篇文章能**被进一步推广**吗
 
-![1676858547127](image/How-to-read-a-paper/1676858547127.png)
+![a list of questions](https://raw.githubusercontent.com/ZiHao256/Gallery/master/uPic/2023/02/image-20230220101301774.png)
+
 
 - 关于论文阅读，可以问自己的 **客观和主观问题**
 - 若能全部回答，则对本篇文章有深刻的理解
 
-![1676858561495](image/How-to-read-a-paper/1676858561495.png)
+![Tools](https://raw.githubusercontent.com/ZiHao256/Gallery/master/uPic/2023/02/image-20230220101312974.png)
+
 
 - 在阅读论文卡壳时，以上**工具**可以帮助阅读/该做什么
 
-![1676858575820](image/How-to-read-a-paper/1676858575820.png)
+![Tips](https://raw.githubusercontent.com/ZiHao256/Gallery/master/uPic/2023/02/image-20230220101322403.png)
+
 
 - 养成**写小总结**的习惯，
 

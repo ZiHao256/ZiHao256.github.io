@@ -1,3 +1,7 @@
+---
+title: JL
+---
+
 {% gallery true%}
 
 ![WechatIMG6526](https://raw.githubusercontent.com/ZiHao256/Gallery/master/uPic/2023/02/WechatIMG6526.jpeg)

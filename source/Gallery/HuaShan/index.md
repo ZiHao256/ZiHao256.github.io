@@ -5,9 +5,9 @@ date: 2021-04-27
 
 {% gallery true %}
 
-![IMG_6028](https://raw.githubusercontent.com/ZiHao256/Gallery/master/uPic/2023/02/IMG_6028.jpeg)
+![IMG_6028](https://raw.githubusercontent.com/ZiHao256/Gallery/master/uPic/2023/02/IMG_6028.jpg)
 
-![IMG_6029](https://raw.githubusercontent.com/ZiHao256/Gallery/master/uPic/2023/02/IMG_6029.jpeg)
+![IMG_6029](https://raw.githubusercontent.com/ZiHao256/Gallery/master/uPic/2023/02/IMG_6029.jpg)
 
 ![IMG_6041](https://raw.githubusercontent.com/ZiHao256/Gallery/master/uPic/2023/02/IMG_6041.jpeg)
 
@@ -33,9 +33,7 @@ date: 2021-04-27
 
 ![IMG_6062](https://raw.githubusercontent.com/ZiHao256/Gallery/master/uPic/2023/02/IMG_6062.jpeg)
 
-![IMG_6066](https://raw.githubusercontent.com/ZiHao256/Gallery/master/uPic/2023/02/IMG_6066.jpeg)
-
-![IMG_6067](https://raw.githubusercontent.com/ZiHao256/Gallery/master/uPic/2023/02/IMG_6067.jpeg)
+![IMG_6067](https://raw.githubusercontent.com/ZiHao256/Gallery/master/uPic/2023/02/IMG_6067.jpg)
 
 ![IMG_6071](https://raw.githubusercontent.com/ZiHao256/Gallery/master/uPic/2023/02/IMG_6071.jpeg)
 

@@ -6,10 +6,8 @@ categories:
 tags: 
   - 操作系统
 abbrlink: bf869091
+date: 2021-05-07
 ---
-
-
-
 # lab1
 
 [toc]
@@ -25,14 +23,12 @@ abbrlink: bf869091
 [参考博客4]()
 
 * 也称 有限缓冲问题 `Bounded-buffer problem`
-
 * 多线程同步的问题
-
-
 
 ## 1.1 信号量配合互斥锁
 
 * 信号量特性：
+
   * 非负整数，对共享资源和线程的控制
   * 通过信号量的线程会使得信号量减一，当为零时，所有试图通过的线程等待
   * 操作：
@@ -42,40 +38,36 @@ abbrlink: bf869091
     * Release：在信号量上执行加一
       * 释放由信号量守护的资源
 * Wait，Release再Linux中：
+
   * `int sem_wait(sem_t* sem)`
   * `int sem_post(sem_t* sem)`
-
-
-
 * 针对该问题：
+
   * 设定两个信号量：
     * `empty`: 空槽的个数
     * `full`: 占有的个数
-  * 生产者 向任务队列 放资源时，调用`sem_wait(&empty)` 检查队列是否已满，
+  * 生产者 向任务队列 放资源时，调用 `sem_wait(&empty)` 检查队列是否已满，
     * 若满，就阻塞，直到有消费者从队列里取资源
     * 若不满，就放入资源，并通知消费者取
-  * 消费者 从任务队列 取资源时，调用`sem_wait(&full)` 检查任务队列是否已空
+  * 消费者 从任务队列 取资源时，调用 `sem_wait(&full)` 检查任务队列是否已空
     * 若已空，就阻塞，直到生产者向里面放入资源在苏醒
     * 若非空，就取资源，并通知生产者来放入
 * 互斥锁是对任务队列进行保护
-
-
-
 * ```C
-   
+
   #include <stdio.h>
   #include <pthread.h>			//pthread_mutex_t, pthread_mutex_lock/unlock, pthread_t，pthread_create(), pthread_join()
   #include <semaphore.h>			//sem_wait, sem_post, sem_init
-   
+
   #define MAX 5  //队列长度
-   
+
   pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
   sem_t full; 	//填充的个数
   sem_t empty; 	//空槽的个数
-   
+
   int top = 0;     //队尾
   int bottom = 0;  //队头
-   
+
   void* produce(void* arg)
   {
   	int i;
@@ -83,19 +75,19 @@ abbrlink: bf869091
   	{
   		printf("producer is preparing data\n");
   		sem_wait(&empty);//若空槽个数低于0阻塞
-  		
+
   		pthread_mutex_lock(&mutex);
-  		
+
   		top = (top+1) % MAX;
   		printf("now top is %d\n", top);
-   
+
   		pthread_mutex_unlock(&mutex);
-  		
+
   		sem_post(&full);
   	}
   	return (void*)1;
   }
-   
+
   void* consume(void* arg)
   {
   	int i;
@@ -103,77 +95,70 @@ abbrlink: bf869091
   	{
   		printf("consumer is preparing data\n");
   		sem_wait(&full);//若填充个数低于0阻塞
-  	
+
   		pthread_mutex_lock(&mutex);
-  		
+
   		bottom = (bottom+1) % MAX;
   		printf("now bottom is %d\n", bottom);
-   
+
   		pthread_mutex_unlock(&mutex);
-  		
+
   		sem_post(&empty);
   	}
-   
+
   	return (void*)2;
   }
-   
+
   int main(int argc, char *argv[])
   {
   	pthread_t thid1;		//创建四个线程，unsigned long int
   	pthread_t thid2;
   	pthread_t thid3;
   	pthread_t thid4;
-   
+
   	int  ret1;
   	int  ret2;
   	int  ret3;
   	int  ret4;
-   
+
   	sem_init(&full, 0, 0);			//初始化信号量full为0
   	sem_init(&empty, 0, MAX);		//初始化信号量empty为MAX=5
-   
+
   	pthread_create(&thid1, NULL, produce, NULL);		//
   	pthread_create(&thid2, NULL, consume, NULL);
   	pthread_create(&thid3, NULL, produce, NULL);
   	pthread_create(&thid4, NULL, consume, NULL);
-   
+
   	pthread_join(thid1, (void**)&ret1);					//
   	pthread_join(thid2, (void**)&ret2);
   	pthread_join(thid3, (void**)&ret3);
   	pthread_join(thid4, (void**)&ret4);
-   
+
   	return 0;
   }
   ```
 
-  * 若将`sem_wait()`， `sem_post()`放于lock和unlock之间
+  * 若将 `sem_wait()`， `sem_post()`放于lock和unlock之间
   * 死锁，因为我们不能预知线程进入共享区顺序，如果消费者线程先对mutex加锁，并进入，sem_wait()发现队列为空，阻塞，而生产者在对mutex加锁时，发现已上锁也阻塞，双方永远无法唤醒对方。
-
-
-
 * 
-
-
-
 * `sem_init`: 长整型
+
   * `int sem_init(sem_t *sem, int pshared, unsigned int value);`
     * sem: 指向信号量结构的一个指针
     * pshared不为零时，信号量在进程间共享，否则只能为当前进程的线程共享
     * value为信号量的初始值
 
-
-
 ## 1.2 Pthread
 
 * linux下用C语言开发多线程程序，Linux系统下的多线程遵循POSIX线程接口，称为pthread。
-
 * `pthread_create()`：创建子线程
+
   * Linux 下创建的线程的 API 接口
   * `int pthread_create(pthread_t *thread, const pthread_attr_t *attr, void *(*start_routine)(void *), void *arg);`
   * 参数：
     * thread: 返回成功时，由 thread 指向的内存单元被设置为新创建线程的线程ID
     * attr：线程属性，默认使用NULL
-    * start_routine: 新创建的线程从`start_routine`函数的地址开始运行，该函数只有一个万能参数arg，如果需要向`start_rutine`函数传递的参数不止一个，那么需要把这些参数放到一个结构中，然后把这个结构的地址作为arg的参数传入。
+    * start_routine: 新创建的线程从 `start_routine`函数的地址开始运行，该函数只有一个万能参数arg，如果需要向 `start_rutine`函数传递的参数不止一个，那么需要把这些参数放到一个结构中，然后把这个结构的地址作为arg的参数传入。
     * arg: 子线程处理函数的参数
   * 简单来说：
     * 第一个参数为指向线程 [标识符](http://baike.baidu.com/item/标识符)的 [指针](http://baike.baidu.com/item/指针)。
@@ -182,8 +167,8 @@ abbrlink: bf869091
     * 最后一个参数是运行函数的参数。
   * 返回值：
     * 成功返回0，失败返回错误号
-  
 * `pthread_join()`: 子线程合入主线程
+
   * ` int pthread_join(pthread_t thread, void **retval);`
   * 主线程阻塞，等待子线程结束，然后回收子线程资源
   * 以阻塞的方式，等待thread指定的线程结束
@@ -193,10 +178,9 @@ abbrlink: bf869091
     * thread : 线程标识符，线程id
     * retval：指向一个指向被连接线程的返回码的指针的指针
   * 返回值，0成功，错误号失败
-  
 * > 在很多情况下，主线程生成并起动了子线程，如果子线程里要进行大量的耗时的运算，主线程往往将于子线程之前结束，但是如果主线程处理完其他的事务后，需要用到子线程的处理结果，也就是主线程需要等待子线程执行完成之后再结束，这个时候就要用到pthread_join()方法了。
-  >  即pthread_join()的作用可以这样理解：主线程等待子线程的终止。也就是在子线程调用了pthread_join()方法后面的代码，只有等到子线程结束了才能执行。
-
+  > 即pthread_join()的作用可以这样理解：主线程等待子线程的终止。也就是在子线程调用了pthread_join()方法后面的代码，只有等到子线程结束了才能执行。
+  >
 * 如果没有加pthread_join()方法，main线程里面直接就执行起走了，加了之后是等待线程执行了之后才执行的后面的代码。
 
 ![image-20210505195248476](E:\4th_term\操作系统OS\Lab1\lab1.assets\image-20210505195248476.png)
@@ -223,8 +207,6 @@ abbrlink: bf869091
 
   shmflg: 权限标志。Key标识的内存不存在时，该参数为IPC_CREAT。
 
- 
-
 \2. shmat 函数：创建完共享内存后，不能被进程访问，需要调用shmat启动该共享内存的访问，并把共享内存连接到当前进程的地址空间
 
 函数原型：void *shmat(int shm_id, const void *shm_addr, int shmflg);
@@ -236,8 +218,6 @@ abbrlink: bf869091
   Shm_addr: 指定共享内存链接到当前进程中的地址位置，通常为空，让系统自己选择
 
   Shmflg: 标志位，通常为0
-
- 
 
 \3. shmctl 函数：控制共享内存
 
@@ -253,7 +233,7 @@ abbrlink: bf869091
 
 ### 2.1.2 信号量
 
-​    信号量是一个特殊的变量，程序对其访问都是原子操作，且只允许对它进行等待（即P(信号变量))和发送（即V(信号变量))信息操作。最简单的信号量是只能取0和1的变量，这也是信号量最常见的一种形式，叫做二进制信号量。而可以取多个正整数的信号量被称为通用信号量。
+    信号量是一个特殊的变量，程序对其访问都是原子操作，且只允许对它进行等待（即P(信号变量))和发送（即V(信号变量))信息操作。最简单的信号量是只能取0和1的变量，这也是信号量最常见的一种形式，叫做二进制信号量。而可以取多个正整数的信号量被称为通用信号量。
 
 Linux中对信号量的操作在我们小组的课题《Linux中信号量的实现机制》中详细讲过，接下来简单介绍：
 
@@ -269,15 +249,13 @@ Linux中对信号量的操作在我们小组的课题《Linux中信号量的实�
 
   生产者和消费者的操作都类似于Task1中的操作，不再赘述。
 
-
-
 # 3 测试有名/匿名，共有/私有内存映射
 
 ## 内存映射
 
 ## .1 前置知识
 
-​    内存映射 mmap 是Linux 内核的一个重要机制，和虚拟内存管理以及文件IO都有直接关系。
+    内存映射 mmap 是Linux 内核的一个重要机制，和虚拟内存管理以及文件IO都有直接关系。
 
   Linux 的虚拟内存管理是基于 mmap 实现的，vm_area_struct 在mmap 创建时创建，代表了一段连续的虚拟地址，这些虚拟地址相应的映射到一个后备文件或者匿名文件的虚拟页。一个vm_area_struct映射到一组连续的页表项，页表项映射物理内存page frame，这样文件和物理内存页相映射。
 
@@ -287,7 +265,7 @@ Linux中对信号量的操作在我们小组的课题《Linux中信号量的实�
 
   mm**_**struct**结构**：
 
-​                           ![image-20210507110545709](E:\4th_term\操作系统OS\Lab1\lab1.assets\image-20210507110545709.png)    
+    ![image-20210507110545709](E:\4th_term\操作系统OS\Lab1\lab1.assets\image-20210507110545709.png)
 
 \1.  start_code, end_code: 指定了进程的代码段的边界；
 
@@ -300,8 +278,6 @@ Linux中对信号量的操作在我们小组的课题《Linux中信号量的实�
 \5.  mmap_base: 指定了用户进程虚拟地址空间中 用作内存映射部分的地址的基地址，
 
 \6.  task_size: 指定了用户进程地址空间的长度。
-
- 
 
 进程的mm_struct 除了包含**进程虚拟内存地址空间布局**，还包含了**虚拟内存区域**vm_area_struct信息。虚拟内存区域是内核管理用户进程虚拟地址空间的方式，数据段、代码段、共享库等都是通过vm_area_atruct管理。
 
@@ -339,18 +315,12 @@ mmap分为**后备文件的映射**和**匿名文件的映射**，这两种映�
 
  ![image-20210507110535432](E:\4th_term\操作系统OS\Lab1\lab1.assets\image-20210507110535432.png)
 
-
-
 # 4 共享库的创建和使用
-
-
 
 ## 4.1 前置知识：源代码到运行程序的过程
 
-
-
 1. 预处理：对所有预处理指令进行处理。以#开始的语句
-2. 编译：通常指 程序构建的过程，称为`compilation proper`, 将c源代码文件转换成object文件
+2. 编译：通常指 程序构建的过程，称为 `compilation proper`, 将c源代码文件转换成object文件
 3. 连接：将 object文件和库 串联起来，称为可执行程序
    1. 静态库已经植入程序中
    2. 共享库，只在程序中对其引用
@@ -358,16 +328,12 @@ mmap分为**后备文件的映射**和**匿名文件的映射**，这两种映�
    1. 首先，扫描程序，来引用共享库
    2. 然后所有引用都立即生效，对应的库也被映射到程序中
 
-
-
 * 一个程序函数库：一个文件包含了一些编译好的代码和数据，可供其他程序使用
 * 可以使得整个程序更加模块化，更容易重新编译，方便升级
 * 程序函数库分为3类：
   * 静态函数库(static libraries): 在程序执行前就加入到了目标程序中
   * 共享函数库(shared libraries)：`.so`
   * 动态加载函数库(dynamically loaded libraries)：`.dll`, 与共享函数库是一样的，在l Windows 中叫动态加载函数库
-
-
 
 ## 4.2 静态函数库
 
@@ -377,17 +343,13 @@ mmap分为**后备文件的映射**和**匿名文件的映射**，这两种映�
 * 允许程序员把程序 link 起来而不用重新编译代码，节省了重新编译代码的时间
   * 如今该优势不再那么明显
 * 静态函数库对开发者来说还是很有用的，例如你想把自己提供的函数给别人使用，但是又想对函数的源代码进行保密
-* 理论上说，使用ELF格式的静态库函数生成的代码可以比使用共享函数库（或者动态函数库）的程序运行速度上快一些，大概1－5％。 
+* 理论上说，使用ELF格式的静态库函数生成的代码可以比使用共享函数库（或者动态函数库）的程序运行速度上快一些，大概1－5％。
 * `ar rcs my_library.a file.o file1.o`
-
-
 
 ### 4.2.2 使用静态函数库
 
 * 把它作为你编译和连接过程中的一部分用来生成你的可执行代码
-* 用gcc来编译产生可执行代码的话，你可以用“-l”参数来指定这个库函数。你也可以用ld来做，使用它的“-l”和“-L”参数选项。具体用法可以参考info:gcc。 
-
-
+* 用gcc来编译产生可执行代码的话，你可以用“-l”参数来指定这个库函数。你也可以用ld来做，使用它的“-l”和“-L”参数选项。具体用法可以参考info:gcc。
 
 ## 4.3 共享函数库
 
@@ -403,27 +365,23 @@ mmap分为**后备文件的映射**和**匿名文件的映射**，这两种映�
 
 #### 4.3.1.1 命名
 
-* 每个共享函数库的**特殊名字**, 称作`soname`
-  * 以`lib`为前缀，然后是函数名
-  * 以`.so`为后缀
+* 每个共享函数库的**特殊名字**, 称作 `soname`
+  * 以 `lib`为前缀，然后是函数名
+  * 以 `.so`为后缀
   * 最后是版本号信息
 * 特例：非常底层的C库函数都不是以lib开头命名
-* 每个共享函数库都有一个**真正名字**，称为`real name`
+* 每个共享函数库都有一个**真正名字**，称为 `real name`
   * 包含真正函数代码的文件
   * 真名有一个主版本号和一个发行主版号（可有可无）
     * 知道安装了什么版本的函数库
 * 还有一个名字，**编译器编译时需要的函数库名字**：简单的soname，不包含任何版本号信息
 
-
-
 ## 4.4 函数库如何使用
 
 * 基于GNU glibc的系统中，启动一个ELF格式的二进制可执行文件，会自动启动和运行一个program loader
 
-  * 对于Linux 系统，loader的名字是`/lib/ld-linux.so.X（版本号）`
+  * 对于Linux 系统，loader的名字是 `/lib/ld-linux.so.X（版本号）`
   * loader启动后，会load 其他本程序要使用的共享库
-
-  
 
 ## 4.5 创建一个共享库
 
@@ -432,36 +390,32 @@ mmap分为**后备文件的映射**和**匿名文件的映射**，这两种映�
 * `foo.h`: 定义接口，连接动态库
 
   * ![image-20210506205836103](E:\4th_term\操作系统OS\Lab1\lab1.assets\image-20210506205836103-1620305918992.png)
-
   * ```
     #ifndef foo_h__
     #define foo_h__
-    
+
     extern void foo(void);
-    
+
     #endif  // foo_h__
     ```
-
 * `foo.c`：对接口foo()的实现
 
   * ![image-20210506205941576](E:\4th_term\操作系统OS\Lab1\lab1.assets\image-20210506205941576.png)
-
   * ```
     #include <stdio.h>
-     
-     
+
+
     void foo(void)
     {
         puts("Hello, I'm a shared library");
     }
     ```
-
 * `main.c`： 库的驱动程序
 
   * ```
     #include <stdio.h>
     #include "foo.h"
-     
+
     int main(void)
     {
         puts("This is a shared library test...");
@@ -469,19 +423,15 @@ mmap分为**后备文件的映射**和**匿名文件的映射**，这两种映�
         return 0;
     }
     ```
-
-    
-
 * 首先，编译位置无关代码，即创建object文件
-  * 通过`gcc -fPIC`参数加入到共享函数库中：`PIC`: 位置无关代码
-  
-* 然后，将对象文件创建共享库，
 
+  * 通过 `gcc -fPIC`参数加入到共享函数库中：`PIC`: 位置无关代码
+* 然后，将对象文件创建共享库，
 * 例如：创建a.0, b.o, 然后创建一个包含a.o, b.o的共享库
+
   * `gcc -fPIC -g -c -Wall a.c`
   * `gcc -fPIC -g -c -Wall b.c`
   * `gcc -shared -WL -libmath.so -o  a.o b.o -lc`
-  
 * 通常，动态函数库的符号表里面包含了这些动态的对象的符号。这个选项在创建ELF格式的文件时候，会将所有的符号加入到动态符号表中。可以参考ld的帮助获得更详细的说明。
 
 ## 4.6 安装和使用共享库
@@ -489,19 +439,21 @@ mmap分为**后备文件的映射**和**匿名文件的映射**，这两种映�
 ### 方法一：将共享库拷贝入标准目录(/usr/lib或/usr/local/lib)
 
 * 需要有权限
-
 * 使得系统上所有用户都可以使用该共享库
 
 方法：
 
 * 首先，以root权限，将库放到标准位置（/usr/lib或/usr/local/lib）
+
   * `sudo cp /home/zihao/task4/libfoo.so /usr/lib`
 * 然后，以root权限更新缓存，告诉加载器 库文件可用，
+
   * `sudo ldconfig`: 检查一块存在的库文件，然后创建soname符号链接到真正的函数库
   * 将创建链接到共享库，并且更新缓存以便可立即生效
-  * 使用`ldconfig -p | grep foo`，核实创建了链接
-
+  * 使用 `ldconfig -p | grep foo`，核实创建了链接
 * 其次，重新连接可执行程序
+
   * `gcc -Wall -o main.c -lfoo`
 * 最后，运行程序
+
   * `./test`

@@ -7,15 +7,11 @@ tags:
   - 操作系统
   - Linux
 abbrlink: 9750b399
+date: 2021-03-05
 ---
-
-
-
-
-
 # LinuxLearning
 
-[TOC]
+[toc]
 
 # 0 Linux 系统简介
 
@@ -33,12 +29,11 @@ abbrlink: 9750b399
 ## 0.1 简介
 
 * 是一种自由和开放源码的操作系统，有着不同的Linux版本，但都是用了Linux内核。
+
   * ![这里写图片描述](https://img-blog.csdn.net/20180527120259589?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Nja2V2aW5jeWg=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)
 * Linux 可安装在各种计算机硬件设备中：手机、平板电脑、路由器、台式计算机
-  
+
   * ![img](https://img-blog.csdn.net/2018090315211355?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwNTMwOTQz/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)
-
-
 
 ## 0.2 特点
 
@@ -99,13 +94,9 @@ abbrlink: 9750b399
    * 足够的游戏娱乐支持度
    * 足够的专业软件支持度
 
-
-
 # 1 VMware 虚拟机
 
 ## 1.1 介绍
-
-
 
 ## 1.2 下载及安装
 
@@ -135,15 +126,15 @@ abbrlink: 9750b399
 
 **遇到的问题：**
 
-* * [x] 问题一：![img](https://img-blog.csdn.net/2018030316140063?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvd2VpeGluXzM4MTExOTU3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)
+* * [X] 问题一：![img](https://img-blog.csdn.net/2018030316140063?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvd2VpeGluXzM4MTExOTU3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)
 
   * 我选择将 D 盘压缩 30G ，新建空的简单卷来装此系统
-* * [x] 问题二：`have no enough available....`
+* * [X] 问题二：`have no enough available....`
 
-  * 最后在给`根目录`分区，根目录就是在选择挂载点的第一个`/`，然后下面有个选择框`选择最大的值`，分区4个就够了。
+  * 最后在给 `根目录`分区，根目录就是在选择挂载点的第一个 `/`，然后下面有个选择框 `选择最大的值`，分区4个就够了。
 * **password**：`ZihaoMa123`
 * **Congratulations**![image-20210306213821201](E:\LearningNotes\Linux\LinuxLearning.assets\image-20210306213821201.png)
-* 在输入密码（*密码就是在安装系统时输入的密码*）的时候是不会出现`****`
+* 在输入密码（*密码就是在安装系统时输入的密码*）的时候是不会出现 `****`
 
 虚拟机挂起和关机的区别
 
@@ -153,7 +144,7 @@ abbrlink: 9750b399
 # 3 学习 Linux 的好习惯
 
 * 善于使用 `man 命令`查看帮助文档
-* 利用好`Tab`键
+* 利用好 `Tab`键
 * 掌握好：
   * `ctrl + c` 停止当前进程
   * `ctrl + r 查看命令历史`
@@ -163,15 +154,13 @@ abbrlink: 9750b399
 
 ## 1 心态
 
-*  明确目的：用Linux来干什么（搭建服务器，做程序开发，日常办公，还是娱乐游戏）
-
+* 明确目的：用Linux来干什么（搭建服务器，做程序开发，日常办公，还是娱乐游戏）
 * 面对现实：Linux 大都在命令行下操作，能否接受不用图形化界面
-
 * 是学习Linux操作系统本身，还是某一个发行版（Ubuntu，CentOS，Fedora，OpenSUSE等）
 
   * [Linux发行版](https://baike.baidu.com/item/Linux%E7%89%88%E6%9C%AC)
-
 * > 一个典型的Linux发行版包括：[Linux内核](https://baike.baidu.com/item/Linux内核)，一些[GNU](https://baike.baidu.com/item/GNU)[程序库](https://baike.baidu.com/item/程序库/7662317)和工具，命令行shell，图形界面的[X Window](https://baike.baidu.com/item/X Window)系统和相应的[桌面环境](https://baike.baidu.com/item/桌面环境/3373875)，如[KDE](https://baike.baidu.com/item/KDE)或[GNOME](https://baike.baidu.com/item/GNOME)，并包含数千种从办公套件，[编译器](https://baike.baidu.com/item/编译器/8853067)，[文本编辑器](https://baike.baidu.com/item/文本编辑器/8853160)到科学工具的应用软件。
+  >
 
 ## 2 注重基础，从头开始
 

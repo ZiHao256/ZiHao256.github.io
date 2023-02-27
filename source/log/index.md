@@ -5,6 +5,10 @@ type: timeline
 ---
 {% timeline 2023,blue %}
 
+<!-- timeline 02-27 -->
+- 增加 {% btn 'https://zihao256.github.io/Map/',List-Map,fa fa-map-signs,outline %} 页面，用来记录博主对世界的奇妙探险
+<!-- endtimeline -->
+
 <!-- timeline 02-22 -->
 
 - 增加文章置顶功能
@@ -22,7 +26,7 @@ type: timeline
 <!-- timeline 02-18 -->
 
 - 增加 `Gitalk 评论` 功能
-- 增加 `Gallery 图册`模块
+- 增加 {% btn 'https://zihao256.github.io/Gallery/',List-Gallery,fa fa-camera-retro,outline %} 页面，用来记录博主眼中的世界
 
 <!-- endtimeline -->
 

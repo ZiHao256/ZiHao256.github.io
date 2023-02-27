@@ -6,7 +6,7 @@ categories:
 tags: 
   - SQL
 abbrlink: 4d712855
-date: 2021
+date: 2021-05-20
 ---
 # SQL
 
@@ -325,20 +325,17 @@ date: 2021
   * 通过 两个一对多关系 实现：即通过**一个中间表**，**关联两个一对多关系**，就形成了多对多关系
 * 示例：
 
-  * `teachers`表：
-    | id | name   |
+  * `teachers`表：| id | name   |
     | :- | :----- |
     | 1  | 张老师 |
     | 2  | 王老师 |
     | 3  | 李老师 |
     | 4  | 赵老师 |
-  * `classes`表：
-    | id | name |
+  * `classes`表：| id | name |
     | :- | :--- |
     | 1  | 一班 |
     | 2  | 二班 |
-  * 中间表 `teacher_class`关联两个一对多关系：
-    | id | teacher_id | class_id |
+  * 中间表 `teacher_class`关联两个一对多关系：| id | teacher_id | class_id |
     | :- | :--------- | :------- |
     | 1  | 1          | 1        |
     | 2  | 1          | 2        |
@@ -435,8 +432,7 @@ date: 2021
 
 * 事先准备 `students` 和 `classes` 表
 
-  * `students`表存储了学生信息：
-    | id | class_id | name | gender | score |
+  * `students`表存储了学生信息：| id | class_id | name | gender | score |
     | :- | :------- | :--- | :----- | :---- |
     | 1  | 1        | 小明 | M      | 90    |
     | 2  | 1        | 小红 | F      | 95    |
@@ -448,8 +444,7 @@ date: 2021
     | 8  | 3        | 小新 | F      | 91    |
     | 9  | 3        | 小王 | M      | 89    |
     | 10 | 3        | 小丽 | F      | 85    |
-  * `classes`表存储了班级信息：
-    | id | name |
+  * `classes`表存储了班级信息：| id | name |
     | :- | :--- |
     | 1  | 一班 |
     | 2  | 二班 |

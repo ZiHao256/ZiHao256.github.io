@@ -9,6 +9,7 @@ type: timeline
 <iframe src="https://www.google.com/maps/d/embed?mid=1fCGbdRuEPO68svjXSvVZzjXmKYZvwwM&ehbc=2E312F" width=100% height=480></iframe>
 <!-- endtimeline -->
 
+{% hideBlock %}
 <!-- timeline 02-26 -->
 <details>
 <summary>
@@ -34,7 +35,7 @@ type: timeline
 </details>
 
 <!-- endtimeline -->
-
+{% endhideBlock %}
 
 
 {% endtimeline %}

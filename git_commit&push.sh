@@ -1,12 +1,14 @@
 #!/bin/bash
-echo "git add"
+SPLITE_LINE="=========="
+
+echo "$SPLITE_LINE git add $SPLITE_LINE"
 git add .
 
-echo "git commit"
+echo "$SPLITE_LINE git commit $SPLITE_LINE"
 git commit -m 'update Hexo source code'
 
-echo "git push github"
+echo "$SPLITE_LINE git push github $SPLITE_LINE"
 git push github
 
-echo "git push gitee"
+echo "$SPLITE_LINE git push gitee $SPLITE_LINE"
 git push gitee

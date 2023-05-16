@@ -32,7 +32,7 @@ date: 2023-05-16 14:17:01
 
 ## embedding
 
-## term-embedding
+### term-embedding
 
 “term-embedding” ([Gao 等, 2019, p. 145](zotero://select/library/items/9LQ2XLYP)) ([pdf](zotero://open-pdf/library/items/4RB7Y8FW?page=1&annotation=WKIBFI2P)) 「  
 **embedding**:  
@@ -43,7 +43,7 @@ date: 2023-05-16 14:17:01
 - 这些特征向量可以在机器学习模型中使用，从而对代码进行分类或聚类等操作  
 」
 
-## tree-embedding
+### tree-embedding
 
 “tree embedding technique” ([Gao 等, 2019, p. 145](zotero://select/library/items/9LQ2XLYP)) ([pdf](zotero://open-pdf/library/items/4RB7Y8FW?page=1&annotation=NK5S2J7A)) 「  
 **tree embedding**：  

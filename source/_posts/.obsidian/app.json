@@ -7,5 +7,6 @@
   "useMarkdownLinks": true,
   "alwaysUpdateLinks": true,
   "showFrontmatter": true,
-  "defaultViewMode": "preview"
+  "defaultViewMode": "preview",
+  "showLineNumber": true
 }

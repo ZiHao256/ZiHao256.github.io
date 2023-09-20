@@ -3,19 +3,15 @@ title: About Me
 type: "about"
 date: 2021-05-01 09:50:14
 ---
-**Name**: Zihao Ma / Alex Ma
+# Zihao(Zahi) Ma
+- [Home](https://zihao256.github.io/ZiHao256.com)
+- [Blog](https://zihao256.github.io)
+- [About](https://zihao256.github.io/about/)
+- [CV](https://zihao256.github.io/ZiHao256.com/cv.pdf)
 
-**Home Page:**  [https://zihao256.github.io/ZiHao256.com/](https://zihao256.github.io/ZiHao256.com/)
+# About Me
+I am currently a postgraduate student in Computer Science and Technology at [Xidian University](https://www.xidian.edu.cn/). I received my bachelor's degree in software engineering from [Xidian University](https://www.xidian.edu.cn/).
 
-**Introduction：**
+I can be referred to as Zahi Ma and Zihao Ma.
 
-> **我的名字叫吉良吉影，年龄33岁。家在杜王町东北部的别墅区内，未婚。我在龟友连锁百货公司上班，每天最晚也会在8点前回家，不抽烟，偶尔沾点酒，晚上十一点上床，保证睡足8个小时。**睡前喝一杯热乎乎的牛奶，再做20分钟的舒缓运动暖身然后再睡觉，基本能熟睡到天亮，像婴儿一样不留下任何疲劳和压力，就这样迎来第二天的早晨，健康检查结果也显示我很正常。
-
-
-**Address**: Xi'an Shaanxi & Bo'zhou Anhui
-
-**qq-email**: zihaom@qq.com
-
-**gmail**: zihao626@gmail.com
-
-**XDU-email**: zh_ma@stu.xidian.edu.cn
+I have been focusing on learning system software, especially database systems, during my undergraduate and graduate study. I am learning CMU15-445(2023FALL) to improve my skills of C++ and database system.

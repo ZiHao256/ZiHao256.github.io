@@ -1,0 +1,571 @@
+<!DOCTYPE html><html lang="zh-Hans" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>17 网络编程 | ZiHao's Blog</title><meta name="keywords" content="The Go Programming Language"><meta name="author" content="Zihao Ma"><meta name="copyright" content="Zihao Ma"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="17 网络编程 使得程序相互通信  演示使用net 包进行TCP 和UDP 通信   互联网协议介绍 互联网的核心是一系列协议，总称为互联网协议 (Internet Protocol Suite)  这一系列协议规定了电脑如何连接和组网    互联网分层模型 互联网的逻辑实现：  ![osi七层模型](E:\LearningNotes\Go\17 网络编程.assets\osi.png)   互联">
+<meta property="og:type" content="article">
+<meta property="og:title" content="17 网络编程">
+<meta property="og:url" content="https://zihao256.github.io/p/527606cb.html">
+<meta property="og:site_name" content="ZiHao&#39;s Blog">
+<meta property="og:description" content="17 网络编程 使得程序相互通信  演示使用net 包进行TCP 和UDP 通信   互联网协议介绍 互联网的核心是一系列协议，总称为互联网协议 (Internet Protocol Suite)  这一系列协议规定了电脑如何连接和组网    互联网分层模型 互联网的逻辑实现：  ![osi七层模型](E:\LearningNotes\Go\17 网络编程.assets\osi.png)   互联">
+<meta property="og:locale">
+<meta property="og:image" content="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven2.jpg">
+<meta property="article:published_time" content="2021-05-06T11:36:06.000Z">
+<meta property="article:modified_time" content="2023-09-20T06:52:02.723Z">
+<meta property="article:author" content="Zihao Ma">
+<meta property="article:tag" content="The Go Programming Language">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven2.jpg"><link rel="shortcut icon" href="https://github.com/ZiHao256/ZiHao256.github.io/blob/hexo/images/stitch.JPG?raw=true"><link rel="canonical" href="https://zihao256.github.io/p/527606cb"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":true,"languages":{"hits_empty":"We didn't find any results for the search: ${query}"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: true,
+    post: true
+  },
+  runtime: '天',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: true,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '17 网络编程',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: true,
+  isToc: true,
+  postUpdate: '2023-09-20 14:52:02'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="/atom.xml" title="ZiHao's Blog" type="application/atom+xml">
+<style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}</style></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">Loading...</div></div></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://github.com/ZiHao256/ZiHao256.github.io/blob/hexo/images/stitch.JPG?raw=true" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">58</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">38</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">15</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/log"><i class="fa-fw fas fa-book"></i><span> Log</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fa fa-camera-retro"></i><span> Gallery</span></a></li><li><a class="site-page child" href="/Map/"><i class="fa-fw fa fa-map-signs"></i><span> Map</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven2.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">ZiHao's Blog</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> Search</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/log"><i class="fa-fw fas fa-book"></i><span> Log</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fa fa-camera-retro"></i><span> Gallery</span></a></li><li><a class="site-page child" href="/Map/"><i class="fa-fw fa fa-map-signs"></i><span> Map</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">17 网络编程</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2021-05-06T11:36:06.000Z" title="Created 2021-05-06 19:36:06">2021-05-06</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2023-09-20T06:52:02.723Z" title="Updated 2023-09-20 14:52:02">2023-09-20</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E4%B8%AA%E4%BA%BA%E6%8F%90%E5%8D%87/">个人提升</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E4%B8%AA%E4%BA%BA%E6%8F%90%E5%8D%87/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0/">编程语言学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">Word count:</span><span class="word-count">1.8k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">Reading time:</span><span>5min</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="17 网络编程"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">Comments:</span><a href="/p/527606cb.html#post-comment"><span class="gitalk-comment-count"><i class="fa-solid fa-spinner fa-spin"></i></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="17-网络编程"><a href="#17-网络编程" class="headerlink" title="17 网络编程"></a>17 网络编程</h1><ul>
+<li><p>使得<strong>程序相互通信</strong></p>
+</li>
+<li><p>演示使用<code>net</code> 包进行<code>TCP</code> 和<code>UDP</code> 通信</p>
+</li>
+</ul>
+<h1 id="互联网协议介绍"><a href="#互联网协议介绍" class="headerlink" title="互联网协议介绍"></a>互联网协议介绍</h1><ul>
+<li>互联网的核心是<strong>一系列协议</strong>，总称为<code>互联网协议</code> <strong>(Internet Protocol Suite)</strong> <ul>
+<li>这一系列协议规定了电脑如何<strong>连接和组网</strong></li>
+</ul>
+</li>
+</ul>
+<h2 id="互联网分层模型"><a href="#互联网分层模型" class="headerlink" title="互联网分层模型"></a>互联网分层模型</h2><ul>
+<li><p>互联网的逻辑实现：</p>
+<ul>
+<li>![osi七层模型](E:\LearningNotes\Go\17 网络编程.assets\osi.png)</li>
+</ul>
+</li>
+<li><p>互联网按照不同的模型划分为不同的分层</p>
+</li>
+<li><p>无论按照什么模型划分：越往上的层越 靠近<strong>用户</strong>，越往下的层越 靠近<strong>硬件</strong></p>
+</li>
+</ul>
+<h3 id="物理层"><a href="#物理层" class="headerlink" title="物理层"></a>物理层</h3><ul>
+<li>电脑与外界互联网通信<ul>
+<li>先把电脑连接网络：使用 双绞线、光纤、无线电波 等方式</li>
+</ul>
+</li>
+<li><strong>实物理层</strong>：把电脑连接起来的物理手段</li>
+<li>主要是<strong>规定了网络的一些电气特性</strong>，作用是负责传送 0 和 1 的电信号</li>
+</ul>
+<h3 id="数据链路层"><a href="#数据链路层" class="headerlink" title="数据链路层"></a>数据链路层</h3><ul>
+<li>功能：规定解读电信号的方式，确定了物理层传输的 0 和 1 的分组方式及代表意义<ul>
+<li>例如：多少电信号算一组？每个信号位有何意义</li>
+</ul>
+</li>
+<li><strong>以太网 (Ethernet) 的协议</strong>占据了主导地位</li>
+</ul>
+<ul>
+<li>以太网 规定，<strong>一组电信号</strong>构成一个<strong>数据包</strong>，叫做 <code>帧Frame</code> <ul>
+<li><strong>一个帧</strong>：<code>标头Head</code> 和 <code>数据Data</code> 组成</li>
+<li><strong>标头 ：</strong>包含数据包的一些<strong>说明项</strong>：如发送者、接收者、数据类型等<ul>
+<li>长度：固定 18 字节</li>
+</ul>
+</li>
+<li><strong>数据 ：</strong>数据包的<strong>具体内容</strong><ul>
+<li>长度：最短 46 字节，最长 1500 字节</li>
+</ul>
+</li>
+<li>若数据很长，必须分割成多个帧发送</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>标识 发送者 和 接收者：</li>
+<li>以太网协议 规定：连入网络的所有设备 必须具有 网卡接口<ul>
+<li>数据包必须是从一块网卡，传送到另一块网卡</li>
+<li>网卡地址，就是数据包的发送地址和接收地址，这就是<strong>MAC地址</strong></li>
+</ul>
+</li>
+<li>每块网卡拥有独一无二的<strong>MAC地址</strong>，长度是 48 个二进制位，通常用 12 个十六进制数表示<ul>
+<li>前 6 个十六进制数 是厂商编号</li>
+<li>后 6 个是该厂商的网卡流水号</li>
+</ul>
+</li>
+<li>MAC 地址：定位网卡和数据包的路径</li>
+</ul>
+<ul>
+<li>通过 ARP 协议获取接收方的 MAC地址，</li>
+<li>以太网采用<code>广播broadcasting</code> 发送方式<ul>
+<li>向本网络内所有计算机都发送数据包</li>
+<li>每台计算机读取这个包的 <code>标头</code> ，找到接收方的MAC地址，</li>
+<li>然后与自身的MAC地址相比较，若相同就接受这个包；否则就丢弃</li>
+</ul>
+</li>
+</ul>
+<h3 id="网络层"><a href="#网络层" class="headerlink" title="网络层"></a>网络层</h3><ul>
+<li>根据以太网协议，可以依靠 <strong>MAC 地址</strong> 向外发送数据</li>
+<li>以太网采用广播方式发送数据包 重大缺陷：<ul>
+<li>所有成员人手一包，不仅效率低</li>
+<li>而且发送的数据只能局限在 发送者 所在的子网络</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>区别哪些 MAC 地址属于同一个子网络<ul>
+<li>若是同一个字网络，就采用广播方式发送</li>
+<li>否则就采用<code>路由</code> 方式发送</li>
+</ul>
+</li>
+<li>针对该问题，导致了网络层的诞生，</li>
+<li>网络层的作用：引进一套新的地址，区分不同的计算机是否属于同一个子网络<ul>
+<li>这套地址 即网络地址，简称 网址</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>至此，每台计算机拥有两种地址：<ul>
+<li><strong>MAC 地址</strong>：将数据包 送到该子网络（网络地址确定的）中的目标网卡<ul>
+<li>绑定于网卡</li>
+</ul>
+</li>
+<li><strong>网络地址</strong>：帮助我们确定计算机所在的子网络<ul>
+<li>网络管理员分配的</li>
+</ul>
+</li>
+<li>两者无任何联系</li>
+</ul>
+</li>
+<li>先处理网络地址，在处理MAC地址</li>
+</ul>
+<ul>
+<li><strong>IP 协议</strong>：规定网络地址的协议<ul>
+<li>所定义的地址：IP 地址</li>
+</ul>
+</li>
+<li>目前，广泛采用 <code>IPv4</code> , IP 协议第四版<ul>
+<li>网络地址：32 个二进制位组成</li>
+<li>习惯用<strong>分成四段</strong>的十进制数表示 IP 地址：从<code>0.0.0.0到255.255.255.255</code></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>IP 数据包：根据 IP 协议发送的数据<ul>
+<li><strong>标头</strong>：版本、长度、IP 地址<ul>
+<li>长度：20 - 60字节</li>
+</ul>
+</li>
+<li><strong>数据：</strong>IP 数据包的具体内容</li>
+<li>整个数据包的总长度最大为 65535 字节</li>
+</ul>
+</li>
+</ul>
+<h3 id="传输层"><a href="#传输层" class="headerlink" title="传输层"></a>传输层</h3><ul>
+<li>有了 MAC 地址 和 IP 地址，可以在互联网上的 任意两台主机建立通信</li>
+<li>同一台主机上的许多程序 需要使用网络收发数据包，该如何区分数据包的归属</li>
+<li>使用参数 <code>端口Port</code> 表示数据包供哪个进程使用<ul>
+<li>Port 是每一个使用网卡的程序的编号</li>
+<li>每一个数据包都发到主机的特定端口</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>端口 是<code>0-65535</code> 的一个整数，使用16 个二进制位表示<ul>
+<li><code>0-1023</code> 的端口被系统占用</li>
+<li>用户只能选用大于 1023 的端口</li>
+</ul>
+</li>
+<li>有了 IP 和 端口，可以唯一确定互联网上一个程序，进而实现网络间的程序通信</li>
+</ul>
+<ul>
+<li>必须在数据包中加入 端口信息，因此需要新的协议<ul>
+<li><code>UDP</code> 协议：在数据前加上端口号，总长度不超过<code>65535</code> 字节<ul>
+<li>缺陷：无法确定对方是否收到</li>
+<li>标头：发出端口，接收端口<ul>
+<li>8个字节</li>
+</ul>
+</li>
+<li>数据：具体内容</li>
+</ul>
+</li>
+<li><code>TCP</code> 协议：保证数据不丢失<ul>
+<li>缺陷：过程复杂，实现困难，消耗较多的资源</li>
+<li>无长度限制</li>
+<li>通常长度不超过 IP 数据包的长度</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="应用层"><a href="#应用层" class="headerlink" title="应用层"></a>应用层</h3><ul>
+<li>应用程序收到 传输层数据，需要对数据进行解包：（需要事先规定好通信的数据格式）</li>
+<li>应用层的作用：规定应用程序使用的数据格式<ul>
+<li>例如：TCP协议之上的 Email，HTTP，FTP等协议</li>
+<li>这些协议组成了互联网协议的应用层</li>
+</ul>
+</li>
+<li>发送方的<code>HTTP</code> 数据，经过互联网的传输过程中，会依次添加各层协议的标头信息，接收方收到数据包后， 再依次根据协议解包得到数据<ul>
+<li>![HTTP数据传输图解](E:\LearningNotes\Go\17 网络编程.assets\httptcpip.png)</li>
+</ul>
+</li>
+</ul>
+<h1 id="socket-编程"><a href="#socket-编程" class="headerlink" title="socket 编程"></a>socket 编程</h1><ul>
+<li>Socket 是 BSD UNIX 的进程通信机制，称作<code>套接字</code></li>
+<li>作用：描述 IP 地址和端口，一个通信链的句柄</li>
+<li>可以理解为 <code>TCP/IP</code> 网络的 API ，定义了许多函数和例程，程序员可以用它们开发<code>TCP/IP</code> 网络上的应用程序</li>
+<li>电脑上运行的应用程序，通常通过<code>套接字</code>向网络发出请求或者应答请求</li>
+</ul>
+<h2 id="socket-图解"><a href="#socket-图解" class="headerlink" title="socket 图解"></a>socket 图解</h2><ul>
+<li><code>Socket</code> 是应用层与<code>TCP/IP</code> 协议族通信的中间软件抽象层</li>
+<li>将复杂的<code>TCP/IP</code> 协议族 隐藏在<code>Socket</code> 后，<ul>
+<li>用户只需调用Socket相关函数，</li>
+<li>让Socket去组织符合指定的协议数据，然后进行通信</li>
+</ul>
+</li>
+<li>![socket图解](E:\LearningNotes\Go\17 网络编程.assets\socket.png)</li>
+</ul>
+<h2 id="Go-语言实现-TCP-通信"><a href="#Go-语言实现-TCP-通信" class="headerlink" title="Go 语言实现 TCP 通信"></a>Go 语言实现 TCP 通信</h2><h3 id="TCP-协议"><a href="#TCP-协议" class="headerlink" title="TCP 协议"></a>TCP 协议</h3><h3 id="TCP-服务端"><a href="#TCP-服务端" class="headerlink" title="TCP 服务端"></a>TCP 服务端</h3><h3 id="TCP-客户端"><a href="#TCP-客户端" class="headerlink" title="TCP 客户端"></a>TCP 客户端</h3><h2 id="TCP-黏包"><a href="#TCP-黏包" class="headerlink" title="TCP 黏包"></a>TCP 黏包</h2><h3 id="黏包示例"><a href="#黏包示例" class="headerlink" title="黏包示例"></a>黏包示例</h3><h3 id="为什么会出现黏包"><a href="#为什么会出现黏包" class="headerlink" title="为什么会出现黏包"></a>为什么会出现黏包</h3><h3 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h3><h2 id="Go-语言实现UDP通信"><a href="#Go-语言实现UDP通信" class="headerlink" title="Go 语言实现UDP通信"></a>Go 语言实现UDP通信</h2><h3 id="UDP-协议"><a href="#UDP-协议" class="headerlink" title="UDP 协议"></a>UDP 协议</h3><h3 id="UDP-服务端"><a href="#UDP-服务端" class="headerlink" title="UDP 服务端"></a>UDP 服务端</h3><h3 id="UDP-客户端"><a href="#UDP-客户端" class="headerlink" title="UDP 客户端"></a>UDP 客户端</h3><p>304301980</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="https://zihao256.github.io">Zihao Ma</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://zihao256.github.io/p/527606cb.html">https://zihao256.github.io/p/527606cb.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/The-Go-Programming-Language/">The Go Programming Language</a></div><div class="post_share"><div class="social-share" data-image="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven2.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/p/bf869091.html"><img class="prev-cover" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven2.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info">Lab1</div></div></a></div><div class="next-post pull-right"><a href="/p/a4216756.html"><img class="next-cover" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/narrow-muddy-road-dark-forest.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">16 并发</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><div><a href="/p/a4216756.html" title="16 并发"><img class="cover" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/narrow-muddy-road-dark-forest.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-05-06</div><div class="title">16 并发</div></div></a></div><div><a href="/p/16e69ce4.html" title="15 反射"><img class="cover" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven7.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-05-06</div><div class="title">15 反射</div></div></a></div><div><a href="/p/f9eadfe2.html" title="14 接口"><img class="cover" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/john-towner-3Kv48NS4WUU-unsplash.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-05-06</div><div class="title">14 接口</div></div></a></div><div><a href="/p/9d9aaa60.html" title="13 包"><img class="cover" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven7.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-05-06</div><div class="title">13 包</div></div></a></div><div><a href="/p/9a7f2d8e.html" title="12 结构体"><img class="cover" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven9.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-05-06</div><div class="title">12 结构体</div></div></a></div><div><a href="/p/9b3b896b.html" title="11 指针"><img class="cover" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven13.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-05-06</div><div class="title">11 指针</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> Comment</span></div></div><div class="comment-wrap"><div><div id="gitalk-container"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://github.com/ZiHao256/ZiHao256.github.io/blob/hexo/images/stitch.JPG?raw=true" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Zihao Ma</div><div class="author-info__description">博学之,审问之,慎思之,明辨之,笃行之.</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">58</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">38</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">15</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/ZiHao256"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/ZiHao256" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/atom.xml" target="_blank" title="RSS链接"><i class="fa fa-rss"></i></a><a class="social-icon" href="mailto:zihao626@gmail.com" target="_blank" title="gmail"><i class="fa-brands fa-google"></i></a><a class="social-icon" href="mailto:19030500024@stu.xidian.edu.cn" target="_blank" title="xdu-mail"><i class="fa fa-graduation-cap"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">This is Zihao's Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#17-%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B"><span class="toc-text">17 网络编程</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%92%E8%81%94%E7%BD%91%E5%8D%8F%E8%AE%AE%E4%BB%8B%E7%BB%8D"><span class="toc-text">互联网协议介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%92%E8%81%94%E7%BD%91%E5%88%86%E5%B1%82%E6%A8%A1%E5%9E%8B"><span class="toc-text">互联网分层模型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%A9%E7%90%86%E5%B1%82"><span class="toc-text">物理层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82"><span class="toc-text">数据链路层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E5%B1%82"><span class="toc-text">网络层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%A0%E8%BE%93%E5%B1%82"><span class="toc-text">传输层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BA%94%E7%94%A8%E5%B1%82"><span class="toc-text">应用层</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#socket-%E7%BC%96%E7%A8%8B"><span class="toc-text">socket 编程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#socket-%E5%9B%BE%E8%A7%A3"><span class="toc-text">socket 图解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Go-%E8%AF%AD%E8%A8%80%E5%AE%9E%E7%8E%B0-TCP-%E9%80%9A%E4%BF%A1"><span class="toc-text">Go 语言实现 TCP 通信</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#TCP-%E5%8D%8F%E8%AE%AE"><span class="toc-text">TCP 协议</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TCP-%E6%9C%8D%E5%8A%A1%E7%AB%AF"><span class="toc-text">TCP 服务端</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TCP-%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="toc-text">TCP 客户端</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TCP-%E9%BB%8F%E5%8C%85"><span class="toc-text">TCP 黏包</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%BB%8F%E5%8C%85%E7%A4%BA%E4%BE%8B"><span class="toc-text">黏包示例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E5%87%BA%E7%8E%B0%E9%BB%8F%E5%8C%85"><span class="toc-text">为什么会出现黏包</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95"><span class="toc-text">解决办法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Go-%E8%AF%AD%E8%A8%80%E5%AE%9E%E7%8E%B0UDP%E9%80%9A%E4%BF%A1"><span class="toc-text">Go 语言实现UDP通信</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#UDP-%E5%8D%8F%E8%AE%AE"><span class="toc-text">UDP 协议</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#UDP-%E6%9C%8D%E5%8A%A1%E7%AB%AF"><span class="toc-text">UDP 服务端</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#UDP-%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="toc-text">UDP 客户端</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/p/42c77a0c.html" title="Paper Reading: TECCD: A Tree Embedding Approach for Code Clone Detection"><img src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven6.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Paper Reading: TECCD: A Tree Embedding Approach for Code Clone Detection"/></a><div class="content"><a class="title" href="/p/42c77a0c.html" title="Paper Reading: TECCD: A Tree Embedding Approach for Code Clone Detection">Paper Reading: TECCD: A Tree Embedding Approach for Code Clone Detection</a><time datetime="2023-05-16T06:17:01.000Z" title="Created 2023-05-16 14:17:01">2023-05-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/69c3279c.html" title="Git"><img src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/steven-kamenar-MMJx78V7xS8-unsplash.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Git"/></a><div class="content"><a class="title" href="/p/69c3279c.html" title="Git">Git</a><time datetime="2023-05-15T13:42:40.000Z" title="Created 2023-05-15 21:42:40">2023-05-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/26d71884.html" title="Overleaf"><img src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven6.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Overleaf"/></a><div class="content"><a class="title" href="/p/26d71884.html" title="Overleaf">Overleaf</a><time datetime="2023-05-15T11:11:58.000Z" title="Created 2023-05-15 19:11:58">2023-05-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/e75f2967.html" title="Edge浏览器"><img src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/beautiful-milky-way-night-sky.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Edge浏览器"/></a><div class="content"><a class="title" href="/p/e75f2967.html" title="Edge浏览器">Edge浏览器</a><time datetime="2023-05-14T09:24:59.000Z" title="Created 2023-05-14 17:24:59">2023-05-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/e547f891.html" title="Paper Reading: How good are query optimizers, really?"><img src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven9.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Paper Reading: How good are query optimizers, really?"/></a><div class="content"><a class="title" href="/p/e547f891.html" title="Paper Reading: How good are query optimizers, really?">Paper Reading: How good are query optimizers, really?</a><time datetime="2023-03-04T14:25:09.000Z" title="Created 2023-03-04 22:25:09">2023-03-04</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven2.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2021 - 2023 By Zihao Ma</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Hi, welcome to my <a href="https://zihao256.github.io/">Blog</a>!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="Toggle Between Traditional Chinese And Simplified Chinese">简</button><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="Scroll To Comments"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">Search</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  Loading the Database</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="Search for Posts" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script src="/js/search/local-search.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><script>function addGitalkSource () {
+  const ele = document.createElement('link')
+  ele.rel = 'stylesheet'
+  ele.href= 'https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.css'
+  document.getElementsByTagName('head')[0].appendChild(ele)
+}
+
+function loadGitalk () {
+  function initGitalk () {
+    var gitalk = new Gitalk(Object.assign({
+      clientID: 'ff33deb87bcf128b07ee',
+      clientSecret: 'ff52e6f598f01828083ee59b85a9327e686666a7',
+      repo: 'ZiHao256.github.io',
+      owner: 'ZiHao256',
+      admin: ['ZiHao256'],
+      id: 'ccbb2332a3a64c21dd898cf325329617',
+      updateCountCallback: commentCount
+    },null))
+
+    gitalk.render('gitalk-container')
+  }
+
+  if (typeof Gitalk === 'function') initGitalk()
+  else {
+    addGitalkSource()
+    getScript('https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.js').then(initGitalk)
+  }
+}
+
+function commentCount(n){
+  let isCommentCount = document.querySelector('#post-meta .gitalk-comment-count')
+  if (isCommentCount) {
+    isCommentCount.innerHTML= n
+  }
+}
+
+if ('Gitalk' === 'Gitalk' || !false) {
+  if (false) btf.loadComment(document.getElementById('gitalk-container'), loadGitalk)
+  else loadGitalk()
+} else {
+  function loadOtherComment () {
+    loadGitalk()
+  }
+}</script></div><script>window.addEventListener('load', () => {
+  const changeContent = (content) => {
+    if (content === '') return content
+
+    content = content.replace(/<img.*?src="(.*?)"?[^\>]+>/ig, '[image]') // replace image link
+    content = content.replace(/<a[^>]+?href=["']?([^"']+)["']?[^>]*>([^<]+)<\/a>/gi, '[link]') // replace url
+    content = content.replace(/<pre><code>.*?<\/pre>/gi, '[code]') // replace code
+    content = content.replace(/<[^>]+>/g,"") // remove html tag
+
+    if (content.length > 150) {
+      content = content.substring(0,150) + '...'
+    }
+    return content
+  }
+
+  const findTrueUrl = (array) => {
+    Promise.all(array.map(item =>
+      fetch(item.url).then(resp => resp.json()).then(data => {
+        const urlArray = data.body.match(/(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?/ig)
+        if (data.user.login === 'utterances-bot') {
+          return urlArray.pop()
+        } else {
+          return urlArray.shift()
+        }
+      })
+    )).then(res => {
+        array = array.map((i,index)=> {
+          return {
+            ...i,
+            url: res[index]
+          }
+        })
+
+        saveToLocal.set('github-newest-comments', JSON.stringify(array), 10/(60*24))
+        generateHtml(array)
+    });
+  }
+
+  const getComment = () => {
+    fetch('https://api.github.com/repos/ZiHao256/ZiHao256.github.io/issues/comments?sort=updated&direction=desc&per_page=6&page=1',{
+      "headers": {
+        Accept: 'application/vnd.github.v3.html+json'
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        const githubArray = data.map(item => {
+          return {
+            'avatar': item.user.avatar_url,
+            'content': changeContent(item.body_html),
+            'nick': item.user.login,
+            'url': item.issue_url,
+            'date': item.updated_at,
+            'githubUrl': item.html_url
+          }
+        })
+        findTrueUrl(githubArray)
+      }).catch(e => {
+        const $dom = document.querySelector('#card-newest-comments .aside-list')
+        $dom.innerHTML= "Unable to get the data, please make sure the settings are correct."
+      })
+  }
+
+  const generateHtml = array => {
+    let result = ''
+
+    if (array.length) {
+      for (let i = 0; i < array.length; i++) {
+        result += '<div class=\'aside-list-item\'>'
+
+        if (true) {
+          const name = 'src'
+          result += `<a href='${array[i].url}' class='thumbnail'><img ${name}='${array[i].avatar}' alt='${array[i].nick}'></a>`
+        }
+
+        result += `<div class='content'>
+        <a class='comment' href='${array[i].url}' title='${array[i].content}'>${array[i].content}</a>
+        <div class='name'><span>${array[i].nick} / </span><time datetime="${array[i].date}">${btf.diffDate(array[i].date, true)}</time></div>
+        </div></div>`
+      }
+    } else {
+      result += 'No Comment'
+    }
+
+    let $dom = document.querySelector('#card-newest-comments .aside-list')
+    $dom.innerHTML= result
+    window.lazyLoadInstance && window.lazyLoadInstance.update()
+    window.pjax && window.pjax.refresh($dom)
+  }
+
+  const newestCommentInit = () => {
+    if (document.querySelector('#card-newest-comments .aside-list')) {
+      const data = saveToLocal.get('github-newest-comments')
+      if (data) {
+        generateHtml(JSON.parse(data))
+      } else {
+        getComment()
+      }
+    }
+  }
+
+  newestCommentInit()
+  document.addEventListener('pjax:complete', newestCommentInit)
+})</script><div class="aplayer no-destroy" data-id="6738460302" data-server="netease" data-type="playlist" data-fixed="true" data-autoplay="true"> </div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-heart.min.js" async="async" mobile="true"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener scroll 
+  window.tocScrollFn && window.removeEventListener('scroll', window.tocScrollFn)
+  window.scrollCollect && window.removeEventListener('scroll', scrollCollect)
+
+  typeof preloader === 'object' && preloader.initLoading()
+  document.getElementById('rightside').style.cssText = "opacity: ''; transform: ''"
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

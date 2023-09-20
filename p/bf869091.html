@@ -1,0 +1,560 @@
+<!DOCTYPE html><html lang="zh-Hans" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>Lab1 | ZiHao's Blog</title><meta name="keywords" content="操作系统"><meta name="author" content="Zihao Ma"><meta name="copyright" content="Zihao Ma"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="lab1[toc] 1 Producer-Consumer problem参考博客1 参考博客2 参考博客3 参考博客4  也称 有限缓冲问题 Bounded-buffer problem 多线程同步的问题  1.1 信号量配合互斥锁 信号量特性：  非负整数，对共享资源和线程的控制 通过信号量的线程会使得信号量减一，当为零时，所有试图通过的线程等待 操作： Wait：线程调用该函数时 要么得到资">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Lab1">
+<meta property="og:url" content="https://zihao256.github.io/p/bf869091.html">
+<meta property="og:site_name" content="ZiHao&#39;s Blog">
+<meta property="og:description" content="lab1[toc] 1 Producer-Consumer problem参考博客1 参考博客2 参考博客3 参考博客4  也称 有限缓冲问题 Bounded-buffer problem 多线程同步的问题  1.1 信号量配合互斥锁 信号量特性：  非负整数，对共享资源和线程的控制 通过信号量的线程会使得信号量减一，当为零时，所有试图通过的线程等待 操作： Wait：线程调用该函数时 要么得到资">
+<meta property="og:locale">
+<meta property="og:image" content="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven2.jpg">
+<meta property="article:published_time" content="2021-05-06T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-09-20T06:52:02.731Z">
+<meta property="article:author" content="Zihao Ma">
+<meta property="article:tag" content="操作系统">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven2.jpg"><link rel="shortcut icon" href="https://github.com/ZiHao256/ZiHao256.github.io/blob/hexo/images/stitch.JPG?raw=true"><link rel="canonical" href="https://zihao256.github.io/p/bf869091"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":true,"languages":{"hits_empty":"We didn't find any results for the search: ${query}"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: true,
+    post: true
+  },
+  runtime: '天',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: true,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Lab1',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: true,
+  isToc: true,
+  postUpdate: '2023-09-20 14:52:02'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="/atom.xml" title="ZiHao's Blog" type="application/atom+xml">
+<style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}</style></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">Loading...</div></div></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://github.com/ZiHao256/ZiHao256.github.io/blob/hexo/images/stitch.JPG?raw=true" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">58</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">38</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">15</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/log"><i class="fa-fw fas fa-book"></i><span> Log</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fa fa-camera-retro"></i><span> Gallery</span></a></li><li><a class="site-page child" href="/Map/"><i class="fa-fw fa fa-map-signs"></i><span> Map</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven2.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">ZiHao's Blog</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> Search</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/log"><i class="fa-fw fas fa-book"></i><span> Log</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fa fa-camera-retro"></i><span> Gallery</span></a></li><li><a class="site-page child" href="/Map/"><i class="fa-fw fa fa-map-signs"></i><span> Map</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Lab1</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2021-05-06T16:00:00.000Z" title="Created 2021-05-07 00:00:00">2021-05-07</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2023-09-20T06:52:02.731Z" title="Updated 2023-09-20 14:52:02">2023-09-20</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E4%B8%AA%E4%BA%BA%E6%8F%90%E5%8D%87/">个人提升</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E4%B8%AA%E4%BA%BA%E6%8F%90%E5%8D%87/XDU-OS%E8%AF%BE%E7%A8%8B%E8%AE%BE%E8%AE%A1/">XDU OS课程设计</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">Word count:</span><span class="word-count">4.6k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">Reading time:</span><span>15min</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Lab1"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">Comments:</span><a href="/p/bf869091.html#post-comment"><span class="gitalk-comment-count"><i class="fa-solid fa-spinner fa-spin"></i></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="lab1"><a href="#lab1" class="headerlink" title="lab1"></a>lab1</h1><p>[toc]</p>
+<h1 id="1-Producer-Consumer-problem"><a href="#1-Producer-Consumer-problem" class="headerlink" title="1 Producer-Consumer problem"></a>1 Producer-Consumer problem</h1><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/zhou1021jian/article/details/71514738">参考博客1</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/a2ade02979d1">参考博客2</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/linhaostudy/p/7554942.html">参考博客3</a></p>
+<p><a href="">参考博客4</a></p>
+<ul>
+<li>也称 有限缓冲问题 <code>Bounded-buffer problem</code></li>
+<li>多线程同步的问题</li>
+</ul>
+<h2 id="1-1-信号量配合互斥锁"><a href="#1-1-信号量配合互斥锁" class="headerlink" title="1.1 信号量配合互斥锁"></a>1.1 信号量配合互斥锁</h2><ul>
+<li><p>信号量特性：</p>
+<ul>
+<li>非负整数，对共享资源和线程的控制</li>
+<li>通过信号量的线程会使得信号量减一，当为零时，所有试图通过的线程等待</li>
+<li>操作：<ul>
+<li>Wait：线程调用该函数时<ul>
+<li>要么得到资源并将信号量减一</li>
+<li>要么线程进入等待队列，直到信号量大于零</li>
+</ul>
+</li>
+<li>Release：在信号量上执行加一<ul>
+<li>释放由信号量守护的资源</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Wait，Release再Linux中：</p>
+<ul>
+<li><code>int sem_wait(sem_t* sem)</code></li>
+<li><code>int sem_post(sem_t* sem)</code></li>
+</ul>
+</li>
+<li><p>针对该问题：</p>
+<ul>
+<li>设定两个信号量：<ul>
+<li><code>empty</code>: 空槽的个数</li>
+<li><code>full</code>: 占有的个数</li>
+</ul>
+</li>
+<li>生产者 向任务队列 放资源时，调用 <code>sem_wait(&amp;empty)</code> 检查队列是否已满，<ul>
+<li>若满，就阻塞，直到有消费者从队列里取资源</li>
+<li>若不满，就放入资源，并通知消费者取</li>
+</ul>
+</li>
+<li>消费者 从任务队列 取资源时，调用 <code>sem_wait(&amp;full)</code> 检查任务队列是否已空<ul>
+<li>若已空，就阻塞，直到生产者向里面放入资源在苏醒</li>
+<li>若非空，就取资源，并通知生产者来放入</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>互斥锁是对任务队列进行保护</p>
+</li>
+<li><p>```C</p>
+<p>#include &lt;stdio.h&gt;<br>#include &lt;pthread.h&gt;            //pthread_mutex_t, pthread_mutex_lock/unlock, pthread_t，pthread_create(), pthread_join()<br>#include &lt;semaphore.h&gt;            //sem_wait, sem_post, sem_init</p>
+<p>#define MAX 5  //队列长度</p>
+<p>pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;<br>sem_t full;     //填充的个数<br>sem_t empty;     //空槽的个数</p>
+<p>int top = 0;     //队尾<br>int bottom = 0;  //队头</p>
+<p>void* produce(void* arg)<br>{</p>
+<pre><code>int i;
+for ( i = 0; i &lt; MAX*2; i++)
+&#123;
+    printf(&quot;producer is preparing data\n&quot;);
+    sem_wait(&amp;empty);//若空槽个数低于0阻塞
+
+    pthread_mutex_lock(&amp;mutex);
+
+    top = (top+1) % MAX;
+    printf(&quot;now top is %d\n&quot;, top);
+
+    pthread_mutex_unlock(&amp;mutex);
+
+    sem_post(&amp;full);
+&#125;
+return (void*)1;
+</code></pre>
+<p>}</p>
+<p>void* consume(void* arg)<br>{</p>
+<pre><code>int i;
+for ( i = 0; i &lt; MAX*2; i++)
+&#123;
+    printf(&quot;consumer is preparing data\n&quot;);
+    sem_wait(&amp;full);//若填充个数低于0阻塞
+
+    pthread_mutex_lock(&amp;mutex);
+
+    bottom = (bottom+1) % MAX;
+    printf(&quot;now bottom is %d\n&quot;, bottom);
+
+    pthread_mutex_unlock(&amp;mutex);
+
+    sem_post(&amp;empty);
+&#125;
+
+return (void*)2;
+</code></pre>
+<p>}</p>
+<p>int main(int argc, char *argv[])<br>{</p>
+<pre><code>pthread_t thid1;        //创建四个线程，unsigned long int
+pthread_t thid2;
+pthread_t thid3;
+pthread_t thid4;
+
+int  ret1;
+int  ret2;
+int  ret3;
+int  ret4;
+
+sem_init(&amp;full, 0, 0);            //初始化信号量full为0
+sem_init(&amp;empty, 0, MAX);        //初始化信号量empty为MAX=5
+
+pthread_create(&amp;thid1, NULL, produce, NULL);        //
+pthread_create(&amp;thid2, NULL, consume, NULL);
+pthread_create(&amp;thid3, NULL, produce, NULL);
+pthread_create(&amp;thid4, NULL, consume, NULL);
+
+pthread_join(thid1, (void**)&amp;ret1);                    //
+pthread_join(thid2, (void**)&amp;ret2);
+pthread_join(thid3, (void**)&amp;ret3);
+pthread_join(thid4, (void**)&amp;ret4);
+
+return 0;
+</code></pre>
+<p>}</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">  * 若将 `sem_wait()`， `sem_post()`放于lock和unlock之间</span><br><span class="line">  * 死锁，因为我们不能预知线程进入共享区顺序，如果消费者线程先对mutex加锁，并进入，sem_wait()发现队列为空，阻塞，而生产者在对mutex加锁时，发现已上锁也阻塞，双方永远无法唤醒对方。</span><br><span class="line">* </span><br><span class="line">* `sem_init`: 长整型</span><br><span class="line"></span><br><span class="line">  * `int sem_init(sem_t *sem, int pshared, unsigned int value);`</span><br><span class="line">    * sem: 指向信号量结构的一个指针</span><br><span class="line">    * pshared不为零时，信号量在进程间共享，否则只能为当前进程的线程共享</span><br><span class="line">    * value为信号量的初始值</span><br><span class="line"></span><br><span class="line">## 1.2 Pthread</span><br><span class="line"></span><br><span class="line">* linux下用C语言开发多线程程序，Linux系统下的多线程遵循POSIX线程接口，称为pthread。</span><br><span class="line">* `pthread_create()`：创建子线程</span><br><span class="line"></span><br><span class="line">  * Linux 下创建的线程的 API 接口</span><br><span class="line">  * `int pthread_create(pthread_t *thread, const pthread_attr_t *attr, void *(*start_routine)(void *), void *arg);`</span><br><span class="line">  * 参数：</span><br><span class="line">    * thread: 返回成功时，由 thread 指向的内存单元被设置为新创建线程的线程ID</span><br><span class="line">    * attr：线程属性，默认使用NULL</span><br><span class="line">    * start_routine: 新创建的线程从 `start_routine`函数的地址开始运行，该函数只有一个万能参数arg，如果需要向 `start_rutine`函数传递的参数不止一个，那么需要把这些参数放到一个结构中，然后把这个结构的地址作为arg的参数传入。</span><br><span class="line">    * arg: 子线程处理函数的参数</span><br><span class="line">  * 简单来说：</span><br><span class="line">    * 第一个参数为指向线程 [标识符](http://baike.baidu.com/item/标识符)的 [指针](http://baike.baidu.com/item/指针)。</span><br><span class="line">    * 第二个参数用来设置线程属性。</span><br><span class="line">    * 第三个参数是线程运行函数的起始地址。</span><br><span class="line">    * 最后一个参数是运行函数的参数。</span><br><span class="line">  * 返回值：</span><br><span class="line">    * 成功返回0，失败返回错误号</span><br><span class="line">* `pthread_join()`: 子线程合入主线程</span><br><span class="line"></span><br><span class="line">  * ` int pthread_join(pthread_t thread, void **retval);`</span><br><span class="line">  * 主线程阻塞，等待子线程结束，然后回收子线程资源</span><br><span class="line">  * 以阻塞的方式，等待thread指定的线程结束</span><br><span class="line">    * 当函数返回时，被等待线程的资源被回收</span><br><span class="line">    * 若线程已经结束，该函数立即返回</span><br><span class="line">  * 参数：</span><br><span class="line">    * thread : 线程标识符，线程id</span><br><span class="line">    * retval：指向一个指向被连接线程的返回码的指针的指针</span><br><span class="line">  * 返回值，0成功，错误号失败</span><br><span class="line">* &gt; 在很多情况下，主线程生成并起动了子线程，如果子线程里要进行大量的耗时的运算，主线程往往将于子线程之前结束，但是如果主线程处理完其他的事务后，需要用到子线程的处理结果，也就是主线程需要等待子线程执行完成之后再结束，这个时候就要用到pthread_join()方法了。</span><br><span class="line">  &gt; 即pthread_join()的作用可以这样理解：主线程等待子线程的终止。也就是在子线程调用了pthread_join()方法后面的代码，只有等到子线程结束了才能执行。</span><br><span class="line">  &gt;</span><br><span class="line">* 如果没有加pthread_join()方法，main线程里面直接就执行起走了，加了之后是等待线程执行了之后才执行的后面的代码。</span><br><span class="line"></span><br><span class="line">![image-20210505195248476](E:\4th_term\操作系统OS\Lab1\lab1.assets\image-20210505195248476.png)</span><br><span class="line"></span><br><span class="line">![image-20210505195202511](E:\4th_term\操作系统OS\Lab1\lab1.assets\image-20210505195202511.png)</span><br><span class="line"></span><br><span class="line"># 2 用共享内存的多进程实现生产者消费者问题</span><br><span class="line"></span><br><span class="line">## .1 前置知识</span><br><span class="line"></span><br><span class="line">### 2.1.1 共享内存</span><br><span class="line"></span><br><span class="line">  共享内存是不同进程间为了通信而申请的可以被不同进程共同访问的内存区域。在Linux 中，共享内存的相关API由POSIX提供。</span><br><span class="line"></span><br><span class="line">\1. shmget函数：</span><br><span class="line"></span><br><span class="line">函数原型：int shmget(key_t key, size_t size, int shmflg);</span><br><span class="line"></span><br><span class="line">参数：</span><br><span class="line"></span><br><span class="line">  Key: 用于共享内存命名，不同进程通过key进行共享内存识别;</span><br><span class="line"></span><br><span class="line">  Size: 需要的共享内存大小；</span><br><span class="line"></span><br><span class="line">  shmflg: 权限标志。Key标识的内存不存在时，该参数为IPC_CREAT。</span><br><span class="line"></span><br><span class="line">\2. shmat 函数：创建完共享内存后，不能被进程访问，需要调用shmat启动该共享内存的访问，并把共享内存连接到当前进程的地址空间</span><br><span class="line"></span><br><span class="line">函数原型：void *shmat(int shm_id, const void *shm_addr, int shmflg);</span><br><span class="line"></span><br><span class="line">参数：</span><br><span class="line"></span><br><span class="line">  Shm_id: shmget返回的描述符</span><br><span class="line"></span><br><span class="line">  Shm_addr: 指定共享内存链接到当前进程中的地址位置，通常为空，让系统自己选择</span><br><span class="line"></span><br><span class="line">  Shmflg: 标志位，通常为0</span><br><span class="line"></span><br><span class="line">\3. shmctl 函数：控制共享内存</span><br><span class="line"></span><br><span class="line">函数原型：int shmctl(int shm_id, int command, struct shmid_ds *buf);</span><br><span class="line"></span><br><span class="line">参数：</span><br><span class="line"></span><br><span class="line">  Shm_id: 同上</span><br><span class="line"></span><br><span class="line">  Command: 要采取的操作</span><br><span class="line"></span><br><span class="line">  Buf: 结构体指针，指向共享内存的 shmid_ds 结构。</span><br><span class="line"></span><br><span class="line">### 2.1.2 信号量</span><br><span class="line"></span><br><span class="line">    信号量是一个特殊的变量，程序对其访问都是原子操作，且只允许对它进行等待（即P(信号变量))和发送（即V(信号变量))信息操作。最简单的信号量是只能取0和1的变量，这也是信号量最常见的一种形式，叫做二进制信号量。而可以取多个正整数的信号量被称为通用信号量。</span><br><span class="line"></span><br><span class="line">Linux中对信号量的操作在我们小组的课题《Linux中信号量的实现机制》中详细讲过，接下来简单介绍：</span><br><span class="line"></span><br><span class="line">函数semget创建一个新信号量或取得一个已有信号量；</span><br><span class="line"></span><br><span class="line">函数semop 对信号量进行操作；</span><br><span class="line"></span><br><span class="line">函数 semctl 控制信号量的销毁等</span><br><span class="line"></span><br><span class="line">## 2.2 思路</span><br><span class="line"></span><br><span class="line">  该 Task 涉及进程管理和进程间共享内存通信，可将main函数当成主进程，fork出多个子进程，并负责创建共享内存和信号量。将子进程分为两部分，生产者和消费者，通过信号量对共享内存进行互斥读写。</span><br><span class="line"></span><br><span class="line">  生产者和消费者的操作都类似于Task1中的操作，不再赘述。</span><br><span class="line"></span><br><span class="line"># 3 测试有名/匿名，共有/私有内存映射</span><br><span class="line"></span><br><span class="line">## 内存映射</span><br><span class="line"></span><br><span class="line">## .1 前置知识</span><br><span class="line"></span><br><span class="line">    内存映射 mmap 是Linux 内核的一个重要机制，和虚拟内存管理以及文件IO都有直接关系。</span><br><span class="line"></span><br><span class="line">  Linux 的虚拟内存管理是基于 mmap 实现的，vm_area_struct 在mmap 创建时创建，代表了一段连续的虚拟地址，这些虚拟地址相应的映射到一个后备文件或者匿名文件的虚拟页。一个vm_area_struct映射到一组连续的页表项，页表项映射物理内存page frame，这样文件和物理内存页相映射。</span><br><span class="line"></span><br><span class="line">### 3.1.1 mmap 和 虚拟内存管理</span><br><span class="line"></span><br><span class="line">  Linux内核的用户进程虚拟内存管理：内核定义了mm_struct 结构表示一个用户进程的虚拟内存地址空间。</span><br><span class="line"></span><br><span class="line">  mm**_**struct**结构**：</span><br><span class="line"></span><br><span class="line">    ![image-20210507110545709](E:\4th_term\操作系统OS\Lab1\lab1.assets\image-20210507110545709.png)</span><br><span class="line"></span><br><span class="line">\1.  start_code, end_code: 指定了进程的代码段的边界；</span><br><span class="line"></span><br><span class="line">\2.  start_data, end_data: 指定了进程数据段的边界；</span><br><span class="line"></span><br><span class="line">\3.  start_brk指定了堆的起始地址; brk指定了堆的结束位置；</span><br><span class="line"></span><br><span class="line">\4.  start_stack: 指定了站的起始位置；</span><br><span class="line"></span><br><span class="line">\5.  mmap_base: 指定了用户进程虚拟地址空间中 用作内存映射部分的地址的基地址，</span><br><span class="line"></span><br><span class="line">\6.  task_size: 指定了用户进程地址空间的长度。</span><br><span class="line"></span><br><span class="line">进程的mm_struct 除了包含**进程虚拟内存地址空间布局**，还包含了**虚拟内存区域**vm_area_struct信息。虚拟内存区域是内核管理用户进程虚拟地址空间的方式，数据段、代码段、共享库等都是通过vm_area_atruct管理。</span><br><span class="line"></span><br><span class="line">vm_area_struct结构：</span><br><span class="line"></span><br><span class="line"> ![image-20210507110550648](E:\4th_term\操作系统OS\Lab1\lab1.assets\image-20210507110550648.png)</span><br><span class="line"></span><br><span class="line">\1. vm_start, vm_end表示区域的开始位置和结束位置，确定了区域的边界。两个vm_area_struct不会出现交叉的情况</span><br><span class="line"></span><br><span class="line">\2. vm_page_prot 表示这个区域的页的访问权限</span><br><span class="line"></span><br><span class="line">\3. shared结构处理有后备文件的内存映射，和后备文件的address_space地址空间关联起来</span><br><span class="line"></span><br><span class="line">\4. anon_vma_node, anon_vma处理匿名文件共享内存映射的情况，映射到同一物理内存页的映射都保存在一个链表中</span><br><span class="line"></span><br><span class="line">\5. vm_pgoff, vm_file都是处理有后备文件内存映射的情况，获得该映射在文件的页偏移量，以及打开文件file实例的信息</span><br><span class="line"></span><br><span class="line">## 3.2 mmap 的四种类型</span><br><span class="line"></span><br><span class="line">mmap分为**后备文件的映射**和**匿名文件的映射**，这两种映射又有**私有映射和共享映射**之分，所以mmap可以创建4种类型的映射</span><br><span class="line"></span><br><span class="line">\1. **后备文件的共享映射**，多个进程的vm_area_struct指向同一个物理内存区域，一个进程对文件内容的修改，会被其他进程可见。对文件内容的修改会被写回到后备文件。</span><br><span class="line"></span><br><span class="line"> ![image-20210507110514289](E:\4th_term\操作系统OS\Lab1\lab1.assets\image-20210507110514289.png)</span><br><span class="line"></span><br><span class="line">\2. **后备文件的私有映射**，多个进程的vm_area_struct指向同一个物理内存区域，采用写时拷贝的方式，当一个进程对文件内容做修改，不会被其他进程看到。另外对文件内的修改也不会被写回到后备文件。当内存不够需要进行页回收时，私有映射的页被交换到交换区。一般用在加载共享代码库</span><br><span class="line"></span><br><span class="line"> ![image-20210507110518143](E:\4th_term\操作系统OS\Lab1\lab1.assets\image-20210507110518143.png)</span><br><span class="line"></span><br><span class="line">\3. **匿名文件的共享映射**，内核创建一个初始都是0的物理内存区域，然后多个进程的vm_area_struct指向这个共享的物理内存区域，对该区域内容的修改对所有进程可见。匿名文件在页回收时被交换到交换区</span><br><span class="line"></span><br><span class="line"> ![image-20210507110530695](E:\4th_term\操作系统OS\Lab1\lab1.assets\image-20210507110530695.png)</span><br><span class="line"></span><br><span class="line">\4. **匿名文件的私有映射**，内核创建一个初始都是0的物理内存区域，对该区域内容的修改只对创建者进程可见。匿名文件在页回收时被交换到交换区。malloc()底层是用了匿名文件的私有映射来分配大块内存。</span><br><span class="line"></span><br><span class="line"> ![image-20210507110535432](E:\4th_term\操作系统OS\Lab1\lab1.assets\image-20210507110535432.png)</span><br><span class="line"></span><br><span class="line"># 4 共享库的创建和使用</span><br><span class="line"></span><br><span class="line">## 4.1 前置知识：源代码到运行程序的过程</span><br><span class="line"></span><br><span class="line">1. 预处理：对所有预处理指令进行处理。以#开始的语句</span><br><span class="line">2. 编译：通常指 程序构建的过程，称为 `compilation proper`, 将c源代码文件转换成object文件</span><br><span class="line">3. 连接：将 object文件和库 串联起来，称为可执行程序</span><br><span class="line">   1. 静态库已经植入程序中</span><br><span class="line">   2. 共享库，只在程序中对其引用</span><br><span class="line">4. 加载：加载 发生在可执行程序启动时。</span><br><span class="line">   1. 首先，扫描程序，来引用共享库</span><br><span class="line">   2. 然后所有引用都立即生效，对应的库也被映射到程序中</span><br><span class="line"></span><br><span class="line">* 一个程序函数库：一个文件包含了一些编译好的代码和数据，可供其他程序使用</span><br><span class="line">* 可以使得整个程序更加模块化，更容易重新编译，方便升级</span><br><span class="line">* 程序函数库分为3类：</span><br><span class="line">  * 静态函数库(static libraries): 在程序执行前就加入到了目标程序中</span><br><span class="line">  * 共享函数库(shared libraries)：`.so`</span><br><span class="line">  * 动态加载函数库(dynamically loaded libraries)：`.dll`, 与共享函数库是一样的，在l Windows 中叫动态加载函数库</span><br><span class="line"></span><br><span class="line">## 4.2 静态函数库</span><br><span class="line"></span><br><span class="line">### 4.2.1 生成静态函数库</span><br><span class="line"></span><br><span class="line">* 简单的一个普通的目标文件的集合，`.a`后缀文件</span><br><span class="line">* 允许程序员把程序 link 起来而不用重新编译代码，节省了重新编译代码的时间</span><br><span class="line">  * 如今该优势不再那么明显</span><br><span class="line">* 静态函数库对开发者来说还是很有用的，例如你想把自己提供的函数给别人使用，但是又想对函数的源代码进行保密</span><br><span class="line">* 理论上说，使用ELF格式的静态库函数生成的代码可以比使用共享函数库（或者动态函数库）的程序运行速度上快一些，大概1－5％。</span><br><span class="line">* `ar rcs my_library.a file.o file1.o`</span><br><span class="line"></span><br><span class="line">### 4.2.2 使用静态函数库</span><br><span class="line"></span><br><span class="line">* 把它作为你编译和连接过程中的一部分用来生成你的可执行代码</span><br><span class="line">* 用gcc来编译产生可执行代码的话，你可以用“-l”参数来指定这个库函数。你也可以用ld来做，使用它的“-l”和“-L”参数选项。具体用法可以参考info:gcc。</span><br><span class="line"></span><br><span class="line">## 4.3 共享函数库</span><br><span class="line"></span><br><span class="line">* **作用：**共享函数库中的函数是在当一个可执行程序在启动的时候被加载</span><br><span class="line">* 如果一个共享函数库正常安装，所有的程序在重新运行的时候都可以自动加载最新的函数库中的函数。对于Linux系统还有更多可以实现的功能：</span><br><span class="line">  * 升级了函数库但是仍然允许程序使用老版本的函数库</span><br><span class="line">  * 当执行某个特定程序的时候可以覆盖某个特定的库或者库中指定的函数</span><br><span class="line">  * 可以在库函数被使用的过程中修改这些函数库</span><br><span class="line"></span><br><span class="line">### 4.3.1 约定</span><br><span class="line"></span><br><span class="line">* 为了编写的共享函数库支持所有有用的特性，必须遵循一系列约定</span><br><span class="line"></span><br><span class="line">#### 4.3.1.1 命名</span><br><span class="line"></span><br><span class="line">* 每个共享函数库的**特殊名字**, 称作 `soname`</span><br><span class="line">  * 以 `lib`为前缀，然后是函数名</span><br><span class="line">  * 以 `.so`为后缀</span><br><span class="line">  * 最后是版本号信息</span><br><span class="line">* 特例：非常底层的C库函数都不是以lib开头命名</span><br><span class="line">* 每个共享函数库都有一个**真正名字**，称为 `real name`</span><br><span class="line">  * 包含真正函数代码的文件</span><br><span class="line">  * 真名有一个主版本号和一个发行主版号（可有可无）</span><br><span class="line">    * 知道安装了什么版本的函数库</span><br><span class="line">* 还有一个名字，**编译器编译时需要的函数库名字**：简单的soname，不包含任何版本号信息</span><br><span class="line"></span><br><span class="line">## 4.4 函数库如何使用</span><br><span class="line"></span><br><span class="line">* 基于GNU glibc的系统中，启动一个ELF格式的二进制可执行文件，会自动启动和运行一个program loader</span><br><span class="line"></span><br><span class="line">  * 对于Linux 系统，loader的名字是 `/lib/ld-linux.so.X（版本号）`</span><br><span class="line">  * loader启动后，会load 其他本程序要使用的共享库</span><br><span class="line"></span><br><span class="line">## 4.5 创建一个共享库</span><br><span class="line"></span><br><span class="line">示例：</span><br><span class="line"></span><br><span class="line">* `foo.h`: 定义接口，连接动态库</span><br><span class="line"></span><br><span class="line">  * ![image-20210506205836103](E:\4th_term\操作系统OS\Lab1\lab1.assets\image-20210506205836103-1620305918992.png)</span><br><span class="line">  * ```</span><br><span class="line">    #ifndef foo_h__</span><br><span class="line">    #define foo_h__</span><br><span class="line"></span><br><span class="line">    extern void foo(void);</span><br><span class="line"></span><br><span class="line">    #endif  // foo_h__</span><br></pre></td></tr></table></figure></li>
+<li><p><code>foo.c</code>：对接口foo()的实现</p>
+<ul>
+<li><img src="E:\4th_term\操作系统OS\Lab1\lab1.assets\image-20210506205941576.png" alt="image-20210506205941576"></li>
+<li>```<br>#include &lt;stdio.h&gt;</li>
+</ul>
+</li>
+</ul>
+<pre><code>void foo(void)
+&#123;
+    puts(&quot;Hello, I&#39;m a shared library&quot;);
+&#125;
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">* `main.c`： 库的驱动程序</span><br><span class="line"></span><br><span class="line">  * ```</span><br><span class="line">    #include &lt;stdio.h&gt;</span><br><span class="line">    #include &quot;foo.h&quot;</span><br><span class="line"></span><br><span class="line">    int main(void)</span><br><span class="line">    &#123;</span><br><span class="line">        puts(&quot;This is a shared library test...&quot;);</span><br><span class="line">        foo();</span><br><span class="line">        return 0;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+</code></pre>
+<ul>
+<li><p>首先，编译位置无关代码，即创建object文件</p>
+<ul>
+<li>通过 <code>gcc -fPIC</code>参数加入到共享函数库中：<code>PIC</code>: 位置无关代码</li>
+</ul>
+</li>
+<li><p>然后，将对象文件创建共享库，</p>
+</li>
+<li><p>例如：创建a.0, b.o, 然后创建一个包含a.o, b.o的共享库</p>
+<ul>
+<li><code>gcc -fPIC -g -c -Wall a.c</code></li>
+<li><code>gcc -fPIC -g -c -Wall b.c</code></li>
+<li><code>gcc -shared -WL -libmath.so -o  a.o b.o -lc</code></li>
+</ul>
+</li>
+<li><p>通常，动态函数库的符号表里面包含了这些动态的对象的符号。这个选项在创建ELF格式的文件时候，会将所有的符号加入到动态符号表中。可以参考ld的帮助获得更详细的说明。</p>
+</li>
+</ul>
+<h2 id="4-6-安装和使用共享库"><a href="#4-6-安装和使用共享库" class="headerlink" title="4.6 安装和使用共享库"></a>4.6 安装和使用共享库</h2><h3 id="方法一：将共享库拷贝入标准目录-usr-lib或-usr-local-lib"><a href="#方法一：将共享库拷贝入标准目录-usr-lib或-usr-local-lib" class="headerlink" title="方法一：将共享库拷贝入标准目录(/usr/lib或/usr/local/lib)"></a>方法一：将共享库拷贝入标准目录(/usr/lib或/usr/local/lib)</h3><ul>
+<li>需要有权限</li>
+<li>使得系统上所有用户都可以使用该共享库</li>
+</ul>
+<p>方法：</p>
+<ul>
+<li><p>首先，以root权限，将库放到标准位置（/usr/lib或/usr/local/lib）</p>
+<ul>
+<li><code>sudo cp /home/zihao/task4/libfoo.so /usr/lib</code></li>
+</ul>
+</li>
+<li><p>然后，以root权限更新缓存，告诉加载器 库文件可用，</p>
+<ul>
+<li><code>sudo ldconfig</code>: 检查一块存在的库文件，然后创建soname符号链接到真正的函数库</li>
+<li>将创建链接到共享库，并且更新缓存以便可立即生效</li>
+<li>使用 <code>ldconfig -p | grep foo</code>，核实创建了链接</li>
+</ul>
+</li>
+<li><p>其次，重新连接可执行程序</p>
+<ul>
+<li><code>gcc -Wall -o main.c -lfoo</code></li>
+</ul>
+</li>
+<li><p>最后，运行程序</p>
+<ul>
+<li><code>./test</code></li>
+</ul>
+</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="https://zihao256.github.io">Zihao Ma</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://zihao256.github.io/p/bf869091.html">https://zihao256.github.io/p/bf869091.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></div><div class="post_share"><div class="social-share" data-image="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven2.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/p/497f9043.html"><img class="prev-cover" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/pathway-middle-green-leafed-trees-with-sun-shining-through-branches.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info">Django 应用第一部分</div></div></a></div><div class="next-post pull-right"><a href="/p/527606cb.html"><img class="next-cover" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven2.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">17 网络编程</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><div><a href="/p/4b288195.html" title="专题四设备驱动"><img class="cover" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/narrow-muddy-road-dark-forest.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-05-19</div><div class="title">专题四设备驱动</div></div></a></div><div><a href="/p/69488089.html" title="专题三内核模块"><img class="cover" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven6.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-05-19</div><div class="title">专题三内核模块</div></div></a></div><div><a href="/p/6e049acd.html" title="专题二系统调用"><img class="cover" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven7.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-05-19</div><div class="title">专题二系统调用</div></div></a></div><div><a href="/p/d1d6ca89.html" title="专题一内核编译"><img class="cover" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven1.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-05-19</div><div class="title">专题一内核编译</div></div></a></div><div><a href="/p/a3ec7244.html" title="创建进程、子进程和进程间通信"><img class="cover" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/narrow-muddy-road-dark-forest.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-05-19</div><div class="title">创建进程、子进程和进程间通信</div></div></a></div><div><a href="/p/20b5d973.html" title="Lab 0"><img class="cover" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/narrow-muddy-road-dark-forest.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-05-06</div><div class="title">Lab 0</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> Comment</span></div></div><div class="comment-wrap"><div><div id="gitalk-container"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://github.com/ZiHao256/ZiHao256.github.io/blob/hexo/images/stitch.JPG?raw=true" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Zihao Ma</div><div class="author-info__description">博学之,审问之,慎思之,明辨之,笃行之.</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">58</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">38</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">15</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/ZiHao256"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/ZiHao256" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/atom.xml" target="_blank" title="RSS链接"><i class="fa fa-rss"></i></a><a class="social-icon" href="mailto:zihao626@gmail.com" target="_blank" title="gmail"><i class="fa-brands fa-google"></i></a><a class="social-icon" href="mailto:19030500024@stu.xidian.edu.cn" target="_blank" title="xdu-mail"><i class="fa fa-graduation-cap"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">This is Zihao's Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#lab1"><span class="toc-text">lab1</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#1-Producer-Consumer-problem"><span class="toc-text">1 Producer-Consumer problem</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-%E4%BF%A1%E5%8F%B7%E9%87%8F%E9%85%8D%E5%90%88%E4%BA%92%E6%96%A5%E9%94%81"><span class="toc-text">1.1 信号量配合互斥锁</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-6-%E5%AE%89%E8%A3%85%E5%92%8C%E4%BD%BF%E7%94%A8%E5%85%B1%E4%BA%AB%E5%BA%93"><span class="toc-text">4.6 安装和使用共享库</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E4%B8%80%EF%BC%9A%E5%B0%86%E5%85%B1%E4%BA%AB%E5%BA%93%E6%8B%B7%E8%B4%9D%E5%85%A5%E6%A0%87%E5%87%86%E7%9B%AE%E5%BD%95-usr-lib%E6%88%96-usr-local-lib"><span class="toc-text">方法一：将共享库拷贝入标准目录(&#x2F;usr&#x2F;lib或&#x2F;usr&#x2F;local&#x2F;lib)</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/p/42c77a0c.html" title="Paper Reading: TECCD: A Tree Embedding Approach for Code Clone Detection"><img src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven6.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Paper Reading: TECCD: A Tree Embedding Approach for Code Clone Detection"/></a><div class="content"><a class="title" href="/p/42c77a0c.html" title="Paper Reading: TECCD: A Tree Embedding Approach for Code Clone Detection">Paper Reading: TECCD: A Tree Embedding Approach for Code Clone Detection</a><time datetime="2023-05-16T06:17:01.000Z" title="Created 2023-05-16 14:17:01">2023-05-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/69c3279c.html" title="Git"><img src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/steven-kamenar-MMJx78V7xS8-unsplash.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Git"/></a><div class="content"><a class="title" href="/p/69c3279c.html" title="Git">Git</a><time datetime="2023-05-15T13:42:40.000Z" title="Created 2023-05-15 21:42:40">2023-05-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/26d71884.html" title="Overleaf"><img src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven6.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Overleaf"/></a><div class="content"><a class="title" href="/p/26d71884.html" title="Overleaf">Overleaf</a><time datetime="2023-05-15T11:11:58.000Z" title="Created 2023-05-15 19:11:58">2023-05-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/e75f2967.html" title="Edge浏览器"><img src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/beautiful-milky-way-night-sky.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Edge浏览器"/></a><div class="content"><a class="title" href="/p/e75f2967.html" title="Edge浏览器">Edge浏览器</a><time datetime="2023-05-14T09:24:59.000Z" title="Created 2023-05-14 17:24:59">2023-05-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/e547f891.html" title="Paper Reading: How good are query optimizers, really?"><img src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven9.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Paper Reading: How good are query optimizers, really?"/></a><div class="content"><a class="title" href="/p/e547f891.html" title="Paper Reading: How good are query optimizers, really?">Paper Reading: How good are query optimizers, really?</a><time datetime="2023-03-04T14:25:09.000Z" title="Created 2023-03-04 22:25:09">2023-03-04</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven2.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2021 - 2023 By Zihao Ma</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Hi, welcome to my <a href="https://zihao256.github.io/">Blog</a>!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="Toggle Between Traditional Chinese And Simplified Chinese">简</button><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="Scroll To Comments"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">Search</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  Loading the Database</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="Search for Posts" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script src="/js/search/local-search.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><script>function addGitalkSource () {
+  const ele = document.createElement('link')
+  ele.rel = 'stylesheet'
+  ele.href= 'https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.css'
+  document.getElementsByTagName('head')[0].appendChild(ele)
+}
+
+function loadGitalk () {
+  function initGitalk () {
+    var gitalk = new Gitalk(Object.assign({
+      clientID: 'ff33deb87bcf128b07ee',
+      clientSecret: 'ff52e6f598f01828083ee59b85a9327e686666a7',
+      repo: 'ZiHao256.github.io',
+      owner: 'ZiHao256',
+      admin: ['ZiHao256'],
+      id: '1866c91363416d89a9c796b015b0c724',
+      updateCountCallback: commentCount
+    },null))
+
+    gitalk.render('gitalk-container')
+  }
+
+  if (typeof Gitalk === 'function') initGitalk()
+  else {
+    addGitalkSource()
+    getScript('https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.js').then(initGitalk)
+  }
+}
+
+function commentCount(n){
+  let isCommentCount = document.querySelector('#post-meta .gitalk-comment-count')
+  if (isCommentCount) {
+    isCommentCount.innerHTML= n
+  }
+}
+
+if ('Gitalk' === 'Gitalk' || !false) {
+  if (false) btf.loadComment(document.getElementById('gitalk-container'), loadGitalk)
+  else loadGitalk()
+} else {
+  function loadOtherComment () {
+    loadGitalk()
+  }
+}</script></div><script>window.addEventListener('load', () => {
+  const changeContent = (content) => {
+    if (content === '') return content
+
+    content = content.replace(/<img.*?src="(.*?)"?[^\>]+>/ig, '[image]') // replace image link
+    content = content.replace(/<a[^>]+?href=["']?([^"']+)["']?[^>]*>([^<]+)<\/a>/gi, '[link]') // replace url
+    content = content.replace(/<pre><code>.*?<\/pre>/gi, '[code]') // replace code
+    content = content.replace(/<[^>]+>/g,"") // remove html tag
+
+    if (content.length > 150) {
+      content = content.substring(0,150) + '...'
+    }
+    return content
+  }
+
+  const findTrueUrl = (array) => {
+    Promise.all(array.map(item =>
+      fetch(item.url).then(resp => resp.json()).then(data => {
+        const urlArray = data.body.match(/(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?/ig)
+        if (data.user.login === 'utterances-bot') {
+          return urlArray.pop()
+        } else {
+          return urlArray.shift()
+        }
+      })
+    )).then(res => {
+        array = array.map((i,index)=> {
+          return {
+            ...i,
+            url: res[index]
+          }
+        })
+
+        saveToLocal.set('github-newest-comments', JSON.stringify(array), 10/(60*24))
+        generateHtml(array)
+    });
+  }
+
+  const getComment = () => {
+    fetch('https://api.github.com/repos/ZiHao256/ZiHao256.github.io/issues/comments?sort=updated&direction=desc&per_page=6&page=1',{
+      "headers": {
+        Accept: 'application/vnd.github.v3.html+json'
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        const githubArray = data.map(item => {
+          return {
+            'avatar': item.user.avatar_url,
+            'content': changeContent(item.body_html),
+            'nick': item.user.login,
+            'url': item.issue_url,
+            'date': item.updated_at,
+            'githubUrl': item.html_url
+          }
+        })
+        findTrueUrl(githubArray)
+      }).catch(e => {
+        const $dom = document.querySelector('#card-newest-comments .aside-list')
+        $dom.innerHTML= "Unable to get the data, please make sure the settings are correct."
+      })
+  }
+
+  const generateHtml = array => {
+    let result = ''
+
+    if (array.length) {
+      for (let i = 0; i < array.length; i++) {
+        result += '<div class=\'aside-list-item\'>'
+
+        if (true) {
+          const name = 'src'
+          result += `<a href='${array[i].url}' class='thumbnail'><img ${name}='${array[i].avatar}' alt='${array[i].nick}'></a>`
+        }
+
+        result += `<div class='content'>
+        <a class='comment' href='${array[i].url}' title='${array[i].content}'>${array[i].content}</a>
+        <div class='name'><span>${array[i].nick} / </span><time datetime="${array[i].date}">${btf.diffDate(array[i].date, true)}</time></div>
+        </div></div>`
+      }
+    } else {
+      result += 'No Comment'
+    }
+
+    let $dom = document.querySelector('#card-newest-comments .aside-list')
+    $dom.innerHTML= result
+    window.lazyLoadInstance && window.lazyLoadInstance.update()
+    window.pjax && window.pjax.refresh($dom)
+  }
+
+  const newestCommentInit = () => {
+    if (document.querySelector('#card-newest-comments .aside-list')) {
+      const data = saveToLocal.get('github-newest-comments')
+      if (data) {
+        generateHtml(JSON.parse(data))
+      } else {
+        getComment()
+      }
+    }
+  }
+
+  newestCommentInit()
+  document.addEventListener('pjax:complete', newestCommentInit)
+})</script><div class="aplayer no-destroy" data-id="6738460302" data-server="netease" data-type="playlist" data-fixed="true" data-autoplay="true"> </div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-heart.min.js" async="async" mobile="true"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener scroll 
+  window.tocScrollFn && window.removeEventListener('scroll', window.tocScrollFn)
+  window.scrollCollect && window.removeEventListener('scroll', scrollCollect)
+
+  typeof preloader === 'object' && preloader.initLoading()
+  document.getElementById('rightside').style.cssText = "opacity: ''; transform: ''"
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

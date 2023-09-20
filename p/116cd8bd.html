@@ -1,0 +1,457 @@
+<!DOCTYPE html><html lang="zh-Hans" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>Paper Reading: Plan Stitch: Harnessing the Best of Many Plans | ZiHao's Blog</title><meta name="keywords" content="Database,Optimizer,Plan Cache"><meta name="author" content="Zihao Ma"><meta name="copyright" content="Zihao Ma"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Title“Plan Stitch: Harnessing the Best of Many Plans” (Ding 等, 2018, p. 1123) 【 计划缝合：利用众多计划的精华&#x2F;最优 两个关键点：  缝合 精华&#x2F;最优  对本科毕设的最后一步或许有帮助：基于Plan模版进行拼接和修改。】 Abstract“ABSTRACT” (Ding 等, 2018, p. 1123) 【摘要：背景：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Paper Reading: Plan Stitch: Harnessing the Best of Many Plans">
+<meta property="og:url" content="https://zihao256.github.io/p/116cd8bd.html">
+<meta property="og:site_name" content="ZiHao&#39;s Blog">
+<meta property="og:description" content="Title“Plan Stitch: Harnessing the Best of Many Plans” (Ding 等, 2018, p. 1123) 【 计划缝合：利用众多计划的精华&#x2F;最优 两个关键点：  缝合 精华&#x2F;最优  对本科毕设的最后一步或许有帮助：基于Plan模版进行拼接和修改。】 Abstract“ABSTRACT” (Ding 等, 2018, p. 1123) 【摘要：背景：">
+<meta property="og:locale">
+<meta property="og:image" content="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/john-towner-3Kv48NS4WUU-unsplash.jpg">
+<meta property="article:published_time" content="2023-03-04T14:01:53.000Z">
+<meta property="article:modified_time" content="2023-09-20T06:52:02.729Z">
+<meta property="article:author" content="Zihao Ma">
+<meta property="article:tag" content="Database">
+<meta property="article:tag" content="Optimizer">
+<meta property="article:tag" content="Plan Cache">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/john-towner-3Kv48NS4WUU-unsplash.jpg"><link rel="shortcut icon" href="https://github.com/ZiHao256/ZiHao256.github.io/blob/hexo/images/stitch.JPG?raw=true"><link rel="canonical" href="https://zihao256.github.io/p/116cd8bd"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":true,"languages":{"hits_empty":"We didn't find any results for the search: ${query}"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: true,
+    post: true
+  },
+  runtime: '天',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: true,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Paper Reading: Plan Stitch: Harnessing the Best of Many Plans',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: true,
+  isToc: true,
+  postUpdate: '2023-09-20 14:52:02'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="/atom.xml" title="ZiHao's Blog" type="application/atom+xml">
+<style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}</style></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">Loading...</div></div></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://github.com/ZiHao256/ZiHao256.github.io/blob/hexo/images/stitch.JPG?raw=true" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">58</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">38</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">15</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/log"><i class="fa-fw fas fa-book"></i><span> Log</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fa fa-camera-retro"></i><span> Gallery</span></a></li><li><a class="site-page child" href="/Map/"><i class="fa-fw fa fa-map-signs"></i><span> Map</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/john-towner-3Kv48NS4WUU-unsplash.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">ZiHao's Blog</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> Search</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/log"><i class="fa-fw fas fa-book"></i><span> Log</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fa fa-camera-retro"></i><span> Gallery</span></a></li><li><a class="site-page child" href="/Map/"><i class="fa-fw fa fa-map-signs"></i><span> Map</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Paper Reading: Plan Stitch: Harnessing the Best of Many Plans</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2023-03-04T14:01:53.000Z" title="Created 2023-03-04 22:01:53">2023-03-04</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2023-09-20T06:52:02.729Z" title="Updated 2023-09-20 14:52:02">2023-09-20</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E4%B8%AA%E4%BA%BA%E6%8F%90%E5%8D%87/">个人提升</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E4%B8%AA%E4%BA%BA%E6%8F%90%E5%8D%87/Paper-Reading/">Paper Reading</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">Word count:</span><span class="word-count">1.8k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">Reading time:</span><span>5min</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Paper Reading: Plan Stitch: Harnessing the Best of Many Plans"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">Comments:</span><a href="/p/116cd8bd.html#post-comment"><span class="gitalk-comment-count"><i class="fa-solid fa-spinner fa-spin"></i></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="Title"><a href="#Title" class="headerlink" title="Title"></a>Title</h1><p>“Plan Stitch: Harnessing the Best of Many Plans” (Ding 等, 2018, p. 1123) <strong>【</strong></p>
+<p>计划<strong>缝合</strong>：利用众多计划的<strong>精华/最优</strong></p>
+<p>两个关键点：</p>
+<ol>
+<li>缝合</li>
+<li>精华/最优</li>
+</ol>
+<p>对本科毕设的最后一步或许有帮助：基于Plan模版进行拼接和修改。<br>】</p>
+<h1 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h1><p>“ABSTRACT” (Ding 等, 2018, p. 1123) 【<br>摘要：<br><strong>背景：</strong><br>查询优化器选择一个非最优的查询执行计划，会导致查询性能的下降。<br>现如今的商业 DBMS 会选择使用 Reversion-based plan correction 来解决该问题。其原理是在检测到出现查询性能降低时，重新纠正——使用之前仍然有效且具有最低执行代价的旧计划。</p>
+<p><strong>真正的发现：</strong><br>RBPC 的基本原理使得其风险很小，但是忽略了更加有效的优化方式——<strong>从之前执行计划的高效 *子计划* 中获得潜在价值的信息！</strong>这会比单独旧的执行计划 代价更低。</p>
+<p><strong>研究成果：</strong><br>在 Microsoft SQL Server 之上实现 Plan Stitch 方法，经过 TPC-DS 测试，显著降低执行代价。</p>
+<p>】</p>
+<h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><p>“INTRODUCTION” (Ding 等, 2018, p. 1123) 【<br>引言：</p>
+<p><strong>关于什么：</strong></p>
+<p>同一个查询所得到的查询计划会因为各种原因更改，更改之后可能会导致 <strong>计划回归</strong> 的问题，具体表现就是优化器所选择的最新查询计划执行代价比原先高。<br>但是目前商业数据库系统中的解决方法—— RBPC 所生成的计划效率上上升空间还很大。</p>
+<p><strong>解决的方法</strong>：</p>
+<p>在 Microsoft SQL Server 的基础上，实现了 Plan Stitch ，是一个比 RBPC 更高效的 APC 策略。<br>通过考虑同一个查询的 过去<strong>已执行的计划以及其子计划</strong>：</p>
+<ol>
+<li>在<strong>受限制的搜索空间（有相同的逻辑表达式，并且在当前的配置环境中有效）</strong>中，通过比较相同逻辑表达式的<strong>可替代子计划</strong>，来发现<strong>高效的子计划</strong>；</li>
+<li>用 <strong>基于动态规划算法</strong> 的<strong>高效、二次时间复杂度</strong>的算法将这些<strong>高效子计划</strong>，<strong>合并成在执行代价上最低的缝合计划</strong>；</li>
+<li>用<strong>计划强制特征</strong>来影响优化器的计划选择，以验证计划的<strong>有效性</strong>。</li>
+</ol>
+<p><strong>迷人的地方</strong>：</p>
+<p>在 RBPC 的基础上，找到了可以提升的地方：在<strong>物理算子层面</strong>对执行代价进行优化，通过<strong>已执行计划的子计划缝合</strong>来体现。<br>拥有三个特点：</p>
+<ol>
+<li>全自动</li>
+<li>低开销</li>
+<li>低风险</li>
+</ol>
+<p><strong>新颖的地方：</strong><br>将过去已执行的计划的子计划进行缝合。</p>
+<p><strong>眼前一亮的结论</strong>：</p>
+<p>通过 TPC-DS 和三个真实的用户负载当做实验环境，发现 Plan Stitch 相比较于 RBPC 的提升很大。</p>
+<p>】</p>
+<h1 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h1><p>“OVERVIEW” (Ding 等, 2018, p. 1125) 「<br><strong>Overview</strong>：<br><strong>问题陈述</strong>：<br>Plan Stitch 为给定的查询 q 构建一个有最低执行代价的查询计划 p，p有一个限制：在p中的每一个算子，都只能从 <strong>过去已执行的计划</strong> 中获取。</p>
+<p><strong>架构概述：</strong><br><img src="https://raw.githubusercontent.com/ZiHao256/Gallery/master/uPic/2023/03/image-20230304220524436.png" alt="image-20230304220524436"></p>
+<p>Plan Stitch 在<strong>查询优化和执行</strong>的关键路径之外工作，作为<strong>外部组件或者背景线程。</strong></p>
+<ol>
+<li><strong>优化器</strong>为 <strong>给定的查询</strong>和<strong>现在的配置</strong> 选择一个计划，计划执行并且将<strong>执行时的统计信息</strong>被记录在<strong>仓库</strong>中。 执行的统计信息——计划结构和算子级别的执行代价。</li>
+</ol>
+<ol start="2">
+<li>仓库 <strong>主动收集</strong>计划的历史，包括<strong>同一个查询的已经执行的不同计划</strong></li>
+</ol>
+<ol start="3">
+<li>当<strong>同一个查询</strong>的不同计划已经执行，并且执行信息在仓库中可用：<strong>触发</strong> Plan Stitch 来查找可替代的 <strong>拼接计划</strong>。</li>
+</ol>
+<p>3.1 触发后，Plan Stitch <strong>从仓库中获得已执行计划</strong>，从 元数据 中<strong>获得现在的索引配置</strong>。<br>3.2 Plan stitch 将最终生成的<strong>缝合 plan 传给优化器</strong>，可以用于 查询 q 未来的执行。<br>4 Plan stitch 会用 <strong>强制特征系统</strong> <strong>指定查询的执行计划暗示</strong>，使得优化器用此暗示来在计划搜索<strong>进行剪枝</strong>。<br>5 仓库会对查询执行计划进行<strong>超龄判断</strong>，以确保在数据变化时 Plan Stitch <strong>代价估计的准确</strong>。</p>
+<p>」</p>
+<h1 id="Plan-Stitch（核心）"><a href="#Plan-Stitch（核心）" class="headerlink" title="Plan Stitch（核心）"></a>Plan Stitch（核心）</h1><h2 id="Constrained-Search-Space"><a href="#Constrained-Search-Space" class="headerlink" title="Constrained Search Space"></a>Constrained Search Space</h2><p>“Constrained Search Space” (Ding 等, 2018, p. 1126) 「<br>生成受限搜索空间分两个步骤：<br>一、识别等价的子计划：<br>是否等效</p>
+<ol>
+<li>逻辑表达式 相同</li>
+<li>需要的物理属性 相同</li>
+</ol>
+<p><strong>之前的工作：</strong><br>tests 和 greedy 算法</p>
+<p><strong>本文章的实现：</strong><br>自己实现的关于<strong>匹配等效子计划</strong>的算法：<br>  用类似于之前工作的启发式 提供在实现简易、开销和匹配的准确度中 的合理平衡。<br>  用优化器来确保缝合计划的准确，以当作计划强制的副作用。</p>
+<p><strong>二、编码受限的搜索空间</strong></p>
+<p><img src="https://raw.githubusercontent.com/ZiHao256/Gallery/master/uPic/2023/03/image-20230304220502732.png" alt="image-20230304220502732"></p>
+<p>构造一个 AND-OR 图（参考Volcano 优化器生成器的文章？）。<br>- <strong>AND 节点</strong>对应 physical operator<br>- <strong>OR 节点</strong>对应 一个有着 physical properties 的 logical expression<br>为什么使用 AND-OR图：</p>
+<ol>
+<li>一个AND节点的所有孩子节点一定是OR节点：OR 子节点 代表 AND 节点的孩子子计划对应的logical expr 和 所需 physical properties</li>
+</ol>
+<ol start="2">
+<li>一个OR节点的所有子节点一定是AND节点：AND 子节点代表 OR 节点对应 Logical Expression 的 可替代子计划的 根物理算子</li>
+</ol>
+<p><strong>具体构造过程</strong>：</p>
+<ol>
+<li>首先，对于一个给定的查询，在它对应已执行的所有执行计划中，分别识别出每个以物理算子为根的子计划的所有等效子计划；</li>
+<li>对于一个等效子计划组，创建一个 OR 节点来代表这个子计划组的逻辑表达式和需要的的物理属性；</li>
+<li>对于这个组中每个子计划的物理算子，在该 OR 节点下分别创建子节点 AND。</li>
+</ol>
+<p>」</p>
+<h2 id="Constructing-the-Stitched-Plan"><a href="#Constructing-the-Stitched-Plan" class="headerlink" title="Constructing the Stitched Plan"></a>Constructing the Stitched Plan</h2><p>“Constructing the Stitched Plan” (Ding 等, 2018, p. 1126) 「<br><strong>构建缝合计划：</strong><br>AND-OR 图的两个性质：</p>
+<ol>
+<li>无环图</li>
+<li>至少有一个 OR 节点，代表该查询</li>
+</ol>
+<p>概述：使用 动态规划 算法，从叶子 AND 节点到 根 OR 节点，为每一个 AND 节点 和 OR节点 缝合一个代价最低的缝合计划。</p>
+<p><strong>分情况获得最优缝合计划：</strong></p>
+<p>叶子层的最优缝合计划：就是 AND 节点自己<br>OR节点的最优缝合计划：从子 AND 节点中找到最低代价的缝合计划<br>非叶子AND节点的最优缝合计划：将其每个子OR节点的最优缝合子计划，缝合到 AND 节点对应的 物理算子下，当做一个一AND节点为根的缝合子计划</p>
+<p><strong>计算缝合计划的代价：</strong></p>
+<p>- 每个算子都存储着过去执行时的代价。通过比较代价来得到每个节点的最优缝合计划。<br>- 使用函数 stitchedSubUnitCost 来计算以op为根的缝合计划的代价。</p>
+<p>」</p>
+<h2 id="Stitch-ALgorithm"><a href="#Stitch-ALgorithm" class="headerlink" title="Stitch ALgorithm"></a>Stitch ALgorithm</h2><p>将算法1和图3结合起来可以很容易理解。<br>根据输入的 AND-OR 图，自底向上地利用动态规划算法实现 根OR节点 的最廉价缝合子计划。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="https://zihao256.github.io">Zihao Ma</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://zihao256.github.io/p/116cd8bd.html">https://zihao256.github.io/p/116cd8bd.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Database/">Database</a><a class="post-meta__tags" href="/tags/Optimizer/">Optimizer</a><a class="post-meta__tags" href="/tags/Plan-Cache/">Plan Cache</a></div><div class="post_share"><div class="social-share" data-image="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/john-towner-3Kv48NS4WUU-unsplash.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/p/5d3b93c8.html"><img class="prev-cover" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/pathway-middle-green-leafed-trees-with-sun-shining-through-branches.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info">Paper Reading: On the Calculation of Optimality Ranges for Relational Query Execution Plans</div></div></a></div><div class="next-post pull-right"><a href="/p/b4607f97.html"><img class="next-cover" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/steven-kamenar-MMJx78V7xS8-unsplash.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">How to read a paper</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><div><a href="/p/5d3b93c8.html" title="Paper Reading: On the Calculation of Optimality Ranges for Relational Query Execution Plans"><img class="cover" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/pathway-middle-green-leafed-trees-with-sun-shining-through-branches.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-03-04</div><div class="title">Paper Reading: On the Calculation of Optimality Ranges for Relational Query Execution Plans</div></div></a></div><div><a href="/p/e547f891.html" title="Paper Reading: How good are query optimizers, really?"><img class="cover" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven9.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-03-04</div><div class="title">Paper Reading: How good are query optimizers, really?</div></div></a></div><div><a href="/p/7091acdb.html" title="Paper Reading: Robustness metrics for relational query execution plans"><img class="cover" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/high-angle-shot-beautiful-forest-with-lot-green-trees-enveloped-fog-new-zealand.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-03-04</div><div class="title">Paper Reading: Robustness metrics for relational query execution plans</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> Comment</span></div></div><div class="comment-wrap"><div><div id="gitalk-container"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://github.com/ZiHao256/ZiHao256.github.io/blob/hexo/images/stitch.JPG?raw=true" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Zihao Ma</div><div class="author-info__description">博学之,审问之,慎思之,明辨之,笃行之.</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">58</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">38</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">15</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/ZiHao256"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/ZiHao256" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/atom.xml" target="_blank" title="RSS链接"><i class="fa fa-rss"></i></a><a class="social-icon" href="mailto:zihao626@gmail.com" target="_blank" title="gmail"><i class="fa-brands fa-google"></i></a><a class="social-icon" href="mailto:19030500024@stu.xidian.edu.cn" target="_blank" title="xdu-mail"><i class="fa fa-graduation-cap"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">This is Zihao's Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Title"><span class="toc-text">Title</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Abstract"><span class="toc-text">Abstract</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Introduction"><span class="toc-text">Introduction</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Overview"><span class="toc-text">Overview</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Plan-Stitch%EF%BC%88%E6%A0%B8%E5%BF%83%EF%BC%89"><span class="toc-text">Plan Stitch（核心）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Constrained-Search-Space"><span class="toc-text">Constrained Search Space</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Constructing-the-Stitched-Plan"><span class="toc-text">Constructing the Stitched Plan</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Stitch-ALgorithm"><span class="toc-text">Stitch ALgorithm</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/p/42c77a0c.html" title="Paper Reading: TECCD: A Tree Embedding Approach for Code Clone Detection"><img src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven6.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Paper Reading: TECCD: A Tree Embedding Approach for Code Clone Detection"/></a><div class="content"><a class="title" href="/p/42c77a0c.html" title="Paper Reading: TECCD: A Tree Embedding Approach for Code Clone Detection">Paper Reading: TECCD: A Tree Embedding Approach for Code Clone Detection</a><time datetime="2023-05-16T06:17:01.000Z" title="Created 2023-05-16 14:17:01">2023-05-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/69c3279c.html" title="Git"><img src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/steven-kamenar-MMJx78V7xS8-unsplash.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Git"/></a><div class="content"><a class="title" href="/p/69c3279c.html" title="Git">Git</a><time datetime="2023-05-15T13:42:40.000Z" title="Created 2023-05-15 21:42:40">2023-05-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/26d71884.html" title="Overleaf"><img src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven6.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Overleaf"/></a><div class="content"><a class="title" href="/p/26d71884.html" title="Overleaf">Overleaf</a><time datetime="2023-05-15T11:11:58.000Z" title="Created 2023-05-15 19:11:58">2023-05-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/e75f2967.html" title="Edge浏览器"><img src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/beautiful-milky-way-night-sky.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Edge浏览器"/></a><div class="content"><a class="title" href="/p/e75f2967.html" title="Edge浏览器">Edge浏览器</a><time datetime="2023-05-14T09:24:59.000Z" title="Created 2023-05-14 17:24:59">2023-05-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/e547f891.html" title="Paper Reading: How good are query optimizers, really?"><img src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven9.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Paper Reading: How good are query optimizers, really?"/></a><div class="content"><a class="title" href="/p/e547f891.html" title="Paper Reading: How good are query optimizers, really?">Paper Reading: How good are query optimizers, really?</a><time datetime="2023-03-04T14:25:09.000Z" title="Created 2023-03-04 22:25:09">2023-03-04</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/john-towner-3Kv48NS4WUU-unsplash.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2021 - 2023 By Zihao Ma</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Hi, welcome to my <a href="https://zihao256.github.io/">Blog</a>!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="Toggle Between Traditional Chinese And Simplified Chinese">简</button><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="Scroll To Comments"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">Search</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  Loading the Database</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="Search for Posts" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script src="/js/search/local-search.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><script>function addGitalkSource () {
+  const ele = document.createElement('link')
+  ele.rel = 'stylesheet'
+  ele.href= 'https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.css'
+  document.getElementsByTagName('head')[0].appendChild(ele)
+}
+
+function loadGitalk () {
+  function initGitalk () {
+    var gitalk = new Gitalk(Object.assign({
+      clientID: 'ff33deb87bcf128b07ee',
+      clientSecret: 'ff52e6f598f01828083ee59b85a9327e686666a7',
+      repo: 'ZiHao256.github.io',
+      owner: 'ZiHao256',
+      admin: ['ZiHao256'],
+      id: 'ac6e69e17e8aef2e50914dad593fea77',
+      updateCountCallback: commentCount
+    },null))
+
+    gitalk.render('gitalk-container')
+  }
+
+  if (typeof Gitalk === 'function') initGitalk()
+  else {
+    addGitalkSource()
+    getScript('https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.js').then(initGitalk)
+  }
+}
+
+function commentCount(n){
+  let isCommentCount = document.querySelector('#post-meta .gitalk-comment-count')
+  if (isCommentCount) {
+    isCommentCount.innerHTML= n
+  }
+}
+
+if ('Gitalk' === 'Gitalk' || !false) {
+  if (false) btf.loadComment(document.getElementById('gitalk-container'), loadGitalk)
+  else loadGitalk()
+} else {
+  function loadOtherComment () {
+    loadGitalk()
+  }
+}</script></div><script>window.addEventListener('load', () => {
+  const changeContent = (content) => {
+    if (content === '') return content
+
+    content = content.replace(/<img.*?src="(.*?)"?[^\>]+>/ig, '[image]') // replace image link
+    content = content.replace(/<a[^>]+?href=["']?([^"']+)["']?[^>]*>([^<]+)<\/a>/gi, '[link]') // replace url
+    content = content.replace(/<pre><code>.*?<\/pre>/gi, '[code]') // replace code
+    content = content.replace(/<[^>]+>/g,"") // remove html tag
+
+    if (content.length > 150) {
+      content = content.substring(0,150) + '...'
+    }
+    return content
+  }
+
+  const findTrueUrl = (array) => {
+    Promise.all(array.map(item =>
+      fetch(item.url).then(resp => resp.json()).then(data => {
+        const urlArray = data.body.match(/(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?/ig)
+        if (data.user.login === 'utterances-bot') {
+          return urlArray.pop()
+        } else {
+          return urlArray.shift()
+        }
+      })
+    )).then(res => {
+        array = array.map((i,index)=> {
+          return {
+            ...i,
+            url: res[index]
+          }
+        })
+
+        saveToLocal.set('github-newest-comments', JSON.stringify(array), 10/(60*24))
+        generateHtml(array)
+    });
+  }
+
+  const getComment = () => {
+    fetch('https://api.github.com/repos/ZiHao256/ZiHao256.github.io/issues/comments?sort=updated&direction=desc&per_page=6&page=1',{
+      "headers": {
+        Accept: 'application/vnd.github.v3.html+json'
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        const githubArray = data.map(item => {
+          return {
+            'avatar': item.user.avatar_url,
+            'content': changeContent(item.body_html),
+            'nick': item.user.login,
+            'url': item.issue_url,
+            'date': item.updated_at,
+            'githubUrl': item.html_url
+          }
+        })
+        findTrueUrl(githubArray)
+      }).catch(e => {
+        const $dom = document.querySelector('#card-newest-comments .aside-list')
+        $dom.innerHTML= "Unable to get the data, please make sure the settings are correct."
+      })
+  }
+
+  const generateHtml = array => {
+    let result = ''
+
+    if (array.length) {
+      for (let i = 0; i < array.length; i++) {
+        result += '<div class=\'aside-list-item\'>'
+
+        if (true) {
+          const name = 'src'
+          result += `<a href='${array[i].url}' class='thumbnail'><img ${name}='${array[i].avatar}' alt='${array[i].nick}'></a>`
+        }
+
+        result += `<div class='content'>
+        <a class='comment' href='${array[i].url}' title='${array[i].content}'>${array[i].content}</a>
+        <div class='name'><span>${array[i].nick} / </span><time datetime="${array[i].date}">${btf.diffDate(array[i].date, true)}</time></div>
+        </div></div>`
+      }
+    } else {
+      result += 'No Comment'
+    }
+
+    let $dom = document.querySelector('#card-newest-comments .aside-list')
+    $dom.innerHTML= result
+    window.lazyLoadInstance && window.lazyLoadInstance.update()
+    window.pjax && window.pjax.refresh($dom)
+  }
+
+  const newestCommentInit = () => {
+    if (document.querySelector('#card-newest-comments .aside-list')) {
+      const data = saveToLocal.get('github-newest-comments')
+      if (data) {
+        generateHtml(JSON.parse(data))
+      } else {
+        getComment()
+      }
+    }
+  }
+
+  newestCommentInit()
+  document.addEventListener('pjax:complete', newestCommentInit)
+})</script><div class="aplayer no-destroy" data-id="6738460302" data-server="netease" data-type="playlist" data-fixed="true" data-autoplay="true"> </div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-heart.min.js" async="async" mobile="true"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener scroll 
+  window.tocScrollFn && window.removeEventListener('scroll', window.tocScrollFn)
+  window.scrollCollect && window.removeEventListener('scroll', scrollCollect)
+
+  typeof preloader === 'object' && preloader.initLoading()
+  document.getElementById('rightside').style.cssText = "opacity: ''; transform: ''"
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

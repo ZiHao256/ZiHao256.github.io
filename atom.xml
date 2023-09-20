@@ -1,0 +1,569 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>ZiHao&#39;s Blog</title>
+  
+  <subtitle>记录生活</subtitle>
+  <link href="https://zihao256.github.io/atom.xml" rel="self"/>
+  
+  <link href="https://zihao256.github.io/"/>
+  <updated>2023-09-20T06:52:02.729Z</updated>
+  <id>https://zihao256.github.io/</id>
+  
+  <author>
+    <name>Zihao Ma</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Paper Reading: TECCD: A Tree Embedding Approach for Code Clone Detection</title>
+    <link href="https://zihao256.github.io/p/42c77a0c.html"/>
+    <id>https://zihao256.github.io/p/42c77a0c.html</id>
+    <published>2023-05-16T06:17:01.000Z</published>
+    <updated>2023-09-20T06:52:02.729Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;摘要-amp-引言&quot;&gt;&lt;a href=&quot;#摘要-amp-引言&quot; class=&quot;headerlink&quot; title=&quot;摘要 &amp;amp; 引言&quot;&gt;&lt;/a&gt;摘要 &amp;amp; 引言&lt;/h1&gt;&lt;p&gt;“Abstract” (&lt;a href=&quot;zotero://select/l</summary>
+      
+    
+    
+    
+    <category term="个人提升" scheme="https://zihao256.github.io/categories/%E4%B8%AA%E4%BA%BA%E6%8F%90%E5%8D%87/"/>
+    
+    <category term="Paper Reading" scheme="https://zihao256.github.io/categories/%E4%B8%AA%E4%BA%BA%E6%8F%90%E5%8D%87/Paper-Reading/"/>
+    
+    
+    <category term="Code Clone Detection" scheme="https://zihao256.github.io/tags/Code-Clone-Detection/"/>
+    
+    <category term="AST" scheme="https://zihao256.github.io/tags/AST/"/>
+    
+    <category term="Machine Learning" scheme="https://zihao256.github.io/tags/Machine-Learning/"/>
+    
+    <category term="Natural Language Processing" scheme="https://zihao256.github.io/tags/Natural-Language-Processing/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Git</title>
+    <link href="https://zihao256.github.io/p/69c3279c.html"/>
+    <id>https://zihao256.github.io/p/69c3279c.html</id>
+    <published>2023-05-15T13:42:40.000Z</published>
+    <updated>2023-09-20T06:52:02.724Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;记录一下因为各种需求而对Git缝缝补补的学习&lt;/p&gt;
+&lt;p&gt;比较本地仓库分支 和 远程仓库分支&lt;code&gt;commit&lt;/code&gt;的不同&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;git fetch local_repo&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;git l</summary>
+      
+    
+    
+    
+    <category term="利器酷" scheme="https://zihao256.github.io/categories/%E5%88%A9%E5%99%A8%E9%85%B7/"/>
+    
+    <category term="工具" scheme="https://zihao256.github.io/categories/%E5%88%A9%E5%99%A8%E9%85%B7/%E5%B7%A5%E5%85%B7/"/>
+    
+    
+    <category term="Git" scheme="https://zihao256.github.io/tags/Git/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Overleaf</title>
+    <link href="https://zihao256.github.io/p/26d71884.html"/>
+    <id>https://zihao256.github.io/p/26d71884.html</id>
+    <published>2023-05-15T11:11:58.000Z</published>
+    <updated>2023-09-20T06:52:02.729Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;记录一下最近尝试学习在&lt;code&gt;Overleaf&lt;/code&gt;上使用LaTeX撰写论文。为了符合&lt;code&gt;XDU&lt;/code&gt;毕设论文格式的要求，可以基于&lt;a href=&quot;https://github.com/note286/xduts&quot;&gt;note286学长提供的一些文</summary>
+      
+    
+    
+    
+    <category term="利器酷" scheme="https://zihao256.github.io/categories/%E5%88%A9%E5%99%A8%E9%85%B7/"/>
+    
+    <category term="工具" scheme="https://zihao256.github.io/categories/%E5%88%A9%E5%99%A8%E9%85%B7/%E5%B7%A5%E5%85%B7/"/>
+    
+    
+    <category term="LaTeX" scheme="https://zihao256.github.io/tags/LaTeX/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Edge浏览器</title>
+    <link href="https://zihao256.github.io/p/e75f2967.html"/>
+    <id>https://zihao256.github.io/p/e75f2967.html</id>
+    <published>2023-05-14T09:24:59.000Z</published>
+    <updated>2023-09-20T06:52:02.724Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;常用的插件&quot;&gt;&lt;a href=&quot;#常用的插件&quot; class=&quot;headerlink&quot; title=&quot;常用的插件&quot;&gt;&lt;/a&gt;常用的插件&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;Vimium C&lt;/code&gt;&lt;ul&gt;
+&lt;li&gt;键入&lt;code&gt;?&lt;/code&gt;获得操作手册</summary>
+      
+    
+    
+    
+    <category term="利器酷" scheme="https://zihao256.github.io/categories/%E5%88%A9%E5%99%A8%E9%85%B7/"/>
+    
+    <category term="工具" scheme="https://zihao256.github.io/categories/%E5%88%A9%E5%99%A8%E9%85%B7/%E5%B7%A5%E5%85%B7/"/>
+    
+    
+    <category term="Edge浏览器" scheme="https://zihao256.github.io/tags/Edge%E6%B5%8F%E8%A7%88%E5%99%A8/"/>
+    
+    <category term="插件" scheme="https://zihao256.github.io/tags/%E6%8F%92%E4%BB%B6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Paper Reading: How good are query optimizers, really?</title>
+    <link href="https://zihao256.github.io/p/e547f891.html"/>
+    <id>https://zihao256.github.io/p/e547f891.html</id>
+    <published>2023-03-04T14:25:09.000Z</published>
+    <updated>2023-09-20T06:52:02.729Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;Title&quot;&gt;&lt;a href=&quot;#Title&quot; class=&quot;headerlink&quot; title=&quot;Title&quot;&gt;&lt;/a&gt;Title&lt;/h1&gt;&lt;p&gt;“How Good Are Query Optimizers, Really?” (Leis 等, 2015, p.</summary>
+      
+    
+    
+    
+    <category term="个人提升" scheme="https://zihao256.github.io/categories/%E4%B8%AA%E4%BA%BA%E6%8F%90%E5%8D%87/"/>
+    
+    <category term="Paper Reading" scheme="https://zihao256.github.io/categories/%E4%B8%AA%E4%BA%BA%E6%8F%90%E5%8D%87/Paper-Reading/"/>
+    
+    
+    <category term="Database" scheme="https://zihao256.github.io/tags/Database/"/>
+    
+    <category term="Cardinality Estimation" scheme="https://zihao256.github.io/tags/Cardinality-Estimation/"/>
+    
+    <category term="Cost Model" scheme="https://zihao256.github.io/tags/Cost-Model/"/>
+    
+    <category term="Search Space" scheme="https://zihao256.github.io/tags/Search-Space/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Paper Reading: Robustness metrics for relational query execution plans</title>
+    <link href="https://zihao256.github.io/p/7091acdb.html"/>
+    <id>https://zihao256.github.io/p/7091acdb.html</id>
+    <published>2023-03-04T14:09:28.000Z</published>
+    <updated>2023-09-20T06:52:02.729Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;笔记&quot;&gt;&lt;a href=&quot;#笔记&quot; class=&quot;headerlink&quot; title=&quot;笔记&quot;&gt;&lt;/a&gt;笔记&lt;/h1&gt;&lt;p&gt;本篇文章的两个核心内容：&lt;/p&gt;
+&lt;p&gt;“three novel metrics for the robustnes” (Florian W</summary>
+      
+    
+    
+    
+    <category term="个人提升" scheme="https://zihao256.github.io/categories/%E4%B8%AA%E4%BA%BA%E6%8F%90%E5%8D%87/"/>
+    
+    <category term="Paper Reading" scheme="https://zihao256.github.io/categories/%E4%B8%AA%E4%BA%BA%E6%8F%90%E5%8D%87/Paper-Reading/"/>
+    
+    
+    <category term="Database" scheme="https://zihao256.github.io/tags/Database/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Paper Reading: On the Calculation of Optimality Ranges for Relational Query Execution Plans</title>
+    <link href="https://zihao256.github.io/p/5d3b93c8.html"/>
+    <id>https://zihao256.github.io/p/5d3b93c8.html</id>
+    <published>2023-03-04T14:07:24.000Z</published>
+    <updated>2023-09-20T06:52:02.729Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;笔记&quot;&gt;&lt;a href=&quot;#笔记&quot; class=&quot;headerlink&quot; title=&quot;笔记&quot;&gt;&lt;/a&gt;笔记&lt;/h1&gt;&lt;p&gt; &lt;strong&gt;最优范围的目的&lt;/strong&gt; ：指出何时最优计划仍然最优。&lt;/p&gt;
+&lt;h1 id=&quot;最优范围计算的步骤：&quot;&gt;&lt;a hr</summary>
+      
+    
+    
+    
+    <category term="个人提升" scheme="https://zihao256.github.io/categories/%E4%B8%AA%E4%BA%BA%E6%8F%90%E5%8D%87/"/>
+    
+    <category term="Paper Reading" scheme="https://zihao256.github.io/categories/%E4%B8%AA%E4%BA%BA%E6%8F%90%E5%8D%87/Paper-Reading/"/>
+    
+    
+    <category term="Database" scheme="https://zihao256.github.io/tags/Database/"/>
+    
+    <category term="Cardinality Estimation" scheme="https://zihao256.github.io/tags/Cardinality-Estimation/"/>
+    
+    <category term="Optimizer" scheme="https://zihao256.github.io/tags/Optimizer/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Paper Reading: Plan Stitch: Harnessing the Best of Many Plans</title>
+    <link href="https://zihao256.github.io/p/116cd8bd.html"/>
+    <id>https://zihao256.github.io/p/116cd8bd.html</id>
+    <published>2023-03-04T14:01:53.000Z</published>
+    <updated>2023-09-20T06:52:02.729Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;Title&quot;&gt;&lt;a href=&quot;#Title&quot; class=&quot;headerlink&quot; title=&quot;Title&quot;&gt;&lt;/a&gt;Title&lt;/h1&gt;&lt;p&gt;“Plan Stitch: Harnessing the Best of Many Plans” (Ding 等, </summary>
+      
+    
+    
+    
+    <category term="个人提升" scheme="https://zihao256.github.io/categories/%E4%B8%AA%E4%BA%BA%E6%8F%90%E5%8D%87/"/>
+    
+    <category term="Paper Reading" scheme="https://zihao256.github.io/categories/%E4%B8%AA%E4%BA%BA%E6%8F%90%E5%8D%87/Paper-Reading/"/>
+    
+    
+    <category term="Database" scheme="https://zihao256.github.io/tags/Database/"/>
+    
+    <category term="Optimizer" scheme="https://zihao256.github.io/tags/Optimizer/"/>
+    
+    <category term="Plan Cache" scheme="https://zihao256.github.io/tags/Plan-Cache/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>How to read a paper</title>
+    <link href="https://zihao256.github.io/p/b4607f97.html"/>
+    <id>https://zihao256.github.io/p/b4607f97.html</id>
+    <published>2023-02-20T01:36:07.000Z</published>
+    <updated>2023-09-20T06:52:02.724Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;“或许你永远不知道你以前读过的书能在什么时候能够派上用场，但请保持阅读，因&lt;/strong&gt;为阅读的过程也是在你大脑中建立认知的过程。”&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;“深度阅读</summary>
+      
+    
+    
+    
+    <category term="利器酷" scheme="https://zihao256.github.io/categories/%E5%88%A9%E5%99%A8%E9%85%B7/"/>
+    
+    <category term="方法" scheme="https://zihao256.github.io/categories/%E5%88%A9%E5%99%A8%E9%85%B7/%E6%96%B9%E6%B3%95/"/>
+    
+    
+    <category term="Reading" scheme="https://zihao256.github.io/tags/Reading/"/>
+    
+    <category term="Paper" scheme="https://zihao256.github.io/tags/Paper/"/>
+    
+    <category term="Research" scheme="https://zihao256.github.io/tags/Research/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hexo博客少生成了index主页文件</title>
+    <link href="https://zihao256.github.io/p/6de7b885.html"/>
+    <id>https://zihao256.github.io/p/6de7b885.html</id>
+    <published>2023-02-19T09:57:13.000Z</published>
+    <updated>2023-09-20T06:52:02.724Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;问题描述&quot;&gt;&lt;a href=&quot;#问题描述&quot; class=&quot;headerlink&quot; title=&quot;问题描述&quot;&gt;&lt;/a&gt;问题描述&lt;/h1&gt;&lt;p&gt;在进行 &lt;code&gt;node&lt;/code&gt; 和 &lt;code&gt;npm&lt;/code&gt; 的版本更新之后，再以此运行 &lt;code&gt;h</summary>
+      
+    
+    
+    
+    <category term="个人提升" scheme="https://zihao256.github.io/categories/%E4%B8%AA%E4%BA%BA%E6%8F%90%E5%8D%87/"/>
+    
+    <category term="博客更新" scheme="https://zihao256.github.io/categories/%E4%B8%AA%E4%BA%BA%E6%8F%90%E5%8D%87/%E5%8D%9A%E5%AE%A2%E6%9B%B4%E6%96%B0/"/>
+    
+    
+    <category term="Blog" scheme="https://zihao256.github.io/tags/Blog/"/>
+    
+    <category term="Debug" scheme="https://zihao256.github.io/tags/Debug/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>hexo博客勉强支持typora中的脚注功能：)</title>
+    <link href="https://zihao256.github.io/p/ef4419f0.html"/>
+    <id>https://zihao256.github.io/p/ef4419f0.html</id>
+    <published>2023-02-19T02:49:13.000Z</published>
+    <updated>2023-09-20T06:52:02.731Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;typora 的脚注功能类似于论文中的对文献引用。在学习或Debug后书写博客不免也要参考多篇网页，这时用脚注功能可以将引用到的所有网页统一写在博文最下方，使得文章看起来不会那么杂乱。&lt;/p&gt;
+&lt;p&gt;typora 支持的markdown脚注功能，但实际上markdown原生</summary>
+      
+    
+    
+    
+    <category term="个人提升" scheme="https://zihao256.github.io/categories/%E4%B8%AA%E4%BA%BA%E6%8F%90%E5%8D%87/"/>
+    
+    <category term="博客更新" scheme="https://zihao256.github.io/categories/%E4%B8%AA%E4%BA%BA%E6%8F%90%E5%8D%87/%E5%8D%9A%E5%AE%A2%E6%9B%B4%E6%96%B0/"/>
+    
+    
+    <category term="Blog" scheme="https://zihao256.github.io/tags/Blog/"/>
+    
+    <category term="Markdown" scheme="https://zihao256.github.io/tags/Markdown/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>奇怪问题——fatal:无法读取远程仓库</title>
+    <link href="https://zihao256.github.io/p/fab1518.html"/>
+    <id>https://zihao256.github.io/p/fab1518.html</id>
+    <published>2023-02-18T15:29:43.000Z</published>
+    <updated>2023-09-20T06:52:02.783Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;问题描述&quot;&gt;&lt;a href=&quot;#问题描述&quot; class=&quot;headerlink&quot; title=&quot;问题描述&quot;&gt;&lt;/a&gt;问题描述&lt;/h1&gt;&lt;p&gt;连接校园网，运行&lt;code&gt;hexo d&lt;/code&gt;得到如下报错：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://ra</summary>
+      
+    
+    
+    
+    <category term="个人提升" scheme="https://zihao256.github.io/categories/%E4%B8%AA%E4%BA%BA%E6%8F%90%E5%8D%87/"/>
+    
+    <category term="博客更新" scheme="https://zihao256.github.io/categories/%E4%B8%AA%E4%BA%BA%E6%8F%90%E5%8D%87/%E5%8D%9A%E5%AE%A2%E6%9B%B4%E6%96%B0/"/>
+    
+    
+    <category term="Blog" scheme="https://zihao256.github.io/tags/Blog/"/>
+    
+    <category term="Bug" scheme="https://zihao256.github.io/tags/Bug/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>增加评论功能</title>
+    <link href="https://zihao256.github.io/p/4ec99e36.html"/>
+    <id>https://zihao256.github.io/p/4ec99e36.html</id>
+    <published>2023-02-18T14:52:34.000Z</published>
+    <updated>2023-09-20T06:52:02.783Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;Butterfly 主题已经集成了 gitalk 功能，只需要在主题配置文件中对其启用和配置即可：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;在 Github 设置中创建一个 OAuth App，并将得到的Client ID和Secret填入主题配置文件相应位置即可；&lt;/li&gt;
+&lt;li&gt;第</summary>
+      
+    
+    
+    
+    <category term="个人提升" scheme="https://zihao256.github.io/categories/%E4%B8%AA%E4%BA%BA%E6%8F%90%E5%8D%87/"/>
+    
+    <category term="博客更新" scheme="https://zihao256.github.io/categories/%E4%B8%AA%E4%BA%BA%E6%8F%90%E5%8D%87/%E5%8D%9A%E5%AE%A2%E6%9B%B4%E6%96%B0/"/>
+    
+    
+    <category term="Blog" scheme="https://zihao256.github.io/tags/Blog/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>将Hexo博客部署到Github</title>
+    <link href="https://zihao256.github.io/p/82975e94.html"/>
+    <id>https://zihao256.github.io/p/82975e94.html</id>
+    <published>2023-02-18T14:26:11.000Z</published>
+    <updated>2023-09-20T06:52:02.783Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;其实一开始就将博客部署到 Github 了，但是没有搞清楚为什么创建一个 hexo 分支，这次遇到了源代码合并问题，才使得我真正明白创建分支的巧妙。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;在 Github 创建一个公开仓库&lt;/li&gt;
+&lt;li&gt;创建一个 &lt;code&gt;hexo&lt;/code&gt;</summary>
+      
+    
+    
+    
+    <category term="个人提升" scheme="https://zihao256.github.io/categories/%E4%B8%AA%E4%BA%BA%E6%8F%90%E5%8D%87/"/>
+    
+    <category term="博客更新" scheme="https://zihao256.github.io/categories/%E4%B8%AA%E4%BA%BA%E6%8F%90%E5%8D%87/%E5%8D%9A%E5%AE%A2%E6%9B%B4%E6%96%B0/"/>
+    
+    
+    <category term="Blog" scheme="https://zihao256.github.io/tags/Blog/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Blog增加图库</title>
+    <link href="https://zihao256.github.io/p/9e54ba1.html"/>
+    <id>https://zihao256.github.io/p/9e54ba1.html</id>
+    <published>2023-02-18T11:19:09.000Z</published>
+    <updated>2023-09-20T06:52:02.783Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;ul&gt;
+&lt;li&gt;Hexo 的 Gallery 相册图库功能&lt;/li&gt;
+&lt;li&gt;在Github 上创建一个仓库作为图床&lt;/li&gt;
+&lt;li&gt;使用 uPic 作为上传工具&lt;/li&gt;
+&lt;li&gt;在 typora 偏好设置中设置插入图片时对其进行上传，选择上传服务为uPic&lt;/li&gt;
+&lt;/</summary>
+      
+    
+    
+    
+    <category term="个人提升" scheme="https://zihao256.github.io/categories/%E4%B8%AA%E4%BA%BA%E6%8F%90%E5%8D%87/"/>
+    
+    <category term="博客更新" scheme="https://zihao256.github.io/categories/%E4%B8%AA%E4%BA%BA%E6%8F%90%E5%8D%87/%E5%8D%9A%E5%AE%A2%E6%9B%B4%E6%96%B0/"/>
+    
+    
+    <category term="Blog" scheme="https://zihao256.github.io/tags/Blog/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>我用什么才能留住你</title>
+    <link href="https://zihao256.github.io/p/d1fbce69.html"/>
+    <id>https://zihao256.github.io/p/d1fbce69.html</id>
+    <published>2022-09-30T16:00:00.000Z</published>
+    <updated>2023-09-20T06:52:02.783Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;我用什么才能留住你&quot;&gt;&lt;a href=&quot;#我用什么才能留住你&quot; class=&quot;headerlink&quot; title=&quot;我用什么才能留住你&quot;&gt;&lt;/a&gt;我用什么才能留住你&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;https://zh.wikipedia.org/wiki/%E8</summary>
+      
+    
+    
+    
+    <category term="生活" scheme="https://zihao256.github.io/categories/%E7%94%9F%E6%B4%BB/"/>
+    
+    <category term="小诗" scheme="https://zihao256.github.io/categories/%E7%94%9F%E6%B4%BB/%E5%B0%8F%E8%AF%97/"/>
+    
+    
+    <category term="博尔赫斯" scheme="https://zihao256.github.io/tags/%E5%8D%9A%E5%B0%94%E8%B5%AB%E6%96%AF/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>清 说</title>
+    <link href="https://zihao256.github.io/p/90d31b3c.html"/>
+    <id>https://zihao256.github.io/p/90d31b3c.html</id>
+    <published>2022-09-30T16:00:00.000Z</published>
+    <updated>2023-09-20T06:52:02.783Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;当你着眼于结果而非过程的时候，你就容易焦虑&lt;/p&gt;
+&lt;/blockquote&gt;
+</summary>
+      
+    
+    
+    
+    <category term="生活" scheme="https://zihao256.github.io/categories/%E7%94%9F%E6%B4%BB/"/>
+    
+    <category term="反思总结" scheme="https://zihao256.github.io/categories/%E7%94%9F%E6%B4%BB/%E5%8F%8D%E6%80%9D%E6%80%BB%E7%BB%93/"/>
+    
+    
+    <category term="友谊" scheme="https://zihao256.github.io/tags/%E5%8F%8B%E8%B0%8A/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Preparation-For-MIT6.824</title>
+    <link href="https://zihao256.github.io/p/c9d8503f.html"/>
+    <id>https://zihao256.github.io/p/c9d8503f.html</id>
+    <published>2022-07-07T11:20:29.000Z</published>
+    <updated>2023-09-20T06:52:02.729Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;&lt;code&gt;refs:&lt;/code&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;h2 id=&quot;如何的才能更好地学习-MIT6-824-分布式系统课程？-谭新宇的回答-知乎&quot;&gt;&lt;a href=&quot;#如何的才能更好地学习-MIT6-824-分布式系统课程？-谭新宇的回答-知乎&quot; class=&quot;</summary>
+      
+    
+    
+    
+    <category term="个人提升" scheme="https://zihao256.github.io/categories/%E4%B8%AA%E4%BA%BA%E6%8F%90%E5%8D%87/"/>
+    
+    <category term="MIT6.824" scheme="https://zihao256.github.io/categories/%E4%B8%AA%E4%BA%BA%E6%8F%90%E5%8D%87/MIT6-824/"/>
+    
+    
+    <category term="Database System" scheme="https://zihao256.github.io/tags/Database-System/"/>
+    
+    <category term="Distributed" scheme="https://zihao256.github.io/tags/Distributed/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hexo+Butterfly</title>
+    <link href="https://zihao256.github.io/p/463f518f.html"/>
+    <id>https://zihao256.github.io/p/463f518f.html</id>
+    <published>2022-07-07T08:21:52.000Z</published>
+    <updated>2023-09-20T06:52:02.724Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;创建新文章-草稿-页面&quot;&gt;&lt;a href=&quot;#创建新文章-草稿-页面&quot; class=&quot;headerlink&quot; title=&quot;创建新文章/草稿/页面&quot;&gt;&lt;/a&gt;创建新文章/草稿/页面&lt;/h1&gt;&lt;p&gt;命令：&lt;code&gt;hexo new [layout] &amp;lt;tit</summary>
+      
+    
+    
+    
+    <category term="个人提升" scheme="https://zihao256.github.io/categories/%E4%B8%AA%E4%BA%BA%E6%8F%90%E5%8D%87/"/>
+    
+    <category term="博客更新" scheme="https://zihao256.github.io/categories/%E4%B8%AA%E4%BA%BA%E6%8F%90%E5%8D%87/%E5%8D%9A%E5%AE%A2%E6%9B%B4%E6%96%B0/"/>
+    
+    
+    <category term="Blog" scheme="https://zihao256.github.io/tags/Blog/"/>
+    
+    <category term="DIY" scheme="https://zihao256.github.io/tags/DIY/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Obsidian和Zotero联动</title>
+    <link href="https://zihao256.github.io/p/52bffbc.html"/>
+    <id>https://zihao256.github.io/p/52bffbc.html</id>
+    <published>2022-07-07T07:36:47.000Z</published>
+    <updated>2023-09-20T06:52:02.729Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;Mdnotes-Better-Bibtex-Zotfile&quot;&gt;&lt;a href=&quot;#Mdnotes-Better-Bibtex-Zotfile&quot; class=&quot;headerlink&quot; title=&quot;Mdnotes + Better-Bibtex + Zotfile&quot;</summary>
+      
+    
+    
+    
+    <category term="利器酷" scheme="https://zihao256.github.io/categories/%E5%88%A9%E5%99%A8%E9%85%B7/"/>
+    
+    <category term="方法" scheme="https://zihao256.github.io/categories/%E5%88%A9%E5%99%A8%E9%85%B7/%E6%96%B9%E6%B3%95/"/>
+    
+    
+    <category term="科研" scheme="https://zihao256.github.io/tags/%E7%A7%91%E7%A0%94/"/>
+    
+    <category term="论文" scheme="https://zihao256.github.io/tags/%E8%AE%BA%E6%96%87/"/>
+    
+    <category term="笔记" scheme="https://zihao256.github.io/tags/%E7%AC%94%E8%AE%B0/"/>
+    
+  </entry>
+  
+</feed>

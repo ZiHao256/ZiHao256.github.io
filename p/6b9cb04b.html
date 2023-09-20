@@ -1,0 +1,594 @@
+<!DOCTYPE html><html lang="zh-Hans" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>6 切片 | ZiHao's Blog</title><meta name="keywords" content="The Go Programming Language"><meta name="author" content="Zihao Ma"><meta name="copyright" content="Zihao Ma"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="6 切片 数组长度是固定的，数组的长度也属于类型的一部分，有许多局限性  例如，函数传参时只能支持一种数组类型 例如，不能再继续向数组中添加元素   Slice 是一个拥有相同类型元素的可变长度序列  是基于数组类型做的一层封装 十分灵活，支持自动扩容   切片是一个 引用类型,不支持直接比较，只能和nil比较  内部结构包含 地址、长度、容量   一般用于快速的操作一块数据集合   切片的定义">
+<meta property="og:type" content="article">
+<meta property="og:title" content="6 切片">
+<meta property="og:url" content="https://zihao256.github.io/p/6b9cb04b.html">
+<meta property="og:site_name" content="ZiHao&#39;s Blog">
+<meta property="og:description" content="6 切片 数组长度是固定的，数组的长度也属于类型的一部分，有许多局限性  例如，函数传参时只能支持一种数组类型 例如，不能再继续向数组中添加元素   Slice 是一个拥有相同类型元素的可变长度序列  是基于数组类型做的一层封装 十分灵活，支持自动扩容   切片是一个 引用类型,不支持直接比较，只能和nil比较  内部结构包含 地址、长度、容量   一般用于快速的操作一块数据集合   切片的定义">
+<meta property="og:locale">
+<meta property="og:image" content="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven8.jpg">
+<meta property="article:published_time" content="2021-05-06T06:22:06.000Z">
+<meta property="article:modified_time" content="2023-09-20T06:52:02.723Z">
+<meta property="article:author" content="Zihao Ma">
+<meta property="article:tag" content="The Go Programming Language">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven8.jpg"><link rel="shortcut icon" href="https://github.com/ZiHao256/ZiHao256.github.io/blob/hexo/images/stitch.JPG?raw=true"><link rel="canonical" href="https://zihao256.github.io/p/6b9cb04b"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":true,"languages":{"hits_empty":"We didn't find any results for the search: ${query}"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: true,
+    post: true
+  },
+  runtime: '天',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: true,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '6 切片',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: true,
+  isToc: true,
+  postUpdate: '2023-09-20 14:52:02'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="/atom.xml" title="ZiHao's Blog" type="application/atom+xml">
+<style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}</style></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">Loading...</div></div></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://github.com/ZiHao256/ZiHao256.github.io/blob/hexo/images/stitch.JPG?raw=true" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">58</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">38</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">15</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/log"><i class="fa-fw fas fa-book"></i><span> Log</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fa fa-camera-retro"></i><span> Gallery</span></a></li><li><a class="site-page child" href="/Map/"><i class="fa-fw fa fa-map-signs"></i><span> Map</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven8.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">ZiHao's Blog</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> Search</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/log"><i class="fa-fw fas fa-book"></i><span> Log</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fa fa-camera-retro"></i><span> Gallery</span></a></li><li><a class="site-page child" href="/Map/"><i class="fa-fw fa fa-map-signs"></i><span> Map</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">6 切片</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2021-05-06T06:22:06.000Z" title="Created 2021-05-06 14:22:06">2021-05-06</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2023-09-20T06:52:02.723Z" title="Updated 2023-09-20 14:52:02">2023-09-20</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E4%B8%AA%E4%BA%BA%E6%8F%90%E5%8D%87/">个人提升</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E4%B8%AA%E4%BA%BA%E6%8F%90%E5%8D%87/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0/">编程语言学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">Word count:</span><span class="word-count">2.3k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">Reading time:</span><span>8min</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="6 切片"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">Comments:</span><a href="/p/6b9cb04b.html#post-comment"><span class="gitalk-comment-count"><i class="fa-solid fa-spinner fa-spin"></i></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="6-切片"><a href="#6-切片" class="headerlink" title="6 切片"></a>6 切片</h2><ul>
+<li><p>数组长度是固定的，数组的长度也属于类型的一部分，有许多局限性</p>
+<ul>
+<li>例如，函数传参时只能支持一种数组类型</li>
+<li>例如，不能再继续向数组中添加元素</li>
+</ul>
+</li>
+<li><p><code>Slice</code> 是一个拥有<strong>相同类型元素的可变长度序列</strong></p>
+<ul>
+<li>是基于数组类型做的一层封装</li>
+<li>十分灵活，支持自动扩容</li>
+</ul>
+</li>
+<li><p>切片是一个 <strong>引用类型</strong>,不支持直接比较，只能和<code>nil</code>比较</p>
+<ul>
+<li>内部结构包含 <code>地址</code>、<code>长度</code>、<code>容量</code></li>
+</ul>
+</li>
+<li><p>一般用于<strong>快速的</strong>操作<strong>一块数据集合</strong></p>
+</li>
+</ul>
+<h3 id="切片的定义"><a href="#切片的定义" class="headerlink" title="切片的定义"></a>切片的定义</h3><ul>
+<li><p>基本语法：<code>var name []T</code></p>
+<ul>
+<li>name : 变量名</li>
+<li>T : 切片中的元素类型</li>
+</ul>
+</li>
+<li><p>示例：</p>
+<ul>
+<li>```<br>var a []string<br>var b = []int{}<br>var c = []bool{false, true}<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">#### 切片的长度和容量</span><br><span class="line"></span><br><span class="line">* 切片拥有自己的长度和容量：</span><br><span class="line">  * `len()` 求长度</span><br><span class="line">  * `cap()` 求容量</span><br><span class="line"></span><br><span class="line">#### 切片的表达式</span><br><span class="line"></span><br><span class="line">* 切片表达式 从`字符串、数组、指向数组或切片的指针` 构造 子字符串或切片</span><br><span class="line">* 两种变体</span><br><span class="line">  * 指定`low`和`high`两个索引界限值的简单形式</span><br><span class="line">  * 除了`low`和`high`索引界限值外，还指定容量 的完整形式</span><br><span class="line"></span><br><span class="line">##### 简单切片表达式</span><br><span class="line"></span><br><span class="line">* 切片的底层就是一个数组</span><br><span class="line"></span><br><span class="line">* 可以**基于 数组** 通过切片表达式得到切片</span><br><span class="line"></span><br><span class="line">* `[low , high)`: 左包含，右不包含</span><br><span class="line"></span><br><span class="line">  * 得到的**切片长度** `high - low`</span><br><span class="line"></span><br><span class="line">  * 得到的**切片容量是** 操作数数组下标从`low` 到最后一个元素所组成的数组的长度</span><br><span class="line"></span><br><span class="line">  * 示例：</span><br><span class="line"></span><br><span class="line">    * ```go</span><br><span class="line">      a := [5]int&#123;1,2,3,4,5&#125;</span><br><span class="line">      s := a[1:3]  </span><br><span class="line">      fmt.Pritf(&quot;s:%v len(s):%v cap(s): %v&quot;,s,len(s),cap(s))</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>切片表达式中的任何索引可以省略：</p>
+<ul>
+<li><code>low</code>默认为 <strong>0</strong></li>
+<li><code>high</code>默认为 <strong>切片操作数的长度</strong></li>
+<li><code>a[2:] </code> : <code>high</code> = len(a)</li>
+<li><code>a[:3]</code>: <code>low</code> = 0</li>
+<li><code>a[:]</code> low = 0, high = len(a)</li>
+</ul>
+</li>
+<li><p>==注意：==</p>
+<ul>
+<li>对于数组和字符串：若<code>0&lt;=low&lt;=high&lt;=len(a)</code> 则索引合法，否则<strong>索引越界</strong>，运行时会<code>panic</code></li>
+<li>对 切片 再执行切片表达式(切片在切片时)，<ul>
+<li><code>high</code> 的上限是 切片的容量<code>cap(s)</code>，而非长度<code>len(s)</code></li>
+</ul>
+</li>
+<li><strong>常量索引</strong>必须是非负，int类型</li>
+</ul>
+</li>
+<li></li>
+</ul>
+<h5 id="完整切片表达式"><a href="#完整切片表达式" class="headerlink" title="完整切片表达式"></a>完整切片表达式</h5><ul>
+<li><em>数组，指向数组的指针，或切片</em> 支持完整切片表达式<ul>
+<li>注意，<strong>字符串不支持</strong></li>
+</ul>
+</li>
+<li>格式 <code>a[low : high : max]</code></li>
+<li>构造与简单切片表达式<code>a[low,high]</code> <ul>
+<li>相同类型、相同长度、相同元素</li>
+<li>将切片的容量设置为<code>max-low</code> </li>
+</ul>
+</li>
+<li>在完整切片表达式中，只有第一个索引值<code>low</code>可以省略，默认为 0<ul>
+<li>示例</li>
+<li></li>
+</ul>
+</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a := [<span class="number">5</span>]<span class="keyword">int</span>&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>&#125;</span><br><span class="line">t := a[<span class="number">1</span>:<span class="number">3</span>:<span class="number">5</span>]</span><br><span class="line"><span class="comment">//t: [2 3] len(t):2 cap(t):4</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>完整切片表达式 需满足<ul>
+<li><code>0 &lt;= low &lt;= high &lt;= max &lt;= cap(a)</code></li>
+</ul>
+</li>
+</ul>
+<h4 id="使用-make-函数构造切片"><a href="#使用-make-函数构造切片" class="headerlink" title="使用 make() 函数构造切片"></a>使用 make() 函数构造切片</h4><ul>
+<li><p>除了基于数组构造切片，还可以动态创建切片</p>
+</li>
+<li><p>make 格式：<code>make ([]T, size, cap)</code></p>
+<ul>
+<li><code>T</code> : 切片内元素类型</li>
+<li><code>size</code> ：切片中元素数量</li>
+<li><code>cap</code> ：切片容量</li>
+</ul>
+</li>
+<li><p>示例：</p>
+<ul>
+<li><p>```go<br>a := make([]int, 2, 10)<br>//a: [0 0] len(a):2 cap(a): 10</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">  * a切片的内部存储空间分配了10，实际上只用了2个</span><br><span class="line"></span><br><span class="line">  * 容量不会影响当前元素的个数</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### 切片的本质</span><br><span class="line"></span><br><span class="line">* **本质：**对底层数组的封装，包含三个信息</span><br><span class="line"></span><br><span class="line">  * 底层数组的指针</span><br><span class="line">  * 切片的长度</span><br><span class="line">  * 切片的容量</span><br><span class="line"></span><br><span class="line">* 例如</span><br><span class="line"></span><br><span class="line">  ```go</span><br><span class="line">  a := [8]int&#123;0,1,2,3,4,5,6,7&#125;</span><br><span class="line">  s1 := a[:5]</span><br></pre></td></tr></table></figure></li>
+<li><p><img src="E:\LearningNotes\Go\GoLearning.assets\slice_01.png" alt="slice_01"></p>
+</li>
+<li><p>切片<code>s2 := a[3:6]</code></p>
+<ul>
+<li><img src="E:\LearningNotes\Go\GoLearning.assets\slice_02.png" alt="slice_02"></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="判断切片是否为空"><a href="#判断切片是否为空" class="headerlink" title="判断切片是否为空"></a>判断切片是否为空</h4><ul>
+<li>最好使用切片的长度 <code>len(s)==0</code> 来判断</li>
+</ul>
+<h3 id="切片不能直接比较"><a href="#切片不能直接比较" class="headerlink" title="切片不能直接比较"></a>切片不能直接比较</h3><ul>
+<li><p>不能使用 <code>==</code> 操作符判断切片是否全部元素相等</p>
+</li>
+<li><p>切片唯一合法的比较操作：和<code>nil</code>比较</p>
+</li>
+<li><p>一个<code>nil</code>值的切片，没有底层数组</p>
+<ul>
+<li>切片长度和容量都是 0</li>
+</ul>
+</li>
+<li><p>但是一个长度和容量都是0的切片不一定是<code>nil</code></p>
+<ul>
+<li><p>示例</p>
+</li>
+<li><p>```go<br>var s1 []int         //len(s1)=0;cap(s1)=0;s1==nil<br>s2 := []int{}        //len(s2)=0;cap(s2)=0;s2!=nil<br>s3 := make([]int, 0) //len(s3)=0;cap(s3)=0;s3!=nil</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">* 因此判断切片是否为空主要用`len(s)==0`</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 切片的赋值拷贝</span><br><span class="line"></span><br><span class="line">* 一个切片 **拷贝赋值** 另一个切片，两个切片会共享底层数组，因此对一个切片的修改会影响另一个切片</span><br><span class="line"></span><br><span class="line">  * 示例</span><br><span class="line"></span><br><span class="line">  * ```go</span><br><span class="line">    	s1 := make([]int, 3) //[0 0 0]</span><br><span class="line">    	s2 := s1             //将s1直接赋值给s2，s1和s2共用一个底层数组</span><br><span class="line">    	s2[0] = 100</span><br><span class="line">    	fmt.Println(s1) //[100 0 0]</span><br><span class="line">    	fmt.Println(s2) //[100 0 0]</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<h3 id="切片遍历"><a href="#切片遍历" class="headerlink" title="切片遍历"></a>切片遍历</h3><ul>
+<li>支持下标索引遍历和<code>for range</code>键值遍历</li>
+</ul>
+<h3 id="append-方法为切片添加元素"><a href="#append-方法为切片添加元素" class="headerlink" title="append() 方法为切片添加元素"></a>append() 方法为切片添加元素</h3><ul>
+<li><p>Go 中的内置函数<code>append()</code> 可以为切片动态添加元素</p>
+<ul>
+<li>添加一个：<code>s = append(s,1)</code></li>
+<li>添加多个：<code>s = append(s,1,2,3)</code></li>
+<li>添加另一个切片中的元素 ：<code>s = append(s, s2...)</code></li>
+</ul>
+</li>
+<li><p>==注意：==通过<strong>var声明</strong>的 <code>零值切片</code> 可以在<code>append()</code> 直接使用，无需初始化</p>
+<ul>
+<li><p>```go<br>var s []int   //声明后直接使用<br>s = append(s,1,2)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* 每个切片指向一个**底层数组**，</span><br><span class="line"></span><br><span class="line">  * 这个数组的**容量够用**就直接在该数组新增元素</span><br><span class="line">  * 当**容量不够用**时，切片**按照一定的规则进行扩容**。此时该切片指向的**底层数组会更换**</span><br><span class="line">  * **扩容操作**发生在`append`时，因此需要用原变量接收函数返回值</span><br><span class="line"></span><br><span class="line">* `append`:</span><br><span class="line"></span><br><span class="line">  * 将元素追加到切片的最后并返回该切片</span><br><span class="line">  * 切片扩容的规则都是扩容前的两倍</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 切片的扩容策略</span><br><span class="line"></span><br><span class="line">* 查看源码：</span><br><span class="line"></span><br><span class="line">  * ```go</span><br><span class="line">    newcap := old.cap</span><br><span class="line">    doublecap := newcap + newcap</span><br><span class="line">    if cap &gt; doublecap &#123;</span><br><span class="line">    	newcap = cap</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">    	if old.len &lt; 1024 &#123;</span><br><span class="line">    		newcap = doublecap</span><br><span class="line">    	&#125; else &#123;</span><br><span class="line">    		// Check 0 &lt; newcap to detect overflow</span><br><span class="line">    		// and prevent an infinite loop.</span><br><span class="line">    		for 0 &lt; newcap &amp;&amp; newcap &lt; cap &#123;</span><br><span class="line">    			newcap += newcap / 4</span><br><span class="line">    		&#125;</span><br><span class="line">    		// Set newcap to the requested cap when</span><br><span class="line">    		// the newcap calculation overflowed.</span><br><span class="line">    		if newcap &lt;= 0 &#123;</span><br><span class="line">    			newcap = cap</span><br><span class="line">    		&#125;</span><br><span class="line">    	&#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><p>首先判断，若新申请(cap)大于两倍的旧容量(old.cap)，最终容量(newcap)就是新申请的容量</p>
+</li>
+<li><p>否则判断，若旧切片的长度小于1024，最终容量就是旧容量的两倍，</p>
+</li>
+<li><p>否则判断，若旧切片的长度大于等于1024，最终容量从旧容量开始循增加原来的1/4，直到最终容量大于等于新申请的容量</p>
+</li>
+<li><p>如果最终容量计算值溢出，则最终容量就是新申请的容量</p>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p>注意：切片扩容会根据切片中元素类型的不同而作不同处理</p>
+</li>
+</ul>
+<h3 id="使用-copy-函数复制切片"><a href="#使用-copy-函数复制切片" class="headerlink" title="使用 copy() 函数复制切片"></a>使用 copy() 函数复制切片</h3><ul>
+<li><p>由于切片是引用类型，拷贝赋值时，两个切片都指向同一块内存地址</p>
+<ul>
+<li><p>示例</p>
+</li>
+<li><p>```go</p>
+<pre><code>a := []int&#123;1, 2, 3, 4, 5&#125;
+b := a
+fmt.Println(a) //[1 2 3 4 5]
+fmt.Println(b) //[1 2 3 4 5]
+b[0] = 1000
+fmt.Println(a) //[1000 2 3 4 5]
+fmt.Println(b) //[1000 2 3 4 5]
+</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">* 可以使用内置函数`copy()`迅速地将一个切片的数据复制到另外一个切片空间中，</span><br><span class="line"></span><br><span class="line">  * `copy(destSlice, srcSlice []T)`</span><br><span class="line"></span><br><span class="line">    * srcSlice：数据来源切片</span><br><span class="line">    * dextSlice:目标切片</span><br><span class="line"></span><br><span class="line">  * 示例：</span><br><span class="line"></span><br><span class="line">  * ```go</span><br><span class="line">    	a := []int&#123;1, 2, 3, 4, 5&#125;</span><br><span class="line">    	c := make([]int, 5, 5)</span><br><span class="line">    	copy(c, a)     //使用copy()函数将切片a中的元素复制到切片c</span><br><span class="line">    	fmt.Println(a) //[1 2 3 4 5]</span><br><span class="line">    	fmt.Println(c) //[1 2 3 4 5]</span><br><span class="line">    	c[0] = 1000</span><br><span class="line">    	fmt.Println(a) //[1 2 3 4 5]</span><br><span class="line">    	fmt.Println(c) //[1000 2 3 4 5]</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<h3 id="从切片中删除元素"><a href="#从切片中删除元素" class="headerlink" title="从切片中删除元素"></a>从切片中删除元素</h3><ul>
+<li><p>Go 中无删除切片元素的专用方法，需要使用切片本身特性：</p>
+<ul>
+<li><p>若要删除下表为<code>index</code>: <code>s = append(s[:index],s[index+1:]...)</code></p>
+</li>
+<li><p>```go<br>func main() {</p>
+<pre><code>// 从切片中删除元素
+a := []int&#123;30, 31, 32, 33, 34, 35, 36, 37&#125;
+// 要删除索引为2的元素
+a = append(a[:2], a[3:]...)
+fmt.Println(a) //[30 31 33 34 35 36 37]
+</code></pre>
+<p>}</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 练习题</span><br><span class="line"></span><br><span class="line">#### 练习一</span><br><span class="line"></span><br><span class="line">请写出下面代码的输出结果。</span><br><span class="line"></span><br><span class="line">```go</span><br><span class="line">func main() &#123;</span><br><span class="line">    var a = make([]string, 5, 10)//a : [0 0 0 0 0 0 0 0 0 0 ],len 5, cap 10</span><br><span class="line">	for i := 0; i &lt; 10; i++ &#123;</span><br><span class="line">		a = append(a, fmt.Sprintf(&quot;%v&quot;, i)) //[0 0 0 0 0 &quot;0&quot; &quot;1&quot; ...&quot;9&quot;]</span><br><span class="line">	&#125;</span><br><span class="line">	fmt.Println(a)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>直接分析：[0 0 0 0 0 “0” “1” …”9”]</p>
+</li>
+<li><p>run ：<code>[   0 1 2 3 4 5 6 7 8 9]</code></p>
+<ul>
+<li>前面五个空字符串</li>
+</ul>
+</li>
+</ul>
+<h4 id="练习二"><a href="#练习二" class="headerlink" title="练习二"></a>练习二</h4><p>请使用内置的<code>sort</code>包对数组<code>var a = [...]int&#123;3, 7, 8, 9, 1&#125;</code>进行排序（附加题，自行查资料解答）。</p>
+<ul>
+<li><p><code>sort</code> 包主要针对[]int., []float64,[]string 以及其他自定义切片的排序</p>
+<ul>
+<li><p>内部实现了：插入排序、归并排序、堆排序、快速排序</p>
+</li>
+<li><p>sort 会依据实际数据自动选择最优的排序方法</p>
+</li>
+<li><p>我们只需要考虑实现 <code>sort.Interface</code>类型</p>
+<ul>
+<li>```go<br>type Interface interface {<pre><code>Len() int           // Len方法返回集合中的元素个数
+Less(i, j int) bool // i&gt;j，该方法返回索引i的元素是否比索引j的元素小、
+Swap(i, j int)      // 交换i, j的值
+</code></pre>
+}<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* 例如：</span><br><span class="line"></span><br><span class="line">  * ```go</span><br><span class="line">    package main</span><br><span class="line">     </span><br><span class="line">    import (</span><br><span class="line">        &quot;fmt&quot;</span><br><span class="line">        &quot;sort&quot;</span><br><span class="line">    )</span><br><span class="line">     </span><br><span class="line">    type IntSlice []int</span><br><span class="line">     </span><br><span class="line">    func (s IntSlice) Len() int &#123; </span><br><span class="line">        return len(s) </span><br><span class="line">    &#125;</span><br><span class="line">    func (s IntSlice) Swap(i, j int)&#123;</span><br><span class="line">        s[i], s[j] = s[j], s[i] </span><br><span class="line">    &#125;</span><br><span class="line">    func (s IntSlice) Less(i, j int) bool &#123;</span><br><span class="line">        return s[i] &lt; s[j] </span><br><span class="line">    &#125;</span><br><span class="line">     </span><br><span class="line">    func main() &#123;</span><br><span class="line">        a := []int&#123;4,3,2,1,5,9,8,7,6&#125;</span><br><span class="line">        sort.Sort(IntSlice(a))</span><br><span class="line">        fmt.Println(&quot;After sorted: &quot;, a)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="https://zihao256.github.io">Zihao Ma</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://zihao256.github.io/p/6b9cb04b.html">https://zihao256.github.io/p/6b9cb04b.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/The-Go-Programming-Language/">The Go Programming Language</a></div><div class="post_share"><div class="social-share" data-image="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven8.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/p/19fd4f1c.html"><img class="prev-cover" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/beautiful-milky-way-night-sky.webp" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info">7 map</div></div></a></div><div class="next-post pull-right"><a href="/p/c6746613.html"><img class="next-cover" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven8.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">5 Array</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><div><a href="/p/527606cb.html" title="17 网络编程"><img class="cover" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven2.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-05-06</div><div class="title">17 网络编程</div></div></a></div><div><a href="/p/a4216756.html" title="16 并发"><img class="cover" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/narrow-muddy-road-dark-forest.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-05-06</div><div class="title">16 并发</div></div></a></div><div><a href="/p/16e69ce4.html" title="15 反射"><img class="cover" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven7.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-05-06</div><div class="title">15 反射</div></div></a></div><div><a href="/p/f9eadfe2.html" title="14 接口"><img class="cover" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/john-towner-3Kv48NS4WUU-unsplash.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-05-06</div><div class="title">14 接口</div></div></a></div><div><a href="/p/9d9aaa60.html" title="13 包"><img class="cover" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven7.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-05-06</div><div class="title">13 包</div></div></a></div><div><a href="/p/9a7f2d8e.html" title="12 结构体"><img class="cover" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven9.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-05-06</div><div class="title">12 结构体</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> Comment</span></div></div><div class="comment-wrap"><div><div id="gitalk-container"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://github.com/ZiHao256/ZiHao256.github.io/blob/hexo/images/stitch.JPG?raw=true" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Zihao Ma</div><div class="author-info__description">博学之,审问之,慎思之,明辨之,笃行之.</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">58</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">38</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">15</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/ZiHao256"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/ZiHao256" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/atom.xml" target="_blank" title="RSS链接"><i class="fa fa-rss"></i></a><a class="social-icon" href="mailto:zihao626@gmail.com" target="_blank" title="gmail"><i class="fa-brands fa-google"></i></a><a class="social-icon" href="mailto:19030500024@stu.xidian.edu.cn" target="_blank" title="xdu-mail"><i class="fa fa-graduation-cap"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">This is Zihao's Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E5%88%87%E7%89%87"><span class="toc-text">6 切片</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%87%E7%89%87%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="toc-text">切片的定义</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AE%8C%E6%95%B4%E5%88%87%E7%89%87%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-text">完整切片表达式</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-make-%E5%87%BD%E6%95%B0%E6%9E%84%E9%80%A0%E5%88%87%E7%89%87"><span class="toc-text">使用 make() 函数构造切片</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%A4%E6%96%AD%E5%88%87%E7%89%87%E6%98%AF%E5%90%A6%E4%B8%BA%E7%A9%BA"><span class="toc-text">判断切片是否为空</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%87%E7%89%87%E4%B8%8D%E8%83%BD%E7%9B%B4%E6%8E%A5%E6%AF%94%E8%BE%83"><span class="toc-text">切片不能直接比较</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%87%E7%89%87%E9%81%8D%E5%8E%86"><span class="toc-text">切片遍历</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#append-%E6%96%B9%E6%B3%95%E4%B8%BA%E5%88%87%E7%89%87%E6%B7%BB%E5%8A%A0%E5%85%83%E7%B4%A0"><span class="toc-text">append() 方法为切片添加元素</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-copy-%E5%87%BD%E6%95%B0%E5%A4%8D%E5%88%B6%E5%88%87%E7%89%87"><span class="toc-text">使用 copy() 函数复制切片</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8E%E5%88%87%E7%89%87%E4%B8%AD%E5%88%A0%E9%99%A4%E5%85%83%E7%B4%A0"><span class="toc-text">从切片中删除元素</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%83%E4%B9%A0%E4%BA%8C"><span class="toc-text">练习二</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/p/42c77a0c.html" title="Paper Reading: TECCD: A Tree Embedding Approach for Code Clone Detection"><img src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven6.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Paper Reading: TECCD: A Tree Embedding Approach for Code Clone Detection"/></a><div class="content"><a class="title" href="/p/42c77a0c.html" title="Paper Reading: TECCD: A Tree Embedding Approach for Code Clone Detection">Paper Reading: TECCD: A Tree Embedding Approach for Code Clone Detection</a><time datetime="2023-05-16T06:17:01.000Z" title="Created 2023-05-16 14:17:01">2023-05-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/69c3279c.html" title="Git"><img src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/steven-kamenar-MMJx78V7xS8-unsplash.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Git"/></a><div class="content"><a class="title" href="/p/69c3279c.html" title="Git">Git</a><time datetime="2023-05-15T13:42:40.000Z" title="Created 2023-05-15 21:42:40">2023-05-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/26d71884.html" title="Overleaf"><img src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven6.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Overleaf"/></a><div class="content"><a class="title" href="/p/26d71884.html" title="Overleaf">Overleaf</a><time datetime="2023-05-15T11:11:58.000Z" title="Created 2023-05-15 19:11:58">2023-05-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/e75f2967.html" title="Edge浏览器"><img src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/beautiful-milky-way-night-sky.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Edge浏览器"/></a><div class="content"><a class="title" href="/p/e75f2967.html" title="Edge浏览器">Edge浏览器</a><time datetime="2023-05-14T09:24:59.000Z" title="Created 2023-05-14 17:24:59">2023-05-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/e547f891.html" title="Paper Reading: How good are query optimizers, really?"><img src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven9.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Paper Reading: How good are query optimizers, really?"/></a><div class="content"><a class="title" href="/p/e547f891.html" title="Paper Reading: How good are query optimizers, really?">Paper Reading: How good are query optimizers, really?</a><time datetime="2023-03-04T14:25:09.000Z" title="Created 2023-03-04 22:25:09">2023-03-04</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven8.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2021 - 2023 By Zihao Ma</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Hi, welcome to my <a href="https://zihao256.github.io/">Blog</a>!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="Toggle Between Traditional Chinese And Simplified Chinese">简</button><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="Scroll To Comments"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">Search</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  Loading the Database</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="Search for Posts" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script src="/js/search/local-search.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><script>function addGitalkSource () {
+  const ele = document.createElement('link')
+  ele.rel = 'stylesheet'
+  ele.href= 'https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.css'
+  document.getElementsByTagName('head')[0].appendChild(ele)
+}
+
+function loadGitalk () {
+  function initGitalk () {
+    var gitalk = new Gitalk(Object.assign({
+      clientID: 'ff33deb87bcf128b07ee',
+      clientSecret: 'ff52e6f598f01828083ee59b85a9327e686666a7',
+      repo: 'ZiHao256.github.io',
+      owner: 'ZiHao256',
+      admin: ['ZiHao256'],
+      id: '65da258c443dd5cf358cf849fbe85d87',
+      updateCountCallback: commentCount
+    },null))
+
+    gitalk.render('gitalk-container')
+  }
+
+  if (typeof Gitalk === 'function') initGitalk()
+  else {
+    addGitalkSource()
+    getScript('https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.js').then(initGitalk)
+  }
+}
+
+function commentCount(n){
+  let isCommentCount = document.querySelector('#post-meta .gitalk-comment-count')
+  if (isCommentCount) {
+    isCommentCount.innerHTML= n
+  }
+}
+
+if ('Gitalk' === 'Gitalk' || !false) {
+  if (false) btf.loadComment(document.getElementById('gitalk-container'), loadGitalk)
+  else loadGitalk()
+} else {
+  function loadOtherComment () {
+    loadGitalk()
+  }
+}</script></div><script>window.addEventListener('load', () => {
+  const changeContent = (content) => {
+    if (content === '') return content
+
+    content = content.replace(/<img.*?src="(.*?)"?[^\>]+>/ig, '[image]') // replace image link
+    content = content.replace(/<a[^>]+?href=["']?([^"']+)["']?[^>]*>([^<]+)<\/a>/gi, '[link]') // replace url
+    content = content.replace(/<pre><code>.*?<\/pre>/gi, '[code]') // replace code
+    content = content.replace(/<[^>]+>/g,"") // remove html tag
+
+    if (content.length > 150) {
+      content = content.substring(0,150) + '...'
+    }
+    return content
+  }
+
+  const findTrueUrl = (array) => {
+    Promise.all(array.map(item =>
+      fetch(item.url).then(resp => resp.json()).then(data => {
+        const urlArray = data.body.match(/(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?/ig)
+        if (data.user.login === 'utterances-bot') {
+          return urlArray.pop()
+        } else {
+          return urlArray.shift()
+        }
+      })
+    )).then(res => {
+        array = array.map((i,index)=> {
+          return {
+            ...i,
+            url: res[index]
+          }
+        })
+
+        saveToLocal.set('github-newest-comments', JSON.stringify(array), 10/(60*24))
+        generateHtml(array)
+    });
+  }
+
+  const getComment = () => {
+    fetch('https://api.github.com/repos/ZiHao256/ZiHao256.github.io/issues/comments?sort=updated&direction=desc&per_page=6&page=1',{
+      "headers": {
+        Accept: 'application/vnd.github.v3.html+json'
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        const githubArray = data.map(item => {
+          return {
+            'avatar': item.user.avatar_url,
+            'content': changeContent(item.body_html),
+            'nick': item.user.login,
+            'url': item.issue_url,
+            'date': item.updated_at,
+            'githubUrl': item.html_url
+          }
+        })
+        findTrueUrl(githubArray)
+      }).catch(e => {
+        const $dom = document.querySelector('#card-newest-comments .aside-list')
+        $dom.innerHTML= "Unable to get the data, please make sure the settings are correct."
+      })
+  }
+
+  const generateHtml = array => {
+    let result = ''
+
+    if (array.length) {
+      for (let i = 0; i < array.length; i++) {
+        result += '<div class=\'aside-list-item\'>'
+
+        if (true) {
+          const name = 'src'
+          result += `<a href='${array[i].url}' class='thumbnail'><img ${name}='${array[i].avatar}' alt='${array[i].nick}'></a>`
+        }
+
+        result += `<div class='content'>
+        <a class='comment' href='${array[i].url}' title='${array[i].content}'>${array[i].content}</a>
+        <div class='name'><span>${array[i].nick} / </span><time datetime="${array[i].date}">${btf.diffDate(array[i].date, true)}</time></div>
+        </div></div>`
+      }
+    } else {
+      result += 'No Comment'
+    }
+
+    let $dom = document.querySelector('#card-newest-comments .aside-list')
+    $dom.innerHTML= result
+    window.lazyLoadInstance && window.lazyLoadInstance.update()
+    window.pjax && window.pjax.refresh($dom)
+  }
+
+  const newestCommentInit = () => {
+    if (document.querySelector('#card-newest-comments .aside-list')) {
+      const data = saveToLocal.get('github-newest-comments')
+      if (data) {
+        generateHtml(JSON.parse(data))
+      } else {
+        getComment()
+      }
+    }
+  }
+
+  newestCommentInit()
+  document.addEventListener('pjax:complete', newestCommentInit)
+})</script><div class="aplayer no-destroy" data-id="6738460302" data-server="netease" data-type="playlist" data-fixed="true" data-autoplay="true"> </div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-heart.min.js" async="async" mobile="true"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener scroll 
+  window.tocScrollFn && window.removeEventListener('scroll', window.tocScrollFn)
+  window.scrollCollect && window.removeEventListener('scroll', scrollCollect)
+
+  typeof preloader === 'object' && preloader.initLoading()
+  document.getElementById('rightside').style.cssText = "opacity: ''; transform: ''"
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

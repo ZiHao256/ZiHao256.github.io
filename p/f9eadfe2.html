@@ -1,0 +1,638 @@
+<!DOCTYPE html><html lang="zh-Hans" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>14 接口 | ZiHao's Blog</title><meta name="keywords" content="The Go Programming Language"><meta name="author" content="Zihao Ma"><meta name="copyright" content="Zihao Ma"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="14 接口 Interface 定义了一个对象的行为规范， 只定义规范而不实现，由具体的对象来实现规范的细节  接口类型 &#96;Interface ·是一种抽象的类型 Interface  是一组 method的集合，是 duck-type programming的一种体现 接口的作用：定义一个协定(规则)， 不用关心其数据，和方法具体是什么   &#96;Interface· 是一种类型  为什么使用接口">
+<meta property="og:type" content="article">
+<meta property="og:title" content="14 接口">
+<meta property="og:url" content="https://zihao256.github.io/p/f9eadfe2.html">
+<meta property="og:site_name" content="ZiHao&#39;s Blog">
+<meta property="og:description" content="14 接口 Interface 定义了一个对象的行为规范， 只定义规范而不实现，由具体的对象来实现规范的细节  接口类型 &#96;Interface ·是一种抽象的类型 Interface  是一组 method的集合，是 duck-type programming的一种体现 接口的作用：定义一个协定(规则)， 不用关心其数据，和方法具体是什么   &#96;Interface· 是一种类型  为什么使用接口">
+<meta property="og:locale">
+<meta property="og:image" content="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/john-towner-3Kv48NS4WUU-unsplash.jpg">
+<meta property="article:published_time" content="2021-05-06T07:56:06.000Z">
+<meta property="article:modified_time" content="2023-09-20T06:52:02.722Z">
+<meta property="article:author" content="Zihao Ma">
+<meta property="article:tag" content="The Go Programming Language">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/john-towner-3Kv48NS4WUU-unsplash.jpg"><link rel="shortcut icon" href="https://github.com/ZiHao256/ZiHao256.github.io/blob/hexo/images/stitch.JPG?raw=true"><link rel="canonical" href="https://zihao256.github.io/p/f9eadfe2"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":true,"languages":{"hits_empty":"We didn't find any results for the search: ${query}"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: true,
+    post: true
+  },
+  runtime: '天',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: true,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '14 接口',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: true,
+  isToc: true,
+  postUpdate: '2023-09-20 14:52:02'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="/atom.xml" title="ZiHao's Blog" type="application/atom+xml">
+<style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}</style></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">Loading...</div></div></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://github.com/ZiHao256/ZiHao256.github.io/blob/hexo/images/stitch.JPG?raw=true" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">58</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">38</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">15</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/log"><i class="fa-fw fas fa-book"></i><span> Log</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fa fa-camera-retro"></i><span> Gallery</span></a></li><li><a class="site-page child" href="/Map/"><i class="fa-fw fa fa-map-signs"></i><span> Map</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/john-towner-3Kv48NS4WUU-unsplash.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">ZiHao's Blog</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> Search</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/log"><i class="fa-fw fas fa-book"></i><span> Log</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fa fa-camera-retro"></i><span> Gallery</span></a></li><li><a class="site-page child" href="/Map/"><i class="fa-fw fa fa-map-signs"></i><span> Map</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">14 接口</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2021-05-06T07:56:06.000Z" title="Created 2021-05-06 15:56:06">2021-05-06</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2023-09-20T06:52:02.722Z" title="Updated 2023-09-20 14:52:02">2023-09-20</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E4%B8%AA%E4%BA%BA%E6%8F%90%E5%8D%87/">个人提升</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E4%B8%AA%E4%BA%BA%E6%8F%90%E5%8D%87/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0/">编程语言学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">Word count:</span><span class="word-count">2.3k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">Reading time:</span><span>9min</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="14 接口"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">Comments:</span><a href="/p/f9eadfe2.html#post-comment"><span class="gitalk-comment-count"><i class="fa-solid fa-spinner fa-spin"></i></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="14-接口"><a href="#14-接口" class="headerlink" title="14 接口"></a>14 接口</h1><ul>
+<li><code>Interface</code> 定义了<strong>一个对象的行为规范</strong>，</li>
+<li>只定义规范而不实现，由<strong>具体的对象来实现规范的细节</strong></li>
+</ul>
+<h1 id="接口类型"><a href="#接口类型" class="headerlink" title="接口类型"></a>接口类型</h1><ul>
+<li>`Interface ·是一种抽象的类型</li>
+<li><code>Interface</code>  是一组 <code>method</code>的集合，是 <code>duck-type programming</code>的一种体现</li>
+<li>接口的作用：定义一个协定(规则)，<ul>
+<li>不用关心其数据，和方法具体是什么</li>
+</ul>
+</li>
+<li>`Interface· 是一种类型</li>
+</ul>
+<h1 id="为什么使用接口"><a href="#为什么使用接口" class="headerlink" title="为什么使用接口"></a>为什么使用接口</h1><ul>
+<li><p>```go<br>type Cat struct{}</p>
+<p>func (c Cat) Say() string { return “喵喵喵” }</p>
+<p>type Dog struct{}</p>
+<p>func (d Dog) Say() string { return “汪汪汪” }</p>
+<p>func main() {</p>
+<pre><code>c := Cat&#123;&#125;
+fmt.Println(&quot;猫:&quot;, c.Say())
+d := Dog&#123;&#125;
+fmt.Println(&quot;狗:&quot;, d.Say())
+</code></pre>
+<p>}</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">* 共同特点：都会叫</span><br><span class="line"></span><br><span class="line">  * 有重复代码</span><br><span class="line">* 为了解决 有共同特点而导致的代码重复，设计了接口</span><br><span class="line">* 接口是一种抽象的类型，</span><br><span class="line"></span><br><span class="line">  * 看到一个接口，只知道通过它的方法能做什么</span><br><span class="line"></span><br><span class="line"># 接口的定义</span><br><span class="line"></span><br><span class="line">* Go 提倡面向接口编程</span><br><span class="line">* 每个接口由数个方法组成，定义格式:</span><br><span class="line"></span><br><span class="line">  * ```go</span><br><span class="line">    type 接口类型名 interface&#123;</span><br><span class="line">        方法名1(参数列表) 返回值列表</span><br><span class="line">        方法名2(参数列表) 返回值列表</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p><strong>接口名</strong>：自定义的类型名</p>
+<ul>
+<li>一般命名时，在单词后 <code>er</code> , 接口名最好能突出该接口的类型含义</li>
+</ul>
+</li>
+<li><p><strong>方法名：</strong>当接口名首字母是大写，并且方法名首字母也是大写时，方法可以被接口是所在的包 之外的代码访问</p>
+</li>
+<li><p><strong>参数列表、返回值列表：</strong>其中的参数变量名可以省略</p>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="实现接口的条件"><a href="#实现接口的条件" class="headerlink" title="实现接口的条件"></a>实现接口的条件</h1><ul>
+<li><p>接口 是一个<strong>需要实现的方法列表</strong></p>
+</li>
+<li><p>实现了接口中所有方法，就实现了这个接口</p>
+</li>
+<li><p>示例：</p>
+<ul>
+<li><p>定义 <code>Sayer</code> 接口：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Sayer <span class="keyword">interface</span>&#123;</span><br><span class="line">	say()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>定义结构体</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> dog <span class="keyword">struct</span>&#123;&#125;</span><br><span class="line"><span class="keyword">type</span> cat <span class="keyword">struct</span>&#123;&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>需要<strong>对dog和cat</strong>分别实现 <code>say</code>方法，即可实现Sayer接口</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// dog实现了Sayer接口</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(d dog)</span> <span class="title">say</span><span class="params">()</span></span> &#123;</span><br><span class="line">	fmt.Println(<span class="string">&quot;汪汪汪&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// cat实现了Sayer接口</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(c cat)</span> <span class="title">say</span><span class="params">()</span></span> &#123;</span><br><span class="line">	fmt.Println(<span class="string">&quot;喵喵喵&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<h1 id="接口类型变量"><a href="#接口类型变量" class="headerlink" title="接口类型变量"></a>接口类型变量</h1><ul>
+<li><p><strong>接口类型变量</strong> 能<strong>存储所有实现了该接口的实例</strong></p>
+<ul>
+<li>例如，<code>Sayer</code> 类型的变量能存储 <code>dog</code>和 <code>cat</code>类型的变量</li>
+<li>```go<br>func main() {<pre><code>var x Sayer // 声明一个Sayer类型的变量x
+a := cat&#123;&#125;  // 实例化一个cat
+b := dog&#123;&#125;  // 实例化一个dog
+x = a       // 可以把cat实例直接赋值给x
+x.say()     // 喵喵喵
+x = b       // 可以把dog实例直接赋值给x
+x.say()     // 汪汪汪
+</code></pre>
+}<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">* ```go</span><br><span class="line">  // 摘自gin框架routergroup.go</span><br><span class="line">  type IRouter interface&#123; ... &#125;</span><br><span class="line"></span><br><span class="line">  type RouterGroup struct &#123; ... &#125;</span><br><span class="line"></span><br><span class="line">  var _ IRouter = &amp;RouterGroup&#123;&#125;  // 确保RouterGroup实现了接口IRouter</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>确保 <code>RouterGroup</code> 一定实现了 <code>IRouter</code></p>
+</li>
+</ul>
+<h1 id="值接收者-和-指针接收者-实现接口的区别"><a href="#值接收者-和-指针接收者-实现接口的区别" class="headerlink" title="值接收者 和 指针接收者 实现接口的区别"></a>值接收者 和 指针接收者 实现接口的区别</h1><ul>
+<li><p>示例，一个 <code>Mover</code> 接口和 <code>dog</code> 结构体</p>
+<ul>
+<li><p>```go<br>type Mover interface {</p>
+<pre><code>move()
+</code></pre>
+<p>}</p>
+<p>type dog struct {}</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">## 值接收者实现接口</span><br><span class="line"></span><br><span class="line">* dog 类型实现接口：</span><br><span class="line"></span><br><span class="line">  * ```go</span><br><span class="line">    func (d dog) move() &#123;</span><br><span class="line">    	fmt.Println(&quot;狗会动&quot;)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>```go<br>func main() {</p>
+<pre><code>var x Mover
+var wangcai = dog&#123;&#125; // 旺财是dog类型
+x = wangcai         // x可以接收dog类型
+var fugui = &amp;dog&#123;&#125;  // 富贵是*dog类型
+x = fugui           // x可以接收*dog类型
+x.move()
+</code></pre>
+<p>}</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">* 使用值接收者实现接口 后，d**og 结构体和结构体指针类型的变量** 都可以赋值给该接口变量</span><br><span class="line"></span><br><span class="line">  * 由于Go中有对指针类型变量求值的语法糖，指针类型内部会自动求值</span><br><span class="line"></span><br><span class="line">### 指针接收者实现接口</span><br><span class="line"></span><br><span class="line">```go</span><br><span class="line">func (d *dog) move() &#123;</span><br><span class="line">	fmt.Println(&quot;狗会动&quot;)</span><br><span class="line">&#125;</span><br><span class="line">func main() &#123;</span><br><span class="line">	var x Mover</span><br><span class="line">	var wangcai = dog&#123;&#125; // 旺财是dog类型</span><br><span class="line">	x = wangcai         // x不可以接收dog类型</span><br><span class="line">	var fugui = &amp;dog&#123;&#125;  // 富贵是*dog类型</span><br><span class="line">	x = fugui           // x可以接收*dog类型</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>此时实现 <code>Mover</code> 接口的是 <code>*dog</code>类型，所以不能给 x 传入 dog类型的wangcai，此时x只能存储*dog类型的值</p>
+</li>
+</ul>
+<h3 id="面试题"><a href="#面试题" class="headerlink" title="面试题"></a>面试题</h3><ul>
+<li><p>能否通过编译</p>
+</li>
+<li><p>```go<br>type People interface {</p>
+<pre><code>Speak(string) string
+</code></pre>
+<p>}</p>
+<p>type Student struct{}</p>
+<p>func (stu *Student) Speak(think string) (talk string) {</p>
+<pre><code>if think == &quot;sb&quot; &#123;
+    talk = &quot;你是个大帅比&quot;
+&#125; else &#123;
+    talk = &quot;您好&quot;
+&#125;
+return
+</code></pre>
+<p>}</p>
+<p>func main() {</p>
+<pre><code>var peo People = Student&#123;&#125;
+think := &quot;bitch&quot;
+fmt.Println(peo.Speak(think))
+</code></pre>
+<p>}</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">* 不能。可能是因为 `var peo People = Student&#123;&#125;`</span><br><span class="line"></span><br><span class="line">  * 实现People接口的是 `*Student`类型</span><br><span class="line">* 将其修改后：`您好`</span><br><span class="line"></span><br><span class="line"># 类型与接口的关系</span><br><span class="line"></span><br><span class="line">## 一个类型实现多个接口</span><br><span class="line"></span><br><span class="line">* **一个类型**可以**同时实现多个接口**，而接口间彼此独立，不知道对方的实现</span><br><span class="line"></span><br><span class="line">  * 例如，狗可以叫，也可以动。定义 `Sayer` 和 `Mover` 接口：</span><br><span class="line"></span><br><span class="line">    * ```go</span><br><span class="line">      // Sayer 接口</span><br><span class="line">      type Sayer interface &#123;</span><br><span class="line">      	say()</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      // Mover 接口</span><br><span class="line">      type Mover interface &#123;</span><br><span class="line">      	move()</span><br><span class="line">      &#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>对 dog 实现 <code>Sayer</code> 和 <code>Mover</code> 接口</p>
+<ul>
+<li><p>```go<br>type dog struct {</p>
+<pre><code>name string
+</code></pre>
+<p>}</p>
+<p>// 实现Sayer接口<br>func (d dog) say() {</p>
+<pre><code>fmt.Printf(&quot;%s会叫汪汪汪\n&quot;, d.name)
+</code></pre>
+<p>}</p>
+<p>// 实现Mover接口<br>func (d dog) move() {</p>
+<pre><code>fmt.Printf(&quot;%s会动\n&quot;, d.name)
+</code></pre>
+<p>}</p>
+<p>func main() {</p>
+<pre><code>var x Sayer
+var y Mover
+
+var a = dog&#123;name: &quot;旺财&quot;&#125;
+x = a
+y = a
+x.say()
+y.move()
+</code></pre>
+<p>}</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">## 多个类型实现统一接口</span><br><span class="line"></span><br><span class="line">* **不同的类型** 可以 **实现统一接口**</span><br><span class="line"></span><br><span class="line">  * 定义一个 `Mover`接口，有一个 move 方法</span><br><span class="line"></span><br><span class="line">    * ```go</span><br><span class="line">      // Mover 接口</span><br><span class="line">      type Mover interface &#123;</span><br><span class="line">      	move()</span><br><span class="line">      &#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>多个类型实现 <code>Mover</code>的方法 <code>move</code></p>
+<ul>
+<li><p>```go<br>type dog struct {</p>
+<pre><code>name string
+</code></pre>
+<p>}</p>
+<p>type car struct {</p>
+<pre><code>brand string
+</code></pre>
+<p>}</p>
+<p>// dog类型实现Mover接口<br>func (d dog) move() {</p>
+<pre><code>fmt.Printf(&quot;%s会跑\n&quot;, d.name)
+</code></pre>
+<p>}</p>
+<p>// car类型实现Mover接口<br>func (c car) move() {</p>
+<pre><code>fmt.Printf(&quot;%s速度70迈\n&quot;, c.brand)
+</code></pre>
+<p>}</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">* 在代码中，就可以把不同的类型，当成拥有同一特性的物体处理，不需要关注具体是什么，</span><br><span class="line"></span><br><span class="line">  * ```go</span><br><span class="line">    func main() &#123;</span><br><span class="line">    	var x Mover</span><br><span class="line">    	var a = dog&#123;name: &quot;旺财&quot;&#125;</span><br><span class="line">    	var b = car&#123;brand: &quot;保时捷&quot;&#125;</span><br><span class="line">    	x = a</span><br><span class="line">    	x.move()</span><br><span class="line">    	x = b</span><br><span class="line">    	x.move()</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>一个接口的方法，不一定需要由一个类型完全实现，接口的方法可以通过在类型中嵌入其他类型或者结构体来实现</p>
+<ul>
+<li><p>```go<br>// WashingMachine 洗衣机<br>type WashingMachine interface {</p>
+<pre><code>wash()
+dry()
+</code></pre>
+<p>}</p>
+<p>// 甩干器<br>type dryer struct{}</p>
+<p>// 实现WashingMachine接口的dry()方法<br>func (d dryer) dry() {</p>
+<pre><code>fmt.Println(&quot;甩一甩&quot;)
+</code></pre>
+<p>}</p>
+<p>// 海尔洗衣机<br>type haier struct {</p>
+<pre><code>dryer //嵌入甩干器
+</code></pre>
+<p>}</p>
+<p>// 实现WashingMachine接口的wash()方法<br>func (h haier) wash() {</p>
+<pre><code>fmt.Println(&quot;洗刷刷&quot;)
+</code></pre>
+<p>}</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"># 接口嵌套</span><br><span class="line"></span><br><span class="line">* 接口与接口 间 可以通过 嵌套创造新的接口</span><br><span class="line"></span><br><span class="line">  * ```go</span><br><span class="line">    // Sayer 接口</span><br><span class="line">    type Sayer interface &#123;</span><br><span class="line">    	say()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // Mover 接口</span><br><span class="line">    type Mover interface &#123;</span><br><span class="line">    	move()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 接口嵌套</span><br><span class="line">    type animal interface &#123;</span><br><span class="line">    	Sayer</span><br><span class="line">    	Mover</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>嵌套得到的接口 使用与普通接口一致，</p>
+<ul>
+<li><p>```go<br>type cat struct {</p>
+<pre><code>name string
+</code></pre>
+<p>}</p>
+<p>func (c cat) say() {</p>
+<pre><code>fmt.Println(&quot;喵喵喵&quot;)
+</code></pre>
+<p>}</p>
+<p>func (c cat) move() {</p>
+<pre><code>fmt.Println(&quot;猫会动&quot;)
+</code></pre>
+<p>}</p>
+<p>func main() {</p>
+<pre><code>var x animal
+x = cat&#123;name: &quot;花花&quot;&#125;
+x.move()
+x.say()
+</code></pre>
+<p>}</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"># 空接口</span><br><span class="line"></span><br><span class="line">## 空接口的定义</span><br><span class="line"></span><br><span class="line">* 没有指定任何方法的接口，**任何类型都实现了空接口**</span><br><span class="line">* **空接口类型的变量**可以**存储任意类型的变量**</span><br><span class="line"></span><br><span class="line">  * ```go</span><br><span class="line">    func main() &#123;</span><br><span class="line">    	// 定义一个空接口x</span><br><span class="line">    	var x interface&#123;&#125;</span><br><span class="line">    	s := &quot;Hello 沙河&quot;</span><br><span class="line">    	x = s</span><br><span class="line">    	fmt.Printf(&quot;type:%T value:%v\n&quot;, x, x)</span><br><span class="line">    	i := 100</span><br><span class="line">    	x = i</span><br><span class="line">    	fmt.Printf(&quot;type:%T value:%v\n&quot;, x, x)</span><br><span class="line">    	b := true</span><br><span class="line">    	x = b</span><br><span class="line">    	fmt.Printf(&quot;type:%T value:%v\n&quot;, x, x)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<h2 id="空接口的应用"><a href="#空接口的应用" class="headerlink" title="空接口的应用"></a>空接口的应用</h2><h3 id="空接口作为函数的参数"><a href="#空接口作为函数的参数" class="headerlink" title="空接口作为函数的参数"></a>空接口作为函数的参数</h3><ul>
+<li><p>使用空接口可以实现接受 <strong>任意类型的函数参数</strong></p>
+<ul>
+<li>```go<br>// 空接口作为函数参数<br>func show(a interface{}) {<pre><code>fmt.Printf(&quot;type:%T value:%v\n&quot;, a, a)
+</code></pre>
+}<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### 空接口作为 map 的值</span><br><span class="line"></span><br><span class="line">* 使用空接口实现 可以**保存任意值的字典**</span><br><span class="line"></span><br><span class="line">  * ```go</span><br><span class="line">    // 空接口作为map值</span><br><span class="line">    	var studentInfo = make(map[string]interface&#123;&#125;)</span><br><span class="line">    	studentInfo[&quot;name&quot;] = &quot;沙河娜扎&quot;</span><br><span class="line">    	studentInfo[&quot;age&quot;] = 18</span><br><span class="line">    	studentInfo[&quot;married&quot;] = false</span><br><span class="line">    	fmt.Println(studentInfo)</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<h1 id="类型断言"><a href="#类型断言" class="headerlink" title="类型断言"></a>类型断言</h1><ul>
+<li>空接口实现，可以使得map存储任意类型的值，</li>
+<li>如何获取存储的具体数据</li>
+</ul>
+<h2 id="接口值"><a href="#接口值" class="headerlink" title="接口值"></a>接口值</h2><ul>
+<li><p>一个接口的值 <strong>简称为接口值</strong>。<del>废话</del></p>
+</li>
+<li><p><strong>接口值</strong> ： <code>一个具体的类型</code> 和 <code>具体类型的值</code> 组成</p>
+<ul>
+<li>称为 接口的 <code>动态类型</code> 和 <code>动态值</code></li>
+</ul>
+</li>
+<li><p><strong>示例：</strong></p>
+<ul>
+<li><p>```go<br>var w io.Writer<br>w = os.Stdout<br>w = new(bytes.Buffer)<br>w = nil</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">  * ![接口值图解](E:\LearningNotes\Go\14 接口.assets\interface.png)</span><br><span class="line">* **判断空接口中的值**，使用类型断言，格式</span><br><span class="line"></span><br><span class="line">  * `x.(T)`</span><br><span class="line">  * `x` : 表示类型为 `interface&#123;&#125;` 的变量</span><br><span class="line">  * `T `：表示断言 x 可能是的类型</span><br><span class="line">* 该语法返回两个参数</span><br><span class="line"></span><br><span class="line">  * **第一个：**x 转化为 T 类型后的变量</span><br><span class="line">  * **第二个 ：**布尔值，若为 `true` 表示断言成功</span><br><span class="line">* 示例：</span><br><span class="line"></span><br><span class="line">  * ```go</span><br><span class="line">    func main() &#123;</span><br><span class="line">    	var x interface&#123;&#125;</span><br><span class="line">    	x = &quot;Hello 沙河&quot;</span><br><span class="line">    	v, ok := x.(string)</span><br><span class="line">    	if ok &#123;</span><br><span class="line">    		fmt.Println(v)</span><br><span class="line">    	&#125; else &#123;</span><br><span class="line">    		fmt.Println(&quot;类型断言失败&quot;)</span><br><span class="line">    	&#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>使用 <code>switch</code> 语句实现：</p>
+<ul>
+<li>```go<br>func justifyType(x interface{}) {<pre><code>switch v := x.(type) &#123;
+case string:
+    fmt.Printf(&quot;x is a string，value is %v\n&quot;, v)
+case int:
+    fmt.Printf(&quot;x is a int is %v\n&quot;, v)
+case bool:
+    fmt.Printf(&quot;x is a bool is %v\n&quot;, v)
+default:
+    fmt.Println(&quot;unsupport type！&quot;)
+&#125;
+</code></pre>
+}<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">* ==空接口 可以存储任意类型值==</span><br><span class="line">* **注意**：只有当两个以上的**具体类型必须以相同的方式处理**时，才需要定义接口</span><br><span class="line"></span><br><span class="line"># 练习题</span><br><span class="line"></span><br><span class="line">* 使用接口的方式实现一个既可以往终端写日志也可以往文件写日志的简易日志库</span><br><span class="line">* `os` 和 `io` 包的学习：</span><br><span class="line"></span><br><span class="line">  * `os`</span><br><span class="line">  * `io`</span><br><span class="line"></span><br><span class="line">    * `io.Writer` ：表示一个编写器，从缓冲区读取数据，并将数据写入目标资源</span><br><span class="line"></span><br><span class="line">      * 必须实现 `io.Writer`接口的唯一方法 `Write(p []byte)`</span><br><span class="line">      * ```go</span><br><span class="line">        type Writer interface &#123;</span><br><span class="line">            Write(p []byte) (n int, err error) //返回写入到目标资源的字节数，发生错误时的错误</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="https://zihao256.github.io">Zihao Ma</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://zihao256.github.io/p/f9eadfe2.html">https://zihao256.github.io/p/f9eadfe2.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/The-Go-Programming-Language/">The Go Programming Language</a></div><div class="post_share"><div class="social-share" data-image="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/john-towner-3Kv48NS4WUU-unsplash.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/p/16e69ce4.html"><img class="prev-cover" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven7.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info">15 反射</div></div></a></div><div class="next-post pull-right"><a href="/p/9d9aaa60.html"><img class="next-cover" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven7.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">13 包</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><div><a href="/p/527606cb.html" title="17 网络编程"><img class="cover" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven2.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-05-06</div><div class="title">17 网络编程</div></div></a></div><div><a href="/p/a4216756.html" title="16 并发"><img class="cover" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/narrow-muddy-road-dark-forest.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-05-06</div><div class="title">16 并发</div></div></a></div><div><a href="/p/16e69ce4.html" title="15 反射"><img class="cover" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven7.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-05-06</div><div class="title">15 反射</div></div></a></div><div><a href="/p/9d9aaa60.html" title="13 包"><img class="cover" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven7.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-05-06</div><div class="title">13 包</div></div></a></div><div><a href="/p/9a7f2d8e.html" title="12 结构体"><img class="cover" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven9.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-05-06</div><div class="title">12 结构体</div></div></a></div><div><a href="/p/9b3b896b.html" title="11 指针"><img class="cover" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven13.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-05-06</div><div class="title">11 指针</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> Comment</span></div></div><div class="comment-wrap"><div><div id="gitalk-container"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://github.com/ZiHao256/ZiHao256.github.io/blob/hexo/images/stitch.JPG?raw=true" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Zihao Ma</div><div class="author-info__description">博学之,审问之,慎思之,明辨之,笃行之.</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">58</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">38</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">15</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/ZiHao256"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/ZiHao256" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/atom.xml" target="_blank" title="RSS链接"><i class="fa fa-rss"></i></a><a class="social-icon" href="mailto:zihao626@gmail.com" target="_blank" title="gmail"><i class="fa-brands fa-google"></i></a><a class="social-icon" href="mailto:19030500024@stu.xidian.edu.cn" target="_blank" title="xdu-mail"><i class="fa fa-graduation-cap"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">This is Zihao's Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#14-%E6%8E%A5%E5%8F%A3"><span class="toc-text">14 接口</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%8E%A5%E5%8F%A3%E7%B1%BB%E5%9E%8B"><span class="toc-text">接口类型</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%BF%E7%94%A8%E6%8E%A5%E5%8F%A3"><span class="toc-text">为什么使用接口</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0%E6%8E%A5%E5%8F%A3%E7%9A%84%E6%9D%A1%E4%BB%B6"><span class="toc-text">实现接口的条件</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%8E%A5%E5%8F%A3%E7%B1%BB%E5%9E%8B%E5%8F%98%E9%87%8F"><span class="toc-text">接口类型变量</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%80%BC%E6%8E%A5%E6%94%B6%E8%80%85-%E5%92%8C-%E6%8C%87%E9%92%88%E6%8E%A5%E6%94%B6%E8%80%85-%E5%AE%9E%E7%8E%B0%E6%8E%A5%E5%8F%A3%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text">值接收者 和 指针接收者 实现接口的区别</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%A2%E8%AF%95%E9%A2%98"><span class="toc-text">面试题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A9%BA%E6%8E%A5%E5%8F%A3%E7%9A%84%E5%BA%94%E7%94%A8"><span class="toc-text">空接口的应用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A9%BA%E6%8E%A5%E5%8F%A3%E4%BD%9C%E4%B8%BA%E5%87%BD%E6%95%B0%E7%9A%84%E5%8F%82%E6%95%B0"><span class="toc-text">空接口作为函数的参数</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%B1%BB%E5%9E%8B%E6%96%AD%E8%A8%80"><span class="toc-text">类型断言</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%A5%E5%8F%A3%E5%80%BC"><span class="toc-text">接口值</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/p/42c77a0c.html" title="Paper Reading: TECCD: A Tree Embedding Approach for Code Clone Detection"><img src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven6.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Paper Reading: TECCD: A Tree Embedding Approach for Code Clone Detection"/></a><div class="content"><a class="title" href="/p/42c77a0c.html" title="Paper Reading: TECCD: A Tree Embedding Approach for Code Clone Detection">Paper Reading: TECCD: A Tree Embedding Approach for Code Clone Detection</a><time datetime="2023-05-16T06:17:01.000Z" title="Created 2023-05-16 14:17:01">2023-05-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/69c3279c.html" title="Git"><img src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/steven-kamenar-MMJx78V7xS8-unsplash.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Git"/></a><div class="content"><a class="title" href="/p/69c3279c.html" title="Git">Git</a><time datetime="2023-05-15T13:42:40.000Z" title="Created 2023-05-15 21:42:40">2023-05-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/26d71884.html" title="Overleaf"><img src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven6.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Overleaf"/></a><div class="content"><a class="title" href="/p/26d71884.html" title="Overleaf">Overleaf</a><time datetime="2023-05-15T11:11:58.000Z" title="Created 2023-05-15 19:11:58">2023-05-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/e75f2967.html" title="Edge浏览器"><img src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/beautiful-milky-way-night-sky.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Edge浏览器"/></a><div class="content"><a class="title" href="/p/e75f2967.html" title="Edge浏览器">Edge浏览器</a><time datetime="2023-05-14T09:24:59.000Z" title="Created 2023-05-14 17:24:59">2023-05-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/e547f891.html" title="Paper Reading: How good are query optimizers, really?"><img src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven9.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Paper Reading: How good are query optimizers, really?"/></a><div class="content"><a class="title" href="/p/e547f891.html" title="Paper Reading: How good are query optimizers, really?">Paper Reading: How good are query optimizers, really?</a><time datetime="2023-03-04T14:25:09.000Z" title="Created 2023-03-04 22:25:09">2023-03-04</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/john-towner-3Kv48NS4WUU-unsplash.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2021 - 2023 By Zihao Ma</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Hi, welcome to my <a href="https://zihao256.github.io/">Blog</a>!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="Toggle Between Traditional Chinese And Simplified Chinese">简</button><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="Scroll To Comments"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">Search</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  Loading the Database</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="Search for Posts" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script src="/js/search/local-search.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><script>function addGitalkSource () {
+  const ele = document.createElement('link')
+  ele.rel = 'stylesheet'
+  ele.href= 'https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.css'
+  document.getElementsByTagName('head')[0].appendChild(ele)
+}
+
+function loadGitalk () {
+  function initGitalk () {
+    var gitalk = new Gitalk(Object.assign({
+      clientID: 'ff33deb87bcf128b07ee',
+      clientSecret: 'ff52e6f598f01828083ee59b85a9327e686666a7',
+      repo: 'ZiHao256.github.io',
+      owner: 'ZiHao256',
+      admin: ['ZiHao256'],
+      id: '27a9f61b630305ae11860b3492730cdd',
+      updateCountCallback: commentCount
+    },null))
+
+    gitalk.render('gitalk-container')
+  }
+
+  if (typeof Gitalk === 'function') initGitalk()
+  else {
+    addGitalkSource()
+    getScript('https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.js').then(initGitalk)
+  }
+}
+
+function commentCount(n){
+  let isCommentCount = document.querySelector('#post-meta .gitalk-comment-count')
+  if (isCommentCount) {
+    isCommentCount.innerHTML= n
+  }
+}
+
+if ('Gitalk' === 'Gitalk' || !false) {
+  if (false) btf.loadComment(document.getElementById('gitalk-container'), loadGitalk)
+  else loadGitalk()
+} else {
+  function loadOtherComment () {
+    loadGitalk()
+  }
+}</script></div><script>window.addEventListener('load', () => {
+  const changeContent = (content) => {
+    if (content === '') return content
+
+    content = content.replace(/<img.*?src="(.*?)"?[^\>]+>/ig, '[image]') // replace image link
+    content = content.replace(/<a[^>]+?href=["']?([^"']+)["']?[^>]*>([^<]+)<\/a>/gi, '[link]') // replace url
+    content = content.replace(/<pre><code>.*?<\/pre>/gi, '[code]') // replace code
+    content = content.replace(/<[^>]+>/g,"") // remove html tag
+
+    if (content.length > 150) {
+      content = content.substring(0,150) + '...'
+    }
+    return content
+  }
+
+  const findTrueUrl = (array) => {
+    Promise.all(array.map(item =>
+      fetch(item.url).then(resp => resp.json()).then(data => {
+        const urlArray = data.body.match(/(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?/ig)
+        if (data.user.login === 'utterances-bot') {
+          return urlArray.pop()
+        } else {
+          return urlArray.shift()
+        }
+      })
+    )).then(res => {
+        array = array.map((i,index)=> {
+          return {
+            ...i,
+            url: res[index]
+          }
+        })
+
+        saveToLocal.set('github-newest-comments', JSON.stringify(array), 10/(60*24))
+        generateHtml(array)
+    });
+  }
+
+  const getComment = () => {
+    fetch('https://api.github.com/repos/ZiHao256/ZiHao256.github.io/issues/comments?sort=updated&direction=desc&per_page=6&page=1',{
+      "headers": {
+        Accept: 'application/vnd.github.v3.html+json'
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        const githubArray = data.map(item => {
+          return {
+            'avatar': item.user.avatar_url,
+            'content': changeContent(item.body_html),
+            'nick': item.user.login,
+            'url': item.issue_url,
+            'date': item.updated_at,
+            'githubUrl': item.html_url
+          }
+        })
+        findTrueUrl(githubArray)
+      }).catch(e => {
+        const $dom = document.querySelector('#card-newest-comments .aside-list')
+        $dom.innerHTML= "Unable to get the data, please make sure the settings are correct."
+      })
+  }
+
+  const generateHtml = array => {
+    let result = ''
+
+    if (array.length) {
+      for (let i = 0; i < array.length; i++) {
+        result += '<div class=\'aside-list-item\'>'
+
+        if (true) {
+          const name = 'src'
+          result += `<a href='${array[i].url}' class='thumbnail'><img ${name}='${array[i].avatar}' alt='${array[i].nick}'></a>`
+        }
+
+        result += `<div class='content'>
+        <a class='comment' href='${array[i].url}' title='${array[i].content}'>${array[i].content}</a>
+        <div class='name'><span>${array[i].nick} / </span><time datetime="${array[i].date}">${btf.diffDate(array[i].date, true)}</time></div>
+        </div></div>`
+      }
+    } else {
+      result += 'No Comment'
+    }
+
+    let $dom = document.querySelector('#card-newest-comments .aside-list')
+    $dom.innerHTML= result
+    window.lazyLoadInstance && window.lazyLoadInstance.update()
+    window.pjax && window.pjax.refresh($dom)
+  }
+
+  const newestCommentInit = () => {
+    if (document.querySelector('#card-newest-comments .aside-list')) {
+      const data = saveToLocal.get('github-newest-comments')
+      if (data) {
+        generateHtml(JSON.parse(data))
+      } else {
+        getComment()
+      }
+    }
+  }
+
+  newestCommentInit()
+  document.addEventListener('pjax:complete', newestCommentInit)
+})</script><div class="aplayer no-destroy" data-id="6738460302" data-server="netease" data-type="playlist" data-fixed="true" data-autoplay="true"> </div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-heart.min.js" async="async" mobile="true"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener scroll 
+  window.tocScrollFn && window.removeEventListener('scroll', window.tocScrollFn)
+  window.scrollCollect && window.removeEventListener('scroll', scrollCollect)
+
+  typeof preloader === 'object' && preloader.initLoading()
+  document.getElementById('rightside').style.cssText = "opacity: ''; transform: ''"
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

@@ -1,0 +1,651 @@
+<!DOCTYPE html><html lang="zh-Hans" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>Hexo LearningNote | ZiHao's Blog</title><meta name="keywords" content="Blog,DIY"><meta name="author" content="Zihao Ma"><meta name="copyright" content="Zihao Ma"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Hexo 博客最全详细（🗡） 参考博客 环境搭建的准备 Node.js 的安装和准备     关于Node.js和npm的介绍: 参考博客  npm 是 javascript 的包管理工具  npm 与 Node.js 一起发布  npm 更新频率快，需单独更新npmnpm install npm@latest -g   安装包：安装对应的包至当前目录，并创建node_modules文件，下载包">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo LearningNote">
+<meta property="og:url" content="https://zihao256.github.io/p/e9b15daf.html">
+<meta property="og:site_name" content="ZiHao&#39;s Blog">
+<meta property="og:description" content="Hexo 博客最全详细（🗡） 参考博客 环境搭建的准备 Node.js 的安装和准备     关于Node.js和npm的介绍: 参考博客  npm 是 javascript 的包管理工具  npm 与 Node.js 一起发布  npm 更新频率快，需单独更新npmnpm install npm@latest -g   安装包：安装对应的包至当前目录，并创建node_modules文件，下载包">
+<meta property="og:locale">
+<meta property="og:image" content="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven5.jpg">
+<meta property="article:published_time" content="2021-04-16T08:21:52.000Z">
+<meta property="article:modified_time" content="2023-09-20T06:52:02.724Z">
+<meta property="article:author" content="Zihao Ma">
+<meta property="article:tag" content="Blog">
+<meta property="article:tag" content="DIY">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven5.jpg"><link rel="shortcut icon" href="https://github.com/ZiHao256/ZiHao256.github.io/blob/hexo/images/stitch.JPG?raw=true"><link rel="canonical" href="https://zihao256.github.io/p/e9b15daf"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":true,"languages":{"hits_empty":"We didn't find any results for the search: ${query}"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: true,
+    post: true
+  },
+  runtime: '天',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: true,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Hexo LearningNote',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: true,
+  isToc: true,
+  postUpdate: '2023-09-20 14:52:02'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="/atom.xml" title="ZiHao's Blog" type="application/atom+xml">
+<style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}</style></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">Loading...</div></div></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://github.com/ZiHao256/ZiHao256.github.io/blob/hexo/images/stitch.JPG?raw=true" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">58</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">38</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">15</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/log"><i class="fa-fw fas fa-book"></i><span> Log</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fa fa-camera-retro"></i><span> Gallery</span></a></li><li><a class="site-page child" href="/Map/"><i class="fa-fw fa fa-map-signs"></i><span> Map</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven5.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">ZiHao's Blog</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> Search</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/log"><i class="fa-fw fas fa-book"></i><span> Log</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fa fa-camera-retro"></i><span> Gallery</span></a></li><li><a class="site-page child" href="/Map/"><i class="fa-fw fa fa-map-signs"></i><span> Map</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Hexo LearningNote</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2021-04-16T08:21:52.000Z" title="Created 2021-04-16 16:21:52">2021-04-16</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2023-09-20T06:52:02.724Z" title="Updated 2023-09-20 14:52:02">2023-09-20</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E4%B8%AA%E4%BA%BA%E6%8F%90%E5%8D%87/">个人提升</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E4%B8%AA%E4%BA%BA%E6%8F%90%E5%8D%87/%E5%8D%9A%E5%AE%A2%E6%9B%B4%E6%96%B0/">博客更新</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">Word count:</span><span class="word-count">2.9k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">Reading time:</span><span>11min</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Hexo LearningNote"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">Comments:</span><a href="/p/e9b15daf.html#post-comment"><span class="gitalk-comment-count"><i class="fa-solid fa-spinner fa-spin"></i></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="Hexo-博客"><a href="#Hexo-博客" class="headerlink" title="Hexo 博客"></a>Hexo 博客</h1><p><a target="_blank" rel="noopener" href="https://io-oi.me/tech/hexo-next-optimization/">最全详细（🗡）</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/gdutxiaoxu/article/details/53576018?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522161853970416780255223015%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&request_id=161853970416780255223015&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduend~default-1-53576018.first_rank_v2_pc_rank_v29&utm_term=Hexo+Github">参考博客</a></p>
+<h1 id="环境搭建的准备"><a href="#环境搭建的准备" class="headerlink" title="环境搭建的准备"></a>环境搭建的准备</h1><ul>
+<li><p><strong>Node.js 的安装和准备</strong></p>
+<ul>
+<li><img src="C:\Users\Light\AppData\Roaming\Typora\typora-user-images\image-20210416102842874.png" alt="image-20210416102842874"></li>
+</ul>
+</li>
+<li><p>关于<code>Node.js</code>和<code>npm</code>的介绍: <a target="_blank" rel="noopener" href="https://www.cnblogs.com/duanweishi/p/7729292.html">参考博客</a></p>
+<ul>
+<li><p>npm 是 javascript 的<strong>包管理工具</strong></p>
+</li>
+<li><p>npm 与 Node.js 一起发布</p>
+<ul>
+<li>npm 更新频率快，需单独更新npm<code>npm install npm@latest -g</code></li>
+</ul>
+</li>
+<li><p><strong>安装包</strong>：安装对应的包至当前目录，并创建<code>node_modules</code>文件，下载包进去</p>
+<ul>
+<li><code>npm install &lt;package_name</code></li>
+</ul>
+</li>
+<li><p><strong><code>package.json</code>:</strong></p>
+<ul>
+<li>可以知道项目中用了什么包</li>
+<li>基本的<code>package.json</code>文件：至少包含<ul>
+<li>包名 name</li>
+<li>版本信息 version</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>创建 <code>package.json</code></strong></p>
+<ul>
+<li><code>npm init</code> : 初始化<code>package.json</code>文件<ul>
+<li>运行后，如实回答基本信息</li>
+</ul>
+</li>
+<li>主要字段含义：<ul>
+<li>name : 模块名，</li>
+<li>version: 模块版本信息</li>
+<li>description:关于模块功能简单描述，若为空，默认葱当前目录的<code>README.md</code>或者<code>README</code>读取第一行作为默认值</li>
+<li>main : 模块被引入后，首先加载的文件，默认为<code>index.js</code></li>
+<li>scripts : 定义一些常用命令入口</li>
+</ul>
+</li>
+<li>npm 可以进行简单配置常用信息<ul>
+<li><code>npm set init.author.email &quot;2638779206@qq.com&quot;</code></li>
+<li><code>npm set init.author.name &quot;zihao&quot;</code> </li>
+<li><code>npm set init.license &quot;XDU&quot;</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>安装模块</strong></p>
+<ul>
+<li><code>npm install</code> 会读取<code>package.json</code>以安装模块<ul>
+<li>安装的模块分为两类: 生产环境需要的安装包<code>dependencies</code>.， 开发环境需要的安装包<code>devDependencies</code></li>
+</ul>
+</li>
+<li>在安装模块时，修改<code>package.json</code><ul>
+<li><code>npm install &lt;packagename&gt; --save</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>配置npm源：</strong></p>
+<ul>
+<li><p>配置国内镜像加快下载速度</p>
+</li>
+<li><p>临时使用 </p>
+<ul>
+<li>通过<code>--registry</code>: <code>npm install express --registry https://registry.npm.taobao.org</code></li>
+</ul>
+</li>
+<li><p>全局使用：</p>
+<ul>
+<li>```bash<br>config set registry <a target="_blank" rel="noopener" href="https://registry.npm.taobao.org/">https://registry.npm.taobao.org</a><br>  // 配置后可通过下面方式来验证是否成功<br>  npm config get registry<br>  // 或<br>  npm info express<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">* **git 的安装和准备**</span><br><span class="line">  * ![image-20210416102902488](C:\Users\Light\AppData\Roaming\Typora\typora-user-images\image-20210416102902488.png)</span><br><span class="line">* **Github账户的配置**</span><br><span class="line">  * 使用了佛跳墙VPN，解决了加载Github慢的问题</span><br><span class="line">  * 注册</span><br><span class="line">  * 创建代码库</span><br><span class="line">  * 代码库设置</span><br><span class="line">    * `Setting`</span><br><span class="line">    * `Pages`</span><br><span class="line">    * `Automatic page generator`</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 安装 Hexo</span><br><span class="line"></span><br><span class="line">* 创建`Hexo` 目录</span><br><span class="line">* `gitbash` 该目录：</span><br><span class="line">  * `npm install hexo-cli -g` ： </span><br><span class="line">    * hexo 本身是一个静态博客生成工具，具备编译markdown、凭借主题模板、生成HTML、上传Gti等基本功能，`hexo-cli`将这些功能封装为命令，提供给用户通过`hexo s`等命令调用的模块</span><br><span class="line">    * problem:![image-20210416110241054](C:\Users\Light\AppData\Roaming\Typora\typora-user-images\image-20210416110241054.png)</span><br><span class="line">    * solution ：[博客](https://blog.csdn.net/m0_46256147/article/details/104725439)</span><br><span class="line">  * `npm install hexo --save`</span><br><span class="line">    * problem :![image-20210416110617131](C:\Users\Light\AppData\Roaming\Typora\typora-user-images\image-20210416110617131.png)</span><br><span class="line">    * solution [参考博客](![image-20210416110631231](C:\Users\Light\AppData\Roaming\Typora\typora-user-images\image-20210416110631231.png))</span><br><span class="line">    * problem ![image-20210416110804200](C:\Users\Light\AppData\Roaming\Typora\typora-user-images\image-20210416110804200.png)</span><br><span class="line">    * solution [参考](https://blog.csdn.net/JZevin/article/details/107865683)</span><br><span class="line">    * problem ![image-20210416113337859](C:\Users\Light\AppData\Roaming\Typora\typora-user-images\image-20210416113337859.png)</span><br><span class="line">    * solution : [参考](https://blog.csdn.net/weixin_42677762/article/details/112554832?utm_medium=distribute.pc_relevant.none-task-blog-baidujs_title-0&amp;spm=1001.2101.3001.4242)</span><br><span class="line">  * `hexo -v` 检查是否安装好</span><br><span class="line">    * ![image-20210416113525387](C:\Users\Light\AppData\Roaming\Typora\typora-user-images\image-20210416113525387.png)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 相关配置</span><br><span class="line"></span><br><span class="line">进行本地的配置</span><br><span class="line"></span><br><span class="line">* **初始化 Hexo**</span><br><span class="line"></span><br><span class="line">  * `hexo init`</span><br><span class="line"></span><br><span class="line">    * problem : ![image-20210416113819617](C:\Users\Light\AppData\Roaming\Typora\typora-user-images\image-20210416113819617.png)</span><br><span class="line"></span><br><span class="line">      * 该博客说接着上面的操作，但是上面的操作创建了json文件等，不是空的，是否可以直接在该目录下在创建一个新的文件？</span><br><span class="line"></span><br><span class="line">    * problem : 创建新文件夹后：`hexo init`</span><br><span class="line"></span><br><span class="line">      * ![image-20210416114034172](C:\Users\Light\AppData\Roaming\Typora\typora-user-images\image-20210416114034172.png)</span><br><span class="line"></span><br><span class="line">        `fatal: unable to access &#x27;https://github.com/hexojs/hexo-starter.git/&#x27;: Failed to connect to github.com port 443: Timed out`</span><br><span class="line"></span><br><span class="line">      * solution : [参考博客](https://blog.csdn.net/weixin_44041700/article/details/115599817)</span><br><span class="line"></span><br><span class="line">        * 果真是网络的问题，再查查看完此博客后，再次输入`hexo init` </span><br><span class="line">        * ![image-20210416115639944](C:\Users\Light\AppData\Roaming\Typora\typora-user-images\image-20210416115639944.png)</span><br><span class="line"></span><br><span class="line">      * 但是很慢</span><br><span class="line"></span><br><span class="line">        * 可以切换npm源至淘宝源加速：</span><br><span class="line">          * `npm install express --registry https://registry.npm.taobao.org`</span><br><span class="line">        * 半分钟就好：</span><br><span class="line">          * ![image-20210416121021641](C:\Users\Light\AppData\Roaming\Typora\typora-user-images\image-20210416121021641.png)</span><br><span class="line"></span><br><span class="line">  * `npm install`自动安装组件</span><br><span class="line"></span><br><span class="line">    * 无报错</span><br><span class="line"></span><br><span class="line">* **首次体验hexo**</span><br><span class="line"></span><br><span class="line">  * `hexo g`：generate 生成网站静态文件至 public 文件夹</span><br><span class="line">    * 便于查看网站生成的静态文件或者手动部署网站</span><br><span class="line">  * `hexo s`：server 启动本地服务器，用于预览主题</span><br><span class="line">    * 默认地址 : http://localhost:4000/</span><br><span class="line">    * 预览的同时可以修改文章内容或主题代码，保存后刷新页面即可</span><br><span class="line">    * 对 Hexo 根目录 `_config.yml` 的修改，需要重启本地服务器后才能预览效果</span><br><span class="line">  * `hexo new&quot;学习笔记 一&quot; `</span><br><span class="line">    * 新建标题为的文章</span><br><span class="line">    * 文章标题可在对应的md文件改</span><br><span class="line">  * `hexo d `deploy</span><br><span class="line">    * 自动生成网站静态文件，并部署到设定的仓库</span><br><span class="line">  * `hexo clean`</span><br><span class="line">    * 清除缓存文件 `db.json` 和已生成的静态文件`public`</span><br><span class="line"></span><br><span class="line"># 将 hexo 与 github page 联系起来</span><br><span class="line"></span><br><span class="line">* **配置 git 个人信息**</span><br><span class="line"></span><br><span class="line">  * 设置 GIT 的 user name 和 email</span><br><span class="line"></span><br><span class="line">    * ```bash</span><br><span class="line">      git config --global user.name &quot;ZiHao256&quot;</span><br><span class="line">      git config --global user.email &quot;2638779206@qq.com&quot;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>生成密钥</p>
+<ul>
+<li>```bash<br> ssh-keygen -t rsa -C “<a href="mailto:&#x32;&#54;&#51;&#56;&#x37;&#x37;&#x39;&#x32;&#x30;&#54;&#x40;&#113;&#113;&#46;&#99;&#x6f;&#x6d;">&#x32;&#54;&#51;&#56;&#x37;&#x37;&#x39;&#x32;&#x30;&#54;&#x40;&#113;&#113;&#46;&#99;&#x6f;&#x6d;</a>“<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">      </span><br><span class="line"></span><br><span class="line">* **配置 Deployment**</span><br><span class="line"></span><br><span class="line">  * 在`_config.yml`文件中，找到Deployment：</span><br><span class="line"></span><br><span class="line">    * ```bash</span><br><span class="line">      deploy:</span><br><span class="line">        type: git</span><br><span class="line">        repo: git@github.com:ZiHao256/ZiHao256.github.io.git</span><br><span class="line">        branch: master</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="写博客、发布文章"><a href="#写博客、发布文章" class="headerlink" title="写博客、发布文章"></a>写博客、发布文章</h1><ul>
+<li><p>新建一篇博客</p>
+<ul>
+<li><code>hexo new post &quot;title&quot;</code></li>
+<li>可在<code>source\_posts</code> 中看到<code>title.md</code>文件</li>
+</ul>
+</li>
+<li><p>新建好后，修改md文件</p>
+</li>
+<li><p>运行生成、部署文章：</p>
+<ul>
+<li><p>生成：<code>hexo g</code></p>
+</li>
+<li><p>部署：<code>hexo d</code></p>
+<ul>
+<li><p>problem 1 : </p>
+<p>![image-20210416124223198](E:\LearningNotes\Hexo\Hexo 博客.assets\image-20210416124223198.png)</p>
+</li>
+<li><p>solution : 未安装<code>hexo-deployer-git</code>插件，在<strong>站点目录</strong>(hexo init 目录)输入<code>npm install hexo-deployer-git --save</code></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_21808961/article/details/84476504">参考博客</a></p>
+</li>
+<li><p>problem 2:</p>
+<p>![image-20210416125451770](E:\LearningNotes\Hexo\Hexo 博客.assets\image-20210416125451770.png) solution:    <code>Please make sure you have the correct access rights and the repository exist</code>: 确保您具有正确的访问权限并且存储库存在</p>
+<p>原因：公钥出现问题</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_43705131/article/details/107965888">参考博客</a></p>
+<ol>
+<li>删除.ssh文件</li>
+<li>重新设置用户名和邮箱</li>
+<li>重新生成ssh公钥</li>
+<li>配置github</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p>或直接在部署前生成：</p>
+<ul>
+<li><code>hexo d -g #在部署前先生成</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>部署成功后，在<code>https://ZiHao256.github.io</code>看到生成的文章</p>
+</li>
+</ul>
+<h1 id="主题推荐"><a href="#主题推荐" class="headerlink" title="主题推荐"></a>主题推荐</h1><ul>
+<li>主题配置文件在<code>_config.yml</code></li>
+</ul>
+<h2 id="NexT主题配置"><a href="#NexT主题配置" class="headerlink" title="NexT主题配置"></a>NexT主题配置</h2><ul>
+<li>简洁美观</li>
+<li>支持不同风格</li>
+<li>提供完善配置说明</li>
+<li>Hexo 两份主要配置文件：名称都是<code>_config.yml</code><ul>
+<li><strong>站点配置文件</strong>站点根目录下 ：Hexo 本身的配置</li>
+<li><strong>主题配置文件</strong>主题目录下 ：由主题作者提供，用于配置主题相关选项</li>
+</ul>
+</li>
+</ul>
+<h3 id="1-安装NexT"><a href="#1-安装NexT" class="headerlink" title="1 安装NexT"></a>1 安装NexT</h3><ul>
+<li>只需要将主题文件拷贝至 <code>themes</code> 目录下，然后修改一下配置文件</li>
+<li>若熟悉 git ，建议使用 克隆最新版本的方式，之后更新可以使用 <code>git pull</code> 快速更新</li>
+<li>定位至Hexo 站点目录 <code>cd 至站点目录文件</code></li>
+<li>使用git checkout <code>git clone https://github.com/iissnan/hexo-theme-next themes/next</code><ul>
+<li><strong>problem</strong> : git clone 很慢</li>
+<li><strong>solution</strong>  : 使用国内镜像网站:<code>github.com.cnpnjs.org</code><ul>
+<li>将命令中的<code>github.com</code>换成这个</li>
+<li>效果拔群</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-启用主题"><a href="#2-启用主题" class="headerlink" title="2 启用主题"></a>2 启用主题</h3><ul>
+<li>当 克隆/下载 至<code>themes</code>下后，打开 <strong>站点配置文件</strong>，找到 <strong>theme</strong> 字段，将其值改为<strong>主题名</strong></li>
+<li>验证是否启用成功之前，需要使用<code>hexo clean</code>清除缓存</li>
+</ul>
+<h3 id="3-验证主题"><a href="#3-验证主题" class="headerlink" title="3 验证主题"></a>3 验证主题</h3><ul>
+<li>首先，<code>hexo g</code>生成静态文件</li>
+<li>其次，启动 Hexo 本地站点，并开启调试模式(<code>--debug</code>)<ul>
+<li><code>hexo s --debug</code>, 若有异常可从命令行输出，帮助debug</li>
+</ul>
+</li>
+<li>然后，<code>https://localhost:4000</code>，检查是否运行正常</li>
+<li><strong>problem:</strong> ![image-20210416144717418](E:\LearningNotes\Hexo\Hexo 博客.assets\image-20210416144717418.png)<ul>
+<li><strong>solution</strong> : ![image-20210416145430740](E:\LearningNotes\Hexo\Hexo 博客.assets\image-20210416145430740.png)</li>
+<li><ol>
+<li>手动配置：文件名和配置文件都无问题</li>
+<li>更新主题文件：</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="4-主题设定"><a href="#4-主题设定" class="headerlink" title="4 主题设定"></a>4 主题设定</h3><ul>
+<li>scheme : NexT 提供的一种特性，可提供多种外观<ul>
+<li>Muse - 默认 Scheme，这是 NexT 最初的版本，黑白主调，大量留白 </li>
+<li>Mist - Muse 的紧凑版本，整洁有序的单栏外观 </li>
+<li>Pisces - 双栏 Scheme，小家碧玉似的清新</li>
+</ul>
+</li>
+</ul>
+<h3 id="5-设置语言"><a href="#5-设置语言" class="headerlink" title="5 设置语言"></a>5 设置语言</h3><ul>
+<li>编辑站点配置文件，将<code>language</code>字段设置成需要的语言：<ul>
+<li><code>language: zh-Hans</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="6-设置菜单"><a href="#6-设置菜单" class="headerlink" title="6 设置菜单"></a>6 设置菜单</h3><ul>
+<li><p><strong>菜单配置</strong>三个部分：<strong>主题配置文件</strong> 中 对应的字段<code>menu</code></p>
+<ul>
+<li><strong>菜单项：</strong>名称和链接<ul>
+<li><code>item name:link</code><ul>
+<li>item name 是一个名称，不直接显示在页面，而是用于匹配图标和翻译</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>菜单项的显示文本</strong></li>
+<li><strong>菜单项对应的图标</strong><ul>
+<li>NexT 使用 <code>Font Awesome</code>提供的图标</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>示例：若站点在子目录中，去掉连接前的 <code>/</code></p>
+<ul>
+<li>```<br>menu:<br>  home: /<br>  archives: /archives<br>  #about: /about<br>  #categories: /categories<br>  tags: /tags<br>  #commonweal: /404.html<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* **NexT 默认的菜单项：**</span><br><span class="line"></span><br><span class="line">  * *键值*：**home**</span><br><span class="line">    * *设定值*：home:/</span><br><span class="line">    * *显示文本*：主页</span><br><span class="line">  * **archives**</span><br><span class="line">    * archives:/archives</span><br><span class="line">    * 归档页</span><br><span class="line">  * **categories**</span><br><span class="line">    * categories:/categories</span><br><span class="line">    * 分类页</span><br><span class="line">  * **tags**</span><br><span class="line">    * tags:/tags</span><br><span class="line">    * 标签页</span><br><span class="line">  * **about**</span><br><span class="line">    * about:/about</span><br><span class="line">    * 关于页</span><br><span class="line">  * **commonweal**</span><br><span class="line">    * commonweal:/404.html</span><br><span class="line">    * 公益 404</span><br><span class="line"></span><br><span class="line">* 设置菜单项的**显示文本：**</span><br><span class="line"></span><br><span class="line">  * Hexo 生成的时候，使用**菜单项的名称**查找对应的语言翻译，并且提取显示文本</span><br><span class="line">  * 显示文本在NexT 主题目录下的`language/&#123;language&#125;.yml`</span><br><span class="line"></span><br><span class="line">* 设置菜单项的**图标**，对应的字段`menu_icons`</span><br><span class="line"></span><br><span class="line">  * 设定格式`item name:icon name`</span><br><span class="line"></span><br><span class="line">    * icon name是Font Awesome 图表的名字</span><br><span class="line">    * enable 可用于是否显示图标</span><br><span class="line"></span><br><span class="line">  * 示例</span><br><span class="line"></span><br><span class="line">    * ```</span><br><span class="line">      menu_icons:</span><br><span class="line">        enable: true</span><br><span class="line">        # Icon Mapping.</span><br><span class="line">        home: home</span><br><span class="line">        about: user</span><br><span class="line">        categories: th</span><br><span class="line">        tags: tags</span><br><span class="line">        archives: archive</span><br><span class="line">        commonweal: heartbeat</span><br><span class="line">      </span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="7-侧栏"><a href="#7-侧栏" class="headerlink" title="7 侧栏"></a>7 侧栏</h3><ul>
+<li><p><strong>默认情况</strong>：侧栏仅在文章页面（拥有目录列表时）才显示，放于右侧</p>
+</li>
+<li><p>可通过控制 主题配置文件 <code>sidebar</code>字段控制侧栏</p>
+<ul>
+<li><p><strong>侧栏的位置</strong>，<code>sidebar.position</code>, 目前仅Pisces Scheme支持</p>
+<ul>
+<li>left</li>
+<li>right</li>
+</ul>
+</li>
+<li><p><strong>侧栏显示的时机</strong>，<code>sidebar.display</code></p>
+<ul>
+<li><p><strong>post :</strong> 默认行为，在文章页面（拥有目录列表）时显示</p>
+</li>
+<li><p><strong>always:</strong> 在所有页面中都显示</p>
+</li>
+<li><p><strong>remove:</strong> 完全移除</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="8-头像"><a href="#8-头像" class="headerlink" title="8 头像"></a>8 头像</h3><ul>
+<li>编辑 站点配置文件， 新增<code>avatar</code>字段，将其值设置为头像的链接地址：<ul>
+<li>完整的互联网URL：</li>
+<li>站点内的地址：<code>将头像放置主题目录下的 source/uploads/ （新建uploads目录若不存在） 配置为：avatar: /uploads/avatar.png 或者 放置在 source/images/ 目录下 , 配置为：avatar: /images/avatar.png</code></li>
+</ul>
+</li>
+</ul>
+<h1 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h1><h2 id="生成-分类-页并添加-type-属性"><a href="#生成-分类-页并添加-type-属性" class="headerlink" title="生成 分类 页并添加 type 属性"></a>生成 分类 页并添加 type 属性</h2><ul>
+<li><code>hexo new page categories</code>: 生成分类页</li>
+<li>找到<code>source/categories/index.md</code><ul>
+<li>添加<code>type: &quot;xxx&quot;</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="给文章添加-categories-属性"><a href="#给文章添加-categories-属性" class="headerlink" title="给文章添加 categories 属性"></a>给文章添加 categories 属性</h2><ul>
+<li>打开文章，写入<code>categories : -xxx</code></li>
+<li>hexo 不会产生两个分类，<strong>而是把分类嵌套</strong></li>
+</ul>
+<h1 id="标签"><a href="#标签" class="headerlink" title="标签"></a>标签</h1><p>与分类类似</p>
+<h1 id="个人博客主题优化"><a href="#个人博客主题优化" class="headerlink" title="个人博客主题优化"></a>个人博客主题优化</h1><p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/efbeddc5eb19">参考博客</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/60424755">参考博客</a></p>
+<p><a target="_blank" rel="noopener" href="https://itrhx.blog.csdn.net/article/details/85420403?utm_medium=distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromMachineLearnPai2~default-2.control&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromMachineLearnPai2~default-2.control">cankao</a></p>
+<h2 id="统计站点的总访问量"><a href="#统计站点的总访问量" class="headerlink" title="统计站点的总访问量"></a>统计站点的总访问量</h2><h2 id="让百度收录-blog"><a href="#让百度收录-blog" class="headerlink" title="让百度收录 blog"></a>让百度收录 blog</h2><h2 id="底部小心心增加点击动画"><a href="#底部小心心增加点击动画" class="headerlink" title="底部小心心增加点击动画"></a>底部小心心增加点击动画</h2><p>博客1：</p>
+<h3 id="3-1-添加头像"><a href="#3-1-添加头像" class="headerlink" title="3.1 添加头像"></a>3.1 添加头像</h3><h3 id="3-2-设置头像边框为圆形"><a href="#3-2-设置头像边框为圆形" class="headerlink" title="3.2 设置头像边框为圆形"></a>3.2 设置头像边框为圆形</h3><h3 id="3-3-特效：鼠标放置头像上旋转"><a href="#3-3-特效：鼠标放置头像上旋转" class="headerlink" title="3.3 特效：鼠标放置头像上旋转"></a>3.3 特效：鼠标放置头像上旋转</h3><h2 id="4-浏览页面时，显示当前浏览进度"><a href="#4-浏览页面时，显示当前浏览进度" class="headerlink" title="4 浏览页面时，显示当前浏览进度"></a>4 浏览页面时，显示当前浏览进度</h2><h2 id="5-侧边栏设置"><a href="#5-侧边栏设置" class="headerlink" title="5 侧边栏设置"></a>5 侧边栏设置</h2><h3 id="5-1-设置侧边栏社交链接"><a href="#5-1-设置侧边栏社交链接" class="headerlink" title="5.1 设置侧边栏社交链接"></a>5.1 设置侧边栏社交链接</h3><h3 id="5-2-设置侧边栏社交图标"><a href="#5-2-设置侧边栏社交图标" class="headerlink" title="5.2 设置侧边栏社交图标"></a>5.2 设置侧边栏社交图标</h3><h3 id="5-3-RSS"><a href="#5-3-RSS" class="headerlink" title="5.3 RSS"></a>5.3 RSS</h3><p>配置</p>
+<h3 id="5-4-友情链接"><a href="#5-4-友情链接" class="headerlink" title="5.4 友情链接"></a>5.4 友情链接</h3><h2 id="6-主页文章添加边框阴影效果"><a href="#6-主页文章添加边框阴影效果" class="headerlink" title="6 主页文章添加边框阴影效果"></a>6 主页文章添加边框阴影效果</h2><h2 id="7-修改文章间分割线"><a href="#7-修改文章间分割线" class="headerlink" title="7 修改文章间分割线"></a>7 修改文章间分割线</h2><h2 id="8-代码块自定义样式"><a href="#8-代码块自定义样式" class="headerlink" title="8 代码块自定义样式"></a>8 代码块自定义样式</h2><h2 id="9-开启版权声明"><a href="#9-开启版权声明" class="headerlink" title="9 开启版权声明"></a>9 开启版权声明</h2><h2 id="10-自定义文章底部版权声明"><a href="#10-自定义文章底部版权声明" class="headerlink" title="10 自定义文章底部版权声明"></a>10 自定义文章底部版权声明</h2><h2 id="11-在右上角或者左上角实现fork-me-on-github"><a href="#11-在右上角或者左上角实现fork-me-on-github" class="headerlink" title="11 在右上角或者左上角实现fork me on github"></a>11 在右上角或者左上角实现<code>fork me on github</code></h2><h2 id="12-修改文章底部带-号的标签"><a href="#12-修改文章底部带-号的标签" class="headerlink" title="12 修改文章底部带 # 号的标签"></a>12 修改文章底部带 # 号的标签</h2><h2 id="13-添加顶部加载条"><a href="#13-添加顶部加载条" class="headerlink" title="13 添加顶部加载条"></a>13 添加顶部加载条</h2><h2 id="14"><a href="#14" class="headerlink" title="14"></a>14</h2><h2 id="15-修改网页底部"><a href="#15-修改网页底部" class="headerlink" title="15 修改网页底部"></a>15 修改网页底部</h2><h3 id="1-修改桃心"><a href="#1-修改桃心" class="headerlink" title="1 修改桃心"></a>1 修改桃心</h3><h2 id="16"><a href="#16" class="headerlink" title="16"></a>16</h2><h2 id="23-新建404界面"><a href="#23-新建404界面" class="headerlink" title="23 新建404界面"></a>23 新建404界面</h2><h2 id="32-修改打赏字体不闪动"><a href="#32-修改打赏字体不闪动" class="headerlink" title="32 修改打赏字体不闪动"></a>32 修改打赏字体不闪动</h2><h2 id="39-添加网易云音乐"><a href="#39-添加网易云音乐" class="headerlink" title="39 添加网易云音乐"></a>39 添加网易云音乐</h2><h2 id="设置显示目录"><a href="#设置显示目录" class="headerlink" title="设置显示目录"></a>设置显示目录</h2><h2 id="统计字数"><a href="#统计字数" class="headerlink" title="统计字数"></a>统计字数</h2><p>博客2</p>
+<h2 id="加宠物"><a href="#加宠物" class="headerlink" title="加宠物"></a>加宠物</h2><h2 id="网页底部的动态桃心图像"><a href="#网页底部的动态桃心图像" class="headerlink" title="网页底部的动态桃心图像"></a>网页底部的动态桃心图像</h2><h2 id="404-页面"><a href="#404-页面" class="headerlink" title="404 页面"></a>404 页面</h2><h1 id="访客数访问次数"><a href="#访客数访问次数" class="headerlink" title="访客数访问次数"></a>访客数访问次数</h1><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/baidu_34310405/article/details/102665373">https://blog.csdn.net/baidu_34310405/article/details/102665373</a></p>
+<h1 id="添加背景图片"><a href="#添加背景图片" class="headerlink" title="添加背景图片"></a>添加背景图片</h1><p><a target="_blank" rel="noopener" href="https://tding.top/archives/761b6f4d.html">https://tding.top/archives/761b6f4d.html</a></p>
+<h1 id="添加跳动的心"><a href="#添加跳动的心" class="headerlink" title="添加跳动的心"></a>添加跳动的心</h1><p><a target="_blank" rel="noopener" href="https://io-oi.me/tech/hexo-next-optimization/#%E8%AE%A9%E9%A1%B5%E8%84%9A%E7%9A%84%E5%BF%83%E8%B7%B3%E5%8A%A8%E8%B5%B7%E6%9D%A5">https://io-oi.me/tech/hexo-next-optimization/#%E8%AE%A9%E9%A1%B5%E8%84%9A%E7%9A%84%E5%BF%83%E8%B7%B3%E5%8A%A8%E8%B5%B7%E6%9D%A5</a></p>
+<h1 id="侧栏加入运行时间"><a href="#侧栏加入运行时间" class="headerlink" title="侧栏加入运行时间"></a>侧栏加入运行时间</h1><p><a target="_blank" rel="noopener" href="https://io-oi.me/tech/hexo-next-optimization/#%E4%BE%A7%E6%A0%8F%E5%8A%A0%E5%85%A5%E5%B7%B2%E8%BF%90%E8%A1%8C%E7%9A%84%E6%97%B6%E9%97%B4">https://io-oi.me/tech/hexo-next-optimization/#%E4%BE%A7%E6%A0%8F%E5%8A%A0%E5%85%A5%E5%B7%B2%E8%BF%90%E8%A1%8C%E7%9A%84%E6%97%B6%E9%97%B4</a></p>
+<h1 id="本地搜索"><a href="#本地搜索" class="headerlink" title="本地搜索"></a>本地搜索</h1><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/266119565">https://zhuanlan.zhihu.com/p/266119565</a></p>
+<h1 id="夜间模式切换‘"><a href="#夜间模式切换‘" class="headerlink" title="夜间模式切换‘"></a>夜间模式切换‘</h1><p><a target="_blank" rel="noopener" href="https://www.techgrow.cn/posts/abf4aee1.html">https://www.techgrow.cn/posts/abf4aee1.html</a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="https://zihao256.github.io">Zihao Ma</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://zihao256.github.io/p/e9b15daf.html">https://zihao256.github.io/p/e9b15daf.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Blog/">Blog</a><a class="post-meta__tags" href="/tags/DIY/">DIY</a></div><div class="post_share"><div class="social-share" data-image="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven5.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/p/1b6782a7.html"><img class="prev-cover" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/star_sky.webp" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info">1 变量和常量</div></div></a></div><div class="next-post pull-right"><a href="/p/e2bef277.html"><img class="next-cover" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/steven-kamenar-MMJx78V7xS8-unsplash.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">Lab 2 物理内存管理</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><div><a href="/p/463f518f.html" title="Hexo+Butterfly"><img class="cover" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven4.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-07-07</div><div class="title">Hexo+Butterfly</div></div></a></div><div><a href="/p/6de7b885.html" title="Hexo博客少生成了index主页文件"><img class="cover" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/star_sky.webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-02-19</div><div class="title">Hexo博客少生成了index主页文件</div></div></a></div><div><a href="/p/ef4419f0.html" title="hexo博客勉强支持typora中的脚注功能：)"><img class="cover" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/narrow-muddy-road-dark-forest.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-02-19</div><div class="title">hexo博客勉强支持typora中的脚注功能：)</div></div></a></div><div><a href="/p/fab1518.html" title="奇怪问题——fatal:无法读取远程仓库"><img class="cover" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/star_sky.webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-02-18</div><div class="title">奇怪问题——fatal:无法读取远程仓库</div></div></a></div><div><a href="/p/4ec99e36.html" title="增加评论功能"><img class="cover" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven9.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-02-18</div><div class="title">增加评论功能</div></div></a></div><div><a href="/p/82975e94.html" title="将Hexo博客部署到Github"><img class="cover" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven8.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-02-18</div><div class="title">将Hexo博客部署到Github</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> Comment</span></div></div><div class="comment-wrap"><div><div id="gitalk-container"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://github.com/ZiHao256/ZiHao256.github.io/blob/hexo/images/stitch.JPG?raw=true" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Zihao Ma</div><div class="author-info__description">博学之,审问之,慎思之,明辨之,笃行之.</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">58</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">38</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">15</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/ZiHao256"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/ZiHao256" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/atom.xml" target="_blank" title="RSS链接"><i class="fa fa-rss"></i></a><a class="social-icon" href="mailto:zihao626@gmail.com" target="_blank" title="gmail"><i class="fa-brands fa-google"></i></a><a class="social-icon" href="mailto:19030500024@stu.xidian.edu.cn" target="_blank" title="xdu-mail"><i class="fa fa-graduation-cap"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">This is Zihao's Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Hexo-%E5%8D%9A%E5%AE%A2"><span class="toc-text">Hexo 博客</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E7%9A%84%E5%87%86%E5%A4%87"><span class="toc-text">环境搭建的准备</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%86%99%E5%8D%9A%E5%AE%A2%E3%80%81%E5%8F%91%E5%B8%83%E6%96%87%E7%AB%A0"><span class="toc-text">写博客、发布文章</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%BB%E9%A2%98%E6%8E%A8%E8%8D%90"><span class="toc-text">主题推荐</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#NexT%E4%B8%BB%E9%A2%98%E9%85%8D%E7%BD%AE"><span class="toc-text">NexT主题配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%AE%89%E8%A3%85NexT"><span class="toc-text">1 安装NexT</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%90%AF%E7%94%A8%E4%B8%BB%E9%A2%98"><span class="toc-text">2 启用主题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E9%AA%8C%E8%AF%81%E4%B8%BB%E9%A2%98"><span class="toc-text">3 验证主题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E4%B8%BB%E9%A2%98%E8%AE%BE%E5%AE%9A"><span class="toc-text">4 主题设定</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E8%AE%BE%E7%BD%AE%E8%AF%AD%E8%A8%80"><span class="toc-text">5 设置语言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E8%AE%BE%E7%BD%AE%E8%8F%9C%E5%8D%95"><span class="toc-text">6 设置菜单</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-%E4%BE%A7%E6%A0%8F"><span class="toc-text">7 侧栏</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-%E5%A4%B4%E5%83%8F"><span class="toc-text">8 头像</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%88%86%E7%B1%BB"><span class="toc-text">分类</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%9F%E6%88%90-%E5%88%86%E7%B1%BB-%E9%A1%B5%E5%B9%B6%E6%B7%BB%E5%8A%A0-type-%E5%B1%9E%E6%80%A7"><span class="toc-text">生成 分类 页并添加 type 属性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%99%E6%96%87%E7%AB%A0%E6%B7%BB%E5%8A%A0-categories-%E5%B1%9E%E6%80%A7"><span class="toc-text">给文章添加 categories 属性</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%A0%87%E7%AD%BE"><span class="toc-text">标签</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E4%B8%BB%E9%A2%98%E4%BC%98%E5%8C%96"><span class="toc-text">个人博客主题优化</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%9F%E8%AE%A1%E7%AB%99%E7%82%B9%E7%9A%84%E6%80%BB%E8%AE%BF%E9%97%AE%E9%87%8F"><span class="toc-text">统计站点的总访问量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%A9%E7%99%BE%E5%BA%A6%E6%94%B6%E5%BD%95-blog"><span class="toc-text">让百度收录 blog</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BA%95%E9%83%A8%E5%B0%8F%E5%BF%83%E5%BF%83%E5%A2%9E%E5%8A%A0%E7%82%B9%E5%87%BB%E5%8A%A8%E7%94%BB"><span class="toc-text">底部小心心增加点击动画</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E6%B7%BB%E5%8A%A0%E5%A4%B4%E5%83%8F"><span class="toc-text">3.1 添加头像</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E8%AE%BE%E7%BD%AE%E5%A4%B4%E5%83%8F%E8%BE%B9%E6%A1%86%E4%B8%BA%E5%9C%86%E5%BD%A2"><span class="toc-text">3.2 设置头像边框为圆形</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-%E7%89%B9%E6%95%88%EF%BC%9A%E9%BC%A0%E6%A0%87%E6%94%BE%E7%BD%AE%E5%A4%B4%E5%83%8F%E4%B8%8A%E6%97%8B%E8%BD%AC"><span class="toc-text">3.3 特效：鼠标放置头像上旋转</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E6%B5%8F%E8%A7%88%E9%A1%B5%E9%9D%A2%E6%97%B6%EF%BC%8C%E6%98%BE%E7%A4%BA%E5%BD%93%E5%89%8D%E6%B5%8F%E8%A7%88%E8%BF%9B%E5%BA%A6"><span class="toc-text">4 浏览页面时，显示当前浏览进度</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E4%BE%A7%E8%BE%B9%E6%A0%8F%E8%AE%BE%E7%BD%AE"><span class="toc-text">5 侧边栏设置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-%E8%AE%BE%E7%BD%AE%E4%BE%A7%E8%BE%B9%E6%A0%8F%E7%A4%BE%E4%BA%A4%E9%93%BE%E6%8E%A5"><span class="toc-text">5.1 设置侧边栏社交链接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-%E8%AE%BE%E7%BD%AE%E4%BE%A7%E8%BE%B9%E6%A0%8F%E7%A4%BE%E4%BA%A4%E5%9B%BE%E6%A0%87"><span class="toc-text">5.2 设置侧边栏社交图标</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3-RSS"><span class="toc-text">5.3 RSS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-4-%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5"><span class="toc-text">5.4 友情链接</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E4%B8%BB%E9%A1%B5%E6%96%87%E7%AB%A0%E6%B7%BB%E5%8A%A0%E8%BE%B9%E6%A1%86%E9%98%B4%E5%BD%B1%E6%95%88%E6%9E%9C"><span class="toc-text">6 主页文章添加边框阴影效果</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E4%BF%AE%E6%94%B9%E6%96%87%E7%AB%A0%E9%97%B4%E5%88%86%E5%89%B2%E7%BA%BF"><span class="toc-text">7 修改文章间分割线</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-%E4%BB%A3%E7%A0%81%E5%9D%97%E8%87%AA%E5%AE%9A%E4%B9%89%E6%A0%B7%E5%BC%8F"><span class="toc-text">8 代码块自定义样式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-%E5%BC%80%E5%90%AF%E7%89%88%E6%9D%83%E5%A3%B0%E6%98%8E"><span class="toc-text">9 开启版权声明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10-%E8%87%AA%E5%AE%9A%E4%B9%89%E6%96%87%E7%AB%A0%E5%BA%95%E9%83%A8%E7%89%88%E6%9D%83%E5%A3%B0%E6%98%8E"><span class="toc-text">10 自定义文章底部版权声明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#11-%E5%9C%A8%E5%8F%B3%E4%B8%8A%E8%A7%92%E6%88%96%E8%80%85%E5%B7%A6%E4%B8%8A%E8%A7%92%E5%AE%9E%E7%8E%B0fork-me-on-github"><span class="toc-text">11 在右上角或者左上角实现fork me on github</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#12-%E4%BF%AE%E6%94%B9%E6%96%87%E7%AB%A0%E5%BA%95%E9%83%A8%E5%B8%A6-%E5%8F%B7%E7%9A%84%E6%A0%87%E7%AD%BE"><span class="toc-text">12 修改文章底部带 # 号的标签</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#13-%E6%B7%BB%E5%8A%A0%E9%A1%B6%E9%83%A8%E5%8A%A0%E8%BD%BD%E6%9D%A1"><span class="toc-text">13 添加顶部加载条</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#14"><span class="toc-text">14</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#15-%E4%BF%AE%E6%94%B9%E7%BD%91%E9%A1%B5%E5%BA%95%E9%83%A8"><span class="toc-text">15 修改网页底部</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E4%BF%AE%E6%94%B9%E6%A1%83%E5%BF%83"><span class="toc-text">1 修改桃心</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#16"><span class="toc-text">16</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#23-%E6%96%B0%E5%BB%BA404%E7%95%8C%E9%9D%A2"><span class="toc-text">23 新建404界面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#32-%E4%BF%AE%E6%94%B9%E6%89%93%E8%B5%8F%E5%AD%97%E4%BD%93%E4%B8%8D%E9%97%AA%E5%8A%A8"><span class="toc-text">32 修改打赏字体不闪动</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#39-%E6%B7%BB%E5%8A%A0%E7%BD%91%E6%98%93%E4%BA%91%E9%9F%B3%E4%B9%90"><span class="toc-text">39 添加网易云音乐</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%BE%E7%BD%AE%E6%98%BE%E7%A4%BA%E7%9B%AE%E5%BD%95"><span class="toc-text">设置显示目录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%9F%E8%AE%A1%E5%AD%97%E6%95%B0"><span class="toc-text">统计字数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%A0%E5%AE%A0%E7%89%A9"><span class="toc-text">加宠物</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BD%91%E9%A1%B5%E5%BA%95%E9%83%A8%E7%9A%84%E5%8A%A8%E6%80%81%E6%A1%83%E5%BF%83%E5%9B%BE%E5%83%8F"><span class="toc-text">网页底部的动态桃心图像</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#404-%E9%A1%B5%E9%9D%A2"><span class="toc-text">404 页面</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AE%BF%E5%AE%A2%E6%95%B0%E8%AE%BF%E9%97%AE%E6%AC%A1%E6%95%B0"><span class="toc-text">访客数访问次数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E8%83%8C%E6%99%AF%E5%9B%BE%E7%89%87"><span class="toc-text">添加背景图片</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E8%B7%B3%E5%8A%A8%E7%9A%84%E5%BF%83"><span class="toc-text">添加跳动的心</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BE%A7%E6%A0%8F%E5%8A%A0%E5%85%A5%E8%BF%90%E8%A1%8C%E6%97%B6%E9%97%B4"><span class="toc-text">侧栏加入运行时间</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9C%AC%E5%9C%B0%E6%90%9C%E7%B4%A2"><span class="toc-text">本地搜索</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A4%9C%E9%97%B4%E6%A8%A1%E5%BC%8F%E5%88%87%E6%8D%A2%E2%80%98"><span class="toc-text">夜间模式切换‘</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/p/42c77a0c.html" title="Paper Reading: TECCD: A Tree Embedding Approach for Code Clone Detection"><img src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven6.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Paper Reading: TECCD: A Tree Embedding Approach for Code Clone Detection"/></a><div class="content"><a class="title" href="/p/42c77a0c.html" title="Paper Reading: TECCD: A Tree Embedding Approach for Code Clone Detection">Paper Reading: TECCD: A Tree Embedding Approach for Code Clone Detection</a><time datetime="2023-05-16T06:17:01.000Z" title="Created 2023-05-16 14:17:01">2023-05-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/69c3279c.html" title="Git"><img src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/steven-kamenar-MMJx78V7xS8-unsplash.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Git"/></a><div class="content"><a class="title" href="/p/69c3279c.html" title="Git">Git</a><time datetime="2023-05-15T13:42:40.000Z" title="Created 2023-05-15 21:42:40">2023-05-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/26d71884.html" title="Overleaf"><img src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven6.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Overleaf"/></a><div class="content"><a class="title" href="/p/26d71884.html" title="Overleaf">Overleaf</a><time datetime="2023-05-15T11:11:58.000Z" title="Created 2023-05-15 19:11:58">2023-05-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/e75f2967.html" title="Edge浏览器"><img src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/beautiful-milky-way-night-sky.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Edge浏览器"/></a><div class="content"><a class="title" href="/p/e75f2967.html" title="Edge浏览器">Edge浏览器</a><time datetime="2023-05-14T09:24:59.000Z" title="Created 2023-05-14 17:24:59">2023-05-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/e547f891.html" title="Paper Reading: How good are query optimizers, really?"><img src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven9.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Paper Reading: How good are query optimizers, really?"/></a><div class="content"><a class="title" href="/p/e547f891.html" title="Paper Reading: How good are query optimizers, really?">Paper Reading: How good are query optimizers, really?</a><time datetime="2023-03-04T14:25:09.000Z" title="Created 2023-03-04 22:25:09">2023-03-04</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven5.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2021 - 2023 By Zihao Ma</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Hi, welcome to my <a href="https://zihao256.github.io/">Blog</a>!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="Toggle Between Traditional Chinese And Simplified Chinese">简</button><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="Scroll To Comments"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">Search</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  Loading the Database</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="Search for Posts" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script src="/js/search/local-search.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><script>function addGitalkSource () {
+  const ele = document.createElement('link')
+  ele.rel = 'stylesheet'
+  ele.href= 'https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.css'
+  document.getElementsByTagName('head')[0].appendChild(ele)
+}
+
+function loadGitalk () {
+  function initGitalk () {
+    var gitalk = new Gitalk(Object.assign({
+      clientID: 'ff33deb87bcf128b07ee',
+      clientSecret: 'ff52e6f598f01828083ee59b85a9327e686666a7',
+      repo: 'ZiHao256.github.io',
+      owner: 'ZiHao256',
+      admin: ['ZiHao256'],
+      id: '58533a9074f547d4a9954297ae0075b7',
+      updateCountCallback: commentCount
+    },null))
+
+    gitalk.render('gitalk-container')
+  }
+
+  if (typeof Gitalk === 'function') initGitalk()
+  else {
+    addGitalkSource()
+    getScript('https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.js').then(initGitalk)
+  }
+}
+
+function commentCount(n){
+  let isCommentCount = document.querySelector('#post-meta .gitalk-comment-count')
+  if (isCommentCount) {
+    isCommentCount.innerHTML= n
+  }
+}
+
+if ('Gitalk' === 'Gitalk' || !false) {
+  if (false) btf.loadComment(document.getElementById('gitalk-container'), loadGitalk)
+  else loadGitalk()
+} else {
+  function loadOtherComment () {
+    loadGitalk()
+  }
+}</script></div><script>window.addEventListener('load', () => {
+  const changeContent = (content) => {
+    if (content === '') return content
+
+    content = content.replace(/<img.*?src="(.*?)"?[^\>]+>/ig, '[image]') // replace image link
+    content = content.replace(/<a[^>]+?href=["']?([^"']+)["']?[^>]*>([^<]+)<\/a>/gi, '[link]') // replace url
+    content = content.replace(/<pre><code>.*?<\/pre>/gi, '[code]') // replace code
+    content = content.replace(/<[^>]+>/g,"") // remove html tag
+
+    if (content.length > 150) {
+      content = content.substring(0,150) + '...'
+    }
+    return content
+  }
+
+  const findTrueUrl = (array) => {
+    Promise.all(array.map(item =>
+      fetch(item.url).then(resp => resp.json()).then(data => {
+        const urlArray = data.body.match(/(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?/ig)
+        if (data.user.login === 'utterances-bot') {
+          return urlArray.pop()
+        } else {
+          return urlArray.shift()
+        }
+      })
+    )).then(res => {
+        array = array.map((i,index)=> {
+          return {
+            ...i,
+            url: res[index]
+          }
+        })
+
+        saveToLocal.set('github-newest-comments', JSON.stringify(array), 10/(60*24))
+        generateHtml(array)
+    });
+  }
+
+  const getComment = () => {
+    fetch('https://api.github.com/repos/ZiHao256/ZiHao256.github.io/issues/comments?sort=updated&direction=desc&per_page=6&page=1',{
+      "headers": {
+        Accept: 'application/vnd.github.v3.html+json'
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        const githubArray = data.map(item => {
+          return {
+            'avatar': item.user.avatar_url,
+            'content': changeContent(item.body_html),
+            'nick': item.user.login,
+            'url': item.issue_url,
+            'date': item.updated_at,
+            'githubUrl': item.html_url
+          }
+        })
+        findTrueUrl(githubArray)
+      }).catch(e => {
+        const $dom = document.querySelector('#card-newest-comments .aside-list')
+        $dom.innerHTML= "Unable to get the data, please make sure the settings are correct."
+      })
+  }
+
+  const generateHtml = array => {
+    let result = ''
+
+    if (array.length) {
+      for (let i = 0; i < array.length; i++) {
+        result += '<div class=\'aside-list-item\'>'
+
+        if (true) {
+          const name = 'src'
+          result += `<a href='${array[i].url}' class='thumbnail'><img ${name}='${array[i].avatar}' alt='${array[i].nick}'></a>`
+        }
+
+        result += `<div class='content'>
+        <a class='comment' href='${array[i].url}' title='${array[i].content}'>${array[i].content}</a>
+        <div class='name'><span>${array[i].nick} / </span><time datetime="${array[i].date}">${btf.diffDate(array[i].date, true)}</time></div>
+        </div></div>`
+      }
+    } else {
+      result += 'No Comment'
+    }
+
+    let $dom = document.querySelector('#card-newest-comments .aside-list')
+    $dom.innerHTML= result
+    window.lazyLoadInstance && window.lazyLoadInstance.update()
+    window.pjax && window.pjax.refresh($dom)
+  }
+
+  const newestCommentInit = () => {
+    if (document.querySelector('#card-newest-comments .aside-list')) {
+      const data = saveToLocal.get('github-newest-comments')
+      if (data) {
+        generateHtml(JSON.parse(data))
+      } else {
+        getComment()
+      }
+    }
+  }
+
+  newestCommentInit()
+  document.addEventListener('pjax:complete', newestCommentInit)
+})</script><div class="aplayer no-destroy" data-id="6738460302" data-server="netease" data-type="playlist" data-fixed="true" data-autoplay="true"> </div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-heart.min.js" async="async" mobile="true"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener scroll 
+  window.tocScrollFn && window.removeEventListener('scroll', window.tocScrollFn)
+  window.scrollCollect && window.removeEventListener('scroll', scrollCollect)
+
+  typeof preloader === 'object' && preloader.initLoading()
+  document.getElementById('rightside').style.cssText = "opacity: ''; transform: ''"
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

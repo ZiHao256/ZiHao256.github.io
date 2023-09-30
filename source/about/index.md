@@ -5,10 +5,10 @@ date: 2021-05-01 09:50:14
 ---
 # Zihao(Zahi) Ma
 <div class="btn-center">
-{% btn 'https://zihao256.github.io/ZiHao256.com',Home,far fa-hand-point-right,outline blue larger %}
-{% btn 'https://zihao256.github.io',Blog,far fa-hand-point-right,outline blue larger %}
-{% btn 'https://zihao256.github.io/about/',About,far fa-hand-point-right,outline blue larger %}
-{% btn 'https://zihao256.github.io/ZiHao256.com/Awesome_CV.pdf',CV,far fa-hand-point-right,outline blue larger %}
+{% btn 'https://zihao256.github.io/ZiHao256.com',Home, iconfont icon-house-user,outline blue larger %}
+{% btn 'https://zihao256.github.io',Blog,iconfont icon-blog,outline blue larger %}
+{% btn 'https://zihao256.github.io/about/',About, iconfont icon-about,outline blue larger %}
+{% btn 'https://zihao256.github.io/ZiHao256.com/Awesome_CV.pdf',CV,iconfont icon-cv,outline blue larger %}
 </div>
 
 # About Me
@@ -21,15 +21,27 @@ I am keeping moving and learning:
 
 {% timeline 2023,blue %}
 
+<!-- timeline 09-30 -->
+{% note success disabled %}
+finish Project#1 and pass the local tests. Leaderboard Task is not included, but I will try my best to do it.
+{% endnote %}
+<!-- endtimeline -->
+
+<!-- timeline 09-24 -->
+{% note success disabled %}
+finish Homework#1.
+{% endnote %}
+<!-- endtimeline -->
+
 <!-- timeline 09-18-->
 {% note success disabled %}
-get the point of Project#0
+finish the Project#0 and get the point.
 {% endnote %}
 <!-- endtimeline -->
 
 <!-- timeline 09-04-->
 {% note primary disabled %}
-start learning CMU15-445(2023FALL)
+start learning CMU15-445(2023FALL).
 {% endnote %}
 <!-- endtimeline -->
 {% endtimeline %}

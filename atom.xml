@@ -6,7 +6,7 @@
   <link href="https://zihao256.github.io/atom.xml" rel="self"/>
   
   <link href="https://zihao256.github.io/"/>
-  <updated>2023-10-01T08:46:24.655Z</updated>
+  <updated>2023-10-01T08:56:51.319Z</updated>
   <id>https://zihao256.github.io/</id>
   
   <author>
@@ -15,6 +15,19 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>test</title>
+    <link href="https://zihao256.github.io/p/d87f7e0c.html"/>
+    <id>https://zihao256.github.io/p/d87f7e0c.html</id>
+    <published>2023-10-01T08:56:51.000Z</published>
+    <updated>2023-10-01T08:56:51.319Z</updated>
+    
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>CMU15-445(2023FALL):Project#0 C++Primer</title>
@@ -535,32 +548,6 @@
     <category term="Database System" scheme="https://zihao256.github.io/tags/Database-System/"/>
     
     <category term="Distributed" scheme="https://zihao256.github.io/tags/Distributed/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Hexo+Butterfly</title>
-    <link href="https://zihao256.github.io/p/463f518f.html"/>
-    <id>https://zihao256.github.io/p/463f518f.html</id>
-    <published>2022-07-07T08:21:52.000Z</published>
-    <updated>2023-09-20T06:52:02.724Z</updated>
-    
-    
-      
-      
-    <summary type="html">&lt;h1 id=&quot;创建新文章-草稿-页面&quot;&gt;&lt;a href=&quot;#创建新文章-草稿-页面&quot; class=&quot;headerlink&quot; title=&quot;创建新文章/草稿/页面&quot;&gt;&lt;/a&gt;创建新文章/草稿/页面&lt;/h1&gt;&lt;p&gt;命令：&lt;code&gt;hexo new [layout] &amp;lt;tit</summary>
-      
-    
-    
-    
-    <category term="个人提升" scheme="https://zihao256.github.io/categories/%E4%B8%AA%E4%BA%BA%E6%8F%90%E5%8D%87/"/>
-    
-    <category term="博客更新" scheme="https://zihao256.github.io/categories/%E4%B8%AA%E4%BA%BA%E6%8F%90%E5%8D%87/%E5%8D%9A%E5%AE%A2%E6%9B%B4%E6%96%B0/"/>
-    
-    
-    <category term="Blog" scheme="https://zihao256.github.io/tags/Blog/"/>
-    
-    <category term="DIY" scheme="https://zihao256.github.io/tags/DIY/"/>
     
   </entry>
   

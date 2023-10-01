@@ -322,7 +322,7 @@ gitalk:
   owner: ZiHao256
   admin: ZiHao256
   client_id: ff33deb87bcf128b07ee
-  client_secret: ff52e6f598f01828083ee59b85a9327e686666a7
+  client_secret: bb0a64f8e0dfccbfaa16a4cf203b242cd953785f
   repo: ZiHao256.github.io
   option:
   distractionFreeMode: true
@@ -422,8 +422,8 @@ chatra:
 # tidio
 # https://www.tidio.com/
 tidio:
-  enable: false
-  public_key:
+  enable: true
+  public_key: fzzv3smuzu2mnp9mytgk0xes8jghyowu
 
 # daovoice
 # http://daovoice.io/
@@ -684,7 +684,7 @@ aside:
       link: https://github.com/ZiHao256
   card_announcement:
     enable: true
-    content: This is Zihao's Blog
+    content: keep moving in 2023
   card_recent_post:
     enable: true
     limit: 5 # if set 0 will show all

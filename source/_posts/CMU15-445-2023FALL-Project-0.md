@@ -1,5 +1,5 @@
 ---
-title: 'CMU15-445(2023FALL):Project#0 C++Primer'
+title: 'Project#0: C++ Primer'
 toc: true
 categories:
   - 个人提升

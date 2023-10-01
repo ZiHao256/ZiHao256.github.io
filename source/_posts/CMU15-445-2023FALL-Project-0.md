@@ -13,7 +13,7 @@ date: 2023-10-01 14:44:47
 # Task#1 - Copy-On-Write Trie
 按照源码中给的提示即可完成
 
-总体思路：use std::shared_ptr<const TrieNode> to traverse, then reuse nodes that do not need to be modified and use std::shared_ptr<TrieNode>  with Clone to build and modify memebers from the bottom up on nodes that need to be modified.
+**总体思路**：use std::shared_ptr<const TrieNode> to traverse, then reuse nodes that do not need to be modified and use std::shared_ptr<TrieNode>  with Clone to build and modify memebers from the bottom up on nodes that need to be modified.
 
 ## Get
 Get函数实现较为简单
@@ -110,6 +110,7 @@ Get函数实现较为简单
 
 
 # GradeScope
+被`Format`测试卡了好几次零分，但是最终还是完成了！很有成就感，just keep moving!
 
 ![image-20231001164418561](https://cdn.jsdelivr.net/gh/ZiHao256/Gallery@master/uPic/2023/10/image-20231001164418561.png)
 
@@ -126,7 +127,7 @@ Get函数实现较为简单
     - I think your `TrieNodeWithValue` is casted to `TrieNode` if you do `make_shared<TrieNode>...`, which you do not want
       
 
-## Geogle Coding Format
+## Google Coding Format
 
 - 双目运算符两边加空格
   

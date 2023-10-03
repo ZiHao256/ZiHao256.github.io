@@ -3,7 +3,7 @@ title: Preparation-For-MIT6.824
 typora-copy-images-to: Preparation-For-MIT6.824
 toc: true
 categories:
-  - 个人提升
+  - 学无止境
   - MIT6.824
 tags:
   - Database System

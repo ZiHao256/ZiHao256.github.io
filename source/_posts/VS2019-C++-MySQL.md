@@ -1,7 +1,7 @@
 ---
 title: VS2019 下 C++ 项目访问MySQL数据库
 categories: 
-  - 个人提升
+  - 学无止境
   - 编程语言学习
 tags:
   - SQL

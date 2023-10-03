@@ -1,7 +1,7 @@
 ---
 title: SQL
 categories: 
-  - 个人提升
+  - 学无止境
   - 编程语言学习
 tags: 
   - SQL

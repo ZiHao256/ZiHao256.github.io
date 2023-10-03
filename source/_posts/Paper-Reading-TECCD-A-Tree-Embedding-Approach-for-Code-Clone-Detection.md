@@ -2,7 +2,7 @@
 title: 'Paper Reading: TECCD: A Tree Embedding Approach for Code Clone Detection'
 toc: true
 categories:
-  - 个人提升
+  - 学无止境
   - Paper Reading
 tags:
   - Code Clone Detection

@@ -1,7 +1,7 @@
 ---
 title: Hexo LearningNote
 categories: 
-  - 个人提升
+  - 学无止境
   - 博客更新
 tags:
   - Blog

@@ -2,7 +2,7 @@
 title: 'Project#0: C++ Primer'
 toc: true
 categories:
-  - 个人提升
+  - 学无止境
   - CMU15-445(2023FALL)
 tags:
   - Database System
@@ -10,6 +10,11 @@ tags:
 abbrlink: 6fa5e9a2
 date: 2023-10-01 14:44:47
 ---
+{% note warning simple %}
+**撰写本文的目的**：记录本人在不参考其他任何形式的解决方法（思路/源码）、仅靠课程提供的资源（课本/参考资料）和`Discord`中`high level`的讨论的情况下，独立完成该课程的过程。
+
+欢迎大家和我讨论学习中所遇到的问题。
+{% endnote %}
 # Task#1 - Copy-On-Write Trie
 按照源码中给的提示即可完成
 
@@ -51,11 +56,11 @@ Get函数实现较为简单
 ## Tests
 ### trie_test
 
-![image-20231001163006844](https://cdn.jsdelivr.net/gh/ZiHao256/Gallery@master/uPic/2023/10/image-20231001163006844.png)
+![trie_test](https://cdn.jsdelivr.net/gh/ZiHao256/Gallery@master/uPic/2023/10/image-20231001163006844.png)
 
 ### trie_noncopy_test
 
-![image-20231001163527645](https://cdn.jsdelivr.net/gh/ZiHao256/Gallery@master/uPic/2023/10/image-20231001163527645.png)
+![trie_noncopy_test](https://cdn.jsdelivr.net/gh/ZiHao256/Gallery@master/uPic/2023/10/image-20231001163527645.png)
 
 # Task#2 - Concurrent Key-value Store
 同上，按照源码给出的伪代码完成即可
@@ -85,11 +90,11 @@ Get函数实现较为简单
 ## Tests
 ### trie_store_test
 
-![image-20231001163631391](https://cdn.jsdelivr.net/gh/ZiHao256/Gallery@master/uPic/2023/10/image-20231001163631391.png)
+![trie_store_test result](https://cdn.jsdelivr.net/gh/ZiHao256/Gallery@master/uPic/2023/10/image-20231001163631391.png)
 
 ### trie_store_noncopy_test
 
-![image-20231001163712181](https://cdn.jsdelivr.net/gh/ZiHao256/Gallery@master/uPic/2023/10/image-20231001163712181.png)
+![trie_store_noncopy_test result](https://cdn.jsdelivr.net/gh/ZiHao256/Gallery@master/uPic/2023/10/image-20231001163712181.png)
 
 # Task#3 - Debugging
 可以使用VSCode或者Clion的CMake, Make插件直接构建、生成或者调试给定的测试代码
@@ -101,18 +106,18 @@ Get函数实现较为简单
 
 ## Tests
 
-![image-20231001164116523](https://cdn.jsdelivr.net/gh/ZiHao256/Gallery@master/uPic/2023/10/image-20231001164116523.png)
+![test1 result](https://cdn.jsdelivr.net/gh/ZiHao256/Gallery@master/uPic/2023/10/image-20231001164116523.png)
 
-![image-20231001164150326](https://cdn.jsdelivr.net/gh/ZiHao256/Gallery@master/uPic/2023/10/image-20231001164150326.png)
+![test2 result](https://cdn.jsdelivr.net/gh/ZiHao256/Gallery@master/uPic/2023/10/image-20231001164150326.png)
 
-![image-20231001164317119](https://cdn.jsdelivr.net/gh/ZiHao256/Gallery@master/uPic/2023/10/image-20231001164317119.png)
+![test3 result](https://cdn.jsdelivr.net/gh/ZiHao256/Gallery@master/uPic/2023/10/image-20231001164317119.png)
 
 
 
 # GradeScope
 被`Format`测试卡了好几次零分，但是最终还是完成了！很有成就感，just keep moving!
 
-![image-20231001164418561](https://cdn.jsdelivr.net/gh/ZiHao256/Gallery@master/uPic/2023/10/image-20231001164418561.png)
+![gradscope result](https://cdn.jsdelivr.net/gh/ZiHao256/Gallery@master/uPic/2023/10/image-20231001164418561.png)
 
 
 # Learning Notes

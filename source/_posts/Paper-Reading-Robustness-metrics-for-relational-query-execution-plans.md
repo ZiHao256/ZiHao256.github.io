@@ -2,7 +2,7 @@
 title: 'Paper Reading: Robustness metrics for relational query execution plans'
 toc: true
 categories:
-  - 个人提升
+  - 学无止境
   - Paper Reading
 tags:
   - Database

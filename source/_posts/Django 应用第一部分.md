@@ -1,7 +1,7 @@
 ---
 title: Django 应用第一部分
 categories: 
-  - 个人提升
+  - 学无止境
   - 开发框架学习
 tags: 
   - Python

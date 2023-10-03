@@ -2,7 +2,7 @@
 title: hexo博客勉强支持typora中的脚注功能：)
 toc: true
 categories:
-  - 个人提升
+  - 学无止境
   - 博客更新
 tags:
   - Blog

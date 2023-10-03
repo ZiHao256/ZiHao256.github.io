@@ -2,7 +2,7 @@
 title: 将Hexo博客部署到Github
 toc: true
 categories:
-  - 个人提升
+  - 学无止境
   - 博客更新
 tags:
   - Blog

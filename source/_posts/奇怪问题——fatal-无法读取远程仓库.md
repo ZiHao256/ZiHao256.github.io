@@ -2,7 +2,7 @@
 title: '奇怪问题——fatal:无法读取远程仓库'
 toc: true
 categories:
-  - 个人提升
+  - 学无止境
   - 博客更新
 tags:
   - Blog

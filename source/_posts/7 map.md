@@ -1,7 +1,7 @@
 ---
 title: 7 map
 categories: 
-  - 个人提升
+  - 学无止境
   - 编程语言学习
 tags:
   - The Go Programming Language

@@ -2,7 +2,7 @@
 title: Hexo博客少生成了index主页文件
 toc: true
 categories:
-  - 个人提升
+  - 学无止境
   - 博客更新
 tags:
   - Blog

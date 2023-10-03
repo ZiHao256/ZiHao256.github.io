@@ -1,7 +1,7 @@
 ---
 title: Lab 2 物理内存管理
 categories: 
-  - 个人提升
+  - 学无止境
   - 课程实验
 tags: 
   - 操作系统

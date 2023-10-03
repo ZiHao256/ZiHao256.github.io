@@ -1,7 +1,7 @@
 ---
 title: Linux 入门学习3
 categories: 
-  - 个人提升
+  - 学无止境
   - 操作系统学习
 tags:
   - 操作系统

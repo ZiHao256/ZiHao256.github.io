@@ -2,7 +2,7 @@
 title: 'Paper Reading: Plan Stitch: Harnessing the Best of Many Plans'
 toc: true
 categories:
-  - 个人提升
+  - 学无止境
   - Paper Reading
 tags:
   - Database

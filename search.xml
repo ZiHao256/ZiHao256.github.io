@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>test</title>
+    <url>/p/d87f7e0c.html</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
     <title>Project#1: Buffer Pool</title>
     <url>/p/1c228cd6.html</url>
     <content><![CDATA[<div class="note warning simple"><p><strong>撰写本文的目的</strong>：记录本人在不参考其他任何形式的解决方法（思路/源码）、仅靠课程提供的资源（课本/参考资料）和<code>Discord</code>中<code>high level</code>的讨论的情况下，独立完成该课程的过程。</p>

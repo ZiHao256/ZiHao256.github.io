@@ -6,7 +6,7 @@
   <link href="https://zihao256.github.io/atom.xml" rel="self"/>
   
   <link href="https://zihao256.github.io/"/>
-  <updated>2023-10-04T03:53:46.931Z</updated>
+  <updated>2023-10-03T07:46:29.564Z</updated>
   <id>https://zihao256.github.io/</id>
   
   <author>
@@ -15,19 +15,6 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
-  
-  <entry>
-    <title>test</title>
-    <link href="https://zihao256.github.io/p/d87f7e0c.html"/>
-    <id>https://zihao256.github.io/p/d87f7e0c.html</id>
-    <published>2023-10-04T03:53:46.000Z</published>
-    <updated>2023-10-04T03:53:46.931Z</updated>
-    
-    
-    
-    
-    
-  </entry>
   
   <entry>
     <title>Project#1: Buffer Pool</title>
@@ -546,6 +533,34 @@
     
     
     <category term="友谊" scheme="https://zihao256.github.io/tags/%E5%8F%8B%E8%B0%8A/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Preparation-For-MIT6.824</title>
+    <link href="https://zihao256.github.io/p/c9d8503f.html"/>
+    <id>https://zihao256.github.io/p/c9d8503f.html</id>
+    <published>2022-07-07T11:20:29.000Z</published>
+    <updated>2023-10-03T05:07:27.539Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;&lt;code&gt;refs:&lt;/code&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;h2 id=&quot;如何的才能更好地学习-MIT6-824-分布式系统课程？-谭新宇的回答-知乎&quot;&gt;&lt;a href=&quot;#如何的才能更好地学习-MIT6-824-分布式系统课程？-谭新宇的回答-知乎&quot; class=&quot;</summary>
+      
+    
+    
+    
+    <category term="学无止境" scheme="https://zihao256.github.io/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/"/>
+    
+    <category term="MIT6.824" scheme="https://zihao256.github.io/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/MIT6-824/"/>
+    
+    
+    <category term="Database System" scheme="https://zihao256.github.io/tags/Database-System/"/>
+    
+    <category term="Distributed" scheme="https://zihao256.github.io/tags/Distributed/"/>
     
   </entry>
   

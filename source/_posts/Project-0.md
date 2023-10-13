@@ -115,11 +115,18 @@ Get函数实现较为简单
 
 
 # GradeScope
+不知为什么本地`make format`会报出如下错误，因此只能通过`gradescope`来纠正我的代码格式：
+```
+/bin/sh: -c: line 0: syntax error near unexpected token `('
+/bin/sh: -c: line 0: `cd "/Users/zihao/Library/CloudStorage/OneDrive-stu.xidian.edu.cn/StudyFiled/XDU_Postgraduate/Learning/Courses/15-445(fall23)/bustub-private/cmake-build-debug" && "/Users/zihao/Library/CloudStorage/OneDrive-stu.xidian.edu.cn/StudyFiled/XDU_Postgraduate/Learning/Courses/15-445(fall23)/bustub-private/build_support/run_clang_format.py" /opt/homebrew/opt/llvm@14/bin/clang-format /Users/zihao/Library/CloudStorage/OneDrive-stu.xidian.edu.cn/StudyFiled/XDU_Postgraduate/Learning/Courses/15-445(fall23)/bustub-private/build_support/clang_format_exclusions.txt --source_dirs /Users/zihao/Library/CloudStorage/OneDrive-stu.xidian.edu.cn/StudyFiled/XDU_Postgraduate/Learning/Courses/15-445(fall23)/bustub-private/src,/Users/zihao/Library/CloudStorage/OneDrive-stu.xidian.edu.cn/StudyFiled/XDU_Postgraduate/Learning/Courses/15-445(fall23)/bustub-private/test, --fix --quiet'
+ninja: build stopped: subcommand failed.
+```
+
 被`Format`测试卡了好几次零分，但是最终还是完成了！很有成就感，just keep moving!
 
 ![gradscope result](https://cdn.jsdelivr.net/gh/ZiHao256/Gallery@master/uPic/2023/10/image-20231001164418561.png)
 
-
+> 更新：对project1运行`make format`时，发现可能是路径名称过长，改变项目位置之后能够成功`make format`。之前都是自己亲手一点点改过来的。。。被自己蠢哭了
 # Learning Notes
 - what is `COW`: ref: ([“Copy-On-Write”](zotero://select/library/items/WHDTY9QP))
 

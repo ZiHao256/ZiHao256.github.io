@@ -5,7 +5,8 @@
     <url>/p/1c228cd6.html</url>
     <content><![CDATA[<div class="note warning simple"><p><strong>撰写本文的目的</strong>：记录本人在不参考其他任何形式的解决方法（思路/源码）、仅靠课程提供的资源（课本/参考资料）和<code>Discord</code>中<code>high level</code>的讨论的情况下，独立完成该课程的过程。</p>
 <p>欢迎大家和我讨论学习中所遇到的问题。</p>
-<p>由于<code>gradescope</code>中对<code>non-cmu students</code>仅开放了<code>Project#0</code>，本文方法仅通过了本地测试，极有可能有错误（并发访问）</p>
+<p><del>由于<code>gradescope</code>中对<code>non-cmu students</code>仅开放了<code>Project#0</code>，本文方法仅通过了本地测试，极有可能有错误（并发访问）</del></p>
+<p>目前通过了<code>GradeScope</code>所有测试并且拿到了<code>100.0/100.0</code>，但是性能较差（与<code>Leaderboard</code>上第一名有十倍的性能差距)，打算在下一篇文章记录一下对<code>BPM</code>的性能进行优化，例如本文中提到的<code>DiskScheduler</code>创建的对<code>Request</code>的处理<code>Thread</code>实际上是串行的，后续再保证顺序正确的情况下对其进行适当的并行处理。</p>
 </div>
 
 <h1 id="Task-1-LRU-K-Replacement-Policy"><a href="#Task-1-LRU-K-Replacement-Policy" class="headerlink" title="Task#1 - LRU-K Replacement Policy"></a>Task#1 - LRU-K Replacement Policy</h1><p><strong>思路：</strong></p>
@@ -88,10 +89,19 @@
 <h1 id="Task-3-Buffer-Pool-Manager"><a href="#Task-3-Buffer-Pool-Manager" class="headerlink" title="Task#3 - Buffer Pool Manager"></a>Task#3 - Buffer Pool Manager</h1><p>通过参考<code>Page</code>，<code>LRU K Replacement Policy</code>和<code>Disk Scheduler</code>的源码实现，完成时过程比较曲折，花了中秋节一下午和晚上完成，并且只通过了本地测试，并发问题肯定很严重。等<code>gradescope</code>开了再继续完善。</p>
 <p>源码中给的提示还是比较清晰，因此实现过程虽然曲折但也还算顺利。但有一些我自己踩过的坑或bug，在最后统一写出。</p>
 <h2 id="Learning-Note"><a href="#Learning-Note" class="headerlink" title="Learning Note"></a>Learning Note</h2><ul>
-<li>如果在if之前对mutex进行过lock，需要在每个if分支（若有return）中unlock</li>
-<li>多线程在进行数据同步的时候，如若使用promise和future，一定不要忘了在指定线程中使用future对象实例的get方法，等待线程任务的完成</li>
-<li>DiskManager:<ul>
-<li>```<br>  WritePage(page_id_t page_id, const char *page_data)  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">    </span><br><span class="line">    - page_id：Disk Page的id</span><br><span class="line">      </span><br><span class="line">    - page_data：是Memory buffer pool中存储Disk Page所在frame的地址</span><br><span class="line">    </span><br><span class="line">- ```</span><br><span class="line">    ReadPage(page_id_t page_id, char *page_data)</span><br></pre></td></tr></table></figure>
+<li><p>如果在if之前对mutex进行过lock，需要在每个if分支（若有return）中unlock</p>
+</li>
+<li><p>多线程在进行数据同步的时候，如若使用promise和future，一定不要忘了在指定线程中使用future对象实例的get方法，等待线程任务的完成</p>
+</li>
+<li><p>DiskManager:</p>
+<ul>
+<li><p><code>WritePage(page_id_t page_id, const char *page_data)</code></p>
+<ul>
+<li>page_id：Disk Page的id</li>
+<li>page_data：是Memory buffer pool中存储Disk Page所在frame的地址</li>
+</ul>
+</li>
+<li><p><code>ReadPage(page_id_t page_id, char *page_data)</code></p>
 <ul>
 <li>page_id: Disk Page的id</li>
 <li>page_data: 也是将Disk Page读入内存所在frame的地址</li>
@@ -337,23 +347,180 @@
 <h4 id="FetchPage-1"><a href="#FetchPage-1" class="headerlink" title="FetchPage"></a>FetchPage</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">10: Test command: /autograder/source/bustub/build/test/grading_buffer_pool_manager_test &quot;--gtest_filter=BufferPoolManagerTest.FetchPage&quot; &quot;--gtest_also_run_disabled_tests&quot; &quot;--gtest_color=auto&quot; &quot;--gtest_output=xml:/autograder/source/bustub/build/test/grading_buffer_pool_manager_test.xml&quot; &quot;--gtest_catch_exceptions=0&quot;</span><br><span class="line">10: Test timeout computed to be: 120</span><br><span class="line">10: Running main() from gmock_main.cc</span><br><span class="line">10: Note: Google Test filter = BufferPoolManagerTest.FetchPage</span><br><span class="line">10: [==========] Running 1 test from 1 test suite.</span><br><span class="line">10: [----------] Global test environment set-up.</span><br><span class="line">10: [----------] 1 test from BufferPoolManagerTest</span><br><span class="line">10: [ RUN      ] BufferPoolManagerTest.FetchPage</span><br><span class="line">10: /autograder/source/bustub/test/buffer/grading_buffer_pool_manager_test.cpp:355: Failure</span><br><span class="line">10: Expected equality of these values:</span><br><span class="line">10:   1</span><br><span class="line">10:   bpm-&gt;UnpinPage(page_ids[i], true)</span><br><span class="line">10:     Which is: false</span><br><span class="line">10: </span><br><span class="line">10: [  FAILED  ] BufferPoolManagerTest.FetchPage (0 ms)</span><br><span class="line">10: [----------] 1 test from BufferPoolManagerTest (0 ms total)</span><br><span class="line">10: </span><br><span class="line">10: [----------] Global test environment tear-down</span><br><span class="line">10: [==========] 1 test from 1 test suite ran. (0 ms total)</span><br><span class="line">10: [  PASSED  ] 0 tests.</span><br><span class="line">10: [  FAILED  ] 1 test, listed below:</span><br><span class="line">10: [  FAILED  ] BufferPoolManagerTest.FetchPage</span><br><span class="line">10: </span><br><span class="line">10:  1 FAILED TEST</span><br><span class="line">10: </span><br><span class="line">10: =================================================================</span><br><span class="line">10: ==2680==ERROR: LeakSanitizer: detected memory leaks</span><br><span class="line">10: </span><br><span class="line">10: Indirect leak of 40960 byte(s) in 10 object(s) allocated from:</span><br><span class="line">10:     #0 0x55e631f1ab7d in operator new[](unsigned long) (/autograder/source/bustub/build/test/grading_buffer_pool_manager_test+0x111b7d) (BuildId: bba925843ed9324ec5cf6b26d6f3b079c64b7e41)</span><br><span class="line">10:     #1 0x55e631fbb4c0 in bustub::Page::Page() /autograder/source/bustub/src/include/storage/page/page.h:35:13</span><br><span class="line">10:     #2 0x55e631fb7762 in bustub::BufferPoolManager::BufferPoolManager(unsigned long, bustub::DiskManager*, unsigned long, bustub::LogManager*) /autograder/source/bustub/src/buffer/buffer_pool_manager.cpp:36:12</span><br><span class="line">10:     #3 0x55e631f2b83b in bustub::BufferPoolManagerTest_FetchPage_Test::TestBody() /autograder/source/bustub/test/buffer/grading_buffer_pool_manager_test.cpp:334:19</span><br><span class="line">10:     #4 0x55e63206f55e in void testing::internal::HandleExceptionsInMethodIfSupported&lt;testing::Test, void&gt;(testing::Test*, void (testing::Test::*)(), char const*) /autograder/source/bustub/third_party/googletest/googletest/src/gtest.cc:2670:12</span><br><span class="line">10:     #5 0x55e63201c9cc in testing::Test::Run() /autograder/source/bustub/third_party/googletest/googletest/src/gtest.cc:2687:5</span><br><span class="line">10:     #6 0x55e63201e854 in testing::TestInfo::Run() /autograder/source/bustub/third_party/googletest/googletest/src/gtest.cc:2836:11</span><br><span class="line">10:     #7 0x55e632020077 in testing::TestSuite::Run() /autograder/source/bustub/third_party/googletest/googletest/src/gtest.cc:3015:30</span><br><span class="line">10:     #8 0x55e632043c89 in testing::internal::UnitTestImpl::RunAllTests() /autograder/source/bustub/third_party/googletest/googletest/src/gtest.cc:5920:44</span><br><span class="line">10:     #9 0x55e632075c43 in bool testing::internal::HandleExceptionsInMethodIfSupported&lt;testing::internal::UnitTestImpl, bool&gt;(testing::internal::UnitTestImpl*, bool (testing::internal::UnitTestImpl::*)(), char const*) /autograder/source/bustub/third_party/googletest/googletest/src/gtest.cc:2670:12</span><br><span class="line">10:     #10 0x55e632042fc2 in testing::UnitTest::Run() /autograder/source/bustub/third_party/googletest/googletest/src/gtest.cc:5484:10</span><br><span class="line">10:     #11 0x55e6320cf620 in RUN_ALL_TESTS() /autograder/source/bustub/third_party/googletest/googletest/include/gtest/gtest.h:2317:73</span><br><span class="line">10:     #12 0x55e6320cf5b1 in main /autograder/source/bustub/third_party/googletest/googlemock/src/gmock_main.cc:71:10</span><br><span class="line">10:     #13 0x7fa693f2dd8f in __libc_start_call_main csu/../sysdeps/nptl/libc_start_call_main.h:58:16</span><br></pre></td></tr></table></figure>
 
 <ul>
-<li><p>- [✅] <code>Unpin</code>相关操作逻辑有<code>bug</code></p>
-<ul>
+<li>- [✅] <code>Unpin</code>相关操作逻辑有<code>bug</code><ul>
 <li>影响<code>UnpinPage</code>逻辑的一些<code>shared data structure</code><ul>
 <li><code>page_table_</code></li>
 <li><code>Page::pin_count_</code><ul>
 <li>- [❓] 尝试<code>NewPage</code>和<code>FetchPage</code>时，都初始化<code>pin_count_</code>为1。并且在<code>DeletePage</code>时，将<code>Page::pin_count_</code>设置为0<ul>
-<li>修改后遇到新bug：<ul>
-<li>```<br>  67: Note: Google Test filter = DiskSchedulerTest.ScheduleManyWrites<br>  67: [==========] Running 1 test from 1 test suite.<br>  67: [———-] Global test environment set-up.<br>  67: [———-] 1 test from DiskSchedulerTest<br>  67: [ RUN      ] DiskSchedulerTest.ScheduleManyWrites<br>  67: /autograder/source/bustub/test/storage/grading_disk_scheduler_test.cpp:68: Failure<br>  67: Expected equality of these values:<br>  67:   std::memcmp(buf, data_pages[100 - 1], sizeof(buf))<br>  67:     Which is: 8<br>  67:   0<br>  67:<br>  67: [  FAILED  ] DiskSchedulerTest.ScheduleManyWrites (18 ms)<br>  67: [———-] 1 test from DiskSchedulerTest (18 ms total)<br>  67:<br>  67: [———-] Global test environment tear-down<br>  67: [==========] 1 test from 1 test suite ran. (18 ms total)<br>  67: [  PASSED  ] 0 tests.<br>  67: [  FAILED  ] 1 test, listed below:<br>  67: [  FAILED  ] DiskSchedulerTest.ScheduleManyWrites<br>  67:<br>  67:  1 FAILED TEST  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">                    </span><br><span class="line">                - 影响的测试应该是串行多次读写？可能是错误修改了不该修改的`page`的`dirty`/`pin_count_`导致的</span><br><span class="line">                  </span><br><span class="line">                - \- [✅] 尝试修改`GetFreePageForPageId`中的`pin_count_`为1，解决新bug。</span><br><span class="line">                  </span><br><span class="line">                - 为什么同一个文件上传多次：有的时候会`fail` 有的时候`pass`？~太玄学了？~</span><br><span class="line">                </span><br><span class="line">            - \- [✅] 尝试修改`FetchPage`：每次访问在`BufferPool`中的Page，都`access and pin_count_++`</span><br><span class="line">            </span><br><span class="line">                - ![submission_after_pass_FetchPageTest](https://cdn.jsdelivr.net/gh/ZiHao256/Gallery@master/uPic/2023/10/submission_after_pass_FetchPageTest.png)</span><br><span class="line">            </span><br><span class="line">    </span><br><span class="line">- \- [✅] 有很严重的`Memory Leaks`：9处。。。🐽</span><br><span class="line">  </span><br><span class="line">    - 通过更改`FetchPage`的逻辑，也将其解决了。</span><br><span class="line">      </span><br><span class="line"></span><br><span class="line">#### DeletePage/IsDirty/ConcurrencyTest</span><br><span class="line"></span><br><span class="line">- 是因为`FetchPage`处理存在于`Buffer Pool`中Page的逻辑有问题，导致了这么多测试失败。</span><br><span class="line">  </span><br><span class="line">- 下次需要自己多多思考了，注释不可能像伪代码一样将所有情况的处理都写下来，需要自己真正理解这个函数在做什么</span><br><span class="line">  </span><br><span class="line">    - `FetchPage`实际上就是`Execution Engine`调用的，然后调用`UnpinPage`来告诉`BPM`它对Page是否进行`Write`，接着`BPM`会决定该如何处理`Page`以及`Replacer`会如何处理</span><br><span class="line">      </span><br><span class="line">        - 简单来说，`pin_count_`类似于`reference_count`，而`NewPage`,`FetchPage`会增加`pin`，而`UnpinPage`会相应的减少`pin`</span><br><span class="line">        </span><br><span class="line">    - 对于已经在`Buffer Pool`中的Page，可能会有多个`worker`正在或者已经`fetch`，因此需要`pin++`，并且调用`replacer`来记录访问log</span><br><span class="line">    </span><br><span class="line">- \- [✅] 对于相同的`submission file`，`ConcurrencyTest`也会有时失败有时成功，搞不清楚。可能每次用于测试的数据不同？</span><br><span class="line">  </span><br><span class="line">    - 需要先扩大锁持有的范围/粒度</span><br><span class="line">      </span><br><span class="line"></span><br><span class="line">#### HardTests(1-4)</span><br><span class="line"></span><br><span class="line">\- [✅]`HardTest_1`</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-15: Test command: /autograder/source/bustub/build/test/grading_buffer_pool_manager_test “–gtest_filter=BufferPoolManagerTest.HardTest_1” “–gtest_also_run_disabled_tests” “–gtest_color=auto” “–gtest_output=xml:/autograder/source/bustub/build/test/grading_buffer_pool_manager_test.xml” “–gtest_catch_exceptions=0”<br>15: Test timeout computed to be: 120<br>15: Running main() from gmock_main.cc<br>15: Note: Google Test filter = BufferPoolManagerTest.HardTest_1<br>15: [==========] Running 1 test from 1 test suite.<br>15: [———-] Global test environment set-up.<br>15: [———-] 1 test from BufferPoolManagerTest<br>15: [ RUN      ] BufferPoolManagerTest.HardTest_1<br>15: ==587==ERROR: AddressSanitizer failed to allocate 0x13f000 (1306624) bytes at address fe7b62e4000 (errno: 12)<br>15: ==587==ReserveShadowMemoryRange failed while trying to map 0x13f000 bytes. Perhaps you’re using ulimit -v<br>1/1 Test #15: BufferPoolManagerTest.HardTest_1 …Subprocess aborted***Exception:   4.57 sec<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">\- [✅] `HardTest_2 - 4`</span><br><span class="line"></span><br><span class="line">- \- [ ] 和`Address Sanitizer`相关，可能是`内存泄漏`？也可能是`并发访问导致`的</span><br><span class="line">  </span><br><span class="line">    - 似乎`FetchPage`和`UnpiPage`还是有问题</span><br><span class="line">      </span><br><span class="line">    - `page_table_`访问抛出了`out_of_range`</span><br><span class="line">      </span><br><span class="line">    - \- [❎] 给LRUNode设置锁</span><br><span class="line">      </span><br><span class="line">        - 但实际上`Replacer`自己维护了一个锁，并且我也给每个成员函数上了该锁，不应该会有多个线程同时访问一个LRUNode</span><br><span class="line">        </span><br><span class="line">    - \- [✅] 尝试扩大`BPM`中每个方法持有`latch_`的范围粒度</span><br><span class="line">      </span><br><span class="line">        - 扩大到整个函数期间都拥有`latch_`，有一定效果，但是不多，解决了`FetchPage`和`UnpinPage`的问题</span><br><span class="line">          - ![submission_after_solve_FetchPage&amp;UnpinPage](https://cdn.jsdelivr.net/gh/ZiHao256/Gallery@master/uPic/2023/10/submission_after_solve_FetchPage&amp;UnpinPage.png)</span><br><span class="line">        </span><br><span class="line">        - \- [✅] 需要解决函数调用者和被调用者可能同时获得同一个锁：效果显著。~性能可能有大问题~</span><br><span class="line">        </span><br><span class="line">            1. \- [✅] 递归锁/ScopeLock</span><br><span class="line">               1. ![submission_after_pass_HardTest2_4](https://cdn.jsdelivr.net/gh/ZiHao256/Gallery@master/uPic/2023/10/submission_after_pass_HardTest2_4.png)</span><br><span class="line">        </span><br><span class="line">            2. \- [ ] 先释放再调用：可能会在释放与获得之间的空隙发生竞争</span><br><span class="line">        </span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">\- [✅] 还剩下一个`HardTest-1`：可能由于`Page`对象的读写锁没有正确地获取和释放，导致测试文件中的内存泄漏？</span><br><span class="line"></span><br><span class="line">- \- [❎] 尝试修改`BPM`对`Page`对象读写锁的持有范围：需要注意的是，`W`和`R`是读写锁的意思，而非从`disk`中`read`或者`write`</span><br><span class="line">  </span><br><span class="line">    - 会有许多调用者和被调用者持有相同锁的问题：但这次是读写锁</span><br><span class="line">      </span><br><span class="line">        - 错误：</span><br><span class="line">          - ![error_protect_page1](https://cdn.jsdelivr.net/gh/ZiHao256/Gallery@master/uPic/2023/10/error_protect_page1.png)</span><br><span class="line">          </span><br><span class="line">        - 获得读锁期间，创建临时变量获得需要的内容</span><br><span class="line">          - ![correct_protect_page](https://cdn.jsdelivr.net/gh/ZiHao256/Gallery@master/uPic/2023/10/correct_protect_page.png)</span><br><span class="line">        </span><br><span class="line">    </span><br><span class="line">- \- [✅] 其他原因：仍然是`AddressSanitizer`相关问题：</span><br><span class="line">  </span><br><span class="line">    - \- [❎] BPM中我自己写工具函数都没有对Page进行访问保护</span><br><span class="line">      </span><br><span class="line">        - 改了，但仍是无法通过该测试</span><br><span class="line">        </span><br><span class="line">    - \- [❎] `RecordAccess`中逻辑错误`invalid frame id`</span><br><span class="line">      </span><br><span class="line">        - 修复了，但是对该问题无影响</span><br><span class="line">        </span><br><span class="line">    - \- [✅] `replacer`**的实现有问题**</span><br><span class="line">      </span><br><span class="line">        - \- [✅] **没有保证并发安全**：</span><br><span class="line">          </span><br><span class="line">            - \- [✅] `replacer`维护一个`scope latch`</span><br><span class="line">              </span><br><span class="line">            - \- [✅] `LRUNode`维护一个`latch`并且定义工具函数来获取和释放锁</span><br><span class="line">              </span><br><span class="line">            - \- [✅] 成员变量含有`mutex`的类，不能进行`copy`等操作，因此无法插入`node_store&lt;frame_id, LRUNode&gt;`中</span><br><span class="line">              </span><br><span class="line">                - 需要将该数据结构改为`node_store unordered_map&lt;frame_id, std::shared_ptr&lt;LRUNode&gt;&gt;`</span><br><span class="line">            </span><br><span class="line">        - \- [✅] 之前对`LRUNode` 都是构造临时对象，这次尝试在`node_store`中维护指针</span><br><span class="line">          </span><br><span class="line">            - \- [✅] 需要`new`获得堆内存，**必须显式地使用delete释放: 不然会造成内存泄漏,**有时候认为自己在所有地方都使用了`delete`但仍然会有内存泄漏，这时使用`smart pointer`</span><br><span class="line">              </span><br><span class="line">                - &gt; 在C++中，局部类对象变量取地址和使用\`new\`操作符有重要的区别。这区别在于对象的生命周期、内存管理和访问方式：</span><br><span class="line">                    &gt; </span><br><span class="line">                    &gt; 1\. **对象的生命周期**：</span><br><span class="line">                    &gt; </span><br><span class="line">                    &gt;   - **局部对象变量取地址**：当你取一个局部对象的地址，对象的生命周期仗赖于其定义的作用域。一旦超出该作用域，对象将被销毁，且你的指针将成为悬垂指针（dangling pointer），因为它引用的内存已经释放。</span><br><span class="line">                    &gt; </span><br><span class="line">                    &gt;   - **使用new**：使用`new`创建的对象位于堆内存，它的生命周期在你显式调用`delete`来释放内存之前会一直存在。这意味着你可以在超出定义作用域的地方继续访问这个对象，只要你小心管理内存。</span><br><span class="line">                    &gt; </span><br><span class="line">                    &gt; 2\. **内存管理**：</span><br><span class="line">                    &gt; </span><br><span class="line">                    &gt;   - **局部对象变量取地址**：不需要显式管理内存，对象的内存分配和释放是由编译器自动处理的。</span><br><span class="line">                    &gt; </span><br><span class="line">                    &gt;   - **使用new**：你需要手动分配和释放内存。使用`new`来创建对象后，必须使用`delete`来释放这些对象的内存，否则会导致内存泄漏。</span><br><span class="line">                    &gt; </span><br><span class="line">                    &gt; 3\. **访问方式**：</span><br><span class="line">                    &gt; </span><br><span class="line">                    &gt;   - **局部对象变量取地址**：你可以直接通过指针来访问对象的成员和方法，就像你访问其他对象一样。</span><br><span class="line">                    &gt; </span><br><span class="line">                    &gt;   - **使用new**：你同样可以通过指针来访问对象的成员和方法，但你必须使用箭头运算符(`-&gt;`)，因为你操作的是一个指向对象的指针。</span><br><span class="line">                    &gt; </span><br><span class="line">                    &gt; 总之，取局部对象的地址和使用`new`都有各自的用途和适用情况。如果你需要一个对象在函数调用之后继续存在，使用`new`来在堆上分配内存可能是一个好选择。但请务必小心管理内存，避免内存泄漏。如果对象的生命周期仅在函数内部有效，取地址通常更为简单和安全。</span><br><span class="line">                </span><br><span class="line">            - \- [✅] 直接使用`shared_ptr`，避免**内存泄漏。**~啊，真香~</span><br><span class="line">            </span><br><span class="line">        - 但仍然未能解决\`HardTest_1\`的问题</span><br><span class="line">        </span><br><span class="line">    - 🌟- [✅] `disk_scheduler`的**实现有问题**：偶尔会出现`DiskSchedulerTest.ManyWriteTest`失败，成功和失败间隔出现：**事实证明，该Test的内存泄漏问题是由于**`Disk_Scheduler`的实现有问题导致的，并非真的是内存泄漏问题。</span><br><span class="line">      </span><br><span class="line">        - \- [✅] **保证并发安全**：在`backgroundThread`中创建多个`thread`会对`shared_data_structure`竞争？</span><br><span class="line">          </span><br><span class="line">            - \- [✅] 不需要给`Schedule`和`WorkThread`中加锁，对`request_queue`对象本身访问就是并发安全的，因此只需要给`ProcessRequest`增加获取锁和释放锁</span><br><span class="line">            </span><br><span class="line">        - 但仍然未能解决`HardTest_1`的问题</span><br><span class="line">          </span><br><span class="line">        - **\- [✅] 仍然有极其低的概率出现失败**`1/4`**?**</span><br><span class="line">          </span><br><span class="line">            - **读写相同Page的多个**`thread`**无法按照给定顺序执行：**</span><br><span class="line">              </span><br><span class="line">                - **\- [✅] 先使用**`join`**串联执行，确保正确性：**</span><br><span class="line">        </span><br><span class="line">    - \- [❎] 打`log，复现test`：必然有用，持续使用ing</span><br><span class="line">      </span><br><span class="line">        - 经过上述对`replacer`和`disk_schedular`的实现，`HardTest_1`的两种报错：</span><br><span class="line">          </span><br><span class="line">            - ```</span><br><span class="line">                15: Running main() from gmock_main.cc</span><br><span class="line">                15: Note: Google Test filter = BufferPoolManagerTest.HardTest_1</span><br><span class="line">                15: [==========] Running 1 test from 1 test suite.</span><br><span class="line">                15: [----------] Global test environment set-up.</span><br><span class="line">                15: [----------] 1 test from BufferPoolManagerTest</span><br><span class="line">                15: [ RUN      ] BufferPoolManagerTest.HardTest_1</span><br><span class="line">                15: Stack trace (most recent call last) in thread 588:</span><br><span class="line">                15: #20   Object &quot;&quot;, at 0xffffffffffffffff, in </span><br><span class="line">                15: =================================================================</span><br><span class="line">                15: ==587==ERROR: AddressSanitizer: allocator is out of memory trying to allocate 0x36a8 bytes</span><br><span class="line">                15: ==587==ERROR: AddressSanitizer failed to allocate 0x1000 (4096) bytes of InternalMmapVector (error code: 12)</span><br><span class="line">                15: ERROR: Failed to mmap</span><br><span class="line">                1/1 Test #15: BufferPoolManagerTest.HardTest_1 ...***Failed    4.56 sec</span><br></pre></td></tr></table></figure></li>
+<li>修改后遇到新bug：  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">67: Note: Google Test filter = DiskSchedulerTest.ScheduleManyWrites</span><br><span class="line">67: [==========] Running 1 test from 1 test suite.</span><br><span class="line">67: [----------] Global test environment set-up.</span><br><span class="line">67: [----------] 1 test from DiskSchedulerTest</span><br><span class="line">67: [ RUN      ] DiskSchedulerTest.ScheduleManyWrites</span><br><span class="line">67: /autograder/source/bustub/test/storage/grading_disk_scheduler_test.cpp:68: Failure</span><br><span class="line">67: Expected equality of these values:</span><br><span class="line">67:   std::memcmp(buf, data_pages[100 - 1], sizeof(buf))</span><br><span class="line">67:     Which is: 8</span><br><span class="line">67:   0</span><br><span class="line">67: </span><br><span class="line">67: [  FAILED  ] DiskSchedulerTest.ScheduleManyWrites (18 ms)</span><br><span class="line">67: [----------] 1 test from DiskSchedulerTest (18 ms total)</span><br><span class="line">67: </span><br><span class="line">67: [----------] Global test environment tear-down</span><br><span class="line">67: [==========] 1 test from 1 test suite ran. (18 ms total)</span><br><span class="line">67: [  PASSED  ] 0 tests.</span><br><span class="line">67: [  FAILED  ] 1 test, listed below:</span><br><span class="line">67: [  FAILED  ] DiskSchedulerTest.ScheduleManyWrites</span><br><span class="line">67: </span><br><span class="line">67:  1 FAILED TEST</span><br></pre></td></tr></table></figure>
+</li>
+<li>影响的测试应该是串行多次读写？可能是错误修改了不该修改的<code>page</code>的<code>dirty</code>/<code>pin_count_</code>导致的</li>
+<li>- [✅] 尝试修改<code>GetFreePageForPageId</code>中的<code>pin_count_</code>为1，解决新bug。</li>
+<li>为什么同一个文件上传多次：有的时候会<code>fail</code> 有的时候<code>pass</code>？<del>太玄学了？</del></li>
+</ul>
+</li>
+<li>- [✅] 尝试修改<code>FetchPage</code>：每次访问在<code>BufferPool</code>中的Page，都<code>access and pin_count_++</code><ul>
+<li><img src="https://cdn.jsdelivr.net/gh/ZiHao256/Gallery@master/uPic/2023/10/submission_after_pass_FetchPageTest.png" alt="submission_after_pass_FetchPageTest"></li>
 </ul>
 </li>
 </ul>
 </li>
-<li>```<br>  15: Running main() from gmock_main.cc<br>  15: Note: Google Test filter = BufferPoolManagerTest.HardTest_1<br>  15: [==========] Running 1 test from 1 test suite.<br>  15: [———-] Global test environment set-up.<br>  15: [———-] 1 test from BufferPoolManagerTest<br>  15: [ RUN      ] BufferPoolManagerTest.HardTest_1<br>  15: ==587==ERROR: AddressSanitizer failed to allocate 0x13f000 (1306624) bytes at address ff541264000 (errno: 12)<br>  15: ==587==ReserveShadowMemoryRange failed while trying to map 0x13f000 bytes. Perhaps you’re using ulimit -v<br>  1/1 Test #15: BufferPoolManagerTest.HardTest_1 …Subprocess aborted***Exception:   4.64 sec  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">        </span><br><span class="line">        - `errno`说明内存不足，`gradescope`中分的虚拟内存不足以支持该测试，说明我的程序在内存管理上面需要改进或者有漏洞</span><br><span class="line">    </span><br><span class="line">- `log`:输出：</span><br><span class="line">  </span><br><span class="line">    - ```</span><br><span class="line">        15: FetchPage invoke 2470</span><br><span class="line">        15: UnpinPage: invoke 2470 0</span><br><span class="line">        15: DeletePage: invoke 2470</span><br><span class="line">        15: FetchPage invoke 8925</span><br><span class="line">        15: UnpinPage: invoke 8925 0</span><br><span class="line">        15: Del==587==ERROR: AddressSanitizer failed to allocate 0x13f000 (1306624) bytes at address fefff684000 (errno: 12)</span><br><span class="line">        15: ==587==ReserveShadowMemoryRange failed while trying to map 0x13f000 bytes. Perhaps you&#x27;re using ulimit -v</span><br><span class="line">        1/1 Test #15: BufferPoolManagerTest.HardTest_1 ...Subprocess aborted***Exception:   6.35 sec</span><br></pre></td></tr></table></figure></li>
 </ul>
 </li>
-<li><code>复现</code>：<ol>
+</ul>
+</li>
+<li>- [✅] 有很严重的<code>Memory Leaks</code>：9处。。。🐽<ul>
+<li>通过更改<code>FetchPage</code>的逻辑，也将其解决了。</li>
+</ul>
+</li>
+</ul>
+<h4 id="DeletePage-IsDirty-ConcurrencyTest"><a href="#DeletePage-IsDirty-ConcurrencyTest" class="headerlink" title="DeletePage/IsDirty/ConcurrencyTest"></a>DeletePage/IsDirty/ConcurrencyTest</h4><ul>
+<li>是因为<code>FetchPage</code>处理存在于<code>Buffer Pool</code>中Page的逻辑有问题，导致了这么多测试失败。</li>
+<li>下次需要自己多多思考了，注释不可能像伪代码一样将所有情况的处理都写下来，需要自己真正理解这个函数在做什么<ul>
+<li><code>FetchPage</code>实际上就是<code>Execution Engine</code>调用的，然后调用<code>UnpinPage</code>来告诉<code>BPM</code>它对Page是否进行<code>Write</code>，接着<code>BPM</code>会决定该如何处理<code>Page</code>以及<code>Replacer</code>会如何处理<ul>
+<li>简单来说，<code>pin_count_</code>类似于<code>reference_count</code>，而<code>NewPage</code>,<code>FetchPage</code>会增加<code>pin</code>，而<code>UnpinPage</code>会相应的减少<code>pin</code></li>
+</ul>
+</li>
+<li>对于已经在<code>Buffer Pool</code>中的Page，可能会有多个<code>worker</code>正在或者已经<code>fetch</code>，因此需要<code>pin++</code>，并且调用<code>replacer</code>来记录访问log</li>
+</ul>
+</li>
+<li>- [✅] 对于相同的<code>submission file</code>，<code>ConcurrencyTest</code>也会有时失败有时成功，搞不清楚。可能每次用于测试的数据不同？<ul>
+<li>需要先扩大锁持有的范围/粒度</li>
+</ul>
+</li>
+</ul>
+<h4 id="HardTests-1-4"><a href="#HardTests-1-4" class="headerlink" title="HardTests(1-4)"></a>HardTests(1-4)</h4><p>- [✅]<code>HardTest_1</code></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">15: Test command: /autograder/source/bustub/build/test/grading_buffer_pool_manager_test &quot;--gtest_filter=BufferPoolManagerTest.HardTest_1&quot; &quot;--gtest_also_run_disabled_tests&quot; &quot;--gtest_color=auto&quot; &quot;--gtest_output=xml:/autograder/source/bustub/build/test/grading_buffer_pool_manager_test.xml&quot; &quot;--gtest_catch_exceptions=0&quot;</span><br><span class="line">15: Test timeout computed to be: 120</span><br><span class="line">15: Running main() from gmock_main.cc</span><br><span class="line">15: Note: Google Test filter = BufferPoolManagerTest.HardTest_1</span><br><span class="line">15: [==========] Running 1 test from 1 test suite.</span><br><span class="line">15: [----------] Global test environment set-up.</span><br><span class="line">15: [----------] 1 test from BufferPoolManagerTest</span><br><span class="line">15: [ RUN      ] BufferPoolManagerTest.HardTest_1</span><br><span class="line">15: ==587==ERROR: AddressSanitizer failed to allocate 0x13f000 (1306624) bytes at address fe7b62e4000 (errno: 12)</span><br><span class="line">15: ==587==ReserveShadowMemoryRange failed while trying to map 0x13f000 bytes. Perhaps you&#x27;re using ulimit -v</span><br><span class="line">1/1 Test #15: BufferPoolManagerTest.HardTest_1 ...Subprocess aborted***Exception:   4.57 sec</span><br></pre></td></tr></table></figure>
+
+<p>- [✅] <code>HardTest_2 - 4</code></p>
+<ul>
+<li>- [ ] 和<code>Address Sanitizer</code>相关，可能是<code>内存泄漏</code>？也可能是<code>并发访问导致</code>的<ul>
+<li>似乎<code>FetchPage</code>和<code>UnpiPage</code>还是有问题</li>
+<li><code>page_table_</code>访问抛出了<code>out_of_range</code></li>
+<li>- [❎] 给LRUNode设置锁<ul>
+<li>但实际上<code>Replacer</code>自己维护了一个锁，并且我也给每个成员函数上了该锁，不应该会有多个线程同时访问一个LRUNode</li>
+</ul>
+</li>
+<li>- [✅] 尝试扩大<code>BPM</code>中每个方法持有<code>latch_</code>的范围粒度<ul>
+<li>扩大到整个函数期间都拥有<code>latch_</code>，有一定效果，但是不多，解决了<code>FetchPage</code>和<code>UnpinPage</code>的问题<ul>
+<li><img src="https://cdn.jsdelivr.net/gh/ZiHao256/Gallery@master/uPic/2023/10/submission_after_solve_FetchPage&UnpinPage.png" alt="submission_after_solve_FetchPage&amp;UnpinPage"></li>
+</ul>
+</li>
+<li>- [✅] 需要解决函数调用者和被调用者可能同时获得同一个锁：效果显著。<del>性能可能有大问题</del><ol>
+<li><p>- [✅] 递归锁/ScopeLock</p>
+<ol>
+<li><img src="https://cdn.jsdelivr.net/gh/ZiHao256/Gallery@master/uPic/2023/10/submission_after_pass_HardTest2_4.png" alt="submission_after_pass_HardTest2_4"></li>
+</ol>
+</li>
+<li><p>- [ ] 先释放再调用：可能会在释放与获得之间的空隙发生竞争</p>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>- [✅] 还剩下一个<code>HardTest-1</code>：可能由于<code>Page</code>对象的读写锁没有正确地获取和释放，导致测试文件中的内存泄漏？</p>
+<ul>
+<li><p>- [❎] 尝试修改<code>BPM</code>对<code>Page</code>对象读写锁的持有范围：需要注意的是，<code>W</code>和<code>R</code>是读写锁的意思，而非从<code>disk</code>中<code>read</code>或者<code>write</code></p>
+<ul>
+<li>会有许多调用者和被调用者持有相同锁的问题：但这次是读写锁<ul>
+<li>错误：<ul>
+<li><img src="https://cdn.jsdelivr.net/gh/ZiHao256/Gallery@master/uPic/2023/10/error_protect_page1.png" alt="error_protect_page1"></li>
+</ul>
+</li>
+<li>获得读锁期间，创建临时变量获得需要的内容<ul>
+<li><img src="https://cdn.jsdelivr.net/gh/ZiHao256/Gallery@master/uPic/2023/10/correct_protect_page.png" alt="correct_protect_page"></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>- [✅] 其他原因：仍然是<code>AddressSanitizer</code>相关问题：</p>
+<ul>
+<li><p>- [❎] BPM中我自己写工具函数都没有对Page进行访问保护</p>
+<ul>
+<li>改了，但仍是无法通过该测试</li>
+</ul>
+</li>
+<li><p>- [❎] <code>RecordAccess</code>中逻辑错误<code>invalid frame id</code></p>
+<ul>
+<li>修复了，但是对该问题无影响</li>
+</ul>
+</li>
+<li><p>- [✅] <code>replacer</code><strong>的实现有问题</strong></p>
+<ul>
+<li>- [✅] <strong>没有保证并发安全</strong>：<ul>
+<li>- [✅] <code>replacer</code>维护一个<code>scope latch</code></li>
+<li>- [✅] <code>LRUNode</code>维护一个<code>latch</code>并且定义工具函数来获取和释放锁</li>
+<li>- [✅] 成员变量含有<code>mutex</code>的类，不能进行<code>copy</code>等操作，因此无法插入<code>node_store&lt;frame_id, LRUNode&gt;</code>中<ul>
+<li>需要将该数据结构改为<code>node_store unordered_map&lt;frame_id, std::shared_ptr&lt;LRUNode&gt;&gt;</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>- [✅] 之前对<code>LRUNode</code> 都是构造临时对象，这次尝试在<code>node_store</code>中维护指针<ul>
+<li>- [✅] 需要<code>new</code>获得堆内存，**必须显式地使用delete释放: 不然会造成内存泄漏,**有时候认为自己在所有地方都使用了<code>delete</code>但仍然会有内存泄漏，这时使用<code>smart pointer</code><ul>
+<li><blockquote>
+<p>在C++中，局部类对象变量取地址和使用`new`操作符有重要的区别。这区别在于对象的生命周期、内存管理和访问方式：</p>
+<p>1. <strong>对象的生命周期</strong>：</p>
+<p>  - <strong>局部对象变量取地址</strong>：当你取一个局部对象的地址，对象的生命周期仗赖于其定义的作用域。一旦超出该作用域，对象将被销毁，且你的指针将成为悬垂指针（dangling pointer），因为它引用的内存已经释放。</p>
+<p>  - <strong>使用new</strong>：使用<code>new</code>创建的对象位于堆内存，它的生命周期在你显式调用<code>delete</code>来释放内存之前会一直存在。这意味着你可以在超出定义作用域的地方继续访问这个对象，只要你小心管理内存。</p>
+<p>2. <strong>内存管理</strong>：</p>
+<p>  - <strong>局部对象变量取地址</strong>：不需要显式管理内存，对象的内存分配和释放是由编译器自动处理的。</p>
+<p>  - <strong>使用new</strong>：你需要手动分配和释放内存。使用<code>new</code>来创建对象后，必须使用<code>delete</code>来释放这些对象的内存，否则会导致内存泄漏。</p>
+<p>3. <strong>访问方式</strong>：</p>
+<p>  - <strong>局部对象变量取地址</strong>：你可以直接通过指针来访问对象的成员和方法，就像你访问其他对象一样。</p>
+<p>  - <strong>使用new</strong>：你同样可以通过指针来访问对象的成员和方法，但你必须使用箭头运算符(<code>-&gt;</code>)，因为你操作的是一个指向对象的指针。</p>
+<p>总之，取局部对象的地址和使用<code>new</code>都有各自的用途和适用情况。如果你需要一个对象在函数调用之后继续存在，使用<code>new</code>来在堆上分配内存可能是一个好选择。但请务必小心管理内存，避免内存泄漏。如果对象的生命周期仅在函数内部有效，取地址通常更为简单和安全。</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li>- [✅] 直接使用<code>shared_ptr</code>，避免<strong>内存泄漏。</strong><del>啊，真香</del></li>
+</ul>
+</li>
+<li>但仍然未能解决`HardTest_1`的问题</li>
+</ul>
+</li>
+<li><p>🌟- [✅] <code>disk_scheduler</code>的<strong>实现有问题</strong>：偶尔会出现<code>DiskSchedulerTest.ManyWriteTest</code>失败，成功和失败间隔出现：<strong>事实证明，该Test的内存泄漏问题是由于</strong><code>Disk_Scheduler</code>的实现有问题导致的，并非真的是内存泄漏问题。</p>
+<ul>
+<li>- [✅] <strong>保证并发安全</strong>：在<code>backgroundThread</code>中创建多个<code>thread</code>会对<code>shared_data_structure</code>竞争？<ul>
+<li>- [✅] 不需要给<code>Schedule</code>和<code>WorkThread</code>中加锁，对<code>request_queue</code>对象本身访问就是并发安全的，因此只需要给<code>ProcessRequest</code>增加获取锁和释放锁</li>
+</ul>
+</li>
+<li>但仍然未能解决<code>HardTest_1</code>的问题</li>
+<li><strong>- [✅] 仍然有极其低的概率出现失败</strong><code>1/4</code><strong>?</strong><ul>
+<li><strong>读写相同Page的多个</strong><code>thread</code><strong>无法按照给定顺序执行：</strong><ul>
+<li><strong>- [✅] 先使用</strong><code>join</code><strong>串联执行，确保正确性：</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>- [❎] 打<code>log，复现test</code>：必然有用，持续使用ing</p>
+<ul>
+<li><p>经过上述对<code>replacer</code>和<code>disk_schedular</code>的实现，<code>HardTest_1</code>的两种报错：</p>
+<ul>
+<li>1.  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">15: Running main() from gmock_main.cc</span><br><span class="line">15: Note: Google Test filter = BufferPoolManagerTest.HardTest_1</span><br><span class="line">15: [==========] Running 1 test from 1 test suite.</span><br><span class="line">15: [----------] Global test environment set-up.</span><br><span class="line">15: [----------] 1 test from BufferPoolManagerTest</span><br><span class="line">15: [ RUN      ] BufferPoolManagerTest.HardTest_1</span><br><span class="line">15: Stack trace (most recent call last) in thread 588:</span><br><span class="line">15: #20   Object &quot;&quot;, at 0xffffffffffffffff, in </span><br><span class="line">15: =================================================================</span><br><span class="line">15: ==587==ERROR: AddressSanitizer: allocator is out of memory trying to allocate 0x36a8 bytes</span><br><span class="line">15: ==587==ERROR: AddressSanitizer failed to allocate 0x1000 (4096) bytes of InternalMmapVector (error code: 12)</span><br><span class="line">15: ERROR: Failed to mmap</span><br><span class="line">1/1 Test #15: BufferPoolManagerTest.HardTest_1 ...***Failed    4.56 sec</span><br></pre></td></tr></table></figure>
+</li>
+<li><ol start="2">
+<li><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">15: Running main() from gmock_main.cc</span><br><span class="line">15: Note: Google Test filter = BufferPoolManagerTest.HardTest_1</span><br><span class="line">15: [==========] Running 1 test from 1 test suite.</span><br><span class="line">15: [----------] Global test environment set-up.</span><br><span class="line">15: [----------] 1 test from BufferPoolManagerTest</span><br><span class="line">15: [ RUN      ] BufferPoolManagerTest.HardTest_1</span><br><span class="line">15: ==587==ERROR: AddressSanitizer failed to allocate 0x13f000 (1306624) bytes at address ff541264000 (errno: 12)</span><br><span class="line">15: ==587==ReserveShadowMemoryRange failed while trying to map 0x13f000 bytes. Perhaps you&#x27;re using ulimit -v</span><br><span class="line">1/1 Test #15: BufferPoolManagerTest.HardTest_1 ...Subprocess aborted***Exception:   4.64 sec</span><br></pre></td></tr></table></figure></li>
+</ol>
+<ul>
+<li><code>errno</code>说明内存不足，<code>gradescope</code>中分的虚拟内存不足以支持该测试，说明我的程序在内存管理上面需要改进或者有漏洞</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>log</code>:输出：</p>
+  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">15: FetchPage invoke 2470</span><br><span class="line">15: UnpinPage: invoke 2470 0</span><br><span class="line">15: DeletePage: invoke 2470</span><br><span class="line">15: FetchPage invoke 8925</span><br><span class="line">15: UnpinPage: invoke 8925 0</span><br><span class="line">15: Del==587==ERROR: AddressSanitizer failed to allocate 0x13f000 (1306624) bytes at address fefff684000 (errno: 12)</span><br><span class="line">15: ==587==ReserveShadowMemoryRange failed while trying to map 0x13f000 bytes. Perhaps you&#x27;re using ulimit -v</span><br><span class="line">1/1 Test #15: BufferPoolManagerTest.HardTest_1 ...Subprocess aborted***Exception:   6.35 sec</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>复现</code>：</p>
+<ol>
 <li>创建<code>10</code>容量，<code>5</code>k的<code>BPM</code></li>
 <li>重复下列操作，创建<code>10000</code>个page：<ol>
 <li>连续调用<code>NewPage</code> 10 次，连续对上述pages调用<code>UnpinPage</code>10次，前5个<code>is_dirty</code>为0，后5个<code>is_dirty</code>为1</li>
@@ -365,41 +532,20 @@
 </li>
 </ol>
 </li>
-<li>- [✅] <code>Ubuntu</code><strong>能支持</strong><code>LLVM</code><strong>的内存泄漏检测，但是</strong><code>MacOS</code><strong>不支持：</strong><ul>
+<li><p>- [✅] <code>Ubuntu</code><strong>能支持</strong><code>LLVM</code><strong>的内存泄漏检测，但是</strong><code>MacOS</code><strong>不支持：</strong></p>
+<ul>
 <li>尝试<code>Ubuntu</code>测试上述复现的Test：发现并没有任何内存泄漏</li>
 </ul>
 </li>
 </ul>
 </li>
-<li>- [❎] <code>pages_</code>的索引我没有假设一定是<code>frame_id</code>，只是调用自己写的工具函数<code>GetFreePageForPageId</code>遍历<code>page_</code>并找到第一个<code>PageId</code>为<code>Invalid</code>的<code>Page</code>对象.<ul>
+<li><p>- [❎] <code>pages_</code>的索引我没有假设一定是<code>frame_id</code>，只是调用自己写的工具函数<code>GetFreePageForPageId</code>遍历<code>page_</code>并找到第一个<code>PageId</code>为<code>Invalid</code>的<code>Page</code>对象.</p>
+<ul>
 <li>- [❎] 尝试假设：<code>page_</code>的索引就是<code>frame_id</code>，并且删除工具函数<ul>
 <li>- [❎] <strong>此时会有很多之前通过的测试未通过（包括</strong><code>LRUReplace</code><strong>），不清楚为什么</strong><ul>
 <li>- [❎] <code>LRUReplacerTest.Evict</code> 该测试中:<ul>
-<li>新建一个容量为<code>1000</code>，k为<code>3</code>的<code>replacer</code>，然后依次从0到1000<code>RecordAccess</code>并且<code>SetEvictable</code>：但是出现如下问题：<ul>
-<li><pre><code>  125SetEvictable: invoke 241 1
-  21:  curr_size:241
-  21: not evictable -&gt; on
-  21:  curr_size:242
-  21: 92RecordAccess invoke 242
-  21:  curr_size:242
-  21: note exist
-  21:  curr_size:242
-  21: 125SetEvictable: invoke 242 1
-  21:  curr_size:242
-  21: not evictable -&gt; on
-  21:  curr_size:243
-  21: 92RecordAccess invoke 243
-  21:  curr_[...(truncated)...] invoke 844 1
-  21:  curr_size:1000 
-  21:  curr_size:1000
-  21: 92RecordAccess invoke 845
-  21:  curr_size:1000
-  21: exist
-  21:  curr_size:1000
-  21: 125SetEvictable: invoke 845 1
-  21:  curr_size:1000
-</code></pre>
-</li>
+<li>新建一个容量为<code>1000</code>，k为<code>3</code>的<code>replacer</code>，然后依次从0到1000<code>RecordAccess</code>并且<code>SetEvictable</code>：但是出现如下问题：  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">125SetEvictable: invoke 241 1</span><br><span class="line">21:  curr_size:241</span><br><span class="line">21: not evictable -&gt; on</span><br><span class="line">21:  curr_size:242</span><br><span class="line">21: 92RecordAccess invoke 242</span><br><span class="line">21:  curr_size:242</span><br><span class="line">21: note exist</span><br><span class="line">21:  curr_size:242</span><br><span class="line">21: 125SetEvictable: invoke 242 1</span><br><span class="line">21:  curr_size:242</span><br><span class="line">21: not evictable -&gt; on</span><br><span class="line">21:  curr_size:243</span><br><span class="line">21: 92RecordAccess invoke 243</span><br><span class="line">21:  curr_[...(truncated)...] invoke 844 1</span><br><span class="line">21:  curr_size:1000 </span><br><span class="line">21:  curr_size:1000</span><br><span class="line">21: 92RecordAccess invoke 845</span><br><span class="line">21:  curr_size:1000</span><br><span class="line">21: exist</span><br><span class="line">21:  curr_size:1000</span><br><span class="line">21: 125SetEvictable: invoke 845 1</span><br><span class="line">21:  curr_size:1000</span><br></pre></td></tr></table></figure>
+<ul>
 <li>- [❎]尝试 <code>reproduce test</code><ul>
 <li>复现测试场景居然是没问题的，，，，很困惑</li>
 </ul>
@@ -435,13 +581,18 @@
 <li><p>通过本地测试+通过gradescope（低性能）一共3+5天</p>
 </li>
 </ul>
-<h1 id="可以进行的优化"><a href="#可以进行的优化" class="headerlink" title="可以进行的优化"></a>可以进行的优化</h1><p>- [ ] 当前<code>DiskScheduler</code>中<code>BackgroundWorker</code>中创建的线程是串行，优化需要在确保顺序正确的情况下，使之适当并行执行</p>
-<p>- [ ] 并发问题，虽然在合适的地方加了锁，但是<code>latch_</code>持有的范围可以缩小</p>
-<p>    - [ ] 当前<code>DiskScheduler</code>中<code>BackgroundWorker</code>中创建的线程是串行，需要在确保顺序正确的情况下，使之适当并行执行</p>
-<p>- [ ] 改进递归锁/scope_lock开销</p>
-<p>- [ ] Mutiple buffer pools: 创建多个Buffer Pools，并使用Hashing进行控制用哪个buffer pool</p>
-<p>- [ ] LRU List：按照k backward distance的顺序将pages串联起来</p>
-<p>- [ ] Buffer Pool Pass：但是测试的请求信息中似乎没有标注是什么operator</p>
+<h1 id="个人认为可以进行的优化"><a href="#个人认为可以进行的优化" class="headerlink" title="个人认为可以进行的优化"></a>个人认为可以进行的优化</h1><ol>
+<li>- [ ] 当前<code>DiskScheduler</code>中<code>BackgroundWorker</code>中创建的线程是串行，优化需要在确保顺序正确的情况下，使之适当并行执行</li>
+<li>- [ ] 并发问题，虽然在合适的地方加了锁，但是<code>latch_</code>持有的范围可以缩小<ul>
+<li>- [ ] 当前<code>DiskScheduler</code>中<code>BackgroundWorker</code>中创建的线程是串行，需要在确保顺序正确的情况下，使之适当并行执行</li>
+</ul>
+</li>
+<li>- [ ] 改进递归锁/scope_lock开销</li>
+<li>- [ ] Mutiple buffer pools: 创建多个Buffer Pools，并使用Hashing进行控制用哪个buffer pool</li>
+<li>- [ ] LRU List：按照k backward distance的顺序将pages串联起来</li>
+<li>- [ ] Buffer Pool Pass：但是测试的请求信息中似乎没有标注是什么operator</li>
+</ol>
+<p>具体见下一篇文章</p>
 ]]></content>
       <categories>
         <category>学无止境</category>

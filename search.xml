@@ -1,6 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Extendible Hash Table</title>
+    <url>/p/76b71367.html</url>
+    <content><![CDATA[<p>Extendible Hash Table</p>
+<ul>
+<li><p><strong>hash function</strong></p>
+<ul>
+<li>对于给定key生成32bit的值</li>
+</ul>
+</li>
+<li><p><strong>bucket address table</strong></p>
+<ul>
+<li>对于每个32bit的hash value，都有一个table entry相对应</li>
+<li>但在某一时刻该table的实际使用大小由global prefix控制</li>
+</ul>
+</li>
+<li><p><strong>global prefix：用于生成global mask</strong></p>
+<ul>
+<li><p>在实际使用时，global prefix用于控制当前bucket address table实际使用的大小</p>
+<ul>
+<li>具体为2^(global prefix)个条目</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>local prefix：用于生成local mask</strong></p>
+<ul>
+<li><p>不会为所有hash value都生成一个bucket，而是按需生成</p>
+</li>
+<li><p>用于判断当前table entry指向的bucket</p>
+</li>
+<li><p>如果local prefix == glocal prefix：</p>
+<ul>
+<li>则说明只有该entry拥有指向的bucket</li>
+</ul>
+</li>
+<li><p>按需体现在local prefix &lt; global prefix:</p>
+<ul>
+<li>拥有相同local prefix的entry指向同一个bucket</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="Lookup"><a href="#Lookup" class="headerlink" title="Lookup"></a>Lookup</h1><p><strong>for lookup：</strong>  </p>
+<p>1. 对K进行hash，得到b个 bits序列<br>2. 通过b bits的leftmost prefixe i，找到对应的table entry<br>3. 遍历对应entry指向的bucket，找到对应于K的record</p>
+<h1 id="Insertion"><a href="#Insertion" class="headerlink" title="Insertion"></a>Insertion</h1><p><strong>for insertion:</strong></p>
+<p>1. 首先按照lookup步骤找到对应的bucket</p>
+<p>2. 查看bucket是否full</p>
+<p> 2.1 若非full，则处理比较简单，</p>
+<p> 2.2 否则，比较bucket对应的i_j，和table prefix i，做出后续两种处理方式</p>
+<h2 id="i-i-j"><a href="#i-i-j" class="headerlink" title="i == i_j"></a>i == i_j</h2><p><strong>说明：</strong>bucket address table中只有一个entry指向i_j对应的bucket，需要增加bucket address table中的size（可用entry 数量）和buckets数量<br><strong>split步骤：</strong><br>1. <strong>prefix ++：</strong>使得table中可用的entry数量扩展为原先的两倍<br>2. <strong>replace each entry with two entries:</strong> 此时，每两个entry包含的pointer都指向同一个bucket<br>3. <strong>allocate new bucket and set second entry to ponit to the new bucket</strong><br><strong>4. rehash all record in old buckets</strong><br><strong>5. reattempt the insertion of the new record</strong><br>  <strong>- success：大部分情况</strong><br>  <strong>- failure：</strong>如果在old bucket中的record和new record的前prefix个bit仍然相同，会导致old bucket仍然overflow  </p>
+<ul>
+<li>需要再次split / 使用overflow buckets like static hashing</li>
+</ul>
+<h2 id="i-gt-i-j"><a href="#i-gt-i-j" class="headerlink" title="i &gt; i_j"></a>i &gt; i_j</h2><p><strong>说明：</strong>按照上述data structure的描述，说明bucket address table中有多个entries指向i_j对应的bucket。<br>- <strong>i_j:</strong> 代表bucket address table中leftmost i_j bits相同的entries，指向j bucket<br>- 代表此时database中，该buckets split的速度不是最快的，其他buckets的split导致prefix i&gt;i_j。<br><strong>split 步骤：</strong>不需要扩展prefix，因为bucket address table足够大<br>1. <strong>allocate new bucket_z, set i_j and i_z with (original i_j + 1)</strong><br><strong>2. adjust the entries in the table:</strong> 由于调整了i_j和i_z，自然entries在leftmost i_j会不同，因此entries应该按照leftmost i_j来指向两个buckets<br>3. <strong>rehash records in bucket_j</strong><br><strong>4. reattempt the insert:</strong> 可能会failure，同上处理</p>
+<h1 id="Deletion"><a href="#Deletion" class="headerlink" title="Deletion"></a>Deletion</h1><p><strong>1. remove both search key and record。如果此时bucket empty，则将bucket删除</strong><br><strong>2. 在某种情况下，buckets可以合并，并且table size可以缩减为原来的一半</strong></p>
+<p>Referred in [Project #2: Extendible Hash Index](</p>
+]]></content>
+      <categories>
+        <category>学无止境</category>
+        <category>CMU15-445(2023FALL)</category>
+      </categories>
+      <tags>
+        <tag>Container</tag>
+        <tag>数据结构</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Project#1: Buffer Pool</title>
     <url>/p/1c228cd6.html</url>
     <content><![CDATA[<div class="note warning simple"><p><strong>撰写本文的目的</strong>：记录本人在不参考其他任何形式的解决方法（思路/源码）、仅靠课程提供的资源（课本/参考资料）和<code>Discord</code>中<code>high level</code>的讨论的情况下，独立完成该课程的过程。</p>

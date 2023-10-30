@@ -27,6 +27,18 @@ I have been focusing on learning system software, especially database systems, d
 {% hideToggle I am keep moving in 2023,#3196DB,#fff%}
 
 {% timeline 2023,blue %}
+<!-- timeline 10-30 -->
+{% note success disabled %}
+finish [Project#2](https://15445.courses.cs.cmu.edu/fall2023/project2/) and [pass the local tests](https://zihao256.github.io/p/517dd8ea.html).
+{% endnote %}
+<!-- endtimeline -->
+
+<!-- timeline 10-27 -->
+{% note success disabled %}
+finish `Lecture#9` and [Homework#2](https://15445.courses.cs.cmu.edu/fall2023/files/hw2-clean.pdf).
+{% endnote %}
+<!-- endtimeline -->
+
 <!-- timeline 10-13 -->
 {% note success disabled %}
 [get the point of Project#1 in gradescope](https://zihao256.github.io/p/1c228cd6.html). But it has low performance and I will optimize it in the next few days.

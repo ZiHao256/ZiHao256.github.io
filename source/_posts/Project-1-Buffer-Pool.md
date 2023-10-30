@@ -21,7 +21,9 @@ date: 2023-10-03 13:01:58
 
 
 
-由于`gradescope`中对`non-cmu students`仅开放了`Project#0`，本文方法仅通过了本地测试，极有可能有错误（并发访问）
+~~由于`gradescope`中对`non-cmu students`仅开放了`Project#0`，本文方法仅通过了本地测试，极有可能有错误（并发访问）~~
+
+目前通过了`GradeScope`所有测试并且拿到了`100.0/100.0`，但是性能较差（与`Leaderboard`上第一名有十倍的性能差距)，打算在下一篇文章记录一下对`BPM`的性能进行优化，例如本文中提到的`DiskScheduler`创建的对`Request`的处理`Thread`实际上是串行的，后续再保证顺序正确的情况下对其进行适当的并行处理。
 
 {% endnote %}
 
@@ -130,17 +132,14 @@ date: 2023-10-03 13:01:58
   
 - DiskManager:
   
-    - ```
-        WritePage(page_id_t page_id, const char *page_data)
-        ```
+    -   `WritePage(page_id_t page_id, const char *page_data)`
         
         - page_id：Disk Page的id
           
         - page_data：是Memory buffer pool中存储Disk Page所在frame的地址
         
-    - ```
-        ReadPage(page_id_t page_id, char *page_data)
-        ```
+
+    -   `ReadPage(page_id_t page_id, char *page_data)`
         
         - page_id: Disk Page的id
           
@@ -453,30 +452,29 @@ one by one:
             - \- [❓] 尝试`NewPage`和`FetchPage`时，都初始化`pin_count_`为1。并且在`DeletePage`时，将`Page::pin_count_`设置为0
               
                 - 修改后遇到新bug：
-                  
-                    - ```
-                        67: Note: Google Test filter = DiskSchedulerTest.ScheduleManyWrites
-                        67: [==========] Running 1 test from 1 test suite.
-                        67: [----------] Global test environment set-up.
-                        67: [----------] 1 test from DiskSchedulerTest
-                        67: [ RUN      ] DiskSchedulerTest.ScheduleManyWrites
-                        67: /autograder/source/bustub/test/storage/grading_disk_scheduler_test.cpp:68: Failure
-                        67: Expected equality of these values:
-                        67:   std::memcmp(buf, data_pages[100 - 1], sizeof(buf))
-                        67:     Which is: 8
-                        67:   0
-                        67: 
-                        67: [  FAILED  ] DiskSchedulerTest.ScheduleManyWrites (18 ms)
-                        67: [----------] 1 test from DiskSchedulerTest (18 ms total)
-                        67: 
-                        67: [----------] Global test environment tear-down
-                        67: [==========] 1 test from 1 test suite ran. (18 ms total)
-                        67: [  PASSED  ] 0 tests.
-                        67: [  FAILED  ] 1 test, listed below:
-                        67: [  FAILED  ] DiskSchedulerTest.ScheduleManyWrites
-                        67: 
-                        67:  1 FAILED TEST
-                        ```
+                    ```
+                    67: Note: Google Test filter = DiskSchedulerTest.ScheduleManyWrites
+                    67: [==========] Running 1 test from 1 test suite.
+                    67: [----------] Global test environment set-up.
+                    67: [----------] 1 test from DiskSchedulerTest
+                    67: [ RUN      ] DiskSchedulerTest.ScheduleManyWrites
+                    67: /autograder/source/bustub/test/storage/grading_disk_scheduler_test.cpp:68: Failure
+                    67: Expected equality of these values:
+                    67:   std::memcmp(buf, data_pages[100 - 1], sizeof(buf))
+                    67:     Which is: 8
+                    67:   0
+                    67: 
+                    67: [  FAILED  ] DiskSchedulerTest.ScheduleManyWrites (18 ms)
+                    67: [----------] 1 test from DiskSchedulerTest (18 ms total)
+                    67: 
+                    67: [----------] Global test environment tear-down
+                    67: [==========] 1 test from 1 test suite ran. (18 ms total)
+                    67: [  PASSED  ] 0 tests.
+                    67: [  FAILED  ] 1 test, listed below:
+                    67: [  FAILED  ] DiskSchedulerTest.ScheduleManyWrites
+                    67: 
+                    67:  1 FAILED TEST
+                    ```
                     
                 - 影响的测试应该是串行多次读写？可能是错误修改了不该修改的`page`的`dirty`/`pin_count_`导致的
                   
@@ -637,8 +635,9 @@ one by one:
     - \- [❎] 打`log，复现test`：必然有用，持续使用ing
       
         - 经过上述对`replacer`和`disk_schedular`的实现，`HardTest_1`的两种报错：
-          
-            - ```
+
+            -   1.
+                ```
                 15: Running main() from gmock_main.cc
                 15: Note: Google Test filter = BufferPoolManagerTest.HardTest_1
                 15: [==========] Running 1 test from 1 test suite.
@@ -654,7 +653,8 @@ one by one:
                 1/1 Test #15: BufferPoolManagerTest.HardTest_1 ...***Failed    4.56 sec
                 ```
                 
-            - ```
+            -   2. 
+                ```
                 15: Running main() from gmock_main.cc
                 15: Note: Google Test filter = BufferPoolManagerTest.HardTest_1
                 15: [==========] Running 1 test from 1 test suite.
@@ -669,17 +669,16 @@ one by one:
                 - `errno`说明内存不足，`gradescope`中分的虚拟内存不足以支持该测试，说明我的程序在内存管理上面需要改进或者有漏洞
             
         - `log`:输出：
-          
-            - ```
-                15: FetchPage invoke 2470
-                15: UnpinPage: invoke 2470 0
-                15: DeletePage: invoke 2470
-                15: FetchPage invoke 8925
-                15: UnpinPage: invoke 8925 0
-                15: Del==587==ERROR: AddressSanitizer failed to allocate 0x13f000 (1306624) bytes at address fefff684000 (errno: 12)
-                15: ==587==ReserveShadowMemoryRange failed while trying to map 0x13f000 bytes. Perhaps you're using ulimit -v
-                1/1 Test #15: BufferPoolManagerTest.HardTest_1 ...Subprocess aborted***Exception:   6.35 sec
-                ```
+            ```
+            15: FetchPage invoke 2470
+            15: UnpinPage: invoke 2470 0
+            15: DeletePage: invoke 2470
+            15: FetchPage invoke 8925
+            15: UnpinPage: invoke 8925 0
+            15: Del==587==ERROR: AddressSanitizer failed to allocate 0x13f000 (1306624) bytes at address fefff684000 (errno: 12)
+            15: ==587==ReserveShadowMemoryRange failed while trying to map 0x13f000 bytes. Perhaps you're using ulimit -v
+            1/1 Test #15: BufferPoolManagerTest.HardTest_1 ...Subprocess aborted***Exception:   6.35 sec
+            ```
             
         - `复现`：
           
@@ -708,30 +707,30 @@ one by one:
                   
                     - 新建一个容量为`1000`，k为`3`的`replacer`，然后依次从0到1000`RecordAccess`并且`SetEvictable`：但是出现如下问题：
                       
-                        - ```
-                            125SetEvictable: invoke 241 1
-                            21:  curr_size:241
-                            21: not evictable -> on
-                            21:  curr_size:242
-                            21: 92RecordAccess invoke 242
-                            21:  curr_size:242
-                            21: note exist
-                            21:  curr_size:242
-                            21: 125SetEvictable: invoke 242 1
-                            21:  curr_size:242
-                            21: not evictable -> on
-                            21:  curr_size:243
-                            21: 92RecordAccess invoke 243
-                            21:  curr_[...(truncated)...] invoke 844 1
-                            21:  curr_size:1000 
-                            21:  curr_size:1000
-                            21: 92RecordAccess invoke 845
-                            21:  curr_size:1000
-                            21: exist
-                            21:  curr_size:1000
-                            21: 125SetEvictable: invoke 845 1
-                            21:  curr_size:1000
-                            ```
+                        ```
+                        125SetEvictable: invoke 241 1
+                        21:  curr_size:241
+                        21: not evictable -> on
+                        21:  curr_size:242
+                        21: 92RecordAccess invoke 242
+                        21:  curr_size:242
+                        21: note exist
+                        21:  curr_size:242
+                        21: 125SetEvictable: invoke 242 1
+                        21:  curr_size:242
+                        21: not evictable -> on
+                        21:  curr_size:243
+                        21: 92RecordAccess invoke 243
+                        21:  curr_[...(truncated)...] invoke 844 1
+                        21:  curr_size:1000 
+                        21:  curr_size:1000
+                        21: 92RecordAccess invoke 845
+                        21:  curr_size:1000
+                        21: exist
+                        21:  curr_size:1000
+                        21: 125SetEvictable: invoke 845 1
+                        21:  curr_size:1000
+                        ```
                             
                         - \- [❎]尝试 `reproduce test`
                           
@@ -753,19 +752,20 @@ one by one:
 - 通过本地测试+通过gradescope（低性能）一共3+5天
   
 
-# 可以进行的优化
+# 个人认为可以进行的优化
 
-\- [ ] 当前`DiskScheduler`中`BackgroundWorker`中创建的线程是串行，优化需要在确保顺序正确的情况下，使之适当并行执行
+1. \- [ ] 当前`DiskScheduler`中`BackgroundWorker`中创建的线程是串行，优化需要在确保顺序正确的情况下，使之适当并行执行
+    
+2. \- [ ] 并发问题，虽然在合适的地方加了锁，但是`latch_`持有的范围可以缩小
+    
+    - \- [ ] 当前`DiskScheduler`中`BackgroundWorker`中创建的线程是串行，需要在确保顺序正确的情况下，使之适当并行执行
+        
+3. \- [ ] 改进递归锁/scope_lock开销
+    
+4. \- [ ] Mutiple buffer pools: 创建多个Buffer Pools，并使用Hashing进行控制用哪个buffer pool
+    
+5. \- [ ] LRU List：按照k backward distance的顺序将pages串联起来
+    
+6. \- [ ] Buffer Pool Pass：但是测试的请求信息中似乎没有标注是什么operator
 
-\- [ ] 并发问题，虽然在合适的地方加了锁，但是`latch_`持有的范围可以缩小
-
-    \- [ ] 当前`DiskScheduler`中`BackgroundWorker`中创建的线程是串行，需要在确保顺序正确的情况下，使之适当并行执行
-
-\- [ ] 改进递归锁/scope_lock开销
-
-\- [ ] Mutiple buffer pools: 创建多个Buffer Pools，并使用Hashing进行控制用哪个buffer pool
-
-\- [ ] LRU List：按照k backward distance的顺序将pages串联起来
-
-\- [ ] Buffer Pool Pass：但是测试的请求信息中似乎没有标注是什么operator
-
+具体见下一篇文章

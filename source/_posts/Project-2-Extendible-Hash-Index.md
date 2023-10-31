@@ -1,5 +1,5 @@
 ---
-title: Project#2 Extendible Hash Index
+title: Project#2: Extendible Hash Index
 toc: true
 categories:
   - 学无止境
@@ -69,34 +69,35 @@ date: 2023-10-30 21:56:01
 
     *   参考C++Primer
 
-        *   移动构造的时候从给定对象中窃取资源而非拷贝资源，即移动构造函数部分配任何新内存
-        *   需要确保移后源对象是可以销毁
+        *   移动构造的时候从给定对象中窃取资源而非拷贝资源，即移动构造函数不分配任何新内存
+        *   需要确保移后源对象销毁是安全的
 
-*   `operator=(PageGuard &&that)`: Move operator.
-
-    *   需要处理移动赋值对象是自身的情况
-
-        *   直接返回\*this
-
-    *   否则，需要处理原page
-
-        *   直接调用Drop
+*   `operator=(PageGuard &&that)`: Move assignment operator.
+*   需要处理移动赋值对象是自身的情况
+    
+    *   直接返回\*this
+    
+*   否则，需要处理原page
+    
+    *   按需调用Drop
+        *   类似于移动构造
 
 *   `Drop()`: Unpin
 
     *   先clear
-    *   再unpin
+    *   再调用UnpinPage
 
 *   `~PageGuard()`: Destructor.
-
     *   需要先判断是否已经手动Drop
-
+    
         *   若否则直接调用Drop
-
-*   `read-only`和`write date`APIs
-
-    *   分别为As和AsMut
-    *   可以编译时期检查用法是否正确
+    
+*   `read-only`和`write data`APIs
+    *   分别为`As`和`AsMut`
+        *   `As`以`const`修饰符返回Page内部的data
+        *   `AsMut`则不然，并且注意`AsMut`会将PageGuard的成员变量`is_dirty`置为true
+    *   可以在编译时期检查`data`用法是否正确：
+        *   例如，在实现Task3或Task4的`Insert`时，你可能认为某个部分仅仅是查阅了`HeaderPage`，因此以`As`返回，却没想到其实有可能在`HeaderPage`中无相应`DirectoryPage`后，会修改`HeaderPage`。~~例子可能不大恰当~~
 
 **对于ReadPageGuard**
 
@@ -104,22 +105,29 @@ date: 2023-10-30 21:56:01
 
     *   std::move()移动赋值时，会对赋值guard调用析构函数并调用Drop，因此不必担心赋值后移后源对象会对page造成影响
 
-*   需要注意Drop中资源的释放顺序，需要在Unpin之前释放RLatch，不然会因为Unpin调用了RLatch而死锁
+*   需要注意Drop中资源的释放顺序，需要在Drop BasiPage之前释放RLatch，
+    *   可能会因为Unpin调用了RLatch而死锁
 
-*   需要在构函数中判断是否已经手动drop/移动赋值/移动构造过
+    *   **更重要的原因**：先UnpinPage的话，可能会被replacer evit
+
+*   需要在析构函数中判断是否已经手动drop/移动赋值/移动构造过，避免重复Drop导致重复释放Latch
 
 **对于WritePageGuard**：同上
 
 ## Upgrade
 
-<span style="color: rgb(13, 13, 13)"><span style="background-color: rgb(243, 244, 245)">guarantee that the protected page is not evicted from the buffer pool during the upgrade</span></span>
+> guarantee that the protected page is not evicted from the buffer pool during the upgrade
 
-*   `UpgradeRead()`: Upgrade to a `ReadPageGuard`
+- [ ] `UpgradeRead()`: Upgrade to a `ReadPageGuard`
 
-    *   在升级的过程中加写锁
-    *   并将basic Drop掉
+- [ ] `UpgradeWrite()`: Upgrade to a `WritePageGuard`
 
-*   `UpgradeWrite()`: Upgrade to a `WritePageGuard`
+目前这两个函数我都没有使用到，或者说是不知道该如何实现以及使用：
+
+- **如何实现**？我本以为防止evict只需要将page的pin_count_++，但是并PageGuard不是Page的friend class，无法直接访问Page的私有成员
+- **如何使用**？我能想到该函数存在的原因，是新建一个需要修改的DirectoryPage或者BucketPage，但是没有`NewWritePageGuard`和`NewReadPageGuard`函数的实现，只能 `NewPageGuard`之后立刻`Upgrade`。
+  - 我认为：实际上该线程新建的`Page`目前只能该线程自己访问，并不需要使用`Guard`来保护啊
+  - 因此我在`InsertToNewDirectory`和`InsertToNewBucket`中都只是用了`BasicPageGuard`并且调用了`AsMut`，而未使用`WritePageGuard`。并且这是**能够**通过本地测试的
 
 ## Wrappers
 
@@ -128,16 +136,43 @@ date: 2023-10-30 21:56:01
 *   `FetchPageWrite(page_id_t page_id)`
 *   `NewPageGuarded(page_id_t *page_id)`
 
+注释中说明得足够清晰，不再赘述
+
 ## Tests
 
 ![local test](https://cdn.jsdelivr.net/gh/ZiHao256/Gallery@master/uPic/2023/10/image-20231030220121826.png)
 
-# Task #2-**<span style="color: rgb(13, 13, 13)">Extendible Hash Table Pages</span>**
+# Task #2-Extendible Hash Table Pages
+
+![img](https://15445.courses.cs.cmu.edu/fall2023/project2/img/extendible-htable-structure.svg)
+
+这里主要实现三层可扩展哈希表的三个部分，如上图所示：
+
+1. **Header Page**：
+   1. 课本中的2-Level并没有该部分，该部分的max depth/prefix（例如上图中的2）是固定的
+   2. 主要是用来索引能够索引到存储key的`BucketPage`位置的`Directory Page`在`Header Page`中的位置（比较拗口）
+      1. 通过`HashToDirecotryIndex`实现
+   3. `HeaderPage`的优点（文档中提到）：
+      1. More Direcotry Pages -> More Bucket Pages -> More Keys
+      2. 并且由于`Latch Crabbing`的并发策略，使得`Header Page`的`Latch`很快的被释放
+2. **Directory Page**
+   1. 与课本中一致
+      1. **global depth = hash prefix**：三个作用
+         1. 用来限制某个时刻可以使用的Directory条目数量$2^{global depth}$个
+         2. 用来获得哈希值从LSB开始的global_depth个位，作为在dierctory中的索引，找到key所在的bucket
+            1. `HashToBucketIndex`实现
+         3. 并且在某个bucket满时，通过比较`global depth`和`local depth`来决定如何处理`split`
+      2. **local depth = bucket hash prefix**
+         1. 通过比较和global_depth的关系，判断指向当前bucket的指针数量，分裂时如何处理
+3. **Bucket Page**
+   1. 以数组的形式存储`<key, value`
+   2. 注意本项目并不会处理`non-unque key`，因此对于插入相同的key直接返回false（Insert函数）
 
 Task2中相关源码的注释并没有很详细，需要自己根据本地测试来判断该函数具体完成了什么工作
 
 *   可以在实现`Header Pages`和`Directory Pages`的时候，通过`HeaderDirectoryPageSampleTest`来测试或者Debug
 *   实现`Bucket Pages`的时候，通过`BucketPageSampleTest`测试
+*   例如：`HashToDirectoryIndex`是通过hash value的`max_depth`个MSB求得的
 
 ## Hash Table Header Pages
 
@@ -151,7 +186,7 @@ Task2中相关源码的注释并没有很详细，需要自己根据本地测试
 
 *   **占用内存**：512\*4 = 2048
 
-`max_depth_`:通过page\_id(32位)的高max\_depth\_位，来判断page\_id在directory\_page\_ids\_中的位置
+`max_depth_`: 通过page\_id(32位)哈希值的高max\_depth\_位，来判断page\_id在directory\_page\_ids\_中的位置
 
 *   **占用内存**：4B
 
@@ -161,6 +196,7 @@ Task2中相关源码的注释并没有很详细，需要自己根据本地测试
 
 *   通过测试可以看到，实际上该函数是将hash的高max\_depth\_位，作为directory page id在数组directory\_page\_ids\_的索引
 *   将hash向右移动`32-max_depth_`位，可以获得高`max_depth_`位对应的uint32\_t表示
+*   `Hint`: 考虑`max_depth_`为0的情况，实际上对于4B的整型右移`32`位是`undefined`？
 
 \- \[✅] `MaxSize()：`Get the maximum number of directory page ids the header page could handle
 
@@ -180,17 +216,15 @@ Task2中相关源码的注释并没有很详细，需要自己根据本地测试
 `max_depth_`：
 
 *   4B
-*   Header Page的directory page id数组中所有的directory page拥有相同的max\_depth值，代表一个directory能够用的掩码的最大位数
+*   Header Page的directory page id数组中，所有的directory page拥有相同的max\_depth值，代表一个directory能够用的掩码的最大位数
 
 `global_depth_`：
 
 *   4B
 
-*   类似于: 课本中的bucket address table的global prefix，用来控制当前table使用条目的数量，上限是2^max\_depth\_
+*   类似于: 课本中的bucket address table的global prefix，用来控制当前table使用条目的数量，上限是2^max\_depth
 
-    *   唯一不同的是课本中的`prefix`生成的mask是MSB，而`global_depth_`是LSB
-
-*   简而言之：global\_depth用来掩码hash value，使得其在bucket\_page\_ids\_数组中有一个index
+*   **简而言之**：global\_depth用来掩码hash value，以获得存储key的bucket在directory 中的索引
 
 *   global\_depth<=max\_depth\_
 
@@ -208,62 +242,57 @@ Task2中相关源码的注释并没有很详细，需要自己根据本地测试
 
 \- \[✅] `Init`:
 
-*   初始化所有成员变量
+*   将global depth和local depth初始化0
+*   bucket page id初始化为-1或者其他特殊标记
 
 \- \[✅] `HashToBucketIndex`:
 
-*   ~~类似于~~`Header Page`~~中的~~`HashToDirectoryIndex`~~，只不过掩码长度为~~`global_depth_`
+*   类似于`Header Page`中的`HashToDirectoryIndex`，只不过掩码长度为`global_depth_`，并且是将Hash值的低`global_depth_`位(从LSB开始)处理作为bucket在directory中的索引
+*   像测试中直接`%Size()`是极好的，但是我一开始脑子没转过来，
+    *   一直想用位操作。。。🐽
 
-    *   实际上与Header Page中的不同
-
-*   <span style="background-color: #5fb23680">该函数干啥用的</span>
-
-    *   直接对directory page当前能够使用的entry数量进行取余
-    *   即：%Size()
 
 \- \[✅] `GetSplitImageIndex`:
 
 *   分两种情况：
 
-    *   local\_depth\_ == global\_depth\_
-    *   local\_depth\_ < global\_depth\_
+    *   local\_depth\_ > global\_depth_：代表后续需要double directory
+    *   local\_depth\_ <= global\_depth\_
 
-*   观察得到，对于LSB掩码，为了获得directory扩展后当前bucket\_idx分裂后映像的索引，只需要将bucket\_idx的第新global\_depth\_位取反即可
+*   观察得到，为了获得directory扩展后当前bucket\_idx分裂后映像的索引，只需要将bucket\_idx的第新global\_depth\_位取反即可
 
-*   两种情况可以使用同一个位运算来解决
+*   两种情况可以使用同一种位运算来解决
 
     *   只需要对原进行split的bucket\_idx进行如下位运算
 
-        *   第global\_depth\_+1位与1异或
+        *   第一种情况：需要double directory
+            *   第global\_depth\_位与1异或
+        *   第二种情况：不需要double
+            *   第global\_depth\_-1位与1异或
         *   其他位与0异或
 
 \- \[✅] `SetLocalDepth`
 
-*   分两种情况
+*   同上，分两种情况
 
-    1.  如果新`local_depth_`大于`global_depth_`则需要split
-
-        1.  需要先通过上面的`GetSplitImageIndex`得到split\_bucket\_idx
-
-            1.  然后设置split\_bucket\_idx对应的local\_depth为新local\_depth
-
-        2.  最后将旧bucket的local\_depth设置为新local\_depth
-
-    2.  否则，正常直接设置
+    1.  先根据local_dpth和global_depth的关系，获得split_bucket_idx
+2.  如何将两个bucket的local_depth**同时设置为新**的即可
 
 \- \[✅] `IncrGlobalDepth`
 
-*   需要找到当前directory中，local\_depth小于等于当前global\_depth的项：
+*   需要找到当前directory可用的条目中，local\_depth小于等于当前global\_depth的项：
 
-    *   使得其split\_entry拥有相同的bucket page id和local\_depth
+    *   使得其在double后的split\_entry拥有相同的bucket page id和local\_depth
+*   global_depth++
+*   **Hint:** global_depth <= max_depth
 
 \- \[✅] `DecrGlobalDepth`
 
-*   直接将index在区间\[2^{global\_depth-1}, 2^{global\_depth}-1]的两个数组元素初始化即可
+*   直接将index在区间\[2^{global\_depth-1}, 2^{global\_depth}-1]的两个数组元素初始化为{-1, 0}
 
 \- \[✅] `GetGlobalDepthMask`:
 
-*   通过注释我们可以知道，`global_depth_`是用于生成`LSB`规范的`lobal_depth_mask`
+*   通过注释我们可以知道，`global_depth_`是用于生成从哈希值的`LSB`开始的`global_depth_mask`
 *   而`Header Page`中的`max_depth_`则是用于生成`MSB`的掩码
 
 \- \[✅] `GetLocalDepthMask`:
@@ -377,6 +406,10 @@ Task2中相关源码的注释并没有很详细，需要自己根据本地测试
     *   可以通过实现源码中给定的工具函数`UpdateDirectoryMapping`来辅助实现
 
         *   可能该函数内部调用了`MigrateEntries`函数，但是我并没有实现，直接在`UpdateDirectoryMapping`中实现了Rehash操作
+        *   **Hint:**该函数如果直接在Insert中调用的话函数签名中可以自己修改并多传入两个`ExtendibleHTableBucketPage`
+            *   `old_bucket_page`：需要进行分裂，并rehash的bucket
+            *   `new_bucket_page`：新建的bucket
+            *   这样可以不必重新`FetchPage`
 
 ## - \[ ] Bucket Merging
 

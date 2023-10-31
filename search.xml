@@ -649,6 +649,7 @@
     <url>/p/1c228cd6.html</url>
     <content><![CDATA[<div class="note warning simple"><p><strong>撰写本文的目的</strong>：记录本人在不参考其他任何形式的解决方法（思路/源码）、仅靠课程提供的资源（课本/参考资料）和<code>Discord</code>中<code>high level</code>的讨论的情况下，独立完成该课程的过程。</p>
 <p>欢迎大家和我讨论学习中所遇到的问题。</p>
+<p><a href="https://zihao256.github.io/">ZiHao’s Blog</a></p>
 <p><del>由于<code>gradescope</code>中对<code>non-cmu students</code>仅开放了<code>Project#0</code>，本文方法仅通过了本地测试，极有可能有错误（并发访问）</del></p>
 <p>目前通过了<code>GradeScope</code>所有测试并且拿到了<code>100.0/100.0</code>，但是性能较差（与<code>Leaderboard</code>上第一名有十倍的性能差距)，打算在下一篇文章记录一下对<code>BPM</code>的性能进行优化，例如本文中提到的<code>DiskScheduler</code>创建的对<code>Request</code>的处理<code>Thread</code>实际上是串行的，后续再保证顺序正确的情况下对其进行适当的并行处理。</p>
 </div>
@@ -733,20 +734,15 @@
 <h1 id="Task-3-Buffer-Pool-Manager"><a href="#Task-3-Buffer-Pool-Manager" class="headerlink" title="Task#3 - Buffer Pool Manager"></a>Task#3 - Buffer Pool Manager</h1><p>通过参考<code>Page</code>，<code>LRU K Replacement Policy</code>和<code>Disk Scheduler</code>的源码实现，完成时过程比较曲折，花了中秋节一下午和晚上完成，并且只通过了本地测试，并发问题肯定很严重。等<code>gradescope</code>开了再继续完善。</p>
 <p>源码中给的提示还是比较清晰，因此实现过程虽然曲折但也还算顺利。但有一些我自己踩过的坑或bug，在最后统一写出。</p>
 <h2 id="Learning-Note"><a href="#Learning-Note" class="headerlink" title="Learning Note"></a>Learning Note</h2><ul>
-<li><p>如果在if之前对mutex进行过lock，需要在每个if分支（若有return）中unlock</p>
-</li>
-<li><p>多线程在进行数据同步的时候，如若使用promise和future，一定不要忘了在指定线程中使用future对象实例的get方法，等待线程任务的完成</p>
-</li>
-<li><p>DiskManager:</p>
-<ul>
-<li><p><code>WritePage(page_id_t page_id, const char *page_data)</code></p>
-<ul>
+<li>如果在if之前对mutex进行过lock，需要在每个if分支（若有return）中unlock</li>
+<li>多线程在进行数据同步的时候，如若使用promise和future，一定不要忘了在指定线程中使用future对象实例的get方法，等待线程任务的完成</li>
+<li>DiskManager:<ul>
+<li><code>WritePage(page_id_t page_id, const char *page_data)</code><ul>
 <li>page_id：Disk Page的id</li>
 <li>page_data：是Memory buffer pool中存储Disk Page所在frame的地址</li>
 </ul>
 </li>
-<li><p><code>ReadPage(page_id_t page_id, char *page_data)</code></p>
-<ul>
+<li><code>ReadPage(page_id_t page_id, char *page_data)</code><ul>
 <li>page_id: Disk Page的id</li>
 <li>page_data: 也是将Disk Page读入内存所在frame的地址</li>
 </ul>
@@ -1252,7 +1248,9 @@
     <url>/p/6fa5e9a2.html</url>
     <content><![CDATA[<div class="note warning simple"><p><strong>撰写本文的目的</strong>：记录本人在不参考其他任何形式的解决方法（思路/源码）、仅靠课程提供的资源（课本/参考资料）和<code>Discord</code>中<code>high level</code>的讨论的情况下，独立完成该课程的过程。</p>
 <p>欢迎大家和我讨论学习中所遇到的问题。</p>
+<p><a href="https://zihao256.github.io/">ZiHao’s Blog</a></p>
 </div>
+
 <h1 id="Task-1-Copy-On-Write-Trie"><a href="#Task-1-Copy-On-Write-Trie" class="headerlink" title="Task#1 - Copy-On-Write Trie"></a>Task#1 - Copy-On-Write Trie</h1><p>按照源码中给的提示即可完成</p>
 <p><strong>总体思路</strong>：use std::shared_ptr<const TrieNode> to traverse, then reuse nodes that do not need to be modified and use std::shared_ptr<TrieNode>  with Clone to build and modify memebers from the bottom up on nodes that need to be modified.</p>
 <h2 id="Get"><a href="#Get" class="headerlink" title="Get"></a>Get</h2><p>Get函数实现较为简单</p>

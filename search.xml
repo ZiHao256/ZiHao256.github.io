@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Project#2 Extendible Hash Index</title>
+    <title>Project#2: Extendible Hash Index</title>
     <url>/p/517dd8ea.html</url>
     <content><![CDATA[<div class="note warning simple"><p><strong>撰写本文的目的</strong>：记录本人在不参考其他任何形式的解决方法（思路/源码）、仅靠课程提供的资源（课本/参考资料）和<code>Discord</code>中<code>high level</code>的讨论的情况下，独立完成该课程的过程。</p>
 <p>欢迎大家和我讨论学习中所遇到的问题。</p>
+<p><a href="https://zihao256.github.io/">ZiHao’s Blog</a></p>
 <p>由于<code>gradescope</code>中对<code>non-cmu students</code>还未开放<code>Project#2</code>，本文方法仅通过了本地测试，极有可能有错误（并发访问）</p>
 </div>
 
@@ -48,22 +49,23 @@
 <ul>
 <li><p>参考C++Primer</p>
 <ul>
-<li>  移动构造的时候从给定对象中窃取资源而非拷贝资源，即移动构造函数部分配任何新内存</li>
-<li>  需要确保移后源对象是可以销毁</li>
+<li>  移动构造的时候从给定对象中窃取资源而非拷贝资源，即移动构造函数不分配任何新内存</li>
+<li>  需要确保移后源对象销毁是安全的</li>
 </ul>
 </li>
 </ul>
 </li>
-<li><p><code>operator=(PageGuard &amp;&amp;that)</code>: Move operator.</p>
-<ul>
+<li><p>  <code>operator=(PageGuard &amp;&amp;that)</code>: Move assignment operator.</p>
+</li>
 <li><p>需要处理移动赋值对象是自身的情况</p>
 <ul>
-<li>  直接返回*this</li>
+<li>直接返回*this</li>
 </ul>
 </li>
 <li><p>否则，需要处理原page</p>
 <ul>
-<li>  直接调用Drop</li>
+<li>按需调用Drop<ul>
+<li>  类似于移动构造</li>
 </ul>
 </li>
 </ul>
@@ -71,22 +73,28 @@
 <li><p><code>Drop()</code>: Unpin</p>
 <ul>
 <li>  先clear</li>
-<li>  再unpin</li>
+<li>  再调用UnpinPage</li>
 </ul>
 </li>
 <li><p><code>~PageGuard()</code>: Destructor.</p>
 <ul>
-<li><p>需要先判断是否已经手动Drop</p>
-<ul>
+<li>需要先判断是否已经手动Drop<ul>
 <li>  若否则直接调用Drop</li>
 </ul>
 </li>
 </ul>
 </li>
-<li><p><code>read-only</code>和<code>write date</code>APIs</p>
+<li><p><code>read-only</code>和<code>write data</code>APIs</p>
 <ul>
-<li>  分别为As和AsMut</li>
-<li>  可以编译时期检查用法是否正确</li>
+<li>分别为<code>As</code>和<code>AsMut</code><ul>
+<li>  <code>As</code>以<code>const</code>修饰符返回Page内部的data</li>
+<li>  <code>AsMut</code>则不然，并且注意<code>AsMut</code>会将PageGuard的成员变量<code>is_dirty</code>置为true</li>
+</ul>
+</li>
+<li>可以在编译时期检查<code>data</code>用法是否正确：<ul>
+<li>  例如，在实现Task3或Task4的<code>Insert</code>时，你可能认为某个部分仅仅是查阅了<code>HeaderPage</code>，因此以<code>As</code>返回，却没想到其实有可能在<code>HeaderPage</code>中无相应<code>DirectoryPage</code>后，会修改<code>HeaderPage</code>。<del>例子可能不大恰当</del></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -97,21 +105,34 @@
 <li>  std::move()移动赋值时，会对赋值guard调用析构函数并调用Drop，因此不必担心赋值后移后源对象会对page造成影响</li>
 </ul>
 </li>
-<li><p>  需要注意Drop中资源的释放顺序，需要在Unpin之前释放RLatch，不然会因为Unpin调用了RLatch而死锁</p>
+<li><p>需要注意Drop中资源的释放顺序，需要在Drop BasiPage之前释放RLatch，</p>
+<ul>
+<li><p>  可能会因为Unpin调用了RLatch而死锁</p>
 </li>
-<li><p>  需要在构函数中判断是否已经手动drop/移动赋值/移动构造过</p>
+<li><p>  <strong>更重要的原因</strong>：先UnpinPage的话，可能会被replacer evit</p>
+</li>
+</ul>
+</li>
+<li><p>  需要在析构函数中判断是否已经手动drop/移动赋值/移动构造过，避免重复Drop导致重复释放Latch</p>
 </li>
 </ul>
 <p><strong>对于WritePageGuard</strong>：同上</p>
-<h2 id="Upgrade"><a href="#Upgrade" class="headerlink" title="Upgrade"></a>Upgrade</h2><p><span style="color: rgb(13, 13, 13)"><span style="background-color: rgb(243, 244, 245)">guarantee that the protected page is not evicted from the buffer pool during the upgrade</span></span></p>
+<h2 id="Upgrade"><a href="#Upgrade" class="headerlink" title="Upgrade"></a>Upgrade</h2><blockquote>
+<p>guarantee that the protected page is not evicted from the buffer pool during the upgrade</p>
+</blockquote>
 <ul>
 <li><p><code>UpgradeRead()</code>: Upgrade to a <code>ReadPageGuard</code></p>
-<ul>
-<li>  在升级的过程中加写锁</li>
-<li>  并将basic Drop掉</li>
-</ul>
 </li>
-<li><p>  <code>UpgradeWrite()</code>: Upgrade to a <code>WritePageGuard</code></p>
+<li><p><code>UpgradeWrite()</code>: Upgrade to a <code>WritePageGuard</code></p>
+</li>
+</ul>
+<p>目前这两个函数我都没有使用到，或者说是不知道该如何实现以及使用：</p>
+<ul>
+<li><strong>如何实现</strong>？我本以为防止evict只需要将page的pin_count_++，但是并PageGuard不是Page的friend class，无法直接访问Page的私有成员</li>
+<li><strong>如何使用</strong>？我能想到该函数存在的原因，是新建一个需要修改的DirectoryPage或者BucketPage，但是没有<code>NewWritePageGuard</code>和<code>NewReadPageGuard</code>函数的实现，只能 <code>NewPageGuard</code>之后立刻<code>Upgrade</code>。<ul>
+<li>我认为：实际上该线程新建的<code>Page</code>目前只能该线程自己访问，并不需要使用<code>Guard</code>来保护啊</li>
+<li>因此我在<code>InsertToNewDirectory</code>和<code>InsertToNewBucket</code>中都只是用了<code>BasicPageGuard</code>并且调用了<code>AsMut</code>，而未使用<code>WritePageGuard</code>。并且这是<strong>能够</strong>通过本地测试的</li>
+</ul>
 </li>
 </ul>
 <h2 id="Wrappers"><a href="#Wrappers" class="headerlink" title="Wrappers"></a>Wrappers</h2><ul>
@@ -120,11 +141,54 @@
 <li>  <code>FetchPageWrite(page_id_t page_id)</code></li>
 <li>  <code>NewPageGuarded(page_id_t *page_id)</code></li>
 </ul>
+<p>注释中说明得足够清晰，不再赘述</p>
 <h2 id="Tests"><a href="#Tests" class="headerlink" title="Tests"></a>Tests</h2><p><img src="https://cdn.jsdelivr.net/gh/ZiHao256/Gallery@master/uPic/2023/10/image-20231030220121826.png" alt="local test"></p>
-<h1 id="Task-2-Extendible-Hash-Table-Pages"><a href="#Task-2-Extendible-Hash-Table-Pages" class="headerlink" title="Task #2-Extendible Hash Table Pages"></a>Task #2-<strong><span style="color: rgb(13, 13, 13)">Extendible Hash Table Pages</span></strong></h1><p>Task2中相关源码的注释并没有很详细，需要自己根据本地测试来判断该函数具体完成了什么工作</p>
+<h1 id="Task-2-Extendible-Hash-Table-Pages"><a href="#Task-2-Extendible-Hash-Table-Pages" class="headerlink" title="Task #2-Extendible Hash Table Pages"></a>Task #2-Extendible Hash Table Pages</h1><p><img src="https://cdn.jsdelivr.net/gh/ZiHao256/Gallery@master/uPic/2023/10/image-20231031193833346.png" alt="3-level Extendible Hash Table"></p>
+<p>这里主要实现三层可扩展哈希表的三个部分，如上图所示：</p>
+<ol>
+<li><strong>Header Page</strong>：<ol>
+<li>课本中的2-Level并没有该部分，该部分的max depth/prefix（例如上图中的2）是固定的</li>
+<li>主要是用来索引能够索引到存储key的<code>BucketPage</code>位置的<code>Directory Page</code>在<code>Header Page</code>中的位置（比较拗口）<ol>
+<li>通过<code>HashToDirecotryIndex</code>实现</li>
+</ol>
+</li>
+<li><code>HeaderPage</code>的优点（文档中提到）：<ol>
+<li>More Direcotry Pages -&gt; More Bucket Pages -&gt; More Keys</li>
+<li>并且由于<code>Latch Crabbing</code>的并发策略，使得<code>Header Page</code>的<code>Latch</code>很快的被释放</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><strong>Directory Page</strong><ol>
+<li>与课本中一致<ol>
+<li><strong>global depth = hash prefix</strong>：三个作用<ol>
+<li>用来限制某个时刻可以使用的Directory条目数量$2^{global depth}$个</li>
+<li>用来获得哈希值从LSB开始的global_depth个位，作为在dierctory中的索引，找到key所在的bucket<ol>
+<li><code>HashToBucketIndex</code>实现</li>
+</ol>
+</li>
+<li>并且在某个bucket满时，通过比较<code>global depth</code>和<code>local depth</code>来决定如何处理<code>split</code></li>
+</ol>
+</li>
+<li><strong>local depth = bucket hash prefix</strong><ol>
+<li>通过比较和global_depth的关系，判断指向当前bucket的指针数量，分裂时如何处理</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><strong>Bucket Page</strong><ol>
+<li>以数组的形式存储<code>&lt;key, value</code></li>
+<li>注意本项目并不会处理<code>non-unque key</code>，因此对于插入相同的key直接返回false（Insert函数）</li>
+</ol>
+</li>
+</ol>
+<p>Task2中相关源码的注释并没有很详细，需要自己根据本地测试来判断该函数具体完成了什么工作</p>
 <ul>
 <li>  可以在实现<code>Header Pages</code>和<code>Directory Pages</code>的时候，通过<code>HeaderDirectoryPageSampleTest</code>来测试或者Debug</li>
 <li>  实现<code>Bucket Pages</code>的时候，通过<code>BucketPageSampleTest</code>测试</li>
+<li>  例如：<code>HashToDirectoryIndex</code>是通过hash value的<code>max_depth</code>个MSB求得的</li>
 </ul>
 <h2 id="Hash-Table-Header-Pages"><a href="#Hash-Table-Header-Pages" class="headerlink" title="Hash Table Header Pages"></a>Hash Table Header Pages</h2><h3 id="成员变量："><a href="#成员变量：" class="headerlink" title="成员变量："></a><strong>成员变量：</strong></h3><p><code>directory_page_ids</code>：page_id（4B）的数组</p>
 <ul>
@@ -136,7 +200,7 @@
 <li><p>  <strong>占用内存</strong>：512*4 = 2048</p>
 </li>
 </ul>
-<p><code>max_depth_</code>:通过page_id(32位)的高max_depth_位，来判断page_id在directory_page_ids_中的位置</p>
+<p><code>max_depth_</code>: 通过page_id(32位)哈希值的高max_depth_位，来判断page_id在directory_page_ids_中的位置</p>
 <ul>
 <li>  <strong>占用内存</strong>：4B</li>
 </ul>
@@ -144,6 +208,7 @@
 <ul>
 <li>  通过测试可以看到，实际上该函数是将hash的高max_depth_位，作为directory page id在数组directory_page_ids_的索引</li>
 <li>  将hash向右移动<code>32-max_depth_</code>位，可以获得高<code>max_depth_</code>位对应的uint32_t表示</li>
+<li>  <code>Hint</code>: 考虑<code>max_depth_</code>为0的情况，实际上对于4B的整型右移<code>32</code>位是<code>undefined</code>？</li>
 </ul>
 <p>- [✅] <code>MaxSize()：</code>Get the maximum number of directory page ids the header page could handle</p>
 <ul>
@@ -161,18 +226,15 @@
 <h2 id="Hash-Table-Directory-Pages"><a href="#Hash-Table-Directory-Pages" class="headerlink" title="Hash Table Directory Pages"></a>Hash Table Directory Pages</h2><h3 id="成员变量：-1"><a href="#成员变量：-1" class="headerlink" title="成员变量："></a><strong>成员变量：</strong></h3><p><code>max_depth_</code>：</p>
 <ul>
 <li>  4B</li>
-<li>  Header Page的directory page id数组中所有的directory page拥有相同的max_depth值，代表一个directory能够用的掩码的最大位数</li>
+<li>  Header Page的directory page id数组中，所有的directory page拥有相同的max_depth值，代表一个directory能够用的掩码的最大位数</li>
 </ul>
 <p><code>global_depth_</code>：</p>
 <ul>
 <li><p>  4B</p>
 </li>
-<li><p>类似于: 课本中的bucket address table的global prefix，用来控制当前table使用条目的数量，上限是2^max_depth_</p>
-<ul>
-<li>  唯一不同的是课本中的<code>prefix</code>生成的mask是MSB，而<code>global_depth_</code>是LSB</li>
-</ul>
+<li><p>  类似于: 课本中的bucket address table的global prefix，用来控制当前table使用条目的数量，上限是2^max_depth</p>
 </li>
-<li><p>  简而言之：global_depth用来掩码hash value，使得其在bucket_page_ids_数组中有一个index</p>
+<li><p>  <strong>简而言之</strong>：global_depth用来掩码hash value，以获得存储key的bucket在directory 中的索引</p>
 </li>
 <li><p>  global_depth&lt;=max_depth_</p>
 </li>
@@ -189,19 +251,14 @@
 </ul>
 <h3 id="方法实现：-1"><a href="#方法实现：-1" class="headerlink" title="方法实现："></a><strong>方法实现：</strong></h3><p>- [✅] <code>Init</code>:</p>
 <ul>
-<li>  初始化所有成员变量</li>
+<li>  将global depth和local depth初始化0</li>
+<li>  bucket page id初始化为-1或者其他特殊标记</li>
 </ul>
 <p>- [✅] <code>HashToBucketIndex</code>:</p>
 <ul>
-<li><p><del>类似于</del><code>Header Page</code><del>中的</del><code>HashToDirectoryIndex</code><del>，只不过掩码长度为</del><code>global_depth_</code></p>
-<ul>
-<li>  实际上与Header Page中的不同</li>
-</ul>
-</li>
-<li><p><span style="background-color: #5fb23680">该函数干啥用的</span></p>
-<ul>
-<li>  直接对directory page当前能够使用的entry数量进行取余</li>
-<li>  即：%Size()</li>
+<li>  类似于<code>Header Page</code>中的<code>HashToDirectoryIndex</code>，只不过掩码长度为<code>global_depth_</code>，并且是将Hash值的低<code>global_depth_</code>位(从LSB开始)处理作为bucket在directory中的索引</li>
+<li>像测试中直接<code>%Size()</code>是极好的，但是我一开始脑子没转过来，<ul>
+<li>  一直想用位操作。。。🐽</li>
 </ul>
 </li>
 </ul>
@@ -209,17 +266,24 @@
 <ul>
 <li><p>分两种情况：</p>
 <ul>
-<li>  local_depth_ == global_depth_</li>
-<li>  local_depth_ &lt; global_depth_</li>
+<li>  local_depth_ &gt; global_depth_：代表后续需要double directory</li>
+<li>  local_depth_ &lt;= global_depth_</li>
 </ul>
 </li>
-<li><p>  观察得到，对于LSB掩码，为了获得directory扩展后当前bucket_idx分裂后映像的索引，只需要将bucket_idx的第新global_depth_位取反即可</p>
+<li><p>  观察得到，为了获得directory扩展后当前bucket_idx分裂后映像的索引，只需要将bucket_idx的第新global_depth_位取反即可</p>
 </li>
-<li><p>两种情况可以使用同一个位运算来解决</p>
+<li><p>两种情况可以使用同一种位运算来解决</p>
 <ul>
 <li><p>只需要对原进行split的bucket_idx进行如下位运算</p>
 <ul>
-<li>  第global_depth_+1位与1异或</li>
+<li>第一种情况：需要double directory<ul>
+<li>  第global_depth_位与1异或</li>
+</ul>
+</li>
+<li>第二种情况：不需要double<ul>
+<li>  第global_depth_-1位与1异或</li>
+</ul>
+</li>
 <li>  其他位与0异或</li>
 </ul>
 </li>
@@ -228,39 +292,34 @@
 </ul>
 <p>- [✅] <code>SetLocalDepth</code></p>
 <ul>
-<li><p>分两种情况</p>
+<li><p>同上，分两种情况</p>
 <ol>
-<li><p>如果新<code>local_depth_</code>大于<code>global_depth_</code>则需要split</p>
-<ol>
-<li><p>需要先通过上面的<code>GetSplitImageIndex</code>得到split_bucket_idx</p>
-<ol>
-<li> 然后设置split_bucket_idx对应的local_depth为新local_depth</li>
-</ol>
-</li>
-<li><p> 最后将旧bucket的local_depth设置为新local_depth</p>
-</li>
-</ol>
-</li>
-<li><p> 否则，正常直接设置</p>
-</li>
+<li> 先根据local_dpth和global_depth的关系，获得split_bucket_idx</li>
 </ol>
 </li>
 </ul>
+<ol start="2">
+<li> 如何将两个bucket的local_depth<strong>同时设置为新</strong>的即可</li>
+</ol>
 <p>- [✅] <code>IncrGlobalDepth</code></p>
 <ul>
-<li><p>需要找到当前directory中，local_depth小于等于当前global_depth的项：</p>
+<li><p>需要找到当前directory可用的条目中，local_depth小于等于当前global_depth的项：</p>
 <ul>
-<li>  使得其split_entry拥有相同的bucket page id和local_depth</li>
+<li>  使得其在double后的split_entry拥有相同的bucket page id和local_depth</li>
 </ul>
+</li>
+<li><p>  global_depth++</p>
+</li>
+<li><p>  <strong>Hint:</strong> global_depth &lt;= max_depth</p>
 </li>
 </ul>
 <p>- [✅] <code>DecrGlobalDepth</code></p>
 <ul>
-<li>  直接将index在区间[2^{global_depth-1}, 2^{global_depth}-1]的两个数组元素初始化即可</li>
+<li>  直接将index在区间[2^{global_depth-1}, 2^{global_depth}-1]的两个数组元素初始化为{-1, 0}</li>
 </ul>
 <p>- [✅] <code>GetGlobalDepthMask</code>:</p>
 <ul>
-<li>  通过注释我们可以知道，<code>global_depth_</code>是用于生成<code>LSB</code>规范的<code>lobal_depth_mask</code></li>
+<li>  通过注释我们可以知道，<code>global_depth_</code>是用于生成从哈希值的<code>LSB</code>开始的<code>global_depth_mask</code></li>
 <li>  而<code>Header Page</code>中的<code>max_depth_</code>则是用于生成<code>MSB</code>的掩码</li>
 </ul>
 <p>- [✅] <code>GetLocalDepthMask</code>:</p>
@@ -369,6 +428,12 @@
 <li><p>可以通过实现源码中给定的工具函数<code>UpdateDirectoryMapping</code>来辅助实现</p>
 <ul>
 <li>  可能该函数内部调用了<code>MigrateEntries</code>函数，但是我并没有实现，直接在<code>UpdateDirectoryMapping</code>中实现了Rehash操作</li>
+<li>**Hint:**该函数如果直接在Insert中调用的话函数签名中可以自己修改并多传入两个<code>ExtendibleHTableBucketPage</code><ul>
+<li>  <code>old_bucket_page</code>：需要进行分裂，并rehash的bucket</li>
+<li>  <code>new_bucket_page</code>：新建的bucket</li>
+<li>  这样可以不必重新<code>FetchPage</code></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>

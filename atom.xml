@@ -6,7 +6,7 @@
   <link href="https://zihao256.github.io/atom.xml" rel="self"/>
   
   <link href="https://zihao256.github.io/"/>
-  <updated>2023-11-13T14:08:54.104Z</updated>
+  <updated>2023-11-13T14:10:02.374Z</updated>
   <id>https://zihao256.github.io/</id>
   
   <author>
@@ -17,11 +17,11 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>使用 Actix Web 和 Vue 在开发中遇到的问题</title>
+    <title>基于Actix-Web(Rust)和Vue的Web开发记录</title>
     <link href="https://zihao256.github.io/p/d028ccc3.html"/>
     <id>https://zihao256.github.io/p/d028ccc3.html</id>
     <published>2023-11-13T13:42:48.000Z</published>
-    <updated>2023-11-13T14:08:54.104Z</updated>
+    <updated>2023-11-13T14:10:02.374Z</updated>
     
     
       

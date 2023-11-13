@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>使用 Actix Web 和 Vue 在开发中遇到的问题</title>
+    <title>基于Actix-Web(Rust)和Vue的Web开发记录</title>
     <url>/p/d028ccc3.html</url>
     <content><![CDATA[<h1 id="后端（基于actix-web）"><a href="#后端（基于actix-web）" class="headerlink" title="后端（基于actix-web）"></a>后端（基于actix-web）</h1><h2 id="login"><a href="#login" class="headerlink" title="login"></a>login</h2><ul>
 <li><input checked="" disabled="" type="checkbox"> 登录后，使用session存储用户的相关信息用于导出功能</li>

@@ -1,6 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>使用 Actix Web 和 Vue 在开发中遇到的问题</title>
+    <url>/p/d028ccc3.html</url>
+    <content><![CDATA[<h1 id="后端（基于actix-web）"><a href="#后端（基于actix-web）" class="headerlink" title="后端（基于actix-web）"></a>后端（基于actix-web）</h1><h2 id="login"><a href="#login" class="headerlink" title="login"></a>login</h2><ul>
+<li><input checked="" disabled="" type="checkbox"> 登录后，使用session存储用户的相关信息用于导出功能</li>
+<li><input checked="" disabled="" type="checkbox"> 登录后，生成token返回给前端作为信息认证</li>
+</ul>
+<h2 id="register"><a href="#register" class="headerlink" title="register"></a>register</h2><ul>
+<li><input checked="" disabled="" type="checkbox"> 注册后转到登录界面</li>
+</ul>
+<h2 id="export"><a href="#export" class="headerlink" title="export"></a>export</h2><ul>
+<li><p><input checked="" disabled="" type="checkbox">  用户使用该功能时，需要在请求header中传回<code>token</code>来认证</p>
+<ul>
+<li><p><strong>bug</strong>:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">GET http://localhost:8080/export/x x x 401 (Unauthorized)</span><br></pre></td></tr></table></figure></li>
+<li><p><strong>分析</strong>：授权问题</p>
+</li>
+<li><p><strong>solution</strong>：<code>logger</code> + <code>debug</code></p>
+<ul>
+<li><p>发现是 <code>actix-session</code>中设置的内容并没有在后续操作被访问，</p>
+<ul>
+<li><p>因为在<code>postman</code>中，<code>actix-session</code>返回的<code>set-cookie</code>会默认填充到<code>cookie</code>中</p>
+</li>
+<li><p>而浏览器并没有这个功能，需要前端实现。</p>
+</li>
+</ul>
+</li>
+<li><p><del>这波是postman的锅</del></p>
+<ul>
+<li><p><strong>bug</strong>：为了<code>actix-session</code>能够正常使用（需要将<code>actix-session</code>放置于响应头中的<code>set-cookie</code>，置于其他请求头中），需要使用<code>axios</code>的<code>axios.defaults.withCredentials = true</code></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Access to XMLHttpRequest at &#x27;http://localhost:8080/export/xxx&#x27; from origin &#x27;http://localhost:5173&#x27; has been blocked by CORS policy: Response to preflight request doesn&#x27;t pass access control check: The value of the &#x27;Access-Control-Allow-Credentials&#x27; header in the response is &#x27;&#x27; which must be &#x27;true&#x27; when the request&#x27;s credentials mode is &#x27;include&#x27;. The credentials mode of requests initiated by the XMLHttpRequest is controlled by the withCredentials attribute.</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p><strong>分析：</strong>仍然是跨域问题</p>
+<ul>
+<li>后端<code>axtix-session</code>不允许将<code>cookie</code>放置于跨域的响应头中</li>
+<li>为了确定权限，前端需要设置<code>withCredentials=true</code>：会默认将<code>cookie</code>放置于请求头中，但是实际上此时并没有<code>cookie</code>，因此会报错</li>
+<li>需要设置后端为<code>allow access allow origin</code>指定允许某个跨域请求的域名，便可以将<code>cookie</code>置于响应头中</li>
+</ul>
+</li>
+<li><p><strong>solution</strong>：<code>actix-cors</code></p>
+<ol>
+<li>一种解法：<ol>
+<li>使用<code>Cors::allow_origin</code>来允许某个跨域源的请求</li>
+<li>为了使得前端能够发出带认证的请求，例如<code>Vue中使用axios:withCredential</code>使得默认在请求头部加上后端发来的<code>set-cookie</code>，需要设置使用<code>Cors::support_credential</code>来支持</li>
+</ol>
+</li>
+<li>第二种解法：直接使用 <a href="https://docs.rs/actix-cors/latest/actix_cors/struct.Cors.html#method.permissive"><code>Cors::permissive()</code></a>梭哈，<del>不当人了</del></li>
+</ol>
+<ul>
+<li>refs:<ul>
+<li><a href="https://juejin.cn/post/7163597193058729998">withCredentials——让我加了班</a></li>
+<li><a href="https://github.com/actix/examples/blob/master/cors/backend/src/main.rs">examples/cors/backend/src/main.rs at master · actix/examples (github.com)</a></li>
+<li><a href="https://docs.rs/actix-cors/latest/actix_cors/struct.Cors.html">Cors in actix_cors - Rust (docs.rs)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><input checked="" disabled="" type="checkbox">  导出query中<code>institute</code>对应的tuples</p>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> <strong>bug</strong>：访问<code>export</code>的请求，无法进入<code>pub async fn get_arena_record</code>函数，会一直<code>await</code></li>
+<li><input checked="" disabled="" type="checkbox"> <strong>分析：</strong>可能是<code>pool</code>的问题</li>
+<li><input checked="" disabled="" type="checkbox"> <strong>Solution:</strong> 需要将<code>SqlitePool</code>在<code>HttpServer::new</code>之前，以包裹在<code>web::Data</code>中来定义，因为<code>HttpServer::new</code>会对每个请求创建一个<code>Thread</code>，而<code>web::Data</code>内部使用了<code>Arc</code>保证并发安全<ul>
+<li><input checked="" disabled="" type="checkbox"> ref：<a href="https://actix.rs/docs/application">Application | Actix</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="前端（基于Vue）"><a href="#前端（基于Vue）" class="headerlink" title="前端（基于Vue）"></a>前端（基于Vue）</h1><ul>
+<li><input checked="" disabled="" type="checkbox"> 将records使用表格展示</li>
+<li><input disabled="" type="checkbox"> 将records分页显示</li>
+<li><input checked="" disabled="" type="checkbox"> 将内容进行排序</li>
+<li><input disabled="" type="checkbox"> records以文件形式下载<ul>
+<li><input checked="" disabled="" type="checkbox"> xlsx</li>
+<li><input disabled="" type="checkbox"> db</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>开发框架学习</category>
+      </categories>
+      <tags>
+        <tag>Rust</tag>
+        <tag>Actix-web</tag>
+        <tag>Vue</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Project#2: Extendible Hash Index</title>
     <url>/p/517dd8ea.html</url>
     <content><![CDATA[<div class="note warning simple"><p><strong>撰写本文的目的</strong>：记录本人在不参考其他任何形式的解决方法（思路/源码）、仅靠课程提供的资源（课本/参考资料）和<code>Discord</code>中<code>high level</code>的讨论的情况下，独立完成该课程的过程。</p>
@@ -749,7 +846,7 @@
 <ul>
 <li>🐽，破案了：在<code>SetEvictable</code>函数中，一开始就获得了latch，但是并没有在每个return分支释放latch</li>
 </ul>
-<h2 id="Tests"><a href="#Tests" class="headerlink" title="Tests"></a>Tests</h2><p><img src="https://cdn.jsdelivr.net/gh/ZiHao256/Gallery@master/uPic/2023/10/image-20231003135918493.png" alt="lru_k_replacer_test result"></p>
+<h2 id="Tests"><a href="#Tests" class="headerlink" title="Tests"></a>Tests</h2><p><img src="../../../../Downloads/image-20231003135918493.png" alt="lru_k_replacer_test result"></p>
 <h1 id="Task-2-Disk-Scheduler"><a href="#Task-2-Disk-Scheduler" class="headerlink" title="Task#2 - Disk Scheduler"></a>Task#2 - Disk Scheduler</h1><p><strong>思路：</strong></p>
 <ul>
 <li>可能有多种实现方法，我的思路是<code>Scheduler</code>方法只将给定的<code>DiskRequest</code>对象<code>put</code>进<code>request_queue_</code>队列</li>
@@ -795,7 +892,7 @@
 </ul>
 </li>
 </ul>
-<h2 id="Test"><a href="#Test" class="headerlink" title="Test"></a>Test</h2><p><img src="https://cdn.jsdelivr.net/gh/ZiHao256/Gallery@master/uPic/2023/10/image-20231003141429096.png" alt="disk_scheduler_test result"></p>
+<h2 id="Test"><a href="#Test" class="headerlink" title="Test"></a>Test</h2><p><img src="../../../../Downloads/image-20231003141429096.png" alt="disk_scheduler_test result"></p>
 <h1 id="Task-3-Buffer-Pool-Manager"><a href="#Task-3-Buffer-Pool-Manager" class="headerlink" title="Task#3 - Buffer Pool Manager"></a>Task#3 - Buffer Pool Manager</h1><p>通过参考<code>Page</code>，<code>LRU K Replacement Policy</code>和<code>Disk Scheduler</code>的源码实现，完成时过程比较曲折，花了中秋节一下午和晚上完成，并且只通过了本地测试，并发问题肯定很严重。等<code>gradescope</code>开了再继续完善。</p>
 <p>源码中给的提示还是比较清晰，因此实现过程虽然曲折但也还算顺利。但有一些我自己踩过的坑或bug，在最后统一写出。</p>
 <h2 id="Learning-Note"><a href="#Learning-Note" class="headerlink" title="Learning Note"></a>Learning Note</h2><ul>

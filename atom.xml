@@ -6,7 +6,7 @@
   <link href="https://zihao256.github.io/atom.xml" rel="self"/>
   
   <link href="https://zihao256.github.io/"/>
-  <updated>2023-10-31T11:46:21.423Z</updated>
+  <updated>2023-11-13T14:08:54.104Z</updated>
   <id>https://zihao256.github.io/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>使用 Actix Web 和 Vue 在开发中遇到的问题</title>
+    <link href="https://zihao256.github.io/p/d028ccc3.html"/>
+    <id>https://zihao256.github.io/p/d028ccc3.html</id>
+    <published>2023-11-13T13:42:48.000Z</published>
+    <updated>2023-11-13T14:08:54.104Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;后端（基于actix-web）&quot;&gt;&lt;a href=&quot;#后端（基于actix-web）&quot; class=&quot;headerlink&quot; title=&quot;后端（基于actix-web）&quot;&gt;&lt;/a&gt;后端（基于actix-web）&lt;/h1&gt;&lt;h2 id=&quot;login&quot;&gt;&lt;a hre</summary>
+      
+    
+    
+    
+    <category term="开发框架学习" scheme="https://zihao256.github.io/categories/%E5%BC%80%E5%8F%91%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+    <category term="Rust" scheme="https://zihao256.github.io/tags/Rust/"/>
+    
+    <category term="Actix-web" scheme="https://zihao256.github.io/tags/Actix-web/"/>
+    
+    <category term="Vue" scheme="https://zihao256.github.io/tags/Vue/"/>
+    
+  </entry>
   
   <entry>
     <title>Project#2: Extendible Hash Index</title>
@@ -82,7 +108,7 @@
     <link href="https://zihao256.github.io/p/1c228cd6.html"/>
     <id>https://zihao256.github.io/p/1c228cd6.html</id>
     <published>2023-10-03T05:01:58.000Z</published>
-    <updated>2023-10-31T11:25:14.264Z</updated>
+    <updated>2023-10-31T15:50:10.465Z</updated>
     
     
       
@@ -543,30 +569,6 @@
     
     
     <category term="Blog" scheme="https://zihao256.github.io/tags/Blog/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>我用什么才能留住你</title>
-    <link href="https://zihao256.github.io/p/d1fbce69.html"/>
-    <id>https://zihao256.github.io/p/d1fbce69.html</id>
-    <published>2022-09-30T16:00:00.000Z</published>
-    <updated>2023-09-20T06:52:02.783Z</updated>
-    
-    
-      
-      
-    <summary type="html">&lt;h1 id=&quot;我用什么才能留住你&quot;&gt;&lt;a href=&quot;#我用什么才能留住你&quot; class=&quot;headerlink&quot; title=&quot;我用什么才能留住你&quot;&gt;&lt;/a&gt;我用什么才能留住你&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;https://zh.wikipedia.org/wiki/%E8</summary>
-      
-    
-    
-    
-    <category term="生活" scheme="https://zihao256.github.io/categories/%E7%94%9F%E6%B4%BB/"/>
-    
-    <category term="小诗" scheme="https://zihao256.github.io/categories/%E7%94%9F%E6%B4%BB/%E5%B0%8F%E8%AF%97/"/>
-    
-    
-    <category term="博尔赫斯" scheme="https://zihao256.github.io/tags/%E5%8D%9A%E5%B0%94%E8%B5%AB%E6%96%AF/"/>
     
   </entry>
   

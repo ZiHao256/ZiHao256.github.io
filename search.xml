@@ -10,7 +10,7 @@
 <h2 id="register"><a href="#register" class="headerlink" title="register"></a>register</h2><ul>
 <li><input checked="" disabled="" type="checkbox"> 注册后转到登录界面</li>
 </ul>
-<h2 id="export"><a href="#export" class="headerlink" title="export"></a>export</h2><ul>
+<h2 id="Home"><a href="#Home" class="headerlink" title="Home"></a>Home</h2><h3 id="export-amp-export-in-db"><a href="#export-amp-export-in-db" class="headerlink" title="export &amp; export_in_db"></a>export &amp; export_in_db</h3><ul>
 <li><p><input checked="" disabled="" type="checkbox">  用户使用该功能时，需要在请求header中传回<code>token</code>来认证</p>
 <ul>
 <li><p><strong>bug</strong>:</p>
@@ -76,16 +76,45 @@
 </li>
 </ul>
 </li>
+<li><p><input checked="" disabled="" type="checkbox">  创建<code>backend.db</code>和<code>其他系统.db</code>的多个连接池</p>
+<ul>
+<li><p><input checked="" disabled="" type="checkbox">  每次对数据库操作时只需要使用一个连接即可</p>
+</li>
+<li><p><input checked="" disabled="" type="checkbox"> </p>
+<blockquote>
+<p>实际上会自动从池子中分配连接<br>An asynchronous pool of SQLx database connections.</p>
+<p>Create a pool with <a href="https://docs.rs/sqlx-core/0.7.2/sqlx_core/pool/struct.Pool.html#method.connect">Pool::connect</a> or <a href="https://docs.rs/sqlx-core/0.7.2/sqlx_core/pool/struct.Pool.html#method.connect_with">Pool::connect_with</a> and then call <a href="https://docs.rs/sqlx-core/0.7.2/sqlx_core/pool/struct.Pool.html#method.acquire">Pool::acquire</a> to get a connection from the pool; when the connection is dropped it will return to the pool so it can be reused.</p>
+<p>You can also pass <code>&amp;Pool</code> directly anywhere an <code>Executor</code> is required; this will automatically checkout a connection for you.</p>
+<p>See <a href="https://docs.rs/sqlx-core/0.7.2/sqlx_core/pool/index.html">the module documentation</a> for examples.</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p><input disabled="" type="checkbox">  SQLite 是一种嵌入式数据库，通常以文件形式存储在本地。</p>
+<ul>
+<li><input disabled="" type="checkbox"> 访问前：需要使用<code>scp</code>每次连接前确保从其他服务器下载到本地</li>
+</ul>
+</li>
+</ul>
+<h2 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h2><ul>
+<li><input checked="" disabled="" type="checkbox"> 通过解析前端传来的查询参数（Query param），选择处理不同系统的DB，对后端代码进行复用<ul>
+<li><input checked="" disabled="" type="checkbox"> <code>axios</code>对于get方法有<code>params</code>+<code>actin-web</code>的<code>Query</code></li>
+<li><input checked="" disabled="" type="checkbox"> 使用<code>let/match expression</code>来简化多种情况赋值的代码</li>
+</ul>
+</li>
+<li><input checked="" disabled="" type="checkbox"> 创建枚举类型来包裹DB，将错误处理提前到创建枚举，避免多处枚举时还需要处理其他情况</li>
+<li><input disabled="" type="checkbox"> 对前端Component进行复用</li>
 </ul>
 <h1 id="前端（基于Vue）"><a href="#前端（基于Vue）" class="headerlink" title="前端（基于Vue）"></a>前端（基于Vue）</h1><ul>
 <li><input checked="" disabled="" type="checkbox"> 将records使用表格展示</li>
 <li><input disabled="" type="checkbox"> 将records分页显示</li>
 <li><input checked="" disabled="" type="checkbox"> 将内容进行排序</li>
-<li><input disabled="" type="checkbox"> records以文件形式下载<ul>
+<li><input checked="" disabled="" type="checkbox"> records以文件形式下载<ul>
 <li><input checked="" disabled="" type="checkbox"> xlsx</li>
-<li><input disabled="" type="checkbox"> db</li>
+<li><input checked="" disabled="" type="checkbox"> db</li>
 </ul>
 </li>
+<li><input checked="" disabled="" type="checkbox"> 前端发出带query params的Get 请求，不需要完全修改url，也方便后端对代码复用</li>
 </ul>
 ]]></content>
       <categories>

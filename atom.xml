@@ -6,7 +6,7 @@
   <link href="https://zihao256.github.io/atom.xml" rel="self"/>
   
   <link href="https://zihao256.github.io/"/>
-  <updated>2023-11-17T08:57:01.441Z</updated>
+  <updated>2023-11-28T10:56:27.887Z</updated>
   <id>https://zihao256.github.io/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>rustlings</title>
+    <link href="https://zihao256.github.io/p/2acafc61.html"/>
+    <id>https://zihao256.github.io/p/2acafc61.html</id>
+    <published>2023-11-28T09:46:15.000Z</published>
+    <updated>2023-11-28T10:56:27.887Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;说来惭愧，大三寒假的时候学过一次Rust，但是只是过了一遍语法，并且没有真正有项目实践，所以很快就遗忘了。&lt;/p&gt;
+&lt;p&gt;这次开始尝试实践/项目驱动学习，正好最近需要写一个Web项目，尝试使用Rust来编写，以巩固对Rust的学习。&lt;/p&gt;
+&lt;p&gt;</summary>
+      
+    
+    
+    
+    <category term="学无止境" scheme="https://zihao256.github.io/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/"/>
+    
+    <category term="编程语言学习" scheme="https://zihao256.github.io/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+    <category term="Rust" scheme="https://zihao256.github.io/tags/Rust/"/>
+    
+  </entry>
   
   <entry>
     <title>基于Actix-Web(Rust)和Vue的Web开发记录</title>
@@ -532,35 +559,6 @@
 &lt;ol&gt;
 &lt;li&gt;在 Github 创建一个公开仓库&lt;/li&gt;
 &lt;li&gt;创建一个 &lt;code&gt;hexo&lt;/code&gt;</summary>
-      
-    
-    
-    
-    <category term="学无止境" scheme="https://zihao256.github.io/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/"/>
-    
-    <category term="博客更新" scheme="https://zihao256.github.io/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/%E5%8D%9A%E5%AE%A2%E6%9B%B4%E6%96%B0/"/>
-    
-    
-    <category term="Blog" scheme="https://zihao256.github.io/tags/Blog/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Blog增加图库</title>
-    <link href="https://zihao256.github.io/p/9e54ba1.html"/>
-    <id>https://zihao256.github.io/p/9e54ba1.html</id>
-    <published>2023-02-18T11:19:09.000Z</published>
-    <updated>2023-10-03T05:07:27.575Z</updated>
-    
-    
-      
-      
-    <summary type="html">&lt;ul&gt;
-&lt;li&gt;Hexo 的 Gallery 相册图库功能&lt;/li&gt;
-&lt;li&gt;在Github 上创建一个仓库作为图床&lt;/li&gt;
-&lt;li&gt;使用 uPic 作为上传工具&lt;/li&gt;
-&lt;li&gt;在 typora 偏好设置中设置插入图片时对其进行上传，选择上传服务为uPic&lt;/li&gt;
-&lt;/</summary>
       
     
     

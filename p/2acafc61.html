@@ -1,0 +1,1696 @@
+<!DOCTYPE html><html lang="zh-Hans" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>rustlings | ZiHao's Blog</title><meta name="keywords" content="Rust"><meta name="author" content="zihao"><meta name="copyright" content="zihao"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="说来惭愧，大三寒假的时候学过一次Rust，但是只是过了一遍语法，并且没有真正有项目实践，所以很快就遗忘了。 这次开始尝试实践&#x2F;项目驱动学习，正好最近需要写一个Web项目，尝试使用Rust来编写，以巩固对Rust的学习。 首先用rustlings对Rust的基本语法体系进行最小化学习 后续会根据需要来拓展对相关概念深入的学习（the book&#x2F;async&#x2F;rustdoc）    rustlings">
+<meta property="og:type" content="article">
+<meta property="og:title" content="rustlings">
+<meta property="og:url" content="https://zihao256.github.io/p/2acafc61.html">
+<meta property="og:site_name" content="ZiHao&#39;s Blog">
+<meta property="og:description" content="说来惭愧，大三寒假的时候学过一次Rust，但是只是过了一遍语法，并且没有真正有项目实践，所以很快就遗忘了。 这次开始尝试实践&#x2F;项目驱动学习，正好最近需要写一个Web项目，尝试使用Rust来编写，以巩固对Rust的学习。 首先用rustlings对Rust的基本语法体系进行最小化学习 后续会根据需要来拓展对相关概念深入的学习（the book&#x2F;async&#x2F;rustdoc）    rustlings">
+<meta property="og:locale">
+<meta property="og:image" content="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven2.jpg">
+<meta property="article:published_time" content="2023-11-28T09:46:15.000Z">
+<meta property="article:modified_time" content="2023-11-28T10:56:27.887Z">
+<meta property="article:author" content="zihao">
+<meta property="article:tag" content="Rust">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven2.jpg"><link rel="shortcut icon" href="https://github.com/ZiHao256/ZiHao256.github.io/blob/hexo/images/stitch.JPG?raw=true"><link rel="canonical" href="https://zihao256.github.io/p/2acafc61"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":true,"languages":{"hits_empty":"We didn't find any results for the search: ${query}"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: true,
+    post: true
+  },
+  runtime: '天',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: true,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'rustlings',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: true,
+  isToc: true,
+  postUpdate: '2023-11-28 18:56:27'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="//at.alicdn.com/t/c/font_4263496_xe5w6zp8g5c.css"><meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="/atom.xml" title="ZiHao's Blog" type="application/atom+xml">
+<style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}</style></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">Loading...</div></div></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://github.com/ZiHao256/ZiHao256.github.io/blob/hexo/images/stitch.JPG?raw=true" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">64</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">44</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">16</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/log"><i class="fa-fw fas fa-book"></i><span> Log</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fa fa-camera-retro"></i><span> Gallery</span></a></li><li><a class="site-page child" href="/Map/"><i class="fa-fw fa fa-map-signs"></i><span> Map</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven2.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">ZiHao's Blog</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> Search</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/log"><i class="fa-fw fas fa-book"></i><span> Log</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fa fa-camera-retro"></i><span> Gallery</span></a></li><li><a class="site-page child" href="/Map/"><i class="fa-fw fa fa-map-signs"></i><span> Map</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">rustlings</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2023-11-28T09:46:15.000Z" title="Created 2023-11-28 17:46:15">2023-11-28</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2023-11-28T10:56:27.887Z" title="Updated 2023-11-28 18:56:27">2023-11-28</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/">学无止境</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0/">编程语言学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">Word count:</span><span class="word-count">12.4k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">Reading time:</span><span>51min</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="rustlings"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">Comments:</span><a href="/p/2acafc61.html#post-comment"><span class="gitalk-comment-count"><i class="fa-solid fa-spinner fa-spin"></i></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><blockquote>
+<p>说来惭愧，大三寒假的时候学过一次Rust，但是只是过了一遍语法，并且没有真正有项目实践，所以很快就遗忘了。</p>
+<p>这次开始尝试实践/项目驱动学习，正好最近需要写一个Web项目，尝试使用Rust来编写，以巩固对Rust的学习。</p>
+<p>首先用rustlings对Rust的基本语法体系进行最小化学习</p>
+<p>后续会根据需要来拓展对相关概念深入的学习（the book/async/rustdoc）</p>
+</blockquote>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> rustlings：需要完整做一遍，并把相关概念汇总到此页面，后续作为复习/字典查阅</li>
+<li><input disabled="" type="checkbox"> the book：根据需要对Rust中的概念进行复习，作为字典查看</li>
+<li><input disabled="" type="checkbox"> Asynchronous Programming：web编程中涉及到异步时再深入学习</li>
+</ul>
+<hr>
+<h1 id="Book-Chapter-Mapping"><a href="#Book-Chapter-Mapping" class="headerlink" title="Book Chapter Mapping"></a>Book Chapter Mapping</h1><table>
+<thead>
+<tr>
+<th>Exercise</th>
+<th>Book Chapter</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>variables</td>
+<td>§3.1</td>
+</tr>
+<tr>
+<td>functions</td>
+<td>§3.3</td>
+</tr>
+<tr>
+<td>if</td>
+<td>§3.5</td>
+</tr>
+<tr>
+<td>primitive_types</td>
+<td>§3.2, §4.3</td>
+</tr>
+<tr>
+<td>vecs</td>
+<td>§8.1</td>
+</tr>
+<tr>
+<td>move_semantics</td>
+<td>§4.1-2</td>
+</tr>
+<tr>
+<td>structs</td>
+<td>§5.1, §5.3</td>
+</tr>
+<tr>
+<td>enums</td>
+<td>§6, §18.3</td>
+</tr>
+<tr>
+<td>strings</td>
+<td>§8.2</td>
+</tr>
+<tr>
+<td>modules</td>
+<td>§7</td>
+</tr>
+<tr>
+<td>hashmaps</td>
+<td>§8.3</td>
+</tr>
+<tr>
+<td>options</td>
+<td>§10.1</td>
+</tr>
+<tr>
+<td>error_handling</td>
+<td>§9</td>
+</tr>
+<tr>
+<td>generics</td>
+<td>§10</td>
+</tr>
+<tr>
+<td>traits</td>
+<td>§10.2</td>
+</tr>
+<tr>
+<td>tests</td>
+<td>§11.1</td>
+</tr>
+<tr>
+<td>lifetimes</td>
+<td>§10.3</td>
+</tr>
+<tr>
+<td>iterators</td>
+<td>§13.2-4</td>
+</tr>
+<tr>
+<td>threads</td>
+<td>§16.1-3</td>
+</tr>
+<tr>
+<td>smart_pointers</td>
+<td>§15, §16.3</td>
+</tr>
+<tr>
+<td>macros</td>
+<td>§19.6</td>
+</tr>
+<tr>
+<td>clippy</td>
+<td>§21.4</td>
+</tr>
+<tr>
+<td>conversions</td>
+<td>rustdoc</td>
+</tr>
+</tbody></table>
+<hr>
+<h1 id="Intro"><a href="#Intro" class="headerlink" title="Intro"></a>Intro</h1><p>Rust uses the <code>print!</code> and <code>println!</code> macros to print text to the console.</p>
+<h2 id="Further-information"><a href="#Further-information" class="headerlink" title="Further information"></a>Further information</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://doc.rust-lang.org/rust-by-example/hello.html">Hello World</a></li>
+<li><a target="_blank" rel="noopener" href="https://doc.rust-lang.org/rust-by-example/hello/print.html">Formatted print</a></li>
+</ul>
+<h1 id="Formatted-print"><a href="#Formatted-print" class="headerlink" title="Formatted print"></a>Formatted print</h1><ul>
+<li>Rust中可以通过一系列以<code>!</code>结尾的宏定义来字符串化变量、格式化，并将其写入<code>String</code>或者<code>io::stdout/stderr</code></li>
+<li>Rust中字符串化变量的占位符（类似于C中的<code>%</code>）为<code>&#123;&#125;</code><ul>
+<li><code>&#123;name&#125;</code>指定字符串化变量的名字    </li>
+<li><code>&#123;:&#125;</code>在<code>:</code>后输入<code>format character</code>，可以指定字符串化的形式</li>
+<li>使用<code>&gt;</code>或者<code>&lt;</code>可以在左右两边使用空格或者0等填充至指定长度</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>Rust中，使用类似于C++中的<code>interface</code>或者<code>abstract class</code>的<code>trait</code>来实现一部分多态性<ul>
+<li>例如，实现了<code>fmt::Display</code>的类型才能使用<code>&#123;&#125;</code>标志符来字符串化该类型的变量</li>
+<li>只需要继承<code>fmt::Debug</code>就能使用<code>&#123;&#125;</code>标志</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h1 id="Variables"><a href="#Variables" class="headerlink" title="Variables"></a>Variables</h1><p>In Rust, variables are immutable by default.<br>When a variable is immutable, once a value is bound to a name, you can’t change that value.<br>You can make them mutable by adding <code>mut</code> in front of the variable name.</p>
+<h2 id="Further-information-1"><a href="#Further-information-1" class="headerlink" title="Further information"></a>Further information</h2><ul>
+<li>[✅] <a target="_blank" rel="noopener" href="https://doc.rust-lang.org/book/ch03-01-variables-and-mutability.html">Variables and Mutability</a></li>
+</ul>
+<h1 id="Variables-and-Mutability"><a href="#Variables-and-Mutability" class="headerlink" title="Variables and Mutability"></a>Variables and Mutability</h1><p>mut</p>
+<ul>
+<li>Rust中使用let声明的变量默认是immutable<ul>
+<li>保证并发安全</li>
+</ul>
+</li>
+<li>在变量名前<code>mut</code>使得其可以mutable</li>
+</ul>
+<p>constant</p>
+<ul>
+<li>类似于C/C++中的const</li>
+<li>需要显式指定类型</li>
+</ul>
+<p>shadow</p>
+<ul>
+<li>可以在同一作用域，使用<code>let</code>声明名字相同的两个变量</li>
+<li>第二个会把第一个<code>overshadow</code></li>
+<li>可以根据需要选择<ol>
+<li>直接声明为<code>mut</code></li>
+<li>使用<code>let</code>来overshadow</li>
+</ol>
+</li>
+</ul>
+<hr>
+<h1 id="Functions"><a href="#Functions" class="headerlink" title="Functions"></a>Functions</h1><p>Here, you’ll learn how to write functions and how the Rust compiler can help you debug errors even<br>in more complex code.</p>
+<h2 id="Further-information-2"><a href="#Further-information-2" class="headerlink" title="Further information"></a>Further information</h2><ul>
+<li>[✅] <a target="_blank" rel="noopener" href="https://doc.rust-lang.org/book/ch03-03-how-functions-work.html">How Functions Work</a></li>
+</ul>
+<h1 id="Functions-1"><a href="#Functions-1" class="headerlink" title="Functions"></a>Functions</h1><ul>
+<li>函数名：snake_case</li>
+</ul>
+<h2 id="Parameters"><a href="#Parameters" class="headerlink" title="Parameters"></a>Parameters</h2><ul>
+<li>parameter和argument：函数定义和调用时</li>
+<li>函数签名中，必须显式地给出parameter的类型</li>
+</ul>
+<h2 id="Statement-and-Expressions"><a href="#Statement-and-Expressions" class="headerlink" title="Statement and Expressions"></a>Statement and Expressions</h2><ul>
+<li>Rust的一大特点：基于Expression的语言<ul>
+<li>区别于Statement<ul>
+<li>有返回值</li>
+<li>不以<code>;</code>结尾：expression以;结尾则会变为statement</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>区别于C/C++：Rust的赋值语句无返回值</li>
+<li>Rust中的Expression：<ul>
+<li>基本操作符运算</li>
+<li>函数调用</li>
+<li>macro:<ul>
+<li>print!等形式化字符串的宏则是返回为void？</li>
+</ul>
+</li>
+<li>花括号创建的新作用域</li>
+</ul>
+</li>
+</ul>
+<h2 id="Functions-with-return-values"><a href="#Functions-with-return-values" class="headerlink" title="Functions with return values"></a>Functions with return values</h2><ul>
+<li>必须在函数签名使用<code>-&gt;</code>显式地声明</li>
+<li>函数中返回的方式<ul>
+<li>显式return</li>
+<li>隐式地返回最后一个expresion的返回值</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h1 id="If"><a href="#If" class="headerlink" title="If"></a>If</h1><p><code>if</code>, the most basic (but still surprisingly versatile!) type of control flow, is what you’ll learn here.</p>
+<h2 id="Further-information-3"><a href="#Further-information-3" class="headerlink" title="Further information"></a>Further information</h2><ul>
+<li>[✅] <a target="_blank" rel="noopener" href="https://doc.rust-lang.org/book/ch03-05-control-flow.html#if-expressions">Control Flow - if expressions</a></li>
+</ul>
+<h1 id="Control-Flow"><a href="#Control-Flow" class="headerlink" title="Control Flow"></a>Control Flow</h1><h2 id="if-Expression"><a href="#if-Expression" class="headerlink" title="if Expression"></a>if Expression</h2><ul>
+<li>condition必须是bool<ul>
+<li>强静态类型：不会自动将整型隐式地转换为bool</li>
+</ul>
+</li>
+<li>Rust推荐最多使用一个<code>else if</code>分支，否则使用<code>match</code>来重构代码</li>
+<li><code>if</code>是一个Expression，可以用在let声明的右侧<ul>
+<li>但是需要确保每个分支的最后一行为Expression</li>
+<li>并且每个分支的Expression返回的类型需要一致</li>
+</ul>
+</li>
+</ul>
+<h2 id="Repetition-with-Loops"><a href="#Repetition-with-Loops" class="headerlink" title="Repetition with Loops"></a>Repetition with Loops</h2><h3 id="loop"><a href="#loop" class="headerlink" title="loop"></a>loop</h3><ul>
+<li>break结束循环<ul>
+<li><code>break value;</code>使得loop也可以像<code>if Expression</code>一样返回值</li>
+</ul>
+</li>
+<li>continue进入下一次循环</li>
+<li>对于嵌套loop语句<ul>
+<li>break和continue默认作用于当前作用域最内层的loop</li>
+<li>可以使用<code>&#39;label: loop&#123;&#125;</code>来给loop加标签，并使用<code>break &#39;label;</code>来使得break作用于标签loop</li>
+</ul>
+</li>
+</ul>
+<h3 id="conditional-loop-with-while"><a href="#conditional-loop-with-while" class="headerlink" title="conditional loop with while"></a>conditional loop with while</h3><p>实现conditional loop</p>
+<h3 id="Looping-Through-a-Collection-with-for"><a href="#Looping-Through-a-Collection-with-for" class="headerlink" title="Looping Through a Collection with for"></a>Looping Through a Collection with for</h3><ul>
+<li><code>for element in variable&#123;&#125;</code>来遍历一个Collection（实现了<code>Iterator</code>trait）变量<ul>
+<li>更安全、更快</li>
+<li>类似于C++中的<code>for range</code></li>
+</ul>
+</li>
+<li><code>for i in (lb..hb)</code><ul>
+<li>可以使用<code>Range</code>表达式（实现了<code>Iterator</code>trait）来进行特定数量的循环</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h1 id="Primitive-Types"><a href="#Primitive-Types" class="headerlink" title="Primitive Types"></a>Primitive Types</h1><p>Rust has a couple of basic types that are directly implemented into the<br>compiler. In this section, we’ll go through the most important ones.</p>
+<h2 id="Further-information-4"><a href="#Further-information-4" class="headerlink" title="Further information"></a>Further information</h2><ul>
+<li>[✅] <a target="_blank" rel="noopener" href="https://doc.rust-lang.org/stable/book/ch03-02-data-types.html">Data Types</a></li>
+<li>[] <a target="_blank" rel="noopener" href="https://doc.rust-lang.org/stable/book/ch04-03-slices.html">The Slice Type</a><h1 id="Data-Types"><a href="#Data-Types" class="headerlink" title="Data Types"></a>Data Types</h1></li>
+<li>虽然Rust在声明变量时很方便，不用指定类型（类似于C++中auto），因为编译器能够在编译时推断<code>let</code>声明的变量是什么</li>
+<li>Rust是强静态类型语言，即必须在编译时就推断出所有变量的类型<ul>
+<li>推断需要足够多的信息：初始值、如何使用的</li>
+</ul>
+</li>
+<li>在一个值可能有多种类型的情况，必须使用<code>type annotation</code>显式地给出</li>
+</ul>
+<h2 id="Scalar-Types"><a href="#Scalar-Types" class="headerlink" title="Scalar Types"></a>Scalar Types</h2><ul>
+<li>intergers, floating-point numbers, booleans, characters</li>
+<li>仅仅代表一个值</li>
+</ul>
+<h3 id="Interger-Types"><a href="#Interger-Types" class="headerlink" title="Interger Types"></a>Interger Types</h3><p>类似于C++中，只是类型名不同</p>
+<ul>
+<li>其中有符号数底层使用<code>Two&#39;s Complement</code>，在<code>Release</code>模式允许<code>overflow</code>，会从最小值开始重新计算</li>
+<li>可以使用标准库提供的一系列方法来判断是否overflow</li>
+</ul>
+<h3 id="Floating-point-numbers"><a href="#Floating-point-numbers" class="headerlink" title="Floating-point numbers"></a>Floating-point numbers</h3><ul>
+<li>IEEE-754标准</li>
+</ul>
+<h3 id="The-Character-Type"><a href="#The-Character-Type" class="headerlink" title="The Character Type"></a>The Character Type</h3><ul>
+<li>Rust中的char类型占4 Bytes</li>
+<li>使用Unicode编码</li>
+</ul>
+<h2 id="Compound-Types"><a href="#Compound-Types" class="headerlink" title="Compound Types"></a>Compound Types</h2><ul>
+<li>将多个值组织到一个类型</li>
+<li>tuple, array</li>
+</ul>
+<h3 id="tuple-type"><a href="#tuple-type" class="headerlink" title="tuple type"></a>tuple type</h3><ul>
+<li>注意：<ul>
+<li>一旦定义，大小就不可改动</li>
+<li>可以组织不同类型的值</li>
+</ul>
+</li>
+<li>访问：<ul>
+<li><code>pattern matching</code>：解构一个tuple</li>
+<li>使用运算符<code>.</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="array-type"><a href="#array-type" class="headerlink" title="array type"></a>array type</h3><ul>
+<li>声明/定义<ul>
+<li><code>type annotation</code>: <ul>
+<li><code>[type; size]</code></li>
+</ul>
+</li>
+<li>初始化所有元素为同一值<ul>
+<li><code>[inited_value; size]</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>注意<ul>
+<li>只能组织一种类型的值</li>
+<li>Rust中array的大小固定</li>
+</ul>
+</li>
+<li>访问：<ul>
+<li>运算符<code>[]</code></li>
+<li>如果访问超出数组范围:<code>panic</code></li>
+</ul>
+</li>
+<li><code>Array Slice</code>: 为了提高内存利用率，只能引用数组或者字符串来创建<ul>
+<li>可以使用<code>&amp;a[begin..end]</code>引用一个不可变的数组Slice</li>
+<li><code>&amp;mut</code>引用元素可变数组的可变 数组Slice</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h1 id="Vectors"><a href="#Vectors" class="headerlink" title="Vectors"></a>Vectors</h1><p>Vectors are one of the most-used Rust data structures. In other programming<br>languages, they’d simply be called Arrays, but since Rust operates on a<br>bit of a lower level, an array in Rust is stored on the stack (meaning it<br>can’t grow or shrink, and the size needs to be known at compile time),<br>and a Vector is stored in the heap (where these restrictions do not apply).</p>
+<p>Vectors are a bit of a later chapter in the book, but we think that they’re<br>useful enough to talk about them a bit earlier. We shall be talking about<br>the other useful data structure, hash maps, later.</p>
+<h2 id="Further-information-5"><a href="#Further-information-5" class="headerlink" title="Further information"></a>Further information</h2><ul>
+<li>[✅] <a target="_blank" rel="noopener" href="https://doc.rust-lang.org/stable/book/ch08-01-vectors.html">Storing Lists of Values with Vectors</a></li>
+<li><input disabled="" type="checkbox"> <a target="_blank" rel="noopener" href="https://doc.rust-lang.org/std/primitive.slice.html#method.iter_mut"><code>iter_mut</code></a></li>
+<li><input disabled="" type="checkbox"> <a target="_blank" rel="noopener" href="https://doc.rust-lang.org/std/iter/trait.Iterator.html#method.map"><code>map</code></a></li>
+</ul>
+<h1 id="Storing-Lists-of-Values-with-Vectors"><a href="#Storing-Lists-of-Values-with-Vectors" class="headerlink" title="Storing Lists of Values with Vectors"></a>Storing Lists of Values with Vectors</h1><ul>
+<li>相比于<code>Array</code>类型，<code>Vector</code>类型使用<code>Heap</code>内存来存储变量值</li>
+</ul>
+<h2 id="Creating"><a href="#Creating" class="headerlink" title="Creating"></a>Creating</h2><ul>
+<li>Vector类似于C++中的vector，都是模版类，因此在指定Vector类型时需要指定内部元素类型</li>
+</ul>
+<ol>
+<li>使用构造函数<code>new</code>: <code>Vec::new()</code><ol>
+<li>必须使用<code>type annotation</code></li>
+<li>因为初始化时内部无初始值，编译器无法推断类型</li>
+</ol>
+</li>
+<li>使用宏: <code>vec![x,x]</code></li>
+</ol>
+<h2 id="Updating"><a href="#Updating" class="headerlink" title="Updating"></a>Updating</h2><ul>
+<li>需要使用<code>mut</code>标识符初始化vector</li>
+<li><code>push</code>方法</li>
+</ul>
+<h2 id="Reading"><a href="#Reading" class="headerlink" title="Reading"></a>Reading</h2><ul>
+<li>因为vector存储在堆内存中，为了内存安全，只能通过引用来访问vector中的元素<ol>
+<li><code>&amp;[]</code>：<ol>
+<li>超出界限会<code>panic</code></li>
+</ol>
+</li>
+<li><code>get</code>方法：返回<code>Option&lt;&amp;T&gt;</code><ol>
+<li>可以处理<code>None</code>的情况</li>
+</ol>
+</li>
+</ol>
+</li>
+</ul>
+<p>vector中元素的引用规则：</p>
+<ul>
+<li>由于存储在heap中，并且vector需要实现可变长度，因此Rust需要确保对同一个数组元素多次引用/并发安全<ul>
+<li><code>immutable reference</code>和<code>mutable reference</code>之间的关系类似于读写锁</li>
+<li>并且在有<code>immutabl reference</code>存在时，也不可以通过vec变量更改内容<ul>
+<li>因为随时可能因为vector容量不够而需要更改存储位置</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Iterating"><a href="#Iterating" class="headerlink" title="Iterating"></a>Iterating</h2><ul>
+<li><code>for i in &amp;v&#123;&#125;</code>: 返回对vec中元素的不可变引用</li>
+<li><code>for i in &amp;mut v&#123;&#125;</code>: 返回可变引用<ul>
+<li>在改变元素时：需要使用<code>*</code>解引用</li>
+<li>🙋：和C++相比：<ul>
+<li>Rust中访问一个引用元素不需要解引用，但是改变内容时需要解引用？</li>
+<li>C++中似乎对引用元素直接访问和改变</li>
+</ul>
+</li>
+<li><code>iter_mut</code>方法，可以以<code>&amp;mut T</code>返回一个迭代器，在某些情况下可以替代<code>for i in &amp;mut v&#123;&#125;</code></li>
+</ul>
+</li>
+<li>可以对Iterator使用<code>iter().map()</code>组合拳，快速构建另一个<code>Collection</code></li>
+</ul>
+<h2 id="MostCommonWays-Using-an-Enum-to-Store-Multiple-Types"><a href="#MostCommonWays-Using-an-Enum-to-Store-Multiple-Types" class="headerlink" title="MostCommonWays: Using an Enum to Store Multiple Types"></a>MostCommonWays: Using an Enum to Store Multiple Types</h2><ul>
+<li><code>enum</code>可以在定义时指定内部的所有<code>enum variant</code><ul>
+<li><code>enum variant</code>可以初始化为不同类型</li>
+<li>但是所有<code>enum variant</code>都被视为同一种类型<code>enum EnumName</code></li>
+</ul>
+</li>
+<li>因此可以使用vector存储<code>enum EnumName</code>类型的变量，因为该类型的存储大小在定义<code>enum variants</code>时就固定了</li>
+<li>配合<code>match</code>来访问vector内部的<code>enum</code>元素</li>
+</ul>
+<hr>
+<h1 id="Move-Semantics"><a href="#Move-Semantics" class="headerlink" title="Move Semantics"></a>Move Semantics</h1><p>These exercises are adapted from <a target="_blank" rel="noopener" href="https://github.com/pnkfelix">pnkfelix</a>‘s <a target="_blank" rel="noopener" href="https://pnkfelix.github.io/rust-examples-icfp2014/">Rust Tutorial</a> – Thank you Felix!!!</p>
+<h2 id="Further-information-6"><a href="#Further-information-6" class="headerlink" title="Further information"></a>Further information</h2><p>For this section, the book links are especially important.</p>
+<ul>
+<li>[] <a target="_blank" rel="noopener" href="https://doc.rust-lang.org/book/ch04-01-what-is-ownership.html">Ownership</a></li>
+<li>[] <a target="_blank" rel="noopener" href="https://doc.rust-lang.org/book/ch04-02-references-and-borrowing.html">Reference and borrowing</a></li>
+</ul>
+<h1 id="Ownership"><a href="#Ownership" class="headerlink" title="Ownership"></a>Ownership</h1><p>总的来说，Rust对堆内存数据的所有权机制，类似于C++中的<code>std::unique_ptr</code></p>
+<ul>
+<li><p>References和Borrowing类似于<code>std::make_shared</code></p>
+</li>
+<li><p>Ownership是一系列规则：Rust用于确保程序如何正确的管理内存</p>
+<ul>
+<li>Jvav: 使用Garbage Collection</li>
+<li>C: 程序员手动分配和释放</li>
+</ul>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://doc.rust-lang.org/book/ch04-01-what-is-ownership.html#the-stack-and-the-heap">Stack vs. Heap</a></p>
+<ul>
+<li>Stack：LIFO，存储局部变量，编译时大小就已知</li>
+<li>Heap：less organized，存储可变长度的结构内容，并将指向该内存的指针存入Stack</li>
+</ul>
+</li>
+</ul>
+<h2 id="Ownership-Rules"><a href="#Ownership-Rules" class="headerlink" title="Ownership Rules"></a>Ownership Rules</h2><blockquote>
+<p>Each value in Rust has an owner.<br>There can only be one owner at a time.<br>When the owner goes out of scope, the value will be dropped.</p>
+</blockquote>
+<ul>
+<li>类比C++中的<code>std::uniquer_ptr</code>, <code>std::unique_lock</code>等<code>RAII</code>机制</li>
+</ul>
+<h2 id="Variable-Scope"><a href="#Variable-Scope" class="headerlink" title="Variable Scope"></a>Variable Scope</h2><ul>
+<li>从该变量定义，到函数体或者<code>&#123;&#125;</code>的末端</li>
+</ul>
+<h2 id="The-String-Type"><a href="#The-String-Type" class="headerlink" title="The String Type"></a>The String Type</h2><ul>
+<li><code>String</code>类与<code>string literial</code>不同<ul>
+<li><code>String</code>存储在Heap，并且是<code>mutable</code></li>
+<li><code>String</code>直接硬编码到代码中，并且是<code>immutable</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="Memory-and-Allocation"><a href="#Memory-and-Allocation" class="headerlink" title="Memory and Allocation"></a>Memory and Allocation</h2><ul>
+<li>对于能够主动申请heap空间的语言，正确的释放heap内存也很关键<ol>
+<li>使用Garbage Collection系统</li>
+<li>手动主动释放：可能会错误释放<ol>
+<li>double free</li>
+<li>悬空指针</li>
+</ol>
+</li>
+<li>Rust：使用所有权机制——确保能够在数据最后一次使用后正确释放内存一次</li>
+</ol>
+</li>
+<li>Rust的实现：对堆内存数据的最后一个的引用出了作用域之后，Rust调用其drop函数完成对heap空间释放<ul>
+<li>类似于C++中的RAII</li>
+</ul>
+</li>
+</ul>
+<h2 id="Variables-and-Data-Interacting-with-Move"><a href="#Variables-and-Data-Interacting-with-Move" class="headerlink" title="Variables and Data Interacting with Move"></a>Variables and Data Interacting with Move</h2><p>通过已有的String变量构造新String(直接赋值或者作为函数arguments)：</p>
+<ul>
+<li>按理来说应该如下：两个指针同时指向一个对内存空间</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/ZiHao256/Gallery@master/uPic/2023/11/image.png" alt="image"></p>
+<p>但是由于Rust的所有权机制：会将堆内存空间的所有权Move给第二个String变量，避免两个String变量两次调用drop方法，导致double free错误</p>
+<ul>
+<li>类似于C++中的<code>Move Assignment Operator</code>/<code>Constructor</code></li>
+<li><img src="https://cdn.jsdelivr.net/gh/ZiHao256/Gallery@master/uPic/2023/11/image-1.png" alt="image-1"></li>
+</ul>
+<h2 id="Variables-and-Data-Interacting-with-Clone"><a href="#Variables-and-Data-Interacting-with-Clone" class="headerlink" title="Variables and Data Interacting with Clone"></a>Variables and Data Interacting with Clone</h2><ul>
+<li>Rust默认不会隐式地对任何堆数据对象使用deep copy</li>
+<li>但是堆内存对象可以显式地调用<code>clone</code>方法来完成deep copy</li>
+</ul>
+<h2 id="Stack-Only-Data-Copy"><a href="#Stack-Only-Data-Copy" class="headerlink" title="Stack-Only Data: Copy"></a>Stack-Only Data: Copy</h2><ul>
+<li>对任何编译时期就已知大小的数据类型（内置类型），Rust默认其赋值操作使用Clone，因为开销可忽略不记</li>
+<li>Rust可以为希望使用Clone操作的自定义类型实现<code>Copy</code>trait<ul>
+<li>类似于C++中<code>move assignment = delete</code>操作</li>
+<li><code>Copy</code>trait和<code>Drop</code>trait互斥</li>
+</ul>
+</li>
+</ul>
+<h2 id="Ownership-and-Functions"><a href="#Ownership-and-Functions" class="headerlink" title="Ownership and Functions"></a>Ownership and Functions</h2><ul>
+<li>对于传入函数argument的变量，其所有权机制与赋值类似，即Move还是Copy这是一个问题</li>
+</ul>
+<h2 id="Return-Values-and-Scope"><a href="#Return-Values-and-Scope" class="headerlink" title="Return Values and Scope"></a>Return Values and Scope</h2><ul>
+<li>可以将函数内部获得的堆内存数据的所有权，通过返回值Move</li>
+</ul>
+<h1 id="Reference-and-borrowing"><a href="#Reference-and-borrowing" class="headerlink" title="Reference and borrowing"></a>Reference and borrowing</h1><ul>
+<li>Rust的Borrowing：对某个own堆内存数据的变量创建Reference，可以在不Move所有权的情况下，使得可以通过另一个变量访问数据内容，即另一个变量并不拥有该数据<ul>
+<li>因此当引用类型出scope时，并不会调用drop</li>
+<li>类似于指针，但是编译器确保其指向有效的内容</li>
+</ul>
+</li>
+<li><img src="https://cdn.jsdelivr.net/gh/ZiHao256/Gallery@master/uPic/2023/11/image-2.png" alt="image-2"></li>
+</ul>
+<h2 id="Mutable-References"><a href="#Mutable-References" class="headerlink" title="Mutable References"></a>Mutable References</h2><ul>
+<li><code>&amp;mut v</code>可以创建可变引用<ul>
+<li>类似于变量定义，用于创建引用类型的<code>&amp;</code>默认也是<code>immutable</code></li>
+</ul>
+</li>
+</ul>
+<p>类似于读写锁：避免数据竞争，但是区别是Rust在编译期间就避免了</p>
+<ul>
+<li>一个堆内存数据同一时间只能有一个<code>mutable reference</code><ul>
+<li><blockquote>
+<p>The restriction preventing multiple mutable references to the same data at the same time allows for mutation but in a very controlled fashion</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li>可以同时有多个<code>immutabl references</code></li>
+<li><code>mutable reference</code>和<code>immutable reference</code>不能同时出现</li>
+<li>Hint：同一时间是指Scope是<code>overlap</code>的，Rust会将最后一次变量使用作为<code>end of scope</code></li>
+</ul>
+<h2 id="Dangling-References"><a href="#Dangling-References" class="headerlink" title="Dangling References"></a>Dangling References</h2><ul>
+<li>类似于C++中的悬空指针</li>
+<li>Rust的编译器会通过<code>ownership</code>和<code>borrowing</code>机制确保<code>reference</code>的正确性</li>
+</ul>
+<hr>
+<h1 id="Structs"><a href="#Structs" class="headerlink" title="Structs"></a>Structs</h1><p>Rust has three struct types: a classic C struct, a tuple struct, and a unit struct.</p>
+<h2 id="Further-information-7"><a href="#Further-information-7" class="headerlink" title="Further information"></a>Further information</h2><ul>
+<li>[✅] <a target="_blank" rel="noopener" href="https://doc.rust-lang.org/book/ch05-01-defining-structs.html">Structures</a></li>
+<li>[✅] <a target="_blank" rel="noopener" href="https://doc.rust-lang.org/book/ch05-03-method-syntax.html">Method Syntax</a></li>
+</ul>
+<h2 id="Structures"><a href="#Structures" class="headerlink" title="Structures"></a>Structures</h2><ul>
+<li><p>与Rust的Tuple</p>
+<ul>
+<li>相同点：能够组织其多个类型不同的相关数据</li>
+<li>不同点：struct类型定义需要给每个filed变量名，并且访问使用变量名</li>
+</ul>
+</li>
+<li><p>定义和初始化一个struct对象：<code>T &#123;t1: value1,&#125;</code></p>
+</li>
+<li><p>赋值操作则和其他数据类型一致：任何返回该类型的Expression</p>
+</li>
+</ul>
+<h3 id="Using-the-Field-Init-Shorthand"><a href="#Using-the-Field-Init-Shorthand" class="headerlink" title="Using the Field Init Shorthand"></a>Using the <code>Field Init Shorthand</code></h3><ul>
+<li>如果有已定义的变量名和struct类型中成员变量名相同，则可以直接使用变量名而不是<code>name:value</code>来初始化</li>
+</ul>
+<h3 id="Creating-Instances-from-other-Instances-with-Struct-Update-Syntax"><a href="#Creating-Instances-from-other-Instances-with-Struct-Update-Syntax" class="headerlink" title="Creating Instances from other Instances with Struct Update Syntax"></a>Creating Instances from other Instances with <code>Struct Update Syntax</code></h3><ul>
+<li><code>struct update syntax</code>：<code>..v2</code>其他未显式地给新实例初始值的filed，使用v2的filed来初始化  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">let v1 = T &#123;</span><br><span class="line">    field1: value,</span><br><span class="line">    ..v2</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>Hint：本质上是Move了赋值实例的field<ul>
+<li>因此该语法后，只能使用未被<code>move</code>的filed</li>
+</ul>
+</li>
+</ul>
+<h2 id="Tuple-Struct-without-named-fields-to-create-differenct-types"><a href="#Tuple-Struct-without-named-fields-to-create-differenct-types" class="headerlink" title="Tuple Struct: without named fields to create differenct types"></a>Tuple Struct: without named fields to create differenct types</h2><ul>
+<li>struct和tuple类型的拼接版<ul>
+<li>可以使用Tuple Struct的类型名来区别不同的tuple struct实例</li>
+<li>不需要给filed命名，通过下标访问</li>
+</ul>
+</li>
+</ul>
+<h2 id="Unit-Struct"><a href="#Unit-Struct" class="headerlink" title="Unit Struct"></a>Unit Struct</h2><ul>
+<li>定义Unit Struct：<code>struct T;</code></li>
+<li>定义实例：<code>let v = T;</code></li>
+<li>需要注意的是，三种Struct定义关键词相同，只是定义时struct类型名后的括号种类不同</li>
+</ul>
+<h1 id="Method-Syntax"><a href="#Method-Syntax" class="headerlink" title="Method Syntax"></a>Method Syntax</h1><ul>
+<li>类似于C++中的方法：定义于类内部<ul>
+<li>定义于<code>struct</code>, <code>enum</code>, <code>trait object</code>内部</li>
+<li>显式地将<code>self</code>作为第一个参数</li>
+</ul>
+</li>
+</ul>
+<h2 id="Defining-Methods"><a href="#Defining-Methods" class="headerlink" title="Defining Methods"></a>Defining Methods</h2><ul>
+<li><p>Rust将一个<code>struct</code>的所有方法都实现在一个Block:<code>impl T &#123;&#125;</code>中</p>
+<ul>
+<li>类似于C++中的Class的命名空间：</li>
+</ul>
+</li>
+<li><p>一个<code>struct</code>的每个方法的第一个参数必须是<code>self/&amp;self/&amp;mut self</code>：分别对应于传入所有权，传入immutable reference，传入mutable reference</p>
+<ul>
+<li>Rust中给被实现的<code>struct</code>名一个别名——<code>Self</code></li>
+<li><code>self</code>实际上等效于——<code>self: Self</code><ul>
+<li>同理<code>&amp;self</code>等效于<code>self: &amp;Self</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>通过运算符<code>.</code>来使用method</p>
+</li>
+<li><p>Rust实现了<code>automatic referencing and dereferencing</code>：</p>
+<ul>
+<li>因此不同于<code>C++</code>对于类实例指针调用方法：使用<code>-&gt;</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="Associated-Functions"><a href="#Associated-Functions" class="headerlink" title="Associated Functions"></a>Associated Functions</h2><p>定义在<code>impl T:&#123;&#125;</code>中的都叫做<code>associated functions</code>，因为与<code>T</code>都相关。类似于C++中的命名空间，定义于此的不一定以类实例为参数</p>
+<ul>
+<li>Method: 第一个参数为<code>Self</code></li>
+<li>Tool Functions: 通常用于作<code>Constructor</code>，例如<code>String::new()</code><ul>
+<li>该函数的调用<code>T::f()</code></li>
+</ul>
+</li>
+</ul>
+<hr>
+<h1 id="Enums"><a href="#Enums" class="headerlink" title="Enums"></a>Enums</h1><p>Rust allows you to define types called “enums” which enumerate possible values.<br>Enums are a feature in many languages, but their capabilities differ in each language. Rust’s enums are most similar to algebraic data types in functional languages, such as F#, OCaml, and Haskell.<br>Useful in combination with enums is Rust’s “pattern matching” facility, which makes it easy to run different code for different values of an enumeration.</p>
+<h2 id="Further-information-8"><a href="#Further-information-8" class="headerlink" title="Further information"></a>Further information</h2><ul>
+<li>[✅] <a target="_blank" rel="noopener" href="https://doc.rust-lang.org/book/ch06-00-enums.html">Enums</a></li>
+<li>[] <a target="_blank" rel="noopener" href="https://doc.rust-lang.org/book/ch18-03-pattern-syntax.html">Pattern syntax</a><h1 id="Enums-强大的很，内部enum-varient有着struct的功能"><a href="#Enums-强大的很，内部enum-varient有着struct的功能" class="headerlink" title="Enums(强大的很，内部enum varient有着struct的功能)"></a>Enums(强大的很，内部enum varient有着struct的功能)</h1><h2 id="Defining-an-Enum"><a href="#Defining-an-Enum" class="headerlink" title="Defining an Enum"></a>Defining an Enum</h2></li>
+<li>struct: 将一组fileds组织在一起</li>
+<li>enum：将一组可能的值，组织在一起<ul>
+<li><code>enum varients</code>: 代表该<code>enum</code>类型可能的值，类似于子类与父类的关系，他们的类型一致（<code>enum</code>类型），但是值不同</li>
+</ul>
+</li>
+</ul>
+<h3 id="Enum-Values"><a href="#Enum-Values" class="headerlink" title="Enum Values"></a>Enum Values</h3><ul>
+<li><p>即<code>enum varients</code>，定义<code>enum</code>实例时：</p>
+<ul>
+<li><code>let v = E::varient</code></li>
+</ul>
+</li>
+<li><p>每个<code>enum varient</code>可以有<code>assciated data</code></p>
+<ul>
+<li>每个<code>associated data</code>实际上类似于<code>struct</code>类型：组织多种不同类型的值<ul>
+<li>类似三种<code>struct</code>类型——十分强大，<del>这还要什么自行车</del></li>
+</ul>
+</li>
+<li>并且在初始化一个<code>enum varient</code>实例时，<code>E::varient()</code>成为了一个<code>Constructor</code></li>
+</ul>
+</li>
+<li><p>类似于struct类型，也可以为<code>enum</code>类型实现Method</p>
+</li>
+</ul>
+<h3 id="Optin-Enum-Advantages-Over-Null-Values"><a href="#Optin-Enum-Advantages-Over-Null-Values" class="headerlink" title="Optin Enum: Advantages Over Null Values"></a><code>Optin</code> Enum: Advantages Over Null Values</h3><ul>
+<li>标准库内置一个<code>enum</code>类型<code>Option</code>：强制或者确保程序猿处理所有情况（值为NULL）<ul>
+<li>```<br>enum Option<T> {<pre><code>Some(T),
+None
+</code></pre>
+}<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">- Rust是静态强类型语言，必然`Option&lt;T&gt;`和`T`是不同类型，也不能直接相互操作</span><br><span class="line">  - 必须先从`Option&lt;T&gt;`转换为`T`:https://doc.rust-lang.org/std/option/enum.Option.html</span><br><span class="line">    - 例如使用`match`比较`enum varients`，并在`match arm`中binding其内部的值</span><br><span class="line">    - 这就是Rust确保程序猿处理None情况的策略</span><br><span class="line">  - 与C++中的`Option`模版类不同：C++中可以直接使用`-&gt;`来访问其内部数据（首先确保不是None）</span><br><span class="line"></span><br><span class="line">## `match` Control Flow Construct</span><br><span class="line">- `match`可以将任意一个类型（通常为`enum`）的值与一系列`pattern`（通常为`enum varients`）进行匹配</span><br><span class="line">  - 比`if`只能匹配布尔表达式强大的多</span><br><span class="line"></span><br><span class="line">- 每个`pattern`对应一个`matching arm`</span><br><span class="line">  - 每个`matching arm`是需要执行的代码，**需要确保每个`arm`返回类型一致的值**，即`matching arm`是一个`expression`</span><br><span class="line"></span><br><span class="line">### Patterns That Bind to Values</span><br><span class="line">- 对于`enum`类型的match，可以在`match arm`中将`enum varient`内部`associated data`绑定给一个局部变量，使得能在`match arm`中访问</span><br><span class="line">  - 类似于`tuple`解构各个元素</span><br><span class="line"></span><br><span class="line">### Matching with `Option&lt;T&gt;`</span><br><span class="line">- `match` + `enum` 大法好</span><br><span class="line">- &gt; match against an enum, bind a variable to the data inside, and then execute code based on it.</span><br><span class="line"></span><br><span class="line">### Matched Are Exhausive</span><br><span class="line">- Rust中`match`会穷尽给定值的所有`pattern`</span><br><span class="line"></span><br><span class="line">### Catch-all Patterns and the `_`</span><br><span class="line">- Rust允许我们只显式地特殊处理一部分`pattern`，其他的则默认处理或者忽视</span><br><span class="line">  - 在最后一个`pattern`</span><br><span class="line">    - 使用一个变量名`other`：可以将值绑定到该变量</span><br><span class="line">    - 使用`_`: 不绑定值</span><br><span class="line">      - 但是需要确保每个`match arm`返回值类型一致：`()`则为返回void？</span><br><span class="line"></span><br><span class="line">## Concise Control Flow with `if let`</span><br><span class="line">- `if let`语法糖，适用于只希望处理一个值的一种情况</span><br><span class="line">  - `if let pattern(binding) = matched_value &#123;use binding&#125; else &#123;&#125;`</span><br><span class="line">  - 以更少的代码实现了下述`match`相同的功能</span><br></pre></td></tr></table></figure>
+let new_v = match matched_value{<pre><code>pattern(binding) =&gt; &#123;use binding&#125;,
+_ =&gt; &#123;&#125;
+</code></pre>
+}<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"># Pattern</span><br><span class="line">有一个比较有用:可以使用`tuple`包裹多个返回`Enum`类型的表达式，并使用`tuple`解构来同时`match`。</span><br><span class="line">- 但需要注意的是，`match arm`的数量是多个表达式可能结果的全排列，可以使用`_`来忽略一些不需要的</span><br><span class="line">- 可以当字典来查阅：[Pattern syntax](https://doc.rust-lang.org/book/ch18-03-pattern-syntax.html)</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line"></span><br><span class="line"># Strings</span><br><span class="line"></span><br><span class="line">Rust has two string types, a string slice (`&amp;str`) and an owned string (`String`).</span><br><span class="line">We&#x27;re not going to dictate when you should use which one, but we&#x27;ll show you how</span><br><span class="line">to identify and create them, as well as use them.</span><br><span class="line"></span><br><span class="line">## Further information</span><br><span class="line"></span><br><span class="line">- [✅] [Strings](https://doc.rust-lang.org/book/ch08-02-strings.html)</span><br><span class="line"></span><br><span class="line"># Storing UTF-8 Encoded Test with Strings</span><br><span class="line">- Rust中的String是`Collection`: 底层实现为</span><br><span class="line">  - `a collection of Bytes`</span><br><span class="line">  - `some methods to help interupt Bytes as text`</span><br><span class="line"></span><br><span class="line">## What is String?</span><br><span class="line">- `String`：</span><br><span class="line">  - Rust标准库实现的</span><br><span class="line">- `str`：`[..]`</span><br><span class="line">  - string slice，</span><br><span class="line">  - 由Rust Core实现，常以`&amp;str`的形式使用</span><br><span class="line">- Hint:</span><br><span class="line">  - 两个不同的类型，但都是`UTF-8`编码</span><br><span class="line">  - 可以将`&amp;String`强制转换/隐式转换为`&amp;[..]`即`&amp;str`</span><br><span class="line"></span><br><span class="line">## Creating a New String</span><br><span class="line">- Rust中的String底层实现是基于`Vec&lt;T&gt;`，因此String可以使用类似的method</span><br><span class="line"></span><br><span class="line">Create：</span><br><span class="line">- 创建一个空String：`String::new()`</span><br><span class="line">- 从一个`string literal`创建：</span><br><span class="line">  - `.to_string()`</span><br><span class="line">  - `String::from()`</span><br><span class="line"></span><br><span class="line">## Updating a String</span><br><span class="line">### Appending to a String with `push_str` and `push`</span><br><span class="line">- 方法`push_str()`：将`str`append</span><br><span class="line">  - 会以引用的方式传入，并append到尾部：即以`&amp;str`string slice的形式</span><br><span class="line">- 方法`push()`只能append一个char</span><br><span class="line"></span><br><span class="line">### Concatenation with the `+` Operator or the `format!` Macro</span><br><span class="line">`+`和`format!`的学习能加深对Rust所有权机制的理解</span><br><span class="line">- 两种方法可以根据两个已定义的String拼接</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<p>+<code>: 底层实现为</code>fn add(self, s: &amp;str) -&gt; String</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- 会将`+`左侧String的所有权拿走，</span><br><span class="line">- 将右侧`&amp;String`强制转换为`&amp;[..]`即`&amp;str`</span><br><span class="line">- 并返回左侧String的所有权</span><br><span class="line">- Hint：因此虽然看来新建了一个String，但实际上是在左侧String的基础上append</span><br><span class="line"></span><br><span class="line">`format!`宏：</span><br><span class="line">- 并不会拿去任何String的所有权</span><br><span class="line">- 因此是在内部新建了一个String吧</span><br><span class="line"></span><br><span class="line">## Indexing into Strings</span><br><span class="line">- Rust中String不能直接使用`[]`来索引字符</span><br><span class="line"></span><br><span class="line">### Internal Representation</span><br><span class="line">Rust中String的底层实现`Vec&lt;u8&gt;`</span><br><span class="line">- 并使用UTF-8编码</span><br><span class="line">- 因此使用`[]`可能会获得无效的`Byte`值</span><br><span class="line"></span><br><span class="line">### Bytes and Scalar Values and Grapheme Clusters! Oh My!</span><br><span class="line">由于Rust以`Vec&lt;u8&gt;`的格式存储String，并编码为UTF-8</span><br><span class="line">- Rust提供三个角度解析String：因此使用`[]`会混淆下面三种概念</span><br><span class="line">  - Bytes</span><br><span class="line">  - Scalar Values：即Unicode Scalar Values</span><br><span class="line">  - Grapheme Clusters: 最接近我们认为的字符</span><br><span class="line"></span><br><span class="line">### Slicing Strings</span><br><span class="line">Rust不允许`[]`来索引单个字符</span><br><span class="line">- Rust提供了`[]`+`Range`，允许获得String的`&amp;str`切片</span><br><span class="line">- 但是如果访问了无效的Byte会`panic`</span><br><span class="line"></span><br><span class="line">### Methods for Iterating Over Strings</span><br><span class="line">前面提到了Rust提供了String解析的三种视角：</span><br><span class="line">- Byte：通过`bytes()`方法</span><br><span class="line">- Scalar Values: `chars()`方法</span><br><span class="line">- Grapheme Clusters: 标准库不提供</span><br><span class="line"></span><br><span class="line"># `str`, `&amp;str`和`String`</span><br><span class="line">- `str`: 不可变字符串切片类型</span><br><span class="line">- `&amp;str`: 不可变字符串切片的引用类型</span><br><span class="line">  - 对`String`或者`literal`的引用</span><br><span class="line">- `String`: 可变、owned的字符串类型</span><br><span class="line">  - </span><br><span class="line"></span><br><span class="line"># exercises</span><br><span class="line">`strings4.rs`:</span><br><span class="line">- `&quot;.into`和`&quot;.to_owned`</span><br><span class="line">- 所以说`&amp;str`只是对`String`一部分的引用吗</span><br><span class="line">- str是指`literal`吗</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line"></span><br><span class="line"># Modules</span><br><span class="line"></span><br><span class="line">In this section we&#x27;ll give you an introduction to Rust&#x27;s module system.</span><br><span class="line"></span><br><span class="line">## Further information</span><br><span class="line"></span><br><span class="line">- [✅] [The Module System](https://doc.rust-lang.org/book/ch07-00-managing-growing-projects-with-packages-crates-and-modules.html)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># Managing Growing Projects with Packages, Crates and Modules</span><br><span class="line">## Packages and Crates</span><br><span class="line">Crates</span><br><span class="line">- 是编译器一次性能编译的最小单位</span><br><span class="line">- 由一系列module组成</span><br><span class="line">- 有两种</span><br><span class="line">  1. binary：有main函数，被编译为可执行文件</span><br><span class="line">  2. library：无main函数，可以被binary crate（本项目或者其他项目）</span><br><span class="line">- crate root:</span><br><span class="line">  - 每个crate都有的一个rs源文件，是Rust编译器开始进入的文件</span><br><span class="line">    - 对于binary crate: `src/main.rs`</span><br><span class="line">    - 对于library crate: `src/lib.rs`</span><br><span class="line">    Packages</span><br><span class="line">- 由一系列`crate`组成，根部的`toml`文件会说明如何构建这些`crate`</span><br><span class="line">  - 最多一个library crate</span><br><span class="line">    - 放置于`src/lib.rs`</span><br><span class="line">  - 多个binary crate</span><br><span class="line">    - 需要放置于`src/bin`目录下</span><br><span class="line"></span><br><span class="line">## Defining Modules to Control Scope and Privacy</span><br><span class="line">### Modules备忘录（一系列规则）</span><br><span class="line">https://doc.rust-lang.org/book/ch07-02-defining-modules-to-control-scope-and-privacy.html#modules-cheat-sheet</span><br><span class="line">- 一个crate可能有多个modules</span><br><span class="line"></span><br><span class="line">### Grouping Related Code in Modules</span><br><span class="line">- 实际上一个crate就是一个以`crate`module为根的一个module tree</span><br><span class="line">  - 类似于file system</span><br><span class="line">- 其中`crate root`源文件即为`crate module`所在的位置，因此称为`crate root`</span><br><span class="line"></span><br><span class="line">## Paths for Referring to an item in the Module Tree</span><br><span class="line">在一个`crate`/`modules tree`中，如何访问一个item: struct, enum, constants, function, method, module</span><br><span class="line">- `use path`：可以将`path`中的items带入到当前scope</span><br><span class="line">  - `absolute path`</span><br><span class="line">  - `relative path`</span><br><span class="line">- module的目的之一是为了隐藏功能的实现，而只暴露接口</span><br><span class="line">  - 因此module默认是private的，只能通过加pub关键词来暴露</span><br><span class="line">- modules之间的访问权限</span><br><span class="line">  - 子module可以访问父module</span><br><span class="line">    - 反之则不行</span><br><span class="line">  - 在同一个scope中的不同item之间可以相互访问public的item</span><br><span class="line"></span><br><span class="line">### Exposing Paths with the pub Keyword</span><br><span class="line">- pub作用的对象：`module, struct, enum, constrant, functon, method`</span><br><span class="line">  - 作用于module时，只能说明能够引用这个module名字，尚且不能访问内部private items</span><br><span class="line">- 子module可以访问父module</span><br><span class="line">  - 反之不然</span><br><span class="line">- 兄弟module可以相互访问</span><br><span class="line">### Relative Paths with super</span><br><span class="line">类似于文件系统中的`..`</span><br><span class="line"></span><br><span class="line">### Making Structs and Enums Public</span><br><span class="line">- `struct`：仅仅pub struct名</span><br><span class="line">  - filed和associated function都默认private</span><br><span class="line">- `enum`：pub enum名，会使得其内部`varients`都pub</span><br><span class="line"></span><br><span class="line">## Bringing Paths Into Scope with the use Keyword</span><br></pre></td></tr></table></figure>
+<p>use<code>创建一个路径的</code>shortcut</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- 需要注意的是，该`shortcut`只能被同一个scope中使用</span><br><span class="line">- 如果在其他module中，</span><br><span class="line">  1. 重新创建一个shortcut</span><br><span class="line">  2. 以相对路径的形式使用该shortcut</span><br><span class="line"></span><br><span class="line">### Creating Idiomatic `use` Paths</span><br><span class="line">想要使用其他module中的不同item</span><br><span class="line">- 对于`function`：use到其父module</span><br><span class="line">- 对于`struct, enum, other items`: use full paths</span><br><span class="line">  - 如果可能会有冲突，则use到其父module</span><br><span class="line"></span><br><span class="line">### `use ... as` </span><br><span class="line">- 解决不同module中相同name的情况</span><br><span class="line"></span><br><span class="line">### Re-exporting Names with `pub use`</span><br><span class="line">- 被use的module就像是直接定义在了当前use所在的module</span><br><span class="line">  - 因此可以将`use`所在的module当作是被use的module的父module</span><br><span class="line"></span><br><span class="line">### Using External Packages</span><br><span class="line">- `std`crate:</span><br><span class="line">  - 默认嵌入在Rust中，因此不需要将其加入`toml`作为依赖</span><br><span class="line">  - 但是需要使用`use`来将我们需要使用的item带入到当前scope</span><br><span class="line">- `external`crate:</span><br><span class="line">  - 从`crate.io`中找到</span><br><span class="line">  - `Cargo.toml`中加入</span><br><span class="line">  - 在自己的`crate`代码中使用use将其带入到需要的scope，需要使用绝对地址从对应的`crate`开始</span><br><span class="line"></span><br><span class="line">### Using Nested Paths to Clean Up Large `use` Lists</span><br><span class="line">- 可以使用`&#123;&#125;`来将多个path的不同部分区别，但是相同部分合并</span><br><span class="line"></span><br><span class="line">### the Glob Operator</span><br><span class="line">- use中可以使用`*`符号，来表示将该module下所有items都引入当前scope</span><br><span class="line">  - 慎用</span><br><span class="line"></span><br><span class="line">## Separating Modules into Different Files</span><br><span class="line">可以将module的源码从单个crate root源文件，分割到真正意义上树形文件系统的形式</span><br><span class="line">- 即，将每个module源码放入单个rs源文件，只需要在父module源文件中声明该mod即可</span><br><span class="line">- 但是需要确保源文件名与mod名一致</span><br><span class="line">- 通过文件夹来组织源文件的位置</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line"></span><br><span class="line"># Hashmaps</span><br><span class="line"></span><br><span class="line">A *hash map* allows you to associate a value with a particular key.</span><br><span class="line">You may also know this by the names [*unordered map* in C++](https://en.cppreference.com/w/cpp/container/unordered_map),</span><br><span class="line">[*dictionary* in Python](https://docs.python.org/3/tutorial/datastructures.html#dictionaries) or an *associative array* in other languages.</span><br><span class="line"></span><br><span class="line">This is the other data structure that we&#x27;ve been talking about before, when</span><br><span class="line">talking about Vecs.</span><br><span class="line"></span><br><span class="line">## Further information</span><br><span class="line"></span><br><span class="line">- [✅] [Storing Keys with Associated Values in Hash Maps](https://doc.rust-lang.org/book/ch08-03-hash-maps.html)</span><br><span class="line"></span><br><span class="line"># Storing Keys with Associated Values in Hash Maps</span><br><span class="line">- 类似于Vec类型，传入Hash Map中的owned type会Move ownership</span><br><span class="line">  - 如果传入引用，需要考虑`lifetime`</span><br><span class="line"></span><br><span class="line">## Updating a Hash Map</span><br><span class="line">对于value已经存在的key，处理value的情况有三种</span><br><span class="line">1. overwrite：默认`insert()`实现</span><br><span class="line">2. 只在key value不存在的情况才插入：`entry(&amp;key).or_insert(value)`</span><br><span class="line">   - entry方法返回类似于Option</span><br><span class="line">3. 在key value存在时，基于存在的value更新：`let mut value = entry(&amp;key).or_insert(value)`</span><br><span class="line">   - `*value = new`</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line"></span><br><span class="line"># Options</span><br><span class="line"></span><br><span class="line">Type Option represents an optional value: every Option is either Some and contains a value, or None, and does not.</span><br><span class="line">Option types are very common in Rust code, as they have a number of uses:</span><br><span class="line"></span><br><span class="line">- Initial values</span><br><span class="line">- Return values for functions that are not defined over their entire input range (partial functions)</span><br><span class="line">- Return value for otherwise reporting simple errors, where None is returned on error</span><br><span class="line">- Optional struct fields</span><br><span class="line">- Struct fields that can be loaned or &quot;taken&quot;</span><br><span class="line">- Optional function arguments</span><br><span class="line">- Nullable pointers</span><br><span class="line">- Swapping things out of difficult situations</span><br><span class="line"></span><br><span class="line">## Further Information</span><br><span class="line"></span><br><span class="line">- [x] [Option Enum Format](https://doc.rust-lang.org/stable/book/ch10-01-syntax.html#in-enum-definitions)</span><br><span class="line">- [ ] [Option Module Documentation](https://doc.rust-lang.org/std/option/)</span><br><span class="line">- [ ] [Option Enum Documentation](https://doc.rust-lang.org/std/option/enum.Option.html)</span><br><span class="line">- [x] [if let](https://doc.rust-lang.org/rust-by-example/flow_control/if_let.html)</span><br><span class="line">- [x] [while let](https://doc.rust-lang.org/rust-by-example/flow_control/while_let.html)</span><br><span class="line"></span><br><span class="line"># Option Enum Format</span><br><span class="line">Option&lt;T&gt;</span><br><span class="line">```rust</span><br><span class="line">Option&lt;T&gt;&#123;</span><br><span class="line">    Some(T),</span><br><span class="line">    None</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>主要用于处理None的情况</li>
+</ul>
+<p>Result&lt;T, E&gt;</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Result</span>&lt;T, E&gt;&#123;</span><br><span class="line">    <span class="literal">Ok</span>(T),</span><br><span class="line">    <span class="literal">Err</span>(E)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>主要用于处理Error<h1 id="Documents"><a href="#Documents" class="headerlink" title="Documents"></a>Documents</h1></li>
+<li>Option Module</li>
+<li>Option Enum<ul>
+<li>如何确保在match时不会转移Some(T)内部的所有权<ol>
+<li>在pattern中的binding变量前加<code>ref</code></li>
+<li>match的变量使用<code>as_ref</code>方法从<code>&amp;Option&lt;T&gt;</code>转换为<code>Option&lt;&amp;T&gt;</code></li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="if-let"><a href="#if-let" class="headerlink" title="if let"></a>if let</h1><p>对于只有两三个<code>enum varients</code>的Enum类型，可以不使用match而是<code>if let</code>进行匹配</p>
+<h1 id="while-let"><a href="#while-let" class="headerlink" title="while let"></a>while let</h1><p>类似于while + if let</p>
+<hr>
+<h1 id="Error-handling"><a href="#Error-handling" class="headerlink" title="Error handling"></a>Error handling</h1><p>Most errors aren’t serious enough to require the program to stop entirely.<br>Sometimes, when a function fails, it’s for a reason that you can easily interpret and respond to.<br>For example, if you try to open a file and that operation fails because the file doesn’t exist, you might want to create the file instead of terminating the process.</p>
+<h2 id="Further-information-9"><a href="#Further-information-9" class="headerlink" title="Further information"></a>Further information</h2><ul>
+<li><input checked="" disabled="" type="checkbox"> <a target="_blank" rel="noopener" href="https://doc.rust-lang.org/book/ch09-02-recoverable-errors-with-result.html">Error Handling</a></li>
+<li><input checked="" disabled="" type="checkbox"> <a target="_blank" rel="noopener" href="https://doc.rust-lang.org/book/ch10-01-syntax.html">Generics</a></li>
+<li>[] <a target="_blank" rel="noopener" href="https://doc.rust-lang.org/rust-by-example/error/result.html">Result</a></li>
+<li>[] <a target="_blank" rel="noopener" href="https://doc.rust-lang.org/rust-by-example/error/multiple_error_types/boxing_errors.html">Boxing errors</a></li>
+</ul>
+<h1 id="Recoverable-Errors-with-Result"><a href="#Recoverable-Errors-with-Result" class="headerlink" title="Recoverable Errors with Result"></a>Recoverable Errors with Result</h1><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">Result</span></span>&lt;T, E&gt; &#123;</span><br><span class="line">    <span class="literal">Ok</span>(T),</span><br><span class="line">    <span class="literal">Err</span>(E)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>类似于Option类型，<code>T</code>是<code>Generic Type Parameter</code></li>
+<li>配合<code>match</code>/<code>if let</code>等语法，来处理可能会失败的操作<h2 id="Matching-on-Differences-Errors"><a href="#Matching-on-Differences-Errors" class="headerlink" title="Matching on Differences Errors"></a>Matching on Differences Errors</h2>两种方式处理<code>Result</code>类型变量：<code>unwrap_or_else</code>提供语法糖</li>
+</ul>
+<ol>
+<li>通过多层<code>match</code>语法，可以实现对<code>Result</code>中<code>Err(E)</code>中E类型的判断，并作出不同的处理</li>
+<li><code>closure</code>：通过对<code>Result</code>类型调用closure，可以以更少的代码来处理上述判断error的种类</li>
+</ol>
+<ul>
+<li><code>unwrap_or_else(|error|&#123;&#125;)</code>：实际上可以想象该函数也是类似match，做出两种行为<ol>
+<li><code>unwrap</code>：如果是<code>Ok(T)</code>，则直接将T变量返回</li>
+<li><code>else(|error|&#123;&#125;)</code>：如果是<code>Err(E)</code>，则通过<code>closure</code>将E变量绑定到error变量，并在<code>&#123;&#125;</code>中处理</li>
+</ol>
+</li>
+</ul>
+<p>何为<code>closure</code>：函数式编程的概念</p>
+<ul>
+<li>特性：<ul>
+<li>捕获环境变量：以不同方式捕获</li>
+<li>匿名</li>
+</ul>
+</li>
+</ul>
+<h2 id="Shortcuts-for-Panic-on-Error-unwrap-and-expect"><a href="#Shortcuts-for-Panic-on-Error-unwrap-and-expect" class="headerlink" title="Shortcuts for Panic on Error: unwrap and expect"></a>Shortcuts for Panic on Error: <code>unwrap</code> and <code>expect</code></h2><p>对于<code>Result</code>类型，Rust提供了许多语法糖：要么返回内部的数据，要么<code>panic!</code>或者程序猿自定义处理</p>
+<ul>
+<li><code>unwrap</code></li>
+<li><code>expect</code></li>
+<li><code>unwrap_or_else</code></li>
+</ul>
+<h2 id="Propagating-Errors"><a href="#Propagating-Errors" class="headerlink" title="Propagating Errors"></a>Propagating Errors</h2><ul>
+<li>处理<code>Result</code>时，如果是<code>Err</code><ul>
+<li>则<code>early return</code>提前将结果返回给调用者，由调用者函数来进一步处理</li>
+</ul>
+</li>
+</ul>
+<h2 id="A-shortcut-for-propogating-Errors-the-operator"><a href="#A-shortcut-for-propogating-Errors-the-operator" class="headerlink" title="A shortcut for propogating Errors: the ? operator"></a>A shortcut for propogating Errors: the <code>?</code> operator</h2><ul>
+<li>对于<code>Result</code>值后使用<code>?</code>可以实现向上传播<code>Err</code>的效果，即<ul>
+<li>如果<code>?</code>作用的函数<ul>
+<li>返回<code>Ok</code>，则正常执行下面的操作</li>
+<li>若返回<code>Err</code>，则直接返回该函数为<code>Err</code>类型</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>可以在<code>?</code>后接上其他函数（<code>?</code>前放函数返回的类型能调用的函数，甚至如果是返回<code>Result</code>，则可以在后面继续加<code>?</code>）</li>
+</ul>
+<h2 id="Where-The-Operator-Can-Be-Used"><a href="#Where-The-Operator-Can-Be-Used" class="headerlink" title="Where The ? Operator Can Be Used"></a>Where The <code>?</code> Operator Can Be Used</h2><ul>
+<li><code>?</code>也可用于返回<code>Option</code>类型的函数</li>
+<li><code>?</code>只能用于返回类型为<code>Result</code>或者<code>option</code>的函数</li>
+<li><h2 id="main函数也可以返回Result-lt-Box-lt-dyn-Error-gt-gt-类型"><a href="#main函数也可以返回Result-lt-Box-lt-dyn-Error-gt-gt-类型" class="headerlink" title="main函数也可以返回Result&lt;(), Box&lt;dyn Error&gt;&gt;类型"></a><code>main</code>函数也可以返回<code>Result&lt;(), Box&lt;dyn Error&gt;&gt;</code>类型</h2></li>
+</ul>
+<h1 id="Example-for-Results"><a href="#Example-for-Results" class="headerlink" title="Example for Results"></a>Example for Results</h1><h2 id="map-for-Result"><a href="#map-for-Result" class="headerlink" title="map for Result"></a><code>map</code> for <code>Result</code></h2><ul>
+<li><code>Option</code>和<code>Result</code>类型都实现了很多<code>combinator</code>，可以省去写<code>match</code>的代码<ul>
+<li><code>and_then</code></li>
+<li><code>map</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="early-return"><a href="#early-return" class="headerlink" title="early return"></a><code>early return</code></h2><h1 id="Generic-Data-Types"><a href="#Generic-Data-Types" class="headerlink" title="Generic Data Types"></a>Generic Data Types</h1><ul>
+<li>泛用数据类型：用于定义<code>struct</code>, <code>enum</code>,<code>function</code>,<code>muthod</code><ul>
+<li>类似于C++中的模版类型参数</li>
+</ul>
+</li>
+</ul>
+<h2 id="In-Function-Definition"><a href="#In-Function-Definition" class="headerlink" title="In Function Definition"></a>In Function Definition</h2><ul>
+<li><p>将Generic Type Parameter使用尖括号写在函数名和参数列表之间：</p>
+<ul>
+<li><code>fn fun_name&lt;T&gt;() -&gt; ()</code>：</li>
+</ul>
+</li>
+<li><p>如果在函数体有涉及到<code>T</code>类型变量的比较：</p>
+<ul>
+<li>必须限制该函数的调用范围:实现<code>std::cmp::PartialOrd</code> trait的类型才能传入</li>
+</ul>
+</li>
+</ul>
+<h2 id="In-struct-enum-Definitions"><a href="#In-struct-enum-Definitions" class="headerlink" title="In struct/enum Definitions"></a>In struct/enum Definitions</h2><ul>
+<li><p>将Generic Type Parameter写在struct/enum名之后：</p>
+<ul>
+<li><code>struct Point&lt;T&gt;&#123;&#125;</code></li>
+<li><code>enum Point&lt;T&gt;&#123;&#125;</code></li>
+</ul>
+</li>
+<li><p>可以在尖括号内指定多个generic type parameters</p>
+</li>
+</ul>
+<h2 id="In-method-Definitions"><a href="#In-method-Definitions" class="headerlink" title="In method Definitions"></a>In method Definitions</h2><ul>
+<li><p><code>impl&lt;T&gt; Stru&lt;T&gt;&#123;&#125;</code></p>
+<ul>
+<li><code>impl</code>关键词后必须有generic type parameter，用于说明该<code>impl</code>块是为<code>Str&lt;T&gt;</code>实现的，</li>
+</ul>
+</li>
+<li><p>在<code>impl</code>后指定generic type parameter之后，就不需要在<code>method</code>名和参数列表之间加generic type parameter</p>
+</li>
+<li><p><strong>Hint</strong>：该<code>method</code>也可以额外在<code>method</code>名和参数列表之间加自己的<code>generic type para</code></p>
+</li>
+</ul>
+<h2 id="Performance-of-Code-Using-Generics"><a href="#Performance-of-Code-Using-Generics" class="headerlink" title="Performance of Code Using Generics"></a>Performance of Code Using Generics</h2><ul>
+<li>使用<code>generic type parameters</code>不会减慢程序执行的顺序</li>
+<li><code>Monomorphization</code>——单态化：会在程序编译时完成<ul>
+<li>类似于C++：在编译时，推算出具体类型并将泛化函数实现为多个版本（对应于不同类型）</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h1 id="Generics"><a href="#Generics" class="headerlink" title="Generics"></a>Generics</h1><p>Generics is the topic of generalizing types and functionalities to broader cases.<br>This is extremely useful for reducing code duplication in many ways, but can call for rather involving syntax.<br>Namely, being generic requires taking great care to specify over which types a generic type is actually considered valid.<br>The simplest and most common use of generics is for type parameters.</p>
+<h2 id="Further-information-10"><a href="#Further-information-10" class="headerlink" title="Further information"></a>Further information</h2><ul>
+<li><input checked="" disabled="" type="checkbox"> <a target="_blank" rel="noopener" href="https://doc.rust-lang.org/stable/book/ch10-01-syntax.html">Generic Data Types</a></li>
+<li><input checked="" disabled="" type="checkbox"> <a target="_blank" rel="noopener" href="https://doc.rust-lang.org/rust-by-example/generics/bounds.html">Bounds</a></li>
+</ul>
+<h1 id="Generic-Data-Types-1"><a href="#Generic-Data-Types-1" class="headerlink" title="Generic Data Types"></a>Generic Data Types</h1><ul>
+<li>泛用数据类型：用于定义<code>struct</code>, <code>enum</code>,<code>function</code>,<code>muthod</code><ul>
+<li>类似于C++中的模版类型参数</li>
+</ul>
+</li>
+</ul>
+<h2 id="In-Function-Definition-1"><a href="#In-Function-Definition-1" class="headerlink" title="In Function Definition"></a>In Function Definition</h2><ul>
+<li><p>将Generic Type Parameter使用尖括号写在函数名和参数列表之间：</p>
+<ul>
+<li><code>fn fun_name&lt;T&gt;() -&gt; ()</code>：</li>
+</ul>
+</li>
+<li><p>如果在函数体有涉及到<code>T</code>类型变量: <code>比较</code>或者调用某个<code>trait</code>中的<code>method</code>：</p>
+<ul>
+<li>必须使用<code>Bound</code>限制该函数的调用范围:<ul>
+<li>例如，T的比较只能，实现<code>std::cmp::PartialOrd</code> trait的类型才能传入</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="In-struct-enum-Definitions-1"><a href="#In-struct-enum-Definitions-1" class="headerlink" title="In struct/enum Definitions"></a>In struct/enum Definitions</h2><ul>
+<li><p>将Generic Type Parameter写在struct/enum名之后：</p>
+<ul>
+<li><code>struct Point&lt;T&gt;&#123;&#125;</code></li>
+<li><code>enum Point&lt;T&gt;&#123;&#125;</code></li>
+</ul>
+</li>
+<li><p>可以在尖括号内指定多个generic type parameters</p>
+</li>
+</ul>
+<h2 id="In-method-Definitions-1"><a href="#In-method-Definitions-1" class="headerlink" title="In method Definitions"></a>In method Definitions</h2><ul>
+<li><p><code>impl&lt;T&gt; Stru&lt;T&gt;&#123;&#125;</code></p>
+<ul>
+<li><code>impl</code>关键词后必须有generic type parameter，用于说明该<code>impl</code>块是为<code>Str&lt;T&gt;</code>实现的，</li>
+</ul>
+</li>
+<li><p>在<code>impl</code>后指定generic type parameter之后，就不需要在<code>method</code>名和参数列表之间加generic type parameter</p>
+</li>
+<li><p><strong>Hint</strong>：该<code>method</code>也可以额外在<code>method</code>名和参数列表之间加自己的<code>generic type para</code></p>
+</li>
+</ul>
+<h2 id="Performance-of-Code-Using-Generics-1"><a href="#Performance-of-Code-Using-Generics-1" class="headerlink" title="Performance of Code Using Generics"></a>Performance of Code Using Generics</h2><ul>
+<li>使用<code>generic type parameters</code>不会减慢程序执行的顺序</li>
+<li><code>Monomorphization</code>——单态化：会在程序编译时完成<ul>
+<li>类似于C++：在编译时，推算出具体类型并将泛化函数实现为多个版本（对应于不同类型）</li>
+</ul>
+</li>
+</ul>
+<h1 id="Bounds"><a href="#Bounds" class="headerlink" title="Bounds"></a>Bounds</h1><p><code>fn printer&lt;T: Display&gt; ()&#123;&#125;</code>是对<code>Generic Type Parameter</code>的限制：</p>
+<ul>
+<li>只有实现了<code>Diskplay</code>trait的具体类型才能作为参数</li>
+<li>实现了<code>trait</code>，便可以使得T类型的变量调用<code>trait</code>中的method</li>
+</ul>
+<hr>
+<h1 id="Traits"><a href="#Traits" class="headerlink" title="Traits"></a>Traits</h1><p>A trait is a collection of methods.</p>
+<p>Data types can implement traits. To do so, the methods making up the trait are defined for the data type. For example, the <code>String</code> data type implements the <code>From&lt;&amp;str&gt;</code> trait. This allows a user to write <code>String::from(&quot;hello&quot;)</code>.</p>
+<p>In this way, traits are somewhat similar to Java interfaces and C++ abstract classes.</p>
+<p>Some additional common Rust traits include:</p>
+<ul>
+<li><code>Clone</code> (the <code>clone</code> method)</li>
+<li><code>Display</code> (which allows formatted display via <code>&#123;&#125;</code>)</li>
+<li><code>Debug</code> (which allows formatted display via <code>&#123;:?&#125;</code>)</li>
+</ul>
+<p>Because traits indicate shared behavior between data types, they are useful when writing generics.</p>
+<h2 id="Further-information-11"><a href="#Further-information-11" class="headerlink" title="Further information"></a>Further information</h2><ul>
+<li><input checked="" disabled="" type="checkbox"> <a target="_blank" rel="noopener" href="https://doc.rust-lang.org/book/ch10-02-traits.html">Traits</a></li>
+</ul>
+<h1 id="Traits-Defining-Shared-Behavior"><a href="#Traits-Defining-Shared-Behavior" class="headerlink" title="Traits: Defining Shared Behavior"></a>Traits: Defining Shared Behavior</h1><ul>
+<li>是一系列<code>methods</code>的集合，各种数据类型<code>struct</code>, <code>enum</code>等可以通过实现该<code>trait</code>来使用这些<code>method</code><ul>
+<li>类似于C++中的抽象类</li>
+</ul>
+</li>
+<li><code>shared behavior</code>: 实现了同一个trait的数据类型共享这些method</li>
+<li>可以在<code>generic type parameter</code>中使用，作为<code>Bounds</code>来限制能够作为参数的类型（都实现了某个trait）</li>
+</ul>
+<h2 id="Defining-a-Trait"><a href="#Defining-a-Trait" class="headerlink" title="Defining a Trait"></a>Defining a Trait</h2><ul>
+<li>类型的behavior: 由它能调用的methods组成<ul>
+<li><code>trait</code>中定义的method则是shared behavior</li>
+</ul>
+</li>
+<li><code>pub trait TName&#123;&#125;</code><ul>
+<li>定义多条method的签名</li>
+<li>任何实现了该trait的数据类型必须要实现这些method</li>
+</ul>
+</li>
+</ul>
+<h2 id="Implementing-a-Trait-on-a-Type"><a href="#Implementing-a-Trait-on-a-Type" class="headerlink" title="Implementing a Trait on a Type"></a>Implementing a Trait on a Type</h2><ul>
+<li>需要将要实现的trait引入当前<code>scope</code></li>
+<li>语法：<code>impl TName for StructName&#123;&#125;</code></li>
+<li>trait和struct类型至少有一个需要时<code>local</code>定义的</li>
+</ul>
+<h2 id="Default-Implementation"><a href="#Default-Implementation" class="headerlink" title="Default Implementation"></a>Default Implementation</h2><ul>
+<li>可以在定义<code>tarit</code>时，定义部分<code>method</code>的默认函数体，作为<code>default implementation</code><ul>
+<li>其他类型实现该<code>trait</code>时可以选择使用默认或者自己定义来覆盖</li>
+<li>类似于C++中的虚函数？</li>
+</ul>
+</li>
+</ul>
+<h2 id="Traits-as-Parameters"><a href="#Traits-as-Parameters" class="headerlink" title="Traits as Parameters"></a>Traits as Parameters</h2><ul>
+<li>类似于作为<code>generic type parameter</code>的<code>Bound</code><ul>
+<li>表示只有实现该trait才能作为generic type的实参</li>
+</ul>
+</li>
+<li><code>impl TraitName</code>能够以类型的作用定义函数签名：<code>fn notify(item: &amp;impl Summary)&#123;&#125;</code><ul>
+<li>表示实现了该trait的类型都可以作为实参</li>
+</ul>
+</li>
+</ul>
+<h3 id="Trait-Bound-Syntax"><a href="#Trait-Bound-Syntax" class="headerlink" title="Trait Bound Syntax"></a>Trait Bound Syntax</h3><p>更好的语法：<code>fn notify&lt;T: Summary&gt;(item: &amp;T)</code><br>各有优缺点：</p>
+<ol>
+<li><code>impl Trait</code>语法：简洁</li>
+<li><code>&lt;T: Trait&gt;(item: T)</code>语法：能表示更复杂情况</li>
+</ol>
+<h3 id="Specifying-Multiple-Trait-Bounds-with"><a href="#Specifying-Multiple-Trait-Bounds-with" class="headerlink" title="Specifying Multiple Trait Bounds with +"></a>Specifying Multiple Trait Bounds with <code>+</code></h3><p>通过<code>+</code>，可以叠加<code>Trait Bound</code>：</p>
+<ol>
+<li><code>impl (T1 + T2)</code></li>
+<li><code>&lt;T: T1+T2&gt;(item: T)</code></li>
+</ol>
+<h3 id="Clearer-Trait-Bounds-with-where-clause"><a href="#Clearer-Trait-Bounds-with-where-clause" class="headerlink" title="Clearer Trait Bounds with where clause"></a>Clearer Trait Bounds with <code>where</code> clause</h3><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">function</span></span>&lt;T, U&gt;(item1:T, item2:U)</span><br><span class="line"><span class="keyword">where</span></span><br><span class="line">    T: T1+T2,</span><br><span class="line">    U: T2+T3,</span><br><span class="line">&#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Returning-Types-that-implement-Traits"><a href="#Returning-Types-that-implement-Traits" class="headerlink" title="Returning Types that implement Traits"></a>Returning Types that implement Traits</h2><ul>
+<li>类似于<code>impl Trait</code>可以作为函数的参数类型</li>
+<li><code>impl Trait</code>也可以作为函数的返回值类型</li>
+<li><strong>Hint:</strong> 函数体内只能返回一种具体类型<ul>
+<li>可能是因为编译期间无法判断是哪个具体类型</li>
+<li>而作为函数参数时是能够推断具体类型的</li>
+</ul>
+</li>
+</ul>
+<h2 id="Using-Trait-Bounds-to-Conditionally-Implement-Methods"><a href="#Using-Trait-Bounds-to-Conditionally-Implement-Methods" class="headerlink" title="Using Trait Bounds to Conditionally Implement Methods"></a>Using Trait Bounds to Conditionally Implement Methods</h2><p>一揽子实现：</p>
+<blockquote>
+<p>We can also conditionally implement a trait for any type that implements another trait.<br>Implementations of a trait on any type that satisfies the trait bounds are called blanket implementations<br>and are extensively used in the Rust standard library</p>
+</blockquote>
+<hr>
+<h1 id="Lifetimes"><a href="#Lifetimes" class="headerlink" title="Lifetimes"></a>Lifetimes</h1><p>Lifetimes tell the compiler how to check whether references live long<br>enough to be valid in any given situation. For example lifetimes say<br>“make sure parameter ‘a’ lives as long as parameter ‘b’ so that the return<br>value is valid”.</p>
+<p>They are only necessary on borrows, i.e. references,<br>since copied parameters or moves are owned in their scope and cannot<br>be referenced outside. Lifetimes mean that calling code of e.g. functions<br>can be checked to make sure their arguments are valid. Lifetimes are<br>restrictive of their callers.</p>
+<p>If you’d like to learn more about lifetime annotations, the<br><a target="_blank" rel="noopener" href="https://tfpk.github.io/lifetimekata/">lifetimekata</a> project<br>has a similar style of exercises to Rustlings, but is all about<br>learning to write lifetime annotations.</p>
+<h2 id="Further-information-12"><a href="#Further-information-12" class="headerlink" title="Further information"></a>Further information</h2><ul>
+<li><input checked="" disabled="" type="checkbox"> <a target="_blank" rel="noopener" href="https://doc.rust-lang.org/stable/rust-by-example/scope/lifetime.html">Lifetimes (in Rust By Example)</a></li>
+<li><input checked="" disabled="" type="checkbox"> <a target="_blank" rel="noopener" href="https://doc.rust-lang.org/book/ch10-03-lifetime-syntax.html">Validating References with Lifetimes</a></li>
+</ul>
+<h1 id="Validating-References-with-Lifetimes"><a href="#Validating-References-with-Lifetimes" class="headerlink" title="Validating References with Lifetimes"></a>Validating References with Lifetimes</h1><ul>
+<li>并不会改变<code>argument</code>和<code>return value</code>的<code>lifetime</code>，只是指明关系，或者说是程序猿期望这个关系</li>
+<li>通过显式地声明函数中<code>arguments</code>和<code>return value</code>/<code>struct instance</code>与<code>field</code>之间<code>lifetime</code>的关系，使得编译器能够推断出是否会发生<code>dangling reference</code><ul>
+<li>Rust的<code>Borrow Checker</code>通过给定的<code>lifetime annotation</code>进行检查</li>
+</ul>
+</li>
+<li>也是一种<code>generics</code><ul>
+<li>类似于<code>generic type parameter</code><h2 id="Preventing-Dangling-References-with-Lifetimes"><a href="#Preventing-Dangling-References-with-Lifetimes" class="headerlink" title="Preventing Dangling References with Lifetimes"></a>Preventing Dangling References with Lifetimes</h2></li>
+</ul>
+</li>
+<li>类似于悬空指针</li>
+<li>常常发生在：函数有多个引用类型的<code>parameter</code>，返回值类型也为引用，并且返回值引用为参数索引用的对象</li>
+</ul>
+<h2 id="Borrow-checker"><a href="#Borrow-checker" class="headerlink" title="Borrow checker"></a>Borrow checker</h2><ul>
+<li>通过比较<code>referenced value</code>与<code>reference</code>之间的scope，来判断是否发生<code>dangling reference</code><ul>
+<li><code>referenced value</code>能够涵盖<code>reference</code>的scope</li>
+</ul>
+</li>
+</ul>
+<h2 id="Generic-Lifetimes-in-Functions"><a href="#Generic-Lifetimes-in-Functions" class="headerlink" title="Generic Lifetimes in Functions"></a>Generic Lifetimes in Functions</h2><ul>
+<li>常常发生在：<ul>
+<li>函数有多个引用类型的<code>parameter</code>，返回值类型也为引用，并且返回值引用为参数索引用的对象</li>
+</ul>
+</li>
+</ul>
+<h2 id="Lifetime-Annotation-Syntax"><a href="#Lifetime-Annotation-Syntax" class="headerlink" title="Lifetime Annotation Syntax"></a>Lifetime Annotation Syntax</h2><ul>
+<li><code>&amp;&#39;a i32</code></li>
+<li><code>&amp;&#39;a mut i32</code></li>
+</ul>
+<h2 id="Lifetime-Annotation-in-Function-Signatures"><a href="#Lifetime-Annotation-in-Function-Signatures" class="headerlink" title="Lifetime Annotation in Function Signatures"></a>Lifetime Annotation in Function Signatures</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fn longest&lt;&#x27;a&gt;(x: &amp;&#x27;a str, y: &amp;&#x27;a str) -&gt; &amp;&#x27;a str</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>首先，由于x和y的lifetime parameter都为’a，计算出引用对象中最小的scope</li>
+<li>然后，由于return value的lifetime parameter也为’a，则表明程序猿期望：返回引用的scope只能在上面计算的scope中涵盖</li>
+<li>borrow checker通过检查返回引用是否如期望的那样使用了，确保不会dangling</li>
+</ul>
+<h2 id="Thinking-in-Terms-of-Lifetimes"><a href="#Thinking-in-Terms-of-Lifetimes" class="headerlink" title="Thinking in Terms of Lifetimes"></a>Thinking in Terms of Lifetimes</h2><ul>
+<li>lifetime用于指明实参和返回值之间scope的关系</li>
+</ul>
+<h2 id="Lifetime-Annotations-in-Struct-Definitions"><a href="#Lifetime-Annotations-in-Struct-Definitions" class="headerlink" title="Lifetime Annotations in Struct Definitions"></a>Lifetime Annotations in Struct Definitions</h2><h2 id="Lifetime-Elision"><a href="#Lifetime-Elision" class="headerlink" title="Lifetime Elision"></a>Lifetime Elision</h2><p>对于函数参数和返回值的lifetime，可以根据<code>Elision</code>规则自动推断，三个简单规则</p>
+<h2 id="Lifetime-Annotations-in-Method-Definitions"><a href="#Lifetime-Annotations-in-Method-Definitions" class="headerlink" title="Lifetime Annotations in Method Definitions"></a>Lifetime Annotations in Method Definitions</h2><ul>
+<li>类似于<code>generic type parameter</code><h2 id="Static-Lifetime"><a href="#Static-Lifetime" class="headerlink" title="Static Lifetime"></a>Static Lifetime</h2></li>
+</ul>
+<h2 id="Generic-Type-Parameters-Trait-Bounds-and-Lifetimes-Together"><a href="#Generic-Type-Parameters-Trait-Bounds-and-Lifetimes-Together" class="headerlink" title="Generic Type Parameters, Trait Bounds, and Lifetimes Together"></a>Generic Type Parameters, Trait Bounds, and Lifetimes Together</h2><hr>
+<h1 id="Tests"><a href="#Tests" class="headerlink" title="Tests"></a>Tests</h1><p>Going out of order from the book to cover tests – many of the following exercises will ask you to make tests pass!</p>
+<h2 id="Further-information-13"><a href="#Further-information-13" class="headerlink" title="Further information"></a>Further information</h2><ul>
+<li>[] <a target="_blank" rel="noopener" href="https://doc.rust-lang.org/book/ch11-01-writing-tests.html">Writing Tests</a></li>
+</ul>
+<h1 id="How-to-Write-Tests"><a href="#How-to-Write-Tests" class="headerlink" title="How to Write Tests"></a>How to Write Tests</h1><ul>
+<li>通过<code>cargo test</code>可以测试所有以<code>#[test]</code>标注的为<code>test function</code>的函数</li>
+<li><code>lib crate</code>会创建test module</li>
+</ul>
+<h2 id="assert"><a href="#assert" class="headerlink" title="assert!"></a><code>assert!</code></h2><h2 id="assert-eq-assert-ne"><a href="#assert-eq-assert-ne" class="headerlink" title="assert_eq!, assert_ne!"></a><code>assert_eq!</code>, <code>assert_ne!</code></h2><h2 id="should-panic"><a href="#should-panic" class="headerlink" title="should_panic"></a><code>should_panic</code></h2><p>也是Rust中的属性<code>#[should_panic]</code></p>
+<hr>
+<h1 id="Iterators"><a href="#Iterators" class="headerlink" title="Iterators"></a>Iterators</h1><p>This section will teach you about Iterators.</p>
+<h2 id="Further-information-14"><a href="#Further-information-14" class="headerlink" title="Further information"></a>Further information</h2><ul>
+<li><input checked="" disabled="" type="checkbox"> <a target="_blank" rel="noopener" href="https://doc.rust-lang.org/book/ch13-02-iterators.html">Iterator</a></li>
+<li><input disabled="" type="checkbox"> <a target="_blank" rel="noopener" href="https://doc.rust-lang.org/stable/std/iter/">Iterator documentation</a></li>
+</ul>
+<h1 id="Processing-a-Series-of-Items-with-Iterators"><a href="#Processing-a-Series-of-Items-with-Iterators" class="headerlink" title="Processing a Series of Items with Iterators"></a>Processing a Series of Items with Iterators</h1><blockquote>
+<p>The iterator pattern allows you to perform some task on a sequence of items in turn.</p>
+</blockquote>
+<ul>
+<li><code>iter()</code>方法：获得一个实现了<code>Iterator Trait</code>变量的迭代器<ul>
+<li>调用next时，会得到内部数据的<code>immutable reference</code></li>
+</ul>
+</li>
+<li><code>iter_mut()</code>方法：<ul>
+<li>调用next，会得到内部数据的<code>mutable reference</code></li>
+</ul>
+</li>
+<li><code>into_iter()</code>：会获得实现<code>Iterator</code>变量的所有权，并返回迭代器</li>
+</ul>
+<p><strong>Hint:</strong> Rust中的Iterator是<code>lazy</code>：</p>
+<blockquote>
+<p>they have no effect until you call methods that consume the iterator to use it up</p>
+</blockquote>
+<ul>
+<li>需要对迭代器调用<code>consuming adaptor</code>，即会取走<code>ownership</code>的method</li>
+</ul>
+<h2 id="The-Iterator-Trait-and-the-next-Method"><a href="#The-Iterator-Trait-and-the-next-Method" class="headerlink" title="The Iterator Trait and the next Method"></a>The <code>Iterator</code> Trait and the <code>next</code> Method</h2><ul>
+<li>实现<code>Iterator</code> Trait必须实现<code>next</code>方法</li>
+<li>每次调用<code>next</code>方法会将指针依次指向下一个<code>Item</code></li>
+</ul>
+<h2 id="Method-that-Consume-the-Iterator"><a href="#Method-that-Consume-the-Iterator" class="headerlink" title="Method that Consume the Iterator"></a>Method that Consume the Iterator</h2><ul>
+<li><code>consuming adapter</code>：内部会调用<code>next</code>方法<ul>
+<li>会获取Iterator的所有权，即consume iterator</li>
+<li>由于<code>lazy</code>特性，必须在<code>iterator</code>的最后调用<code>consuming adpater</code><ul>
+<li><code>collect()</code>：会收集迭代器剩下的<code>item</code>为一个<code>collection</code>类型</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Methods-that-Produce-Other-Iterators"><a href="#Methods-that-Produce-Other-Iterators" class="headerlink" title="Methods that Produce Other Iterators"></a>Methods that Produce Other Iterators</h2><ul>
+<li><code>iterator adapter</code>：内部不会调用<code>next</code>方法<ul>
+<li>不会获得Iterator的所有权</li>
+</ul>
+</li>
+</ul>
+<h2 id="Using-Closures-that-Capture-Their-Environment"><a href="#Using-Closures-that-Capture-Their-Environment" class="headerlink" title="Using Closures that Capture Their Environment"></a>Using Closures that Capture Their Environment</h2><p>许多<code>iterator adpater</code>会将<code>closure</code>作为实参</p>
+<hr>
+<h1 id="Smart-Pointers"><a href="#Smart-Pointers" class="headerlink" title="Smart Pointers"></a>Smart Pointers</h1><p>In Rust, smart pointers are variables that contain an address in memory and reference some other data, but they also have additional metadata and capabilities.<br>Smart pointers in Rust often own the data they point to, while references only borrow data.</p>
+<h2 id="Further-Information"><a href="#Further-Information" class="headerlink" title="Further Information"></a>Further Information</h2><ul>
+<li>[✅] <a target="_blank" rel="noopener" href="https://doc.rust-lang.org/book/ch15-00-smart-pointers.html">Smart Pointers</a></li>
+<li>[✅] <a target="_blank" rel="noopener" href="https://doc.rust-lang.org/book/ch16-03-shared-state.html">Shared-State Concurrency</a></li>
+<li>[✅] <a target="_blank" rel="noopener" href="https://doc.rust-lang.org/std/borrow/enum.Cow.html">Cow Documentation</a></li>
+</ul>
+<h1 id="Smart-Pointers-1"><a href="#Smart-Pointers-1" class="headerlink" title="Smart Pointers"></a>Smart Pointers</h1><ul>
+<li>Rust中的reference都是raw pointer：没有其他额外的元数据或者空间</li>
+<li>Rust中的Smart Pointer：有额外的元数据或者空间来完成更复杂的维护<ul>
+<li>智能指针<code>own</code>数据</li>
+<li>必须实现<code>Deref</code>和<code>Drop</code>Trait<ul>
+<li><code>Deref</code>使得智能指针能够像reference一样被<code>*</code>解引用</li>
+<li><code>Drop</code>定制化智能指针的销毁操作，类似于C++中只能指针的drop函数，在智能指针变量out of scope后自动将heap上数据销毁</li>
+</ul>
+</li>
+<li>类似于C++中的智能指针</li>
+<li>例如<code>Vec</code>,<code>String</code>：图中s1即为智能指针，s则为引用<ul>
+<li><img src="../../../../StudyField/github_repositories/rustlings/exercises/06_move_semantics/image-2.png" alt="image-2"></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>reference vs. smart pointer:</p>
+<ul>
+<li>reference占用空间更小，smart pointer占用空间更大<ul>
+<li>reference类似于raw pointer</li>
+</ul>
+</li>
+<li>reference只是对数据的引用，smart pointer则<code>own</code>数据</li>
+</ul>
+<p>例如：</p>
+<ul>
+<li><code>Box&lt;T&gt;</code></li>
+<li><code>Rc&lt;T&gt;</code></li>
+<li><code>Ref&lt;T&gt;</code>,<code>RefMut&lt;T&gt;</code></li>
+</ul>
+<h2 id="Using-Box-to-Point-to-Data-on-the-Heap"><a href="#Using-Box-to-Point-to-Data-on-the-Heap" class="headerlink" title="Using Box to Point to Data on the Heap"></a>Using Box<T> to Point to Data on the Heap</h2><ul>
+<li><code>Box::new()</code>将数据存储在Heap中，而<code>Box</code>变量存储在Stack中</li>
+<li><code>Box</code>：相比其他智能指针，其能力较弱<ul>
+<li>indirection：<code>Box</code>变量存储在stack，而其指向的数据存储在Heap中</li>
+<li>heap allocation:</li>
+</ul>
+</li>
+<li>使用场景：<ul>
+<li>Box类型大小固定：将一个编译时无法确认大小的类型作为<code>Box</code>的<code>generic type parameter</code>，例如递归类型</li>
+<li>Box拥有所指向数据的所有权：可以Move指向的数据，而不是拷贝</li>
+<li>Box有<code>generic type parameter</code>：可以指定实现了某种trait的类型作为<code>generic type parameter</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="Using-a-Box-lt-T-gt-to-Store-Data-on-the-Heap"><a href="#Using-a-Box-lt-T-gt-to-Store-Data-on-the-Heap" class="headerlink" title="Using a Box&lt;T&gt; to Store Data on the Heap"></a>Using a <code>Box&lt;T&gt;</code> to Store Data on the Heap</h3><p>使用<code>Box</code>的<code>associated function</code>-<code>new</code>可以在Heap上创建一个指定类型的数据，并由该Box变量指向它</p>
+<ul>
+<li>类似于C++中的<code>auto p = new int; auto sp = std::unique_ptr(p)</code></li>
+</ul>
+<h3 id="Enabling-Recursive-Types-with-Boxed"><a href="#Enabling-Recursive-Types-with-Boxed" class="headerlink" title="Enabling Recursive Types with Boxed"></a>Enabling Recursive Types with Boxed</h3><ul>
+<li>通过将递归类型作为<code>Box</code>的<code>generic type parameter</code>，可以使得Rust能够在编译时确定该类型的大小</li>
+</ul>
+<p>例如：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">List</span></span>&#123;</span><br><span class="line">  Cons(<span class="built_in">i32</span>, List),</span><br><span class="line">  Nil</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="img.png" alt="img.png"></p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">List</span></span>&#123;</span><br><span class="line">  Cons(<span class="built_in">i32</span>, <span class="built_in">Box</span>&lt;List&gt;),</span><br><span class="line">  Nil</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="img_1.png" alt="img_1.png"></p>
+<h2 id="Deref-Trait-Treating-Smart-Pointers-Like-Regular-References"><a href="#Deref-Trait-Treating-Smart-Pointers-Like-Regular-References" class="headerlink" title="Deref Trait: Treating Smart Pointers Like Regular References"></a><code>Deref Trait</code>: Treating Smart Pointers Like Regular References</h2><ul>
+<li>实现<code>Deref</code>Trait：能够使得<code>*</code>类型能够像<code>*</code>regular reference一样</li>
+</ul>
+<h3 id="Following-the-Pointer-to-the-Value"><a href="#Following-the-Pointer-to-the-Value" class="headerlink" title="Following the Pointer to the Value"></a>Following the Pointer to the Value</h3><ul>
+<li>regular reference：一种指针<ul>
+<li>对其使用解引用操作<code>*</code>：就像是顺着指针找到真正的数据</li>
+</ul>
+</li>
+</ul>
+<h3 id="Using-Box-Like-a-Reference"><a href="#Using-Box-Like-a-Reference" class="headerlink" title="Using Box Like a Reference"></a>Using Box<T> Like a Reference</h3><ul>
+<li>也可以对<code>Box&lt;T&gt;</code>类型的变量使用解引用<code>*</code>：也可以得到其内部真正的数据</li>
+</ul>
+<h3 id="Treating-a-Type-Like-a-Reference-by-Implementing-the-Deref-Trait"><a href="#Treating-a-Type-Like-a-Reference-by-Implementing-the-Deref-Trait" class="headerlink" title="Treating a Type Like a Reference by Implementing the Deref Trait"></a>Treating a Type Like a Reference by Implementing the <code>Deref</code> Trait</h3><ul>
+<li>实现<code>Deref</code> Trait:<ul>
+<li>必须实现其method<code>deref</code></li>
+<li><pre><code class="rust">  impl&lt;T&gt; Deref for MyBox&lt;T&gt;&#123;
+    type Target = T;
+    fn deref(self: &amp;Self) -&gt; &amp;Self::Target&#123;
+        &amp;self.0
+    &#125;   
+  &#125;
+</code></pre>
+</li>
+</ul>
+</li>
+<li>实现了<code>deref</code>便可以像<code>*</code>regular reference一样，<code>*</code>Type:<ul>
+<li><code>* mybox</code> 自动转换为 <code>*(mybox.deref())</code></li>
+</ul>
+</li>
+<li>即：对于实现了<code>Deref</code>的数据类型进行<code>*</code>解引用：<ol>
+<li>首先，调用<code>deref</code>转换为对其内部数据的regular reference</li>
+<li>接着，对regular reference进行解引用即可得到T类型的内部数据</li>
+</ol>
+</li>
+</ul>
+<h3 id="Implicit-Deref-Coercions-with-Functions-and-Methods"><a href="#Implicit-Deref-Coercions-with-Functions-and-Methods" class="headerlink" title="Implicit Deref Coercions with Functions and Methods"></a><code>Implicit Deref Coercions</code> with Functions and Methods</h3><blockquote>
+<p>Deref coercion converts a reference to a type that implements the Deref trait into a reference to another type.</p>
+</blockquote>
+<ul>
+<li>将一个对实现了<code>Deref</code>Trait的类型的引用=&gt;对Self::Target类型的引用<ul>
+<li>即<code>&amp;MyBox&lt;T&gt;</code> =&gt; <code>&amp;T</code>，<code>&amp;String</code> =&gt; <code>&amp;str</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="How-Deref-Coercion-Interacts-with-Mutability"><a href="#How-Deref-Coercion-Interacts-with-Mutability" class="headerlink" title="How Deref Coercion Interacts with Mutability"></a>How Deref Coercion Interacts with Mutability</h3><p>Rust does deref coercion when it finds types and trait implementations in three cases:</p>
+<ul>
+<li>From &amp;T to &amp;U when T: Deref&lt;Target=U&gt;</li>
+<li>From &amp;mut T to &amp;mut U when T: DerefMut&lt;Target=U&gt;</li>
+<li>From &amp;mut T to &amp;U when T: Deref&lt;Target=U&gt;</li>
+</ul>
+<h2 id="Drop-Trait-Running-Code-on-Cleanup-with-the-Drop-Trait"><a href="#Drop-Trait-Running-Code-on-Cleanup-with-the-Drop-Trait" class="headerlink" title="Drop Trait: Running Code on Cleanup with the Drop Trait"></a><code>Drop Trait</code>: Running Code on Cleanup with the Drop Trait</h2><ul>
+<li>每当实现了<code>Drop</code>Trait的类型的实例out of scope，都会自动调用<code>drop</code>方法，并对其heap上的数据进行释放，或者做其他善后工作<ul>
+<li>类似于C++的析构函数</li>
+<li><code>CMU15-445(2023FALL)</code>的<code>Project#2</code>的<code>PageGuard</code>可能就是借鉴了这里的思想</li>
+</ul>
+</li>
+</ul>
+<h3 id="Dropping-a-Value-Early-with-std-mem-drop"><a href="#Dropping-a-Value-Early-with-std-mem-drop" class="headerlink" title="Dropping a Value Early with std::mem::drop"></a>Dropping a Value Early with <code>std::mem::drop</code></h3><ul>
+<li>Rust不允许手动调用<code>Drop</code>中的<code>drop</code>方法</li>
+<li>Rust也不允许禁止在out of scope时自动调用<code>drop</code>方法<ul>
+<li>据说是为了防止<code>double free</code></li>
+<li>但是<code>PageGuard</code>中的Drop是可以手动释放的，可能因为和内存没有很紧密的联系</li>
+</ul>
+</li>
+<li>Rust提供了<code>std::mem::drop</code>来提前手动释放某个value（不必实现Drop Trait）</li>
+</ul>
+<h2 id="Rc-the-Reference-Counted-Smart-Pointer"><a href="#Rc-the-Reference-Counted-Smart-Pointer" class="headerlink" title="Rc: the Reference Counted Smart Pointer"></a>Rc<T>: the Reference Counted Smart Pointer</h2><ul>
+<li><code>reference counting</code>:<code>Rc</code>类型会记录，当前内部数据有多少引用<ul>
+<li>类似于C++中的<code>std::shared_ptr</code></li>
+</ul>
+</li>
+<li><code>Rc&lt;T&gt;</code>不是多线程安全</li>
+<li><code>Rc&lt;T&gt;</code>只能返回内部数据的<code>immutable reference</code></li>
+<li>配合<code>RefCell&lt;T&gt;</code>的<code>borrow_mut</code>方法才可以获得内部数据的可变引用<ul>
+<li><strong>Hint:</strong><code>RefCell</code>的<code>reference rule</code>是在运行时进行的</li>
+</ul>
+</li>
+</ul>
+<h3 id="Using-Rc-to-Share-Data"><a href="#Using-Rc-to-Share-Data" class="headerlink" title="Using Rc to Share Data"></a>Using Rc<T> to Share Data</h3><p><code>Rc::clone(&amp;a)</code>：进行浅拷贝</p>
+<ul>
+<li>只增加Rc实例<code>a</code>的引用计数</li>
+</ul>
+<h3 id="Cloning-an-Rc-Increases-the-Reference-Count"><a href="#Cloning-an-Rc-Increases-the-Reference-Count" class="headerlink" title="Cloning an Rc Increases the Reference Count"></a>Cloning an Rc<T> Increases the Reference Count</h3><ul>
+<li>每次对<code>Rc</code>实例调用<code>RC::clone</code>都会增加其引用计数</li>
+<li>每次drop都会降低引用计数</li>
+<li>对<code>Rc</code>实例的引用分为两种：weak和strong</li>
+<li>通过<code>strong_count</code>可以看到其引用计数</li>
+</ul>
+<h2 id="RefCell-and-the-Interior-Mutability-Pattern"><a href="#RefCell-and-the-Interior-Mutability-Pattern" class="headerlink" title="RefCell and the Interior Mutability Pattern"></a>RefCell<T> and the Interior Mutability Pattern</h2><ul>
+<li><code>Interior Mutability</code>: design pattern in Rust that allows you to mutate data even when there are immutable references to that data<ul>
+<li>使用<code>unsafe</code>代码来实现<h3 id="Enforcing-Borrowing-Rules-at-Runtime-with-RefCell"><a href="#Enforcing-Borrowing-Rules-at-Runtime-with-RefCell" class="headerlink" title="Enforcing Borrowing Rules at Runtime with RefCell"></a>Enforcing Borrowing Rules at Runtime with RefCell<T></h3>Here is a recap of the reasons to choose Box<T>, Rc<T>, or RefCell<T>:</li>
+</ul>
+</li>
+<li>Rc<T> enables <strong>multiple owners</strong> of the same data; Box<T> and RefCell<T> have <strong>single owner</strong>. </li>
+<li>Box<T> allows immutable or mutable borrows checked at compile time; Rc<T> allows only immutable borrows checked at compile time; RefCell<T> allows immutable or mutable borrows checked at runtime. </li>
+<li>Because RefCell<T> allows mutable borrows checked at runtime, you can mutate the value inside the RefCell<T> even when the RefCell<T> is immutable.</li>
+</ul>
+<h3 id="Interior-Mutability-A-Mutable-Borrow-to-an-Immutable-Value"><a href="#Interior-Mutability-A-Mutable-Borrow-to-an-Immutable-Value" class="headerlink" title="Interior Mutability: A Mutable Borrow to an Immutable Value"></a>Interior Mutability: A Mutable Borrow to an Immutable Value</h3><p>对于函数签名为<code>immutable reference</code>struct类型的情况，如果想改struct内部filed，并且不可更改函数签名：</p>
+<ul>
+<li>将field的类型使用<code>RefCell</code>包裹：<code>RefCell&lt;T&gt;</code><ul>
+<li>这样在函数内部可以对<code>RefCell&lt;T&gt;</code>调用<code>borrow_mut</code>获得其内部数据的可变引用</li>
+<li><code>borrow</code>获得其不可变引用</li>
+</ul>
+</li>
+<li>通过<code>RefCell</code>，只在对field更改的地方时该field是<code>mutable</code>，在该函数其他部分该T仍然表现为<code>immutable reference</code></li>
+</ul>
+<h4 id="Keeping-Track-of-Borrows-at-Runtime-with-RefCell"><a href="#Keeping-Track-of-Borrows-at-Runtime-with-RefCell" class="headerlink" title="Keeping Track of Borrows at Runtime with RefCell"></a>Keeping Track of Borrows at Runtime with RefCell<T></h4><ul>
+<li>对于<code>RefCell&lt;T&gt;</code>的<code>reference rule</code>是在运行时进行检查的</li>
+</ul>
+<h3 id="Having-Multiple-Owners-of-Mutable-Data-by-Combining-Rc-and-RefCell"><a href="#Having-Multiple-Owners-of-Mutable-Data-by-Combining-Rc-and-RefCell" class="headerlink" title="Having Multiple Owners of Mutable Data by Combining Rc and RefCell"></a>Having Multiple Owners of Mutable Data by Combining Rc<T> and RefCell<T></h3><ul>
+<li><code>Rc&lt;T&gt;</code>只能允许<code>immutable reference</code></li>
+<li>Rc内部包裹RefCell可以通过<code>borrow_mut</code>获得可变引用</li>
+</ul>
+<h2 id="Reference-Cycles-Can-Leak-Memory"><a href="#Reference-Cycles-Can-Leak-Memory" class="headerlink" title="Reference Cycles Can Leak Memory"></a>Reference Cycles Can Leak Memory</h2><h1 id="Shared-Stated-Concurrency"><a href="#Shared-Stated-Concurrency" class="headerlink" title="Shared-Stated Concurrency"></a>Shared-Stated Concurrency</h1><ul>
+<li><code>Mutex&lt;T&gt;</code>-互斥体：确保同一时间只有一个线程访问<ul>
+<li>其方法<code>lock</code>返回<code>smart pointer</code>——<code>MutexGuard&lt;T&gt;</code>(包裹在Result中)：<ul>
+<li>类似于<code>RefCell&lt;T&gt;</code>，具有相同的API，并且拥有<code>内部可变性</code></li>
+<li>实现了<code>Deref</code>，因此可以像<code>regular reference</code>一样使用<code>*</code>解引用</li>
+<li>具有解引用强制性的特点</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>Arc&lt;T&gt;</code>类似于<code>Rc&lt;T&gt;</code><ul>
+<li>具有相同API，对于引用计数器提供原子操作，因此是线程安全的</li>
+<li>值得注意的是<code>Actix-Web</code>中的<code>web::Data</code>内部使用<code>Arc&lt;T&gt;</code>来实现，因此可以对<code>web::Data</code>包裹的<code>AppState</code>进行线程安全访问<h2 id="Using-Mutexes-to-Allow-Access-to-Data-from-One-Thread-at-a-Time"><a href="#Using-Mutexes-to-Allow-Access-to-Data-from-One-Thread-at-a-Time" class="headerlink" title="Using Mutexes to Allow Access to Data from One Thread at a Time"></a>Using Mutexes to Allow Access to Data from One Thread at a Time</h2><h2 id="The-API-of-Mutex"><a href="#The-API-of-Mutex" class="headerlink" title="The API of Mutex"></a>The API of Mutex<T></h2><h2 id="Sharing-a-Mutex-Between-Multiple-Threads"><a href="#Sharing-a-Mutex-Between-Multiple-Threads" class="headerlink" title="Sharing a Mutex Between Multiple Threads"></a>Sharing a Mutex<T> Between Multiple Threads</h2><h2 id="Multiple-Ownership-with-Multiple-Threads"><a href="#Multiple-Ownership-with-Multiple-Threads" class="headerlink" title="Multiple Ownership with Multiple Threads"></a>Multiple Ownership with Multiple Threads</h2><h2 id="Atomic-Reference-Counting-with-Arc"><a href="#Atomic-Reference-Counting-with-Arc" class="headerlink" title="Atomic Reference Counting with Arc"></a>Atomic Reference Counting with Arc<T></h2><h2 id="Similarities-Between-RefCell-Rc-and-Mutex-Arc"><a href="#Similarities-Between-RefCell-Rc-and-Mutex-Arc" class="headerlink" title="Similarities Between RefCell/Rc and Mutex/Arc"></a>Similarities Between RefCell<T>/Rc<T> and Mutex<T>/Arc<T></h2></li>
+</ul>
+</li>
+</ul>
+<h1 id="Clone-On-Write"><a href="#Clone-On-Write" class="headerlink" title="Clone-On-Write"></a>Clone-On-Write</h1><p><code>CMU15-445</code>的<code>Porject#0</code>实现一个<code>COW</code>的<code>Tree</code>, 可能借鉴了这里的思想</p>
+<blockquote>
+<p>// Cow is a clone-on-write smart pointer. It can enclose and provide immutable access to<br>// borrowed data, and clone the data lazily when mutation or ownership is<br>// required. The type is designed to work with general borrowed data via the<br>// Borrow trait.</p>
+</blockquote>
+<ul>
+<li>使用<code>Cow&lt;T&gt;</code>类型，只有当需要修改或者传入了所有权时，才进行Clone</li>
+</ul>
+<hr>
+<h1 id="Threads"><a href="#Threads" class="headerlink" title="Threads"></a>Threads</h1><p>In most current operating systems, an executed program’s code is run in a process, and the operating system manages multiple processes at once.<br>Within your program, you can also have independent parts that run simultaneously. The features that run these independent parts are called threads.</p>
+<h2 id="Further-information-15"><a href="#Further-information-15" class="headerlink" title="Further information"></a>Further information</h2><ul>
+<li><input disabled="" type="checkbox"> <a target="_blank" rel="noopener" href="https://doc.rust-lang.org/1.4.0/book/dining-philosophers.html">Dining Philosophers example</a></li>
+<li><input checked="" disabled="" type="checkbox"> <a target="_blank" rel="noopener" href="https://doc.rust-lang.org/book/ch16-01-threads.html">Using Threads to Run Code Simultaneously</a></li>
+</ul>
+<h1 id="Using-Threads-to-Run-COde-simultaneously"><a href="#Using-Threads-to-Run-COde-simultaneously" class="headerlink" title="Using Threads to Run COde simultaneously"></a>Using Threads to Run COde simultaneously</h1><p>和C++中线程的使用类似</p>
+<ul>
+<li><p>创建新线程：<code>thread::spawn</code>，会返回<code>JoinHandle</code></p>
+<ul>
+<li>参数为<code>closure</code>会<code>capture</code>上下文中的变量<ul>
+<li><code>move closure</code>会将捕获到的变量转移所有权</li>
+</ul>
+</li>
+<li>新线程会执行closure中的内容</li>
+</ul>
+</li>
+<li><p><code>JoinHandle::join</code>会使等待该线程执行完</p>
+<ul>
+<li><strong>Hint:</strong> <code>join</code>会返回<code>Result&lt;T&gt;</code>其中<code>T</code>为线程内部返回的值</li>
+</ul>
+</li>
+<li><p><code>rust</code>中的<code>mpsc</code>可以实现线程安全的多生产者和单消费者模式的FIFO管道</p>
+</li>
+</ul>
+<hr>
+<h1 id="Macros"><a href="#Macros" class="headerlink" title="Macros"></a>Macros</h1><p>Rust’s macro system is very powerful, but also kind of difficult to wrap your<br>head around. We’re not going to teach you how to write your own fully-featured<br>macros. Instead, we’ll show you how to use and create them.</p>
+<p>If you’d like to learn more about writing your own macros, the<br><a target="_blank" rel="noopener" href="https://github.com/tfpk/macrokata">macrokata</a> project has a similar style<br>of exercises to Rustlings, but is all about learning to write Macros.</p>
+<h2 id="Further-information-16"><a href="#Further-information-16" class="headerlink" title="Further information"></a>Further information</h2><ul>
+<li>[] <a target="_blank" rel="noopener" href="https://doc.rust-lang.org/book/ch19-06-macros.html">Macros</a></li>
+<li>[] <a target="_blank" rel="noopener" href="https://veykril.github.io/tlborm/">The Little Book of Rust Macros</a></li>
+</ul>
+<h1 id="Macros-1"><a href="#Macros-1" class="headerlink" title="Macros"></a>Macros</h1><ul>
+<li><code>metaprogram:</code> 从rust代码生成rust代码</li>
+<li>Rust有四种宏<ul>
+<li><code>declarative macro</code>: 内部使用类似于<code>match</code>的解构实现</li>
+</ul>
+</li>
+<li><code>macro</code> vs <code>function</code>:<ul>
+<li>必须先定义宏才能使用，使用<code>#[macro_use]</code>引入scope</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h1 id="Clippy"><a href="#Clippy" class="headerlink" title="Clippy"></a>Clippy</h1><p>The Clippy tool is a collection of lints to analyze your code so you can catch common mistakes and improve your Rust code.</p>
+<p>If you used the installation script for Rustlings, Clippy should be already installed.<br>If not you can install it manually via <code>rustup component add clippy</code>.</p>
+<h2 id="Further-information-17"><a href="#Further-information-17" class="headerlink" title="Further information"></a>Further information</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/rust-lang/rust-clippy">GitHub Repository</a>.</li>
+</ul>
+<hr>
+<h1 id="Type-conversions"><a href="#Type-conversions" class="headerlink" title="Type conversions"></a>Type conversions</h1><p>Rust offers a multitude of ways to convert a value of a given type into another type.</p>
+<p>The simplest form of type conversion is a type cast expression. It is denoted with the binary operator <code>as</code>. For instance, <code>println!(&quot;&#123;&#125;&quot;, 1 + 1.0);</code> would not compile, since <code>1</code> is an integer while <code>1.0</code> is a float. However, <code>println!(&quot;&#123;&#125;&quot;, 1 as f32 + 1.0)</code> should compile. The exercise <a href="using_as.rs"><code>using_as</code></a> tries to cover this.</p>
+<p>Rust also offers traits that facilitate type conversions upon implementation. These traits can be found under the <a target="_blank" rel="noopener" href="https://doc.rust-lang.org/std/convert/index.html"><code>convert</code></a> module.<br>The traits are the following:</p>
+<ul>
+<li><code>From</code> and <code>Into</code> covered in <a href="from_into.rs"><code>from_into</code></a></li>
+<li><code>TryFrom</code> and <code>TryInto</code> covered in <a href="try_from_into.rs"><code>try_from_into</code></a></li>
+<li><code>AsRef</code> and <code>AsMut</code> covered in <a href="as_ref_mut.rs"><code>as_ref_mut</code></a></li>
+</ul>
+<p>Furthermore, the <code>std::str</code> module offers a trait called <a target="_blank" rel="noopener" href="https://doc.rust-lang.org/std/str/trait.FromStr.html"><code>FromStr</code></a> which helps with converting strings into target types via the <code>parse</code> method on strings. If properly implemented for a given type <code>Person</code>, then <code>let p: Person = &quot;Mark,20&quot;.parse().unwrap()</code> should both compile and run without panicking.</p>
+<p>These should be the main ways <em><strong>within the standard library</strong></em> to convert data into your desired types.</p>
+<h2 id="Further-information-18"><a href="#Further-information-18" class="headerlink" title="Further information"></a>Further information</h2><p>These are not directly covered in the book, but the standard library has a great documentation for it.</p>
+<ul>
+<li>[] <a target="_blank" rel="noopener" href="https://doc.rust-lang.org/std/convert/index.html">conversions</a></li>
+<li>[] <a target="_blank" rel="noopener" href="https://doc.rust-lang.org/std/str/trait.FromStr.html"><code>FromStr</code> trait</a></li>
+</ul>
+<h1 id="AsRef-AsMut-From-Into-TryFrom-Try-Into"><a href="#AsRef-AsMut-From-Into-TryFrom-Try-Into" class="headerlink" title="AsRef, AsMut, From, Into, TryFrom, Try Into"></a>AsRef, AsMut, From, Into, TryFrom, Try Into</h1><ul>
+<li><p>Cheap Conversion: AsRef, AsMut</p>
+<ul>
+<li>都是泛型Trait，实现了该Trait的类型，可以将其引用转换为泛型类型的引用</li>
+<li>至于为什么是cheap：因为只是改变了引用的类型，对于实际数据值没有改变，也没有改变其所有权</li>
+<li><strong>Hint:</strong> 默认对各种智能指针实现了<code>AsRef/AsMut</code>，即可以可以通过对智能指针调用<code>as_mut/as_ref</code>获得内部数据类型的引用</li>
+<li><strong>Hint:</strong> 实现了<code>Deref</code>或者<code>MutDeref</code>的类型（例如Box或者其他智能指针），由于<code>deref coercion</code>（即对智能指针的引用会隐式地转换为对内部数据类型的引用），因此对于实现了<code>AsRef/AsMut</code>的类型可以直接对包裹该类型的智能指针调用<code>as_ref/as_mut</code></li>
+</ul>
+</li>
+<li><p>Consuming/costly Conversion: From, Into, …</p>
+<ul>
+<li>也都是泛型Trait，实现了该<code>From</code>Trait的类型，可以将泛型类型的值转换为该类型的值</li>
+<li>consuming/costly：改变了实际数据值的底层实现，改变了所有权</li>
+</ul>
+</li>
+</ul>
+<h2 id="From"><a href="#From" class="headerlink" title="From"></a>From</h2><p>实现From会自动地为实现类型实现Into</p>
+<ul>
+<li>简化错误处理：为自己的错误类型MyError实现<code>From</code>泛型参数为底层错误类型<ul>
+<li>可以通过<code>?</code>语法糖，将底层错误类型自动地转换为MyError</li>
+</ul>
+</li>
+</ul>
+<h2 id="TryFrom"><a href="#TryFrom" class="headerlink" title="TryFrom"></a>TryFrom</h2><p>与From相近，但是调用from方法返回的是Result类型，更加安全方便，可以让程序猿自己决定如何处理两种情况</p>
+<h1 id="Trait-FromStr"><a href="#Trait-FromStr" class="headerlink" title="Trait: FromStr"></a>Trait: FromStr</h1><blockquote>
+<p>自己在写项目的时候，大多数情况下所用到的crate是没有类似于The Book很友善的教程。尝试通过<a target="_blank" rel="noopener" href="https://doc.rust-lang.org/std/str/trait.FromStr.html"><code>FromStr</code> trait</a>锻炼一下自己读rust 文档</p>
+</blockquote>
+<ul>
+<li>FromStr: <ul>
+<li>最顶部写了FromStr是一个Trait，并且提供了简化版的签名。</li>
+<li>点击source可以阅读源码，今后自己写crate可以参考</li>
+<li>紧接着提供了对该Trait功能的描述和例子</li>
+</ul>
+</li>
+<li>Required Associated Types: 实现该Trait，也需要使用type声明一个自定义的错误类型，以关联类型的形式</li>
+<li>Required Methods: 实现该Trait，必须要实现的方法from_str</li>
+<li>Implementors：一些签名展示了实现了该Trait的类型</li>
+<li>Modules：FromStr所在的模块，即std::str<ul>
+<li>紧接着是该模块内部的内容：<ul>
+<li>Struct</li>
+<li>Trait</li>
+<li>Function</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>通过阅读rustdoc，我知道了必须实现from_str方法才能实现该FromStr Trait，便可以通过str类型的parse方法隐式地将str consuming conversion为实现该trait的类型</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="https://zihao256.github.io">zihao</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://zihao256.github.io/p/2acafc61.html">https://zihao256.github.io/p/2acafc61.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Rust/">Rust</a></div><div class="post_share"><div class="social-share" data-image="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven2.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/p/d028ccc3.html"><img class="next-cover" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven-yx7vmk.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">基于Actix-Web(Rust)和Vue的Web开发记录</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><div><a href="/p/d028ccc3.html" title="基于Actix-Web(Rust)和Vue的Web开发记录"><img class="cover" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven-yx7vmk.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-11-13</div><div class="title">基于Actix-Web(Rust)和Vue的Web开发记录</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> Comment</span></div></div><div class="comment-wrap"><div><div id="gitalk-container"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://github.com/ZiHao256/ZiHao256.github.io/blob/hexo/images/stitch.JPG?raw=true" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">zihao</div><div class="author-info__description">Why be afraid of the infinity of truth? Joy resides in every step of growth.</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">64</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">44</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">16</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/ZiHao256"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/ZiHao256" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/atom.xml" target="_blank" title="RSS链接"><i class="fa fa-rss"></i></a><a class="social-icon" href="mailto:zihao626@gmail.com" target="_blank" title="gmail"><i class="fa-brands fa-google"></i></a><a class="social-icon" href="mailto:zh_ma@stu.xidian.edu.cn" target="_blank" title="xdu-mail"><i class="fa fa-graduation-cap"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">keep moving in 2023</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Book-Chapter-Mapping"><span class="toc-text">Book Chapter Mapping</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Intro"><span class="toc-text">Intro</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Further-information"><span class="toc-text">Further information</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Formatted-print"><span class="toc-text">Formatted print</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Variables"><span class="toc-text">Variables</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Further-information-1"><span class="toc-text">Further information</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Variables-and-Mutability"><span class="toc-text">Variables and Mutability</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Functions"><span class="toc-text">Functions</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Further-information-2"><span class="toc-text">Further information</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Functions-1"><span class="toc-text">Functions</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Parameters"><span class="toc-text">Parameters</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Statement-and-Expressions"><span class="toc-text">Statement and Expressions</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Functions-with-return-values"><span class="toc-text">Functions with return values</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#If"><span class="toc-text">If</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Further-information-3"><span class="toc-text">Further information</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Control-Flow"><span class="toc-text">Control Flow</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#if-Expression"><span class="toc-text">if Expression</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Repetition-with-Loops"><span class="toc-text">Repetition with Loops</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#loop"><span class="toc-text">loop</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#conditional-loop-with-while"><span class="toc-text">conditional loop with while</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Looping-Through-a-Collection-with-for"><span class="toc-text">Looping Through a Collection with for</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Primitive-Types"><span class="toc-text">Primitive Types</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Further-information-4"><span class="toc-text">Further information</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Data-Types"><span class="toc-text">Data Types</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Scalar-Types"><span class="toc-text">Scalar Types</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Interger-Types"><span class="toc-text">Interger Types</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Floating-point-numbers"><span class="toc-text">Floating-point numbers</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#The-Character-Type"><span class="toc-text">The Character Type</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Compound-Types"><span class="toc-text">Compound Types</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#tuple-type"><span class="toc-text">tuple type</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#array-type"><span class="toc-text">array type</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Vectors"><span class="toc-text">Vectors</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Further-information-5"><span class="toc-text">Further information</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Storing-Lists-of-Values-with-Vectors"><span class="toc-text">Storing Lists of Values with Vectors</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Creating"><span class="toc-text">Creating</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Updating"><span class="toc-text">Updating</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reading"><span class="toc-text">Reading</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Iterating"><span class="toc-text">Iterating</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MostCommonWays-Using-an-Enum-to-Store-Multiple-Types"><span class="toc-text">MostCommonWays: Using an Enum to Store Multiple Types</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Move-Semantics"><span class="toc-text">Move Semantics</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Further-information-6"><span class="toc-text">Further information</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Ownership"><span class="toc-text">Ownership</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Ownership-Rules"><span class="toc-text">Ownership Rules</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Variable-Scope"><span class="toc-text">Variable Scope</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#The-String-Type"><span class="toc-text">The String Type</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Memory-and-Allocation"><span class="toc-text">Memory and Allocation</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Variables-and-Data-Interacting-with-Move"><span class="toc-text">Variables and Data Interacting with Move</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Variables-and-Data-Interacting-with-Clone"><span class="toc-text">Variables and Data Interacting with Clone</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Stack-Only-Data-Copy"><span class="toc-text">Stack-Only Data: Copy</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ownership-and-Functions"><span class="toc-text">Ownership and Functions</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Return-Values-and-Scope"><span class="toc-text">Return Values and Scope</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Reference-and-borrowing"><span class="toc-text">Reference and borrowing</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Mutable-References"><span class="toc-text">Mutable References</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Dangling-References"><span class="toc-text">Dangling References</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Structs"><span class="toc-text">Structs</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Further-information-7"><span class="toc-text">Further information</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Structures"><span class="toc-text">Structures</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Using-the-Field-Init-Shorthand"><span class="toc-text">Using the Field Init Shorthand</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Creating-Instances-from-other-Instances-with-Struct-Update-Syntax"><span class="toc-text">Creating Instances from other Instances with Struct Update Syntax</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Tuple-Struct-without-named-fields-to-create-differenct-types"><span class="toc-text">Tuple Struct: without named fields to create differenct types</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Unit-Struct"><span class="toc-text">Unit Struct</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Method-Syntax"><span class="toc-text">Method Syntax</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Defining-Methods"><span class="toc-text">Defining Methods</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Associated-Functions"><span class="toc-text">Associated Functions</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Enums"><span class="toc-text">Enums</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Further-information-8"><span class="toc-text">Further information</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Enums-%E5%BC%BA%E5%A4%A7%E7%9A%84%E5%BE%88%EF%BC%8C%E5%86%85%E9%83%A8enum-varient%E6%9C%89%E7%9D%80struct%E7%9A%84%E5%8A%9F%E8%83%BD"><span class="toc-text">Enums(强大的很，内部enum varient有着struct的功能)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Defining-an-Enum"><span class="toc-text">Defining an Enum</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Enum-Values"><span class="toc-text">Enum Values</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Optin-Enum-Advantages-Over-Null-Values"><span class="toc-text">Optin Enum: Advantages Over Null Values</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Documents"><span class="toc-text">Documents</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#if-let"><span class="toc-text">if let</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#while-let"><span class="toc-text">while let</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Error-handling"><span class="toc-text">Error handling</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Further-information-9"><span class="toc-text">Further information</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Recoverable-Errors-with-Result"><span class="toc-text">Recoverable Errors with Result</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Matching-on-Differences-Errors"><span class="toc-text">Matching on Differences Errors</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Shortcuts-for-Panic-on-Error-unwrap-and-expect"><span class="toc-text">Shortcuts for Panic on Error: unwrap and expect</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Propagating-Errors"><span class="toc-text">Propagating Errors</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#A-shortcut-for-propogating-Errors-the-operator"><span class="toc-text">A shortcut for propogating Errors: the ? operator</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Where-The-Operator-Can-Be-Used"><span class="toc-text">Where The ? Operator Can Be Used</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#main%E5%87%BD%E6%95%B0%E4%B9%9F%E5%8F%AF%E4%BB%A5%E8%BF%94%E5%9B%9EResult-lt-Box-lt-dyn-Error-gt-gt-%E7%B1%BB%E5%9E%8B"><span class="toc-text">main函数也可以返回Result&lt;(), Box&lt;dyn Error&gt;&gt;类型</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Example-for-Results"><span class="toc-text">Example for Results</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#map-for-Result"><span class="toc-text">map for Result</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#early-return"><span class="toc-text">early return</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Generic-Data-Types"><span class="toc-text">Generic Data Types</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#In-Function-Definition"><span class="toc-text">In Function Definition</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#In-struct-enum-Definitions"><span class="toc-text">In struct&#x2F;enum Definitions</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#In-method-Definitions"><span class="toc-text">In method Definitions</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Performance-of-Code-Using-Generics"><span class="toc-text">Performance of Code Using Generics</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Generics"><span class="toc-text">Generics</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Further-information-10"><span class="toc-text">Further information</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Generic-Data-Types-1"><span class="toc-text">Generic Data Types</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#In-Function-Definition-1"><span class="toc-text">In Function Definition</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#In-struct-enum-Definitions-1"><span class="toc-text">In struct&#x2F;enum Definitions</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#In-method-Definitions-1"><span class="toc-text">In method Definitions</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Performance-of-Code-Using-Generics-1"><span class="toc-text">Performance of Code Using Generics</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Bounds"><span class="toc-text">Bounds</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Traits"><span class="toc-text">Traits</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Further-information-11"><span class="toc-text">Further information</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Traits-Defining-Shared-Behavior"><span class="toc-text">Traits: Defining Shared Behavior</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Defining-a-Trait"><span class="toc-text">Defining a Trait</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Implementing-a-Trait-on-a-Type"><span class="toc-text">Implementing a Trait on a Type</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Default-Implementation"><span class="toc-text">Default Implementation</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Traits-as-Parameters"><span class="toc-text">Traits as Parameters</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Trait-Bound-Syntax"><span class="toc-text">Trait Bound Syntax</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Specifying-Multiple-Trait-Bounds-with"><span class="toc-text">Specifying Multiple Trait Bounds with +</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Clearer-Trait-Bounds-with-where-clause"><span class="toc-text">Clearer Trait Bounds with where clause</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Returning-Types-that-implement-Traits"><span class="toc-text">Returning Types that implement Traits</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Using-Trait-Bounds-to-Conditionally-Implement-Methods"><span class="toc-text">Using Trait Bounds to Conditionally Implement Methods</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Lifetimes"><span class="toc-text">Lifetimes</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Further-information-12"><span class="toc-text">Further information</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Validating-References-with-Lifetimes"><span class="toc-text">Validating References with Lifetimes</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Preventing-Dangling-References-with-Lifetimes"><span class="toc-text">Preventing Dangling References with Lifetimes</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Borrow-checker"><span class="toc-text">Borrow checker</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Generic-Lifetimes-in-Functions"><span class="toc-text">Generic Lifetimes in Functions</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Lifetime-Annotation-Syntax"><span class="toc-text">Lifetime Annotation Syntax</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Lifetime-Annotation-in-Function-Signatures"><span class="toc-text">Lifetime Annotation in Function Signatures</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Thinking-in-Terms-of-Lifetimes"><span class="toc-text">Thinking in Terms of Lifetimes</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Lifetime-Annotations-in-Struct-Definitions"><span class="toc-text">Lifetime Annotations in Struct Definitions</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Lifetime-Elision"><span class="toc-text">Lifetime Elision</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Lifetime-Annotations-in-Method-Definitions"><span class="toc-text">Lifetime Annotations in Method Definitions</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Static-Lifetime"><span class="toc-text">Static Lifetime</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Generic-Type-Parameters-Trait-Bounds-and-Lifetimes-Together"><span class="toc-text">Generic Type Parameters, Trait Bounds, and Lifetimes Together</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Tests"><span class="toc-text">Tests</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Further-information-13"><span class="toc-text">Further information</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#How-to-Write-Tests"><span class="toc-text">How to Write Tests</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#assert"><span class="toc-text">assert!</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#assert-eq-assert-ne"><span class="toc-text">assert_eq!, assert_ne!</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#should-panic"><span class="toc-text">should_panic</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Iterators"><span class="toc-text">Iterators</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Further-information-14"><span class="toc-text">Further information</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Processing-a-Series-of-Items-with-Iterators"><span class="toc-text">Processing a Series of Items with Iterators</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#The-Iterator-Trait-and-the-next-Method"><span class="toc-text">The Iterator Trait and the next Method</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Method-that-Consume-the-Iterator"><span class="toc-text">Method that Consume the Iterator</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Methods-that-Produce-Other-Iterators"><span class="toc-text">Methods that Produce Other Iterators</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Using-Closures-that-Capture-Their-Environment"><span class="toc-text">Using Closures that Capture Their Environment</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Smart-Pointers"><span class="toc-text">Smart Pointers</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Further-Information"><span class="toc-text">Further Information</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Smart-Pointers-1"><span class="toc-text">Smart Pointers</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Using-Box-to-Point-to-Data-on-the-Heap"><span class="toc-text">Using Box to Point to Data on the Heap</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Using-a-Box-lt-T-gt-to-Store-Data-on-the-Heap"><span class="toc-text">Using a Box&lt;T&gt; to Store Data on the Heap</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Enabling-Recursive-Types-with-Boxed"><span class="toc-text">Enabling Recursive Types with Boxed</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Deref-Trait-Treating-Smart-Pointers-Like-Regular-References"><span class="toc-text">Deref Trait: Treating Smart Pointers Like Regular References</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Following-the-Pointer-to-the-Value"><span class="toc-text">Following the Pointer to the Value</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Using-Box-Like-a-Reference"><span class="toc-text">Using Box Like a Reference</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Treating-a-Type-Like-a-Reference-by-Implementing-the-Deref-Trait"><span class="toc-text">Treating a Type Like a Reference by Implementing the Deref Trait</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Implicit-Deref-Coercions-with-Functions-and-Methods"><span class="toc-text">Implicit Deref Coercions with Functions and Methods</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#How-Deref-Coercion-Interacts-with-Mutability"><span class="toc-text">How Deref Coercion Interacts with Mutability</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Drop-Trait-Running-Code-on-Cleanup-with-the-Drop-Trait"><span class="toc-text">Drop Trait: Running Code on Cleanup with the Drop Trait</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Dropping-a-Value-Early-with-std-mem-drop"><span class="toc-text">Dropping a Value Early with std::mem::drop</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Rc-the-Reference-Counted-Smart-Pointer"><span class="toc-text">Rc: the Reference Counted Smart Pointer</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Using-Rc-to-Share-Data"><span class="toc-text">Using Rc to Share Data</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Cloning-an-Rc-Increases-the-Reference-Count"><span class="toc-text">Cloning an Rc Increases the Reference Count</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RefCell-and-the-Interior-Mutability-Pattern"><span class="toc-text">RefCell and the Interior Mutability Pattern</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Enforcing-Borrowing-Rules-at-Runtime-with-RefCell"><span class="toc-text">Enforcing Borrowing Rules at Runtime with RefCell</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Interior-Mutability-A-Mutable-Borrow-to-an-Immutable-Value"><span class="toc-text">Interior Mutability: A Mutable Borrow to an Immutable Value</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Keeping-Track-of-Borrows-at-Runtime-with-RefCell"><span class="toc-text">Keeping Track of Borrows at Runtime with RefCell</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Having-Multiple-Owners-of-Mutable-Data-by-Combining-Rc-and-RefCell"><span class="toc-text">Having Multiple Owners of Mutable Data by Combining Rc and RefCell</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference-Cycles-Can-Leak-Memory"><span class="toc-text">Reference Cycles Can Leak Memory</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Shared-Stated-Concurrency"><span class="toc-text">Shared-Stated Concurrency</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Using-Mutexes-to-Allow-Access-to-Data-from-One-Thread-at-a-Time"><span class="toc-text">Using Mutexes to Allow Access to Data from One Thread at a Time</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#The-API-of-Mutex"><span class="toc-text">The API of Mutex</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Sharing-a-Mutex-Between-Multiple-Threads"><span class="toc-text">Sharing a Mutex Between Multiple Threads</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Multiple-Ownership-with-Multiple-Threads"><span class="toc-text">Multiple Ownership with Multiple Threads</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Atomic-Reference-Counting-with-Arc"><span class="toc-text">Atomic Reference Counting with Arc</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Similarities-Between-RefCell-Rc-and-Mutex-Arc"><span class="toc-text">Similarities Between RefCell&#x2F;Rc and Mutex&#x2F;Arc</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Clone-On-Write"><span class="toc-text">Clone-On-Write</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Threads"><span class="toc-text">Threads</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Further-information-15"><span class="toc-text">Further information</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Using-Threads-to-Run-COde-simultaneously"><span class="toc-text">Using Threads to Run COde simultaneously</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Macros"><span class="toc-text">Macros</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Further-information-16"><span class="toc-text">Further information</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Macros-1"><span class="toc-text">Macros</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Clippy"><span class="toc-text">Clippy</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Further-information-17"><span class="toc-text">Further information</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Type-conversions"><span class="toc-text">Type conversions</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Further-information-18"><span class="toc-text">Further information</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#AsRef-AsMut-From-Into-TryFrom-Try-Into"><span class="toc-text">AsRef, AsMut, From, Into, TryFrom, Try Into</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#From"><span class="toc-text">From</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TryFrom"><span class="toc-text">TryFrom</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Trait-FromStr"><span class="toc-text">Trait: FromStr</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/p/2acafc61.html" title="rustlings"><img src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven2.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="rustlings"/></a><div class="content"><a class="title" href="/p/2acafc61.html" title="rustlings">rustlings</a><time datetime="2023-11-28T09:46:15.000Z" title="Created 2023-11-28 17:46:15">2023-11-28</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/d028ccc3.html" title="基于Actix-Web(Rust)和Vue的Web开发记录"><img src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven-yx7vmk.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="基于Actix-Web(Rust)和Vue的Web开发记录"/></a><div class="content"><a class="title" href="/p/d028ccc3.html" title="基于Actix-Web(Rust)和Vue的Web开发记录">基于Actix-Web(Rust)和Vue的Web开发记录</a><time datetime="2023-11-13T13:42:48.000Z" title="Created 2023-11-13 21:42:48">2023-11-13</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/517dd8ea.html" title="Project#2: Extendible Hash Index"><img src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/joseph-barrientos-oQl0eVYd_n8-unsplash.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Project#2: Extendible Hash Index"/></a><div class="content"><a class="title" href="/p/517dd8ea.html" title="Project#2: Extendible Hash Index">Project#2: Extendible Hash Index</a><time datetime="2023-10-30T13:56:01.000Z" title="Created 2023-10-30 21:56:01">2023-10-30</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/76b71367.html" title="Extendible Hash Table"><img src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/drain.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Extendible Hash Table"/></a><div class="content"><a class="title" href="/p/76b71367.html" title="Extendible Hash Table">Extendible Hash Table</a><time datetime="2023-10-29T13:42:15.000Z" title="Created 2023-10-29 21:42:15">2023-10-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/1c228cd6.html" title="Project#1: Buffer Pool"><img src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven13.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Project#1: Buffer Pool"/></a><div class="content"><a class="title" href="/p/1c228cd6.html" title="Project#1: Buffer Pool">Project#1: Buffer Pool</a><time datetime="2023-10-03T05:01:58.000Z" title="Created 2023-10-03 13:01:58">2023-10-03</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven2.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2021 - 2023 By zihao</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Hi, welcome to my <a href="https://zihao256.github.io/">Blog</a>!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="Toggle Between Traditional Chinese And Simplified Chinese">简</button><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="Scroll To Comments"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">Search</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  Loading the Database</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="Search for Posts" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script src="/js/search/local-search.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><script>function addGitalkSource () {
+  const ele = document.createElement('link')
+  ele.rel = 'stylesheet'
+  ele.href= 'https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.css'
+  document.getElementsByTagName('head')[0].appendChild(ele)
+}
+
+function loadGitalk () {
+  function initGitalk () {
+    var gitalk = new Gitalk(Object.assign({
+      clientID: '3b2ff3959cccdea73272',
+      clientSecret: 'ff54cd4f8d455c066e787ca2dc1684a21094e488',
+      repo: 'ZiHao256.github.io',
+      owner: 'ZiHao256',
+      admin: ['ZiHao256'],
+      id: '09a800e9586fc6d6c0d81343b99e9aeb',
+      updateCountCallback: commentCount
+    },null))
+
+    gitalk.render('gitalk-container')
+  }
+
+  if (typeof Gitalk === 'function') initGitalk()
+  else {
+    addGitalkSource()
+    getScript('https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.js').then(initGitalk)
+  }
+}
+
+function commentCount(n){
+  let isCommentCount = document.querySelector('#post-meta .gitalk-comment-count')
+  if (isCommentCount) {
+    isCommentCount.innerHTML= n
+  }
+}
+
+if ('Gitalk' === 'Gitalk' || !false) {
+  if (false) btf.loadComment(document.getElementById('gitalk-container'), loadGitalk)
+  else loadGitalk()
+} else {
+  function loadOtherComment () {
+    loadGitalk()
+  }
+}</script></div><script>window.addEventListener('load', () => {
+  const changeContent = (content) => {
+    if (content === '') return content
+
+    content = content.replace(/<img.*?src="(.*?)"?[^\>]+>/ig, '[image]') // replace image link
+    content = content.replace(/<a[^>]+?href=["']?([^"']+)["']?[^>]*>([^<]+)<\/a>/gi, '[link]') // replace url
+    content = content.replace(/<pre><code>.*?<\/pre>/gi, '[code]') // replace code
+    content = content.replace(/<[^>]+>/g,"") // remove html tag
+
+    if (content.length > 150) {
+      content = content.substring(0,150) + '...'
+    }
+    return content
+  }
+
+  const findTrueUrl = (array) => {
+    Promise.all(array.map(item =>
+      fetch(item.url).then(resp => resp.json()).then(data => {
+        const urlArray = data.body.match(/(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?/ig)
+        if (data.user.login === 'utterances-bot') {
+          return urlArray.pop()
+        } else {
+          return urlArray.shift()
+        }
+      })
+    )).then(res => {
+        array = array.map((i,index)=> {
+          return {
+            ...i,
+            url: res[index]
+          }
+        })
+
+        saveToLocal.set('github-newest-comments', JSON.stringify(array), 10/(60*24))
+        generateHtml(array)
+    });
+  }
+
+  const getComment = () => {
+    fetch('https://api.github.com/repos/ZiHao256/ZiHao256.github.io/issues/comments?sort=updated&direction=desc&per_page=6&page=1',{
+      "headers": {
+        Accept: 'application/vnd.github.v3.html+json'
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        const githubArray = data.map(item => {
+          return {
+            'avatar': item.user.avatar_url,
+            'content': changeContent(item.body_html),
+            'nick': item.user.login,
+            'url': item.issue_url,
+            'date': item.updated_at,
+            'githubUrl': item.html_url
+          }
+        })
+        findTrueUrl(githubArray)
+      }).catch(e => {
+        const $dom = document.querySelector('#card-newest-comments .aside-list')
+        $dom.innerHTML= "Unable to get the data, please make sure the settings are correct."
+      })
+  }
+
+  const generateHtml = array => {
+    let result = ''
+
+    if (array.length) {
+      for (let i = 0; i < array.length; i++) {
+        result += '<div class=\'aside-list-item\'>'
+
+        if (true) {
+          const name = 'src'
+          result += `<a href='${array[i].url}' class='thumbnail'><img ${name}='${array[i].avatar}' alt='${array[i].nick}'></a>`
+        }
+
+        result += `<div class='content'>
+        <a class='comment' href='${array[i].url}' title='${array[i].content}'>${array[i].content}</a>
+        <div class='name'><span>${array[i].nick} / </span><time datetime="${array[i].date}">${btf.diffDate(array[i].date, true)}</time></div>
+        </div></div>`
+      }
+    } else {
+      result += 'No Comment'
+    }
+
+    let $dom = document.querySelector('#card-newest-comments .aside-list')
+    $dom.innerHTML= result
+    window.lazyLoadInstance && window.lazyLoadInstance.update()
+    window.pjax && window.pjax.refresh($dom)
+  }
+
+  const newestCommentInit = () => {
+    if (document.querySelector('#card-newest-comments .aside-list')) {
+      const data = saveToLocal.get('github-newest-comments')
+      if (data) {
+        generateHtml(JSON.parse(data))
+      } else {
+        getComment()
+      }
+    }
+  }
+
+  newestCommentInit()
+  document.addEventListener('pjax:complete', newestCommentInit)
+})</script><div class="aplayer no-destroy" data-id="6738460302" data-server="netease" data-type="playlist" data-fixed="true" data-autoplay="true"> </div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-heart.min.js" async="async" mobile="true"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener scroll 
+  window.tocScrollFn && window.removeEventListener('scroll', window.tocScrollFn)
+  window.scrollCollect && window.removeEventListener('scroll', scrollCollect)
+
+  typeof preloader === 'object' && preloader.initLoading()
+  document.getElementById('rightside').style.cssText = "opacity: ''; transform: ''"
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

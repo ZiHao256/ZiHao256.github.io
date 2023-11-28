@@ -25,6 +25,8 @@ date: 2023-11-28 17:46:15
 
 ---
 
+[toc]
+
 
 
 # Book Chapter Mapping
@@ -56,7 +58,7 @@ date: 2023-11-28 17:46:15
 | conversions     | rustdoc          |
 
 ---
-# Intro
+# 1.Intro
 
 Rust uses the `print!` and `println!` macros to print text to the console.
 
@@ -79,7 +81,7 @@ Rust uses the `print!` and `println!` macros to print text to the console.
 
 ---
 
-# Variables
+# 2. Variables
 
 In Rust, variables are immutable by default.
 When a variable is immutable, once a value is bound to a name, you can’t change that value.
@@ -109,7 +111,7 @@ shadow
 
 ---
 
-# Functions
+# 3.Functions
 
 Here, you'll learn how to write functions and how the Rust compiler can help you debug errors even
 in more complex code.
@@ -148,7 +150,7 @@ in more complex code.
 
 ---
 
-# If
+# 4.If
 
 `if`, the most basic (but still surprisingly versatile!) type of control flow, is what you'll learn here.
 
@@ -188,7 +190,7 @@ in more complex code.
 
 ---
 
-# Primitive Types
+# 5.Primitive Types
 
 Rust has a couple of basic types that are directly implemented into the
 compiler. In this section, we'll go through the most important ones.
@@ -250,7 +252,7 @@ compiler. In this section, we'll go through the most important ones.
 
 ---
 
-# Vectors
+# 6.Vectors
 
 Vectors are one of the most-used Rust data structures. In other programming
 languages, they'd simply be called Arrays, but since Rust operates on a
@@ -318,7 +320,7 @@ vector中元素的引用规则：
 
 ---
 
-# Move Semantics
+# 7.Move Semantics
 
 These exercises are adapted from [pnkfelix](https://github.com/pnkfelix)'s [Rust Tutorial](https://pnkfelix.github.io/rust-examples-icfp2014/) -- Thank you Felix!!!
 
@@ -414,7 +416,7 @@ For this section, the book links are especially important.
 
 ---
 
-# Structs
+# 8.Structs
 
 Rust has three struct types: a classic C struct, a tuple struct, and a unit struct.
 
@@ -487,7 +489,7 @@ Rust has three struct types: a classic C struct, a tuple struct, and a unit stru
 
 ---
 
-# Enums
+# 9.Enums
 
 Rust allows you to define types called "enums" which enumerate possible values.
 Enums are a feature in many languages, but their capabilities differ in each language. Rust’s enums are most similar to algebraic data types in functional languages, such as F#, OCaml, and Haskell.
@@ -571,7 +573,7 @@ Useful in combination with enums is Rust's "pattern matching" facility, which ma
 
 ---
 
-# Strings
+# 10.Strings
 
 Rust has two string types, a string slice (`&str`) and an owned string (`String`).
 We're not going to dictate when you should use which one, but we'll show you how
@@ -669,7 +671,7 @@ Rust不允许`[]`来索引单个字符
 
 ---
 
-# Modules
+# 11 Modules
 
 In this section we'll give you an introduction to Rust's module system.
 
@@ -780,7 +782,7 @@ use`创建一个路径的`shortcut
 
 ---
 
-# Hashmaps
+# 12 Hashmaps
 
 A *hash map* allows you to associate a value with a particular key.
 You may also know this by the names [*unordered map* in C++](https://en.cppreference.com/w/cpp/container/unordered_map),
@@ -807,7 +809,7 @@ talking about Vecs.
 
 ---
 
-# Options
+# 13 Options
 
 Type Option represents an optional value: every Option is either Some and contains a value, or None, and does not.
 Option types are very common in Rust code, as they have a number of uses:
@@ -863,7 +865,7 @@ Result<T, E>{
 
 ---
 
-# Error handling
+# 14 Error handling
 
 Most errors aren’t serious enough to require the program to stop entirely.
 Sometimes, when a function fails, it’s for a reason that you can easily interpret and respond to.
@@ -962,7 +964,7 @@ enum Result<T, E> {
 
 ---
 
-# Generics
+# 15 Generics
 
 Generics is the topic of generalizing types and functionalities to broader cases.
 This is extremely useful for reducing code duplication in many ways, but can call for rather involving syntax.
@@ -1013,7 +1015,7 @@ The simplest and most common use of generics is for type parameters.
 
 ---
 
-# Traits
+# 16 Traits
 
 A trait is a collection of methods.
 
@@ -1097,7 +1099,7 @@ where
 
 ---
 
-# Lifetimes
+# 17 Lifetimes
 
 Lifetimes tell the compiler how to check whether references live long
 enough to be valid in any given situation. For example lifetimes say
@@ -1166,7 +1168,7 @@ fn longest<'a>(x: &'a str, y: &'a str) -> &'a str
 
 ---
 
-# Tests
+# 18 Tests
 
 Going out of order from the book to cover tests -- many of the following exercises will ask you to make tests pass!
 
@@ -1185,7 +1187,7 @@ Going out of order from the book to cover tests -- many of the following exercis
 
 ---
 
-# Iterators
+# 19 Iterators
 
 This section will teach you about Iterators.
 
@@ -1229,7 +1231,7 @@ This section will teach you about Iterators.
 
 ---
 
-# Smart Pointers
+# 20 Smart Pointers
 
 In Rust, smart pointers are variables that contain an address in memory and reference some other data, but they also have additional metadata and capabilities.
 Smart pointers in Rust often own the data they point to, while references only borrow data.
@@ -1415,7 +1417,7 @@ Here is a recap of the reasons to choose Box<T>, Rc<T>, or RefCell<T>:
 
 ---
 
-# Threads
+# 21 Threads
 
 In most current operating systems, an executed program's code is run in a process, and the operating system manages multiple processes at once.
 Within your program, you can also have independent parts that run simultaneously. The features that run these independent parts are called threads.
@@ -1439,7 +1441,7 @@ Within your program, you can also have independent parts that run simultaneously
 
 ---
 
-# Macros
+# 22 Macros
 
 Rust's macro system is very powerful, but also kind of difficult to wrap your
 head around. We're not going to teach you how to write your own fully-featured
@@ -1464,7 +1466,7 @@ of exercises to Rustlings, but is all about learning to write Macros.
 
 ---
 
-# Clippy
+# 23 Clippy
 
 The Clippy tool is a collection of lints to analyze your code so you can catch common mistakes and improve your Rust code.
 
@@ -1477,7 +1479,7 @@ If not you can install it manually via `rustup component add clippy`.
 
 ---
 
-# Type conversions
+# 24 Type conversions
 
 Rust offers a multitude of ways to convert a value of a given type into another type.
 

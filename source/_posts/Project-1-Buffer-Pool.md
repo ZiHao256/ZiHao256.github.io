@@ -21,6 +21,8 @@ date: 2023-10-03 13:01:58
 
 
 
+[ZiHao's Blog](https://zihao256.github.io/)
+
 ~~由于`gradescope`中对`non-cmu students`仅开放了`Project#0`，本文方法仅通过了本地测试，极有可能有错误（并发访问）~~
 
 目前通过了`GradeScope`所有测试并且拿到了`100.0/100.0`，但是性能较差（与`Leaderboard`上第一名有十倍的性能差距)，打算在下一篇文章记录一下对`BPM`的性能进行优化，例如本文中提到的`DiskScheduler`创建的对`Request`的处理`Thread`实际上是串行的，后续再保证顺序正确的情况下对其进行适当的并行处理。
@@ -71,7 +73,7 @@ date: 2023-10-03 13:01:58
 
 ## Tests
 
-![lru_k_replacer_test result](https://cdn.jsdelivr.net/gh/ZiHao256/Gallery@master/uPic/2023/10/image-20231003135918493.png)
+![lru_k_replacer_test result](../../../../Downloads/image-20231003135918493.png)
 
 # Task#2 - Disk Scheduler
 
@@ -114,7 +116,7 @@ date: 2023-10-03 13:01:58
 
 ## Test
 
-![disk_scheduler_test result](https://cdn.jsdelivr.net/gh/ZiHao256/Gallery@master/uPic/2023/10/image-20231003141429096.png)
+![disk_scheduler_test result](../../../../Downloads/image-20231003141429096.png)
 
 # Task#3 - Buffer Pool Manager
 
@@ -138,7 +140,6 @@ date: 2023-10-03 13:01:58
           
         - page_data：是Memory buffer pool中存储Disk Page所在frame的地址
         
-
     -   `ReadPage(page_id_t page_id, char *page_data)`
         
         - page_id: Disk Page的id
@@ -342,7 +343,7 @@ date: 2023-10-03 13:01:58
 
 - `LRU Replacer`
   - 并发访问问题
-    
+  
 - `Disk Scheduler:`没问题
   
 - `Buffer Pool Manager:`问题很多
@@ -731,7 +732,7 @@ one by one:
                         21: 125SetEvictable: invoke 845 1
                         21:  curr_size:1000
                         ```
-                            
+                        
                         - \- [❎]尝试 `reproduce test`
                           
                             - 复现测试场景居然是没问题的，，，，很困惑
@@ -755,17 +756,17 @@ one by one:
 # 个人认为可以进行的优化
 
 1. \- [ ] 当前`DiskScheduler`中`BackgroundWorker`中创建的线程是串行，优化需要在确保顺序正确的情况下，使之适当并行执行
-    
+   
 2. \- [ ] 并发问题，虽然在合适的地方加了锁，但是`latch_`持有的范围可以缩小
-    
+   
     - \- [ ] 当前`DiskScheduler`中`BackgroundWorker`中创建的线程是串行，需要在确保顺序正确的情况下，使之适当并行执行
-        
+    
 3. \- [ ] 改进递归锁/scope_lock开销
-    
+   
 4. \- [ ] Mutiple buffer pools: 创建多个Buffer Pools，并使用Hashing进行控制用哪个buffer pool
-    
+   
 5. \- [ ] LRU List：按照k backward distance的顺序将pages串联起来
-    
+   
 6. \- [ ] Buffer Pool Pass：但是测试的请求信息中似乎没有标注是什么operator
 
 具体见下一篇文章

@@ -1,5 +1,5 @@
 ---
-title: Project#2: Extendible Hash Index
+title: 'Project#2: Extendible Hash Index'
 toc: true
 categories:
   - 学无止境
@@ -16,11 +16,9 @@ date: 2023-10-30 21:56:01
 
 **撰写本文的目的**：记录本人在不参考其他任何形式的解决方法（思路/源码）、仅靠课程提供的资源（课本/参考资料）和`Discord`中`high level`的讨论的情况下，独立完成该课程的过程。
 
-
-
 欢迎大家和我讨论学习中所遇到的问题。
 
-
+[ZiHao's Blog](https://zihao256.github.io/)
 
 由于`gradescope`中对`non-cmu students`还未开放`Project#2`，本文方法仅通过了本地测试，极有可能有错误（并发访问）
 
@@ -144,7 +142,7 @@ date: 2023-10-30 21:56:01
 
 # Task #2-Extendible Hash Table Pages
 
-![img](https://15445.courses.cs.cmu.edu/fall2023/project2/img/extendible-htable-structure.svg)
+![3-level Extendible Hash Table](https://cdn.jsdelivr.net/gh/ZiHao256/Gallery@master/uPic/2023/10/image-20231031193833346.png)
 
 这里主要实现三层可扩展哈希表的三个部分，如上图所示：
 

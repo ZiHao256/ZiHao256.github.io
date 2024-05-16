@@ -20,8 +20,6 @@ date: 2023-10-30 21:56:01
 
 [ZiHao's Blog](https://zihao256.github.io/)
 
-~~由于`gradescope`中对`non-cmu students`还未开放`Project#2`，本文方法仅通过了本地测试，极有可能有错误（并发访问）~~
-
 {% endnote %}
 
 **Project #2: Extendible Hash Index**

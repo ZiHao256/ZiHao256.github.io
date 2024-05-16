@@ -6,7 +6,7 @@
   <link href="https://zihao256.github.io/atom.xml" rel="self"/>
   
   <link href="https://zihao256.github.io/"/>
-  <updated>2023-11-28T11:03:12.329Z</updated>
+  <updated>2024-05-16T01:15:28.720Z</updated>
   <id>https://zihao256.github.io/</id>
   
   <author>
@@ -15,6 +15,68 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>PROJECT #4: CONCURRENCY CONTROL</title>
+    <link href="https://zihao256.github.io/p/10f62ef4.html"/>
+    <id>https://zihao256.github.io/p/10f62ef4.html</id>
+    <published>2024-05-16T01:01:13.000Z</published>
+    <updated>2024-05-16T01:15:28.720Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;div class=&quot;note warning simple&quot;&gt;&lt;p&gt;&lt;strong&gt;撰写本文的目的&lt;/strong&gt;：记录本人在不参考其他任何形式的解决方法（思路/源码）、仅靠课程提供的资源（课本/参考资料）和&lt;code&gt;Discord&lt;/code&gt;中&lt;code&gt;high l</summary>
+      
+    
+    
+    
+    <category term="学无止境" scheme="https://zihao256.github.io/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/"/>
+    
+    <category term="CMU15-445(2023FALL)" scheme="https://zihao256.github.io/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/CMU15-445-2023FALL/"/>
+    
+    
+    <category term="Database System" scheme="https://zihao256.github.io/tags/Database-System/"/>
+    
+    <category term="C++" scheme="https://zihao256.github.io/tags/C/"/>
+    
+    <category term="MVCC" scheme="https://zihao256.github.io/tags/MVCC/"/>
+    
+    <category term="Query Execution" scheme="https://zihao256.github.io/tags/Query-Execution/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Project #3: Query Execution</title>
+    <link href="https://zihao256.github.io/p/c186cbfd.html"/>
+    <id>https://zihao256.github.io/p/c186cbfd.html</id>
+    <published>2024-05-16T00:59:16.000Z</published>
+    <updated>2024-05-16T01:13:49.198Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;div class=&quot;note warning simple&quot;&gt;&lt;p&gt;&lt;strong&gt;撰写本文的目的&lt;/strong&gt;：记录本人在不参考其他任何形式的解决方法（思路/源码）、仅靠课程提供的资源（课本/参考资料）和&lt;code&gt;Discord&lt;/code&gt;中&lt;code&gt;high l</summary>
+      
+    
+    
+    
+    <category term="学无止境" scheme="https://zihao256.github.io/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/"/>
+    
+    <category term="CMU15-445(2023FALL)" scheme="https://zihao256.github.io/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/CMU15-445-2023FALL/"/>
+    
+    
+    <category term="Database System" scheme="https://zihao256.github.io/tags/Database-System/"/>
+    
+    <category term="C++" scheme="https://zihao256.github.io/tags/C/"/>
+    
+    <category term="MVCC" scheme="https://zihao256.github.io/tags/MVCC/"/>
+    
+    <category term="Query Execution" scheme="https://zihao256.github.io/tags/Query-Execution/"/>
+    
+    <category term="Query Optimization" scheme="https://zihao256.github.io/tags/Query-Optimization/"/>
+    
+  </entry>
   
   <entry>
     <title>rustlings</title>
@@ -76,7 +138,7 @@
     <link href="https://zihao256.github.io/p/517dd8ea.html"/>
     <id>https://zihao256.github.io/p/517dd8ea.html</id>
     <published>2023-10-30T13:56:01.000Z</published>
-    <updated>2023-12-11T06:40:42.076Z</updated>
+    <updated>2024-05-16T01:00:31.479Z</updated>
     
     
       
@@ -515,60 +577,6 @@
     <category term="Blog" scheme="https://zihao256.github.io/tags/Blog/"/>
     
     <category term="Bug" scheme="https://zihao256.github.io/tags/Bug/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>增加评论功能</title>
-    <link href="https://zihao256.github.io/p/4ec99e36.html"/>
-    <id>https://zihao256.github.io/p/4ec99e36.html</id>
-    <published>2023-02-18T14:52:34.000Z</published>
-    <updated>2023-10-03T05:07:27.575Z</updated>
-    
-    
-      
-      
-    <summary type="html">&lt;p&gt;Butterfly 主题已经集成了 gitalk 功能，只需要在主题配置文件中对其启用和配置即可：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;在 Github 设置中创建一个 OAuth App，并将得到的Client ID和Secret填入主题配置文件相应位置即可；&lt;/li&gt;
-&lt;li&gt;第</summary>
-      
-    
-    
-    
-    <category term="学无止境" scheme="https://zihao256.github.io/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/"/>
-    
-    <category term="博客更新" scheme="https://zihao256.github.io/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/%E5%8D%9A%E5%AE%A2%E6%9B%B4%E6%96%B0/"/>
-    
-    
-    <category term="Blog" scheme="https://zihao256.github.io/tags/Blog/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>将Hexo博客部署到Github</title>
-    <link href="https://zihao256.github.io/p/82975e94.html"/>
-    <id>https://zihao256.github.io/p/82975e94.html</id>
-    <published>2023-02-18T14:26:11.000Z</published>
-    <updated>2023-10-03T05:07:27.575Z</updated>
-    
-    
-      
-      
-    <summary type="html">&lt;p&gt;其实一开始就将博客部署到 Github 了，但是没有搞清楚为什么创建一个 hexo 分支，这次遇到了源代码合并问题，才使得我真正明白创建分支的巧妙。&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;在 Github 创建一个公开仓库&lt;/li&gt;
-&lt;li&gt;创建一个 &lt;code&gt;hexo&lt;/code&gt;</summary>
-      
-    
-    
-    
-    <category term="学无止境" scheme="https://zihao256.github.io/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/"/>
-    
-    <category term="博客更新" scheme="https://zihao256.github.io/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/%E5%8D%9A%E5%AE%A2%E6%9B%B4%E6%96%B0/"/>
-    
-    
-    <category term="Blog" scheme="https://zihao256.github.io/tags/Blog/"/>
     
   </entry>
   

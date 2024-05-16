@@ -1,5 +1,5 @@
 ---
-title: PROJECT
+title: 'PROJECT #4: CONCURRENCY CONTROL'
 toc: true
 categories:
   - 学无止境
@@ -9,6 +9,7 @@ tags:
   - C++
   - MVCC
   - Query Execution
+abbrlink: 10f62ef4
 date: 2024-05-16 09:01:13
 ---
 

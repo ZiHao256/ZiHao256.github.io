@@ -10,6 +10,7 @@ tags:
   - Query Execution
   - Query Optimization
   - MVCC
+abbrlink: c186cbfd
 date: 2024-05-16 08:59:16
 ---
 

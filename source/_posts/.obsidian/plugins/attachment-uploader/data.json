@@ -1,0 +1,7 @@
+{
+  "uploadService": "uPic",
+  "uploadCommand": "/Applications/uPic.app/Contents/MacOS/uPic -o url -u %s",
+  "uploadFileFormat": ".png\n.jpg\n.jpeg\n.gif\n.webp\n.ico\n.svg\n.bmp",
+  "testFilePath": "/Users/zihao/Downloads/Snipaste_2024-06-15_12-02-19.jpg",
+  "isDeleteSourceFile": false
+}

@@ -1,0 +1,186 @@
+{
+  "main": {
+    "id": "ee2b81110613b084",
+    "type": "split",
+    "children": [
+      {
+        "id": "98b79e770967924d",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "d33c6750de0af2b9",
+            "type": "leaf",
+            "state": {
+              "type": "empty",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "99e829c5e3bc00eb",
+    "type": "mobile-drawer",
+    "children": [
+      {
+        "id": "00a2536a2a21fc83",
+        "type": "leaf",
+        "state": {
+          "type": "file-explorer",
+          "state": {
+            "sortOrder": "alphabetical"
+          }
+        }
+      },
+      {
+        "id": "d73e9b182a65bd4e",
+        "type": "leaf",
+        "state": {
+          "type": "search",
+          "state": {
+            "query": "",
+            "matchingCase": false,
+            "explainSearch": false,
+            "collapseAll": false,
+            "extraContext": false,
+            "sortOrder": "alphabetical"
+          }
+        }
+      },
+      {
+        "id": "ea884113f4f6c4c9",
+        "type": "leaf",
+        "state": {
+          "type": "tag",
+          "state": {
+            "sortOrder": "frequency",
+            "useHierarchy": true
+          }
+        }
+      },
+      {
+        "id": "af5874b363a81099",
+        "type": "leaf",
+        "state": {
+          "type": "bookmarks",
+          "state": {}
+        }
+      },
+      {
+        "id": "5406e61dd7461c3d",
+        "type": "leaf",
+        "state": {
+          "type": "all-properties",
+          "state": {
+            "sortOrder": "frequency",
+            "showSearch": false,
+            "searchQuery": ""
+          }
+        }
+      }
+    ],
+    "currentTab": 0
+  },
+  "right": {
+    "id": "4fe94422563f6b05",
+    "type": "mobile-drawer",
+    "children": [
+      {
+        "id": "7dd8251addf28d50",
+        "type": "leaf",
+        "state": {
+          "type": "backlink",
+          "state": {
+            "collapseAll": false,
+            "extraContext": false,
+            "sortOrder": "alphabetical",
+            "showSearch": false,
+            "searchQuery": "",
+            "backlinkCollapsed": false,
+            "unlinkedCollapsed": true
+          }
+        }
+      },
+      {
+        "id": "95599125f7cdd6fb",
+        "type": "leaf",
+        "state": {
+          "type": "outgoing-link",
+          "state": {
+            "linksCollapsed": false,
+            "unlinkedCollapsed": true
+          }
+        }
+      },
+      {
+        "id": "bc4891917c4aeae4",
+        "type": "leaf",
+        "state": {
+          "type": "outline",
+          "state": {}
+        }
+      }
+    ],
+    "currentTab": 0
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "markdown-importer:打开 Markdown 格式转换器": false,
+      "switcher:打开快速切换": false,
+      "graph:查看关系图谱": false,
+      "canvas:新建白板": false,
+      "command-palette:打开命令面板": false,
+      "remotely-save:Remotely Save": false,
+      "obsidian-excalidraw-plugin:新建绘图文件": false
+    }
+  },
+  "active": "00a2536a2a21fc83",
+  "lastOpenFiles": [
+    "test.md",
+    "Obsidian/test.jpg",
+    "Obsidian/2024-07-17 19.52.56.jpg",
+    "Excalidraw/Drawing 2024-07-18 10.35.52.excalidraw.md",
+    "Excalidraw/Drawing 2024-07-18 10.35.52.excalidraw.png",
+    "清-说.md",
+    "Excalidraw",
+    "Excalidraw/Drawing 2024-07-18 10.27.42.excalidraw.md",
+    "未命名.canvas",
+    "remote-savely-test.md",
+    "Paper-Reading-Plan-Stitch-Harnessing-the-Best-of-Many-Plans.md",
+    "SQL.md",
+    "Git.md",
+    "增加图库.md",
+    "lab1.md",
+    "8 函数.md",
+    "Lab0.md",
+    "6 切片.md",
+    "13 包.md",
+    "7 map.md",
+    "3 运算符.md",
+    "15 反射.md",
+    "16 并发.md",
+    "14 接口.md",
+    "11 指针.md",
+    "增加评论功能.md",
+    "Zotero.md",
+    "9 函数进阶.md",
+    "4 流程控制.md",
+    "12 结构体.md",
+    "Obsidian/hello.png",
+    "Obsidian和Typora之间的权衡/正确使用.png",
+    "专题一内核编译/image-20210512231039151.png",
+    "专题一内核编译/image-20210514211226158.png",
+    "专题一内核编译/image-20210512224054681.png",
+    "专题一内核编译/image-20210512161354142.png",
+    "专题一内核编译/image-20210511211233011.png",
+    "专题一内核编译",
+    "Obsidian",
+    "专题二系统调用.assets",
+    "专题一内核编译.assets",
+    "专题四设备驱动.assets",
+    "Obsidian和Typora之间的权衡",
+    "VS2019-C++-MySQL.assets"
+  ]
+}

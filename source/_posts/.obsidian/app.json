@@ -3,10 +3,11 @@
   "livePreview": true,
   "promptDelete": false,
   "newLinkFormat": "relative",
-  "attachmentFolderPath": "./Obsidian",
+  "attachmentFolderPath": "./attachments",
   "useMarkdownLinks": true,
   "alwaysUpdateLinks": true,
   "showFrontmatter": true,
   "defaultViewMode": "preview",
-  "showLineNumber": true
+  "showLineNumber": true,
+  "trashOption": "none"
 }

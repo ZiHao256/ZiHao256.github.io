@@ -6,7 +6,8 @@ categories:
   - 学无止境
   - MIT6.824
 tags:
-  - Database System
+  - Database
+  - System
   - Distributed
 abbrlink: c9d8503f
 date: 2022-07-07 19:20:29

@@ -1,0 +1,231 @@
+<meta charset="UTF-8">
+
+<div class="search-container">
+    <h1>CS多渠道搜索</h1>
+    <div class="field-buttons">
+        <button id="web-btn" class="field-btn" onclick="changeField('web')">网页</button>
+        <button id="academic-btn" class="field-btn" onclick="changeField('academic')">学术</button>
+    </div>
+    <div class="search-bar">
+        <input id="search-input" type="text" placeholder="请输入搜索内容" />
+    </div>
+    <!-- 网页搜索引擎 -->
+    <div id="web-engines" class="engine-buttons">
+        <button class='engine-btn' onclick="performSearch('baidu')">Baidu</button>
+        <button class='engine-btn' onclick="performSearch('bing')">Bing</button>
+        <button class='engine-btn' onclick="performSearch('google')">Google</button>
+        <button class='engine-btn' onclick="performSearch('yan')">Yan</button>
+    </div>
+    <!-- 学术搜索引擎 -->
+    <div id="academic-engines" class="engine-buttons" style="display:none;">
+        <button class='engine-btn' onclick="performSearch('google-scholar')">Google</button>
+        <button class='engine-btn' onclick="performSearch('acm-dl')">ACM DL</button>
+        <button class='engine-btn' onclick="performSearch('semantic-scholar')">Semantic Scholar</button>
+        <button class='engine-btn' onclick="performSearch('connected-papers')">Connected Papers</button>
+        <button class='engine-btn' onclick="performSearch('dblp')">DBLP</button>
+        <button class='engine-btn' onclick="performSearch('arxiv')">arXiv</button>
+    </div>
+</div>
+
+<!-- 其他版块 -->
+<div class="card-container">
+    <div class="card">
+        <h3>学术资源</h3>
+        <div class="links">
+            <a href="https://dblp.org/db/conf/sigmod/index.html">SIGMOD</a>
+            <a href="https://dblp.org/db/journals/pvldb/index.html">PVLDB</a>
+            <a href="https://dblp.org/db/journals/vldb/index.html">VLDBJ</a>
+            <a href="https://dblp.org/db/conf/icde/index.html">ICDE</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    function changeField(field) {
+        document.getElementById('web-btn').style.backgroundColor = '';
+        document.getElementById('academic-btn').style.backgroundColor = '';
+
+        if (field === 'web') {
+            document.getElementById('web-engines').style.display = 'block';
+            document.getElementById('academic-engines').style.display = 'none';
+            document.getElementById('web-btn').style.backgroundColor = '#add8e6';
+        } else if (field === 'academic') {
+            document.getElementById('web-engines').style.display = 'none';
+            document.getElementById('academic-engines').style.display = 'block';
+            document.getElementById('academic-btn').style.backgroundColor = '#add8e6';
+        }
+    }
+
+    function performSearch(engine) {
+        const query = document.getElementById('search-input').value;
+        if (!query) {
+            return;
+        }
+
+        let searchUrl = '';
+
+        switch (engine) {
+            case 'baidu':
+                searchUrl = `https://www.baidu.com/s?wd=${query}`;
+                break;
+            case 'bing':
+                searchUrl = `https://www.bing.com/search?q=${query}`;
+                break;
+            case 'google':
+                searchUrl = `https://www.google.com/search?q=${query}`;
+                break;
+            case 'yan':
+                searchUrl = `https://www.yandex.com/search/?text=${query}`;
+                break;
+            case 'google-scholar':
+                searchUrl = `https://scholar.google.com.hk/scholar?q=${query}`;
+                break;
+            case 'acm-dl':
+                searchUrl = `https://dl.acm.org/action/doSearch?AllField=${query}`;
+                break;
+            case 'semantic-scholar':
+                searchUrl = `https://www.semanticscholar.org/search?q=${query}&sort=relevance`;
+                break;
+            case 'connected-papers':
+                searchUrl = `https://www.connectedpapers.com/search?q=${query}`;
+                break;
+            case 'dblp':
+                searchUrl = `https://dblp.org/search?q=${query}`;
+                break;
+            case 'arxiv':
+                searchUrl = `https://arxiv.org/search/?query=${query}`;
+                break;
+
+            default:
+                alert('未知搜索引擎');
+                return;
+        }
+
+        window.open(searchUrl, '_blank');
+    }
+</script>
+
+<style>
+    body {
+        background-color: #101010;
+        color: #e0e0e0;
+        font-family: 'Helvetica Neue', Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+    }
+
+    .search-container {
+        width: 90%;
+        padding: 20px;
+        background-color: #202020;
+        border-radius: 20px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        margin-top: 30px;
+        margin-bottom: 30px;
+        text-align: center;
+    }
+
+    .card-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+    }
+
+    .card {
+        width: 300px;
+        background-color: #202020;
+        padding: 20px;
+        border-radius: 15px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        text-align: center;
+    }
+
+    h1 {
+        color: #ffeb3b;
+        font-size: 2.5em;
+        margin-bottom: 30px;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        text-align: center;
+    }
+
+    h3 {
+        color: #ffeb3b;
+        font-size: 1.5em;
+        margin-bottom: 10px;
+        text-align: center;
+    }
+
+    .field-buttons {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 30px;
+    }
+
+    .search-bar {
+        display: flex;
+        justify-content: center;
+    }
+
+    #search-input {
+        padding: 12px 20px;
+        width: 400px;
+        font-size: 18px;
+        border-radius: 30px;
+        border: none;
+        background-color: #333;
+        color: #fff;
+        outline: none;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+
+    .engine-buttons {
+        display: flex;
+        justify-content: center;
+        margin: 20px 0;
+    }
+
+    button {
+        padding: 12px 25px;
+        font-size: 16px;
+        border: none;
+        border-radius: 25px;
+        cursor: pointer;
+        margin: 10px;
+        transition: all 0.3s ease;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+        background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+        color: white;
+    }
+
+    button:hover {
+        transform: translateY(-2px);
+        background: linear-gradient(135deg, #0056b3 0%, #004494 100%);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .links {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .links a {
+        margin: 5px;
+        padding: 10px;
+        background-color: #303030;
+        border-radius: 8px;
+        text-decoration: none;
+        color: #fff;
+        transition: background-color 0.3s ease;
+    }
+
+    .links a:hover {
+        background-color: #505050;
+    }
+</style>

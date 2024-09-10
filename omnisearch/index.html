@@ -14,11 +14,11 @@
         <button class='engine-btn' onclick="performSearch('baidu')">Baidu</button>
         <button class='engine-btn' onclick="performSearch('bing')">Bing</button>
         <button class='engine-btn' onclick="performSearch('google')">Google</button>
-        <button class='engine-btn' onclick="performSearch('yan')">Yan</button>
     </div>
     <!-- 学术搜索引擎 -->
     <div id="academic-engines" class="engine-buttons" style="display:none;">
         <button class='engine-btn' onclick="performSearch('google-scholar')">Google</button>
+        <button class='engine-btn' onclick="performSearch('cnki')">CNKI</button>
         <button class='engine-btn' onclick="performSearch('acm-dl')">ACM DL</button>
         <button class='engine-btn' onclick="performSearch('semantic-scholar')">Semantic Scholar</button>
         <button class='engine-btn' onclick="performSearch('connected-papers')">Connected Papers</button>
@@ -78,6 +78,9 @@
                 break;
             case 'google-scholar':
                 searchUrl = `https://scholar.google.com.hk/scholar?q=${query}`;
+                break;
+            case 'cnki':
+                searchUrl = `https://kns.cnki.net/kns8s/defaultresult/index?kw=${query}`;
                 break;
             case 'acm-dl':
                 searchUrl = `https://dl.acm.org/action/doSearch?AllField=${query}`;

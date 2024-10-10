@@ -40,6 +40,7 @@
 </div> -->
 
 <script>
+    let currentField = 'web'; // 默认字段
     function changeField(field) {
         document.getElementById('web-btn').style.backgroundColor = '';
         document.getElementById('academic-btn').style.backgroundColor = '';
@@ -48,11 +49,14 @@
             document.getElementById('web-engines').style.display = 'block';
             document.getElementById('academic-engines').style.display = 'none';
             document.getElementById('web-btn').style.backgroundColor = '#add8e6';
+            currentField = 'web';
         } else if (field === 'academic') {
             document.getElementById('web-engines').style.display = 'none';
             document.getElementById('academic-engines').style.display = 'block';
             document.getElementById('academic-btn').style.backgroundColor = '#add8e6';
+            currentField = 'academic';
         }
+
     }
 
     function performSearch(engine) {
@@ -105,6 +109,36 @@
 
         window.open(searchUrl, '_blank');
     }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchInput = document.getElementById('search-input');
+
+        // 添加键盘事件监听器
+        searchInput.addEventListener('keypress', function(event) {
+            // 检查是否按下了回车键
+            if (event.key === 'Enter') {
+                event.preventDefault(); // 阻止默认的表单提交行为
+                
+                // 获取输入的搜索词
+                const searchTerm = searchInput.value.trim();
+                
+                console.log('当前搜索字段:', currentField);
+                console.log('搜索词:', searchTerm);
+
+                if (searchTerm) {
+                    let searchUrl;
+                    if (currentField === 'web') {
+                        // 网页搜索使用谷歌
+                        searchUrl = `https://www.google.com/search?q=${encodeURIComponent(searchTerm)}`;
+                    } else if (currentField === 'academic') {
+                        // 学术搜索使用Google Scholar
+                        searchUrl = `https://www.semanticscholar.org/search?q=${encodeURIComponent(searchTerm)}&sort=relevance`;
+                    }
+                    window.open(searchUrl, '_blank');
+                }
+            }
+        });
+    });
 </script>
 
 <style>

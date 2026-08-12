@@ -1,2 +1,4 @@
-git commit -m "Remove secret information"
-hexo s
+#!/usr/bin/env sh
+set -eu
+
+npm run server

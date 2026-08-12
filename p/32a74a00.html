@@ -1,35 +1,181 @@
-<!DOCTYPE html><html lang="zh-Hans" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>Lab 1 系统软件启动过程 | ZiHao's Blog</title><meta name="keywords" content="操作系统"><meta name="author" content="zihao"><meta name="copyright" content="zihao"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Lab 1 系统软件启动过程参考博客 参考博客 [toc] 1 实验目的 需要某种机制加载并运行操作系统 更加简单的软件——Bootloader 能完成切换到 x86 保护模式并显示字符 为启动 ucore   整个 Bootloader 执行代码小于512个字节，能放到硬盘的主引导扇区  分析和实现 Bootloader和ucore  计算机原理 CPU 的编址与寻址：基于分段机制的内存管理">
+<!DOCTYPE html><html lang="zh-Hans" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Lab 1 系统软件启动过程 | ZiHao's Blog</title><meta name="author" content="zihao"><meta name="copyright" content="zihao"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Lab 1 系统软件启动过程参考博客 参考博客 [toc] 1 实验目的 需要某种机制加载并运行操作系统 更加简单的软件——Bootloader 能完成切换到 x86 保护模式并显示字符 为启动 ucore   整个 Bootloader 执行代码小于512个字节，能放到硬盘的主引导扇区  分析和实现 Bootloader和ucore  计算机原理 CPU 的编址与寻址：基于分段机制的内存管理">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Lab 1 系统软件启动过程">
 <meta property="og:url" content="https://zihao256.github.io/p/32a74a00.html">
 <meta property="og:site_name" content="ZiHao&#39;s Blog">
 <meta property="og:description" content="Lab 1 系统软件启动过程参考博客 参考博客 [toc] 1 实验目的 需要某种机制加载并运行操作系统 更加简单的软件——Bootloader 能完成切换到 x86 保护模式并显示字符 为启动 ucore   整个 Bootloader 执行代码小于512个字节，能放到硬盘的主引导扇区  分析和实现 Bootloader和ucore  计算机原理 CPU 的编址与寻址：基于分段机制的内存管理">
 <meta property="og:locale">
-<meta property="og:image" content="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven13.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/pathway-middle-green-leafed-trees-with-sun-shining-through-branches.jpg">
 <meta property="article:published_time" content="2021-04-04T16:00:00.000Z">
-<meta property="article:modified_time" content="2023-10-03T05:07:27.765Z">
+<meta property="article:modified_time" content="2026-08-12T03:20:22.051Z">
 <meta property="article:author" content="zihao">
 <meta property="article:tag" content="操作系统">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven13.jpg"><link rel="shortcut icon" href="https://github.com/ZiHao256/ZiHao256.github.io/blob/hexo/images/stitch.JPG?raw=true"><link rel="canonical" href="https://zihao256.github.io/p/32a74a00"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+<meta name="twitter:image" content="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/pathway-middle-green-leafed-trees-with-sun-shining-through-branches.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Lab 1 系统软件启动过程",
+  "url": "https://zihao256.github.io/p/32a74a00.html",
+  "image": "https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/pathway-middle-green-leafed-trees-with-sun-shining-through-branches.jpg",
+  "datePublished": "2021-04-04T16:00:00.000Z",
+  "dateModified": "2026-08-12T03:20:22.051Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "zihao",
+      "url": "https://zihao256.github.io"
+    }
+  ]
+}</script><link rel="shortcut icon" href="https://github.com/ZiHao256/ZiHao256.github.io/blob/hexo/images/stitch.JPG?raw=true"><link rel="canonical" href="https://zihao256.github.io/p/32a74a00.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.7.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.3.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1.14/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        const data = { value }
+
+        if (ttl != null) {
+          data.expiry = Date.now() + ttl * 86400000
+        }
+
+        localStorage.setItem(key, JSON.stringify(data))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return
+
+        try {
+          const data = JSON.parse(itemStr)
+
+          if (data.expiry && Date.now() > data.expiry) {
+            localStorage.removeItem(key)
+            return
+          }
+
+          return data.value
+        } catch {
+          localStorage.removeItem(key)
+        }
+      }
+    }
+
+    const scriptCache = new Map()
+    const cssCache = new Map()
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => {
+        if (scriptCache.has(url)) {
+          return scriptCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const script = document.createElement('script')
+
+          script.src = url
+          script.async = true
+
+          for (const key in attr) {
+            script.setAttribute(key, attr[key])
+          }
+
+          script.onload = resolve
+          script.onerror = reject
+
+          document.head.appendChild(script)
+        })
+
+        scriptCache.set(url, promise)
+
+        return promise
+      },
+      getCSS: (url, id) => {
+        if (cssCache.has(url)) {
+          return cssCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const link = document.createElement('link')
+
+          link.rel = 'stylesheet'
+          link.href = url
+
+          if (id) {
+            link.id = id
+          }
+
+          link.onload = resolve
+          link.onerror = reject
+
+          document.head.appendChild(link)
+        })
+
+        cssCache.set(url, promise)
+
+        return promise
+      },
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!true && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const metaThemeColor = document.querySelector('meta[name="theme-color"]')
+      const activateDarkMode = () => {
+        document.documentElement.dataset.theme = 'dark'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.dataset.theme = 'light'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
   root: '/',
   algolia: undefined,
-  localSearch: {"path":"/search.xml","preload":true,"languages":{"hits_empty":"We didn't find any results for the search: ${query}"}},
+  localSearch: {"path":"/search.xml","preload":true,"top_n_per_article":1,"unescape":false,"pagination":{"enable":false,"hitsPerPage":8},"languages":{"hits_empty":"No results found for: ${query}","hits_stats":"${hits} articles found"}},
   translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
-  noticeOutdate: undefined,
-  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":true},
   copy: {
-    success: 'Copy successfully',
-    error: 'Copy error',
-    noSupport: 'The browser does not support'
+    success: 'Copy Successful',
+    error: 'Copy Failed',
+    noSupport: 'Browser Not Supported'
   },
   relativeDate: {
     homepage: true,
     post: true
   },
-  runtime: '天',
-  date_suffix: {
-    just: 'Just',
+  runtime: 'days',
+  dateSuffix: {
+    just: 'Just now',
     min: 'minutes ago',
     hour: 'hours ago',
     day: 'days ago',
@@ -38,112 +184,55 @@
   copyright: undefined,
   lightbox: 'fancybox',
   Snackbar: undefined,
-  source: {
-    justifiedGallery: {
-      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
-      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
-    }
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
   },
   isPhotoFigcaption: true,
-  islazyload: false,
-  isAnchor: false
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
 }</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
   title: 'Lab 1 系统软件启动过程',
-  isPost: true,
-  isHome: false,
   isHighlightShrink: true,
   isToc: true,
-  postUpdate: '2023-10-03 13:07:27'
-}</script><noscript><style type="text/css">
-  #nav {
-    opacity: 1
-  }
-  .justified-gallery img {
-    opacity: 1
-  }
-
-  #recent-posts time,
-  #post-meta time {
-    display: inline !important
-  }
-</style></noscript><script>(win=>{
-    win.saveToLocal = {
-      set: function setWithExpiry(key, value, ttl) {
-        if (ttl === 0) return
-        const now = new Date()
-        const expiryDay = ttl * 86400000
-        const item = {
-          value: value,
-          expiry: now.getTime() + expiryDay,
-        }
-        localStorage.setItem(key, JSON.stringify(item))
-      },
-
-      get: function getWithExpiry(key) {
-        const itemStr = localStorage.getItem(key)
-
-        if (!itemStr) {
-          return undefined
-        }
-        const item = JSON.parse(itemStr)
-        const now = new Date()
-
-        if (now.getTime() > item.expiry) {
-          localStorage.removeItem(key)
-          return undefined
-        }
-        return item.value
-      }
+  pageType: 'post'
+}</script><link rel="stylesheet" href="//at.alicdn.com/t/c/font_4263496_xe5w6zp8g5c.css"><meta name="generator" content="Hexo 8.1.2"><link rel="alternate" href="/atom.xml" title="ZiHao's Blog" type="application/atom+xml">
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">Loading...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      if ($loadingBox.classList.contains('loaded')) return
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
     }
-  
-    win.getScript = url => new Promise((resolve, reject) => {
-      const script = document.createElement('script')
-      script.src = url
-      script.async = true
-      script.onerror = reject
-      script.onload = script.onreadystatechange = function() {
-        const loadState = this.readyState
-        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
-        script.onload = script.onreadystatechange = null
-        resolve()
-      }
-      document.head.appendChild(script)
-    })
-  
-      win.activateDarkMode = function () {
-        document.documentElement.setAttribute('data-theme', 'dark')
-        if (document.querySelector('meta[name="theme-color"]') !== null) {
-          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
-        }
-      }
-      win.activateLightMode = function () {
-        document.documentElement.setAttribute('data-theme', 'light')
-        if (document.querySelector('meta[name="theme-color"]') !== null) {
-          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
-        }
-      }
-      const t = saveToLocal.get('theme')
-    
-          if (t === 'dark') activateDarkMode()
-          else if (t === 'light') activateLightMode()
-        
-      const asideStatus = saveToLocal.get('aside-status')
-      if (asideStatus !== undefined) {
-        if (asideStatus === 'hide') {
-          document.documentElement.classList.add('hide-aside')
-        } else {
-          document.documentElement.classList.remove('hide-aside')
-        }
-      }
-    
-    const detectApple = () => {
-      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
-        document.documentElement.classList.add('apple')
-      }
-    }
-    detectApple()
-    })(window)</script><link rel="stylesheet" href="//at.alicdn.com/t/c/font_4263496_xe5w6zp8g5c.css"><meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="/atom.xml" title="ZiHao's Blog" type="application/atom+xml">
-<style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}</style></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">Loading...</div></div></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://github.com/ZiHao256/ZiHao256.github.io/blob/hexo/images/stitch.JPG?raw=true" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">66</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">48</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">16</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/log"><i class="fa-fw fas fa-book"></i><span> Log</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fa fa-camera-retro"></i><span> Gallery</span></a></li><li><a class="site-page child" href="/Map/"><i class="fa-fw fa fa-map-signs"></i><span> Map</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div><div class="menus_item"><a class="site-page" href="/omnisearch/"><i class="fa-fw fas fa-search"></i><span> Omni Search</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven13.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">ZiHao's Blog</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> Search</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/log"><i class="fa-fw fas fa-book"></i><span> Log</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fa fa-camera-retro"></i><span> Gallery</span></a></li><li><a class="site-page child" href="/Map/"><i class="fa-fw fa fa-map-signs"></i><span> Map</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div><div class="menus_item"><a class="site-page" href="/omnisearch/"><i class="fa-fw fas fa-search"></i><span> Omni Search</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Lab 1 系统软件启动过程</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2021-04-04T16:00:00.000Z" title="Created 2021-04-05 00:00:00">2021-04-05</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2023-10-03T05:07:27.765Z" title="Updated 2023-10-03 13:07:27">2023-10-03</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/">学无止境</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/%E8%AF%BE%E7%A8%8B%E5%AE%9E%E9%AA%8C/">课程实验</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">Word count:</span><span class="word-count">14.2k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">Reading time:</span><span>51min</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Lab 1 系统软件启动过程"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">Comments:</span><a href="/p/32a74a00.html#post-comment"><span class="gitalk-comment-count"><i class="fa-solid fa-spinner fa-spin"></i></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="Lab-1-系统软件启动过程"><a href="#Lab-1-系统软件启动过程" class="headerlink" title="Lab 1 系统软件启动过程"></a>Lab 1 系统软件启动过程</h1><p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/2f95d38afa1d">参考博客</a></p>
+  }
+
+  preloader.initLoading()
+
+  if (document.readyState === 'complete') {
+    preloader.endLoading()
+  } else {
+    window.addEventListener('load', preloader.endLoading)
+    document.addEventListener('DOMContentLoaded', preloader.endLoading)
+    // Add timeout protection: force end after 7 seconds
+    setTimeout(preloader.endLoading, 7000)
+  }
+
+  if (true) {
+    btf.addGlobalFn('pjaxSend', preloader.initLoading, 'preloader_init')
+    btf.addGlobalFn('pjaxComplete', preloader.endLoading, 'preloader_end')
+  }
+})()</script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="https://github.com/ZiHao256/ZiHao256.github.io/blob/hexo/images/stitch.JPG?raw=true" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">66</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">48</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">16</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/log"><i class="fa-fw fas fa-book"></i><span> Log</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><span class="site-page group hide"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fa fa-camera-retro"></i><span> Gallery</span></a></li><li><a class="site-page child" href="/Map/"><i class="fa-fw fa fa-map-signs"></i><span> Map</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/pathway-middle-green-leafed-trees-with-sun-shining-through-branches.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">ZiHao's Blog</span></a><a class="nav-page-title" href="/"><span class="site-name">Lab 1 系统软件启动过程</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  Back to Home</span></span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> Search</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/log"><i class="fa-fw fas fa-book"></i><span> Log</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><span class="site-page group hide"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fa fa-camera-retro"></i><span> Gallery</span></a></li><li><a class="site-page child" href="/Map/"><i class="fa-fw fa fa-map-signs"></i><span> Map</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">Lab 1 系统软件启动过程</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2021-04-04T16:00:00.000Z" title="Created 2021-04-05 00:00:00">2021-04-05</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2026-08-12T03:20:22.051Z" title="Updated 2026-08-12 11:20:22">2026-08-12</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/">学无止境</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/%E8%AF%BE%E7%A8%8B%E5%AE%9E%E9%AA%8C/">课程实验</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">Word Count:</span><span class="word-count">14.2k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">Reading Time:</span><span>51mins</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">Comments:</span><a href="/p/32a74a00.html#post-comment"><span class="gitalk-comment-count"><i class="fa-solid fa-spinner fa-spin"></i></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="Lab-1-系统软件启动过程"><a href="#Lab-1-系统软件启动过程" class="headerlink" title="Lab 1 系统软件启动过程"></a>Lab 1 系统软件启动过程</h1><p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/2f95d38afa1d">参考博客</a></p>
 <p><a target="_blank" rel="noopener" href="https://www.git2get.com/av/102915460.html">参考博客</a></p>
 <p>[toc]</p>
 <h1 id="1-实验目的"><a href="#1-实验目的" class="headerlink" title="1 实验目的"></a>1 实验目的</h1><ul>
@@ -160,7 +249,7 @@
 <li><strong>计算机原理</strong><ul>
 <li>CPU 的编址与寻址：基于分段机制的内存管理   <strong>【连续物理内存分配</strong></li>
 <li>CPU 的中断机制</li>
-<li>外设：串口/并口/CGA（显示器），时钟（产生时钟中断），硬盘（读取）</li>
+<li>外设：串口&#x2F;并口&#x2F;CGA（显示器），时钟（产生时钟中断），硬盘（读取）</li>
 </ul>
 </li>
 <li><strong>Bootloader</strong><ul>
@@ -213,7 +302,7 @@
 </ul>
 </li>
 </ul>
-<h4 id="报告"><a href="#报告" class="headerlink" title="报告"></a>报告</h4><h5 id="问题一：操作系统镜像文件-ucore-img-如何一步一步生成的（需要比较详细的解释Makefile-中每一条相关命令和命令参数的含义，以及说明命令导致的结果）"><a href="#问题一：操作系统镜像文件-ucore-img-如何一步一步生成的（需要比较详细的解释Makefile-中每一条相关命令和命令参数的含义，以及说明命令导致的结果）" class="headerlink" title="问题一：操作系统镜像文件 ucore.img 如何一步一步生成的（需要比较详细的解释Makefile 中每一条相关命令和命令参数的含义，以及说明命令导致的结果）"></a><strong>问题一：</strong>操作系统镜像文件 <code>ucore.img</code> 如何一步一步生成的（需要比较详细的解释Makefile 中每一条<strong>相关命令</strong>和<strong>命令参数</strong>的含义，以及说明命令导致的结果）</h5><ul>
+<h4 id="报告"><a href="#报告" class="headerlink" title="报告"></a>报告</h4><h5 id="问题一：操作系统镜像文件-ucore-img-如何一步一步生成的（需要比较详细的解释Makefile-中每一条相关命令和命令参数的含义，以及说明命令导致的结果）"><a href="#问题一：操作系统镜像文件-ucore-img-如何一步一步生成的（需要比较详细的解释Makefile-中每一条相关命令和命令参数的含义，以及说明命令导致的结果）" class="headerlink" title="问题一：操作系统镜像文件 ucore.img 如何一步一步生成的（需要比较详细的解释Makefile 中每一条相关命令和命令参数的含义，以及说明命令导致的结果）"></a><strong>问题一：<strong>操作系统镜像文件 <code>ucore.img</code> 如何一步一步生成的（需要比较详细的解释Makefile 中每一条</strong>相关命令</strong>和<strong>命令参数</strong>的含义，以及说明命令导致的结果）</h5><ul>
 <li><p><strong>GCC</strong> 相关编译选项：</p>
 <ul>
 <li><blockquote>
@@ -234,35 +323,42 @@
 <li><code>0x7c00</code> : 是<strong>操作系统一开始加载的地址</strong></li>
 </ul>
 </li>
-<li><p>```bash<br>//bootasm.o</p>
-<ul>
-<li>cc boot/bootasm.S<br>gcc -Iboot/ -fno-builtin  -ggdb -m32 -gstabs -nostdinc  -fno-stack-protector -Ilibs/ -Os -nostdinc -c boot/bootasm.S -o obj/boot/bootasm.o</li>
-</ul>
-<p>//生成bootmain.o</p>
-<ul>
-<li>cc boot/bootmain.c<br>gcc -Iboot/ -fno-builtin  -ggdb -m32 -gstabs -nostdinc  -fno-stack-protector -Ilibs/ -Os -nostdinc -c boot/bootmain.c -o obj/boot/bootmain.o</li>
-</ul>
-<p>//ld bin/bootblock<br>ld -m    elf_i386 -nostdlib -N -e start -Ttext 0x7C00 obj/boot/bootasm.o obj/boot/bootmain.o -o obj/bootblock.o</p>
-<p>‘obj/bootblock.out’ size: 468 bytes<br>build 512 bytes boot sector: ‘bin/bootblock’ success!</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">* **编译 Kernel**</span><br><span class="line"></span><br><span class="line">  * 操作系统本身</span><br><span class="line">  * 先把.c文件 和 .S 汇编文件生成**目标文件**，之后使用**连接器**生成 Kernel</span><br><span class="line">  * ```bash</span><br><span class="line">    + cc kern/init/init.c</span><br><span class="line">    gcc -Ikern/init/ -fno-builtin -Wall -ggdb -m32 -gstabs -nostdinc  -fno-stack-protector -Ilibs/ -Ikern/debug/ -Ikern/driver/ -Ikern/trap/ -Ikern/mm/ -c kern/init/init.c -o obj/kern/init/init.o</span><br><span class="line">    + cc kern/libs/readline.c</span><br><span class="line">    gcc -Ikern/libs/ -fno-builtin -Wall -ggdb -m32 -gstabs -nostdinc  -fno-stack-protector -Ilibs/ -Ikern/debug/ -Ikern/driver/ -Ikern/trap/ -Ikern/mm/ -c kern/libs/readline.c -o obj/kern/libs/readline.o</span><br><span class="line">    + cc kern/libs/stdio.c</span><br><span class="line">    gcc -Ikern/libs/ -fno-builtin -Wall -ggdb -m32 -gstabs -nostdinc  -fno-stack-protector -Ilibs/ -Ikern/debug/ -Ikern/driver/ -Ikern/trap/ -Ikern/mm/ -c kern/libs/stdio.c -o obj/kern/libs/stdio.o</span><br><span class="line">    + cc kern/debug/kdebug.c</span><br><span class="line">    gcc -Ikern/debug/ -fno-builtin -Wall -ggdb -m32 -gstabs -nostdinc  -fno-stack-protector -Ilibs/ -Ikern/debug/ -Ikern/driver/ -Ikern/trap/ -Ikern/mm/ -c kern/debug/kdebug.c -o obj/kern/debug/kdebug.o</span><br><span class="line">    + cc kern/debug/kmonitor.c</span><br><span class="line">    gcc -Ikern/debug/ -fno-builtin -Wall -ggdb -m32 -gstabs -nostdinc  -fno-stack-protector -Ilibs/ -Ikern/debug/ -Ikern/driver/ -Ikern/trap/ -Ikern/mm/ -c kern/debug/kmonitor.c -o obj/kern/debug/kmonitor.o</span><br><span class="line">    + cc kern/debug/panic.c</span><br><span class="line">    gcc -Ikern/debug/ -fno-builtin -Wall -ggdb -m32 -gstabs -nostdinc  -fno-stack-protector -Ilibs/ -Ikern/debug/ -Ikern/driver/ -Ikern/trap/ -Ikern/mm/ -c kern/debug/panic.c -o obj/kern/debug/panic.o</span><br><span class="line">    + cc kern/driver/clock.c</span><br><span class="line">    gcc -Ikern/driver/ -fno-builtin -Wall -ggdb -m32 -gstabs -nostdinc  -fno-stack-protector -Ilibs/ -Ikern/debug/ -Ikern/driver/ -Ikern/trap/ -Ikern/mm/ -c kern/driver/clock.c -o obj/kern/driver/clock.o</span><br><span class="line">    + cc kern/driver/console.c</span><br><span class="line">    gcc -Ikern/driver/ -fno-builtin -Wall -ggdb -m32 -gstabs -nostdinc  -fno-stack-protector -Ilibs/ -Ikern/debug/ -Ikern/driver/ -Ikern/trap/ -Ikern/mm/ -c kern/driver/console.c -o obj/kern/driver/console.o</span><br><span class="line">    + cc kern/driver/intr.c</span><br><span class="line">    gcc -Ikern/driver/ -fno-builtin -Wall -ggdb -m32 -gstabs -nostdinc  -fno-stack-protector -Ilibs/ -Ikern/debug/ -Ikern/driver/ -Ikern/trap/ -Ikern/mm/ -c kern/driver/intr.c -o obj/kern/driver/intr.o</span><br><span class="line">    + cc kern/driver/picirq.c</span><br><span class="line">    gcc -Ikern/driver/ -fno-builtin -Wall -ggdb -m32 -gstabs -nostdinc  -fno-stack-protector -Ilibs/ -Ikern/debug/ -Ikern/driver/ -Ikern/trap/ -Ikern/mm/ -c kern/driver/picirq.c -o obj/kern/driver/picirq.o</span><br><span class="line">    + cc kern/trap/trap.c</span><br><span class="line">    gcc -Ikern/trap/ -fno-builtin -Wall -ggdb -m32 -gstabs -nostdinc  -fno-stack-protector -Ilibs/ -Ikern/debug/ -Ikern/driver/ -Ikern/trap/ -Ikern/mm/ -c kern/trap/trap.c -o obj/kern/trap/trap.o</span><br><span class="line">    + cc kern/trap/trapentry.S</span><br><span class="line">    gcc -Ikern/trap/ -fno-builtin -Wall -ggdb -m32 -gstabs -nostdinc  -fno-stack-protector -Ilibs/ -Ikern/debug/ -Ikern/driver/ -Ikern/trap/ -Ikern/mm/ -c kern/trap/trapentry.S -o obj/kern/trap/trapentry.o</span><br><span class="line">    + cc kern/trap/vectors.S</span><br><span class="line">    gcc -Ikern/trap/ -fno-builtin -Wall -ggdb -m32 -gstabs -nostdinc  -fno-stack-protector -Ilibs/ -Ikern/debug/ -Ikern/driver/ -Ikern/trap/ -Ikern/mm/ -c kern/trap/vectors.S -o obj/kern/trap/vectors.o</span><br><span class="line">    + cc kern/mm/pmm.c</span><br><span class="line">    gcc -Ikern/mm/ -fno-builtin -Wall -ggdb -m32 -gstabs -nostdinc  -fno-stack-protector -Ilibs/ -Ikern/debug/ -Ikern/driver/ -Ikern/trap/ -Ikern/mm/ -c kern/mm/pmm.c -o obj/kern/mm/pmm.o</span><br><span class="line">    + cc libs/printfmt.c</span><br><span class="line">    gcc -Ilibs/ -fno-builtin -Wall -ggdb -m32 -gstabs -nostdinc  -fno-stack-protector -Ilibs/  -c libs/printfmt.c -o obj/libs/printfmt.o</span><br><span class="line">    + cc libs/string.c</span><br><span class="line">    gcc -Ilibs/ -fno-builtin -Wall -ggdb -m32 -gstabs -nostdinc  -fno-stack-protector -Ilibs/  -c libs/string.c -o obj/libs/string.o</span><br><span class="line"></span><br><span class="line">    + ld bin/kernel</span><br><span class="line">    ld -m    elf_i386 -nostdlib -T tools/kernel.ld -o bin/kernel  obj/kern/init/init.o obj/kern/libs/readline.o obj/kern/libs/stdio.o obj/kern/debug/kdebug.o obj/kern/debug/kmonitor.o obj/kern/debug/panic.o obj/kern/driver/clock.o obj/kern/driver/console.o obj/kern/driver/intr.o obj/kern/driver/picirq.o obj/kern/trap/trap.o obj/kern/trap/trapentry.o obj/kern/trap/vectors.o obj/kern/mm/pmm.o  obj/libs/printfmt.o obj/libs/string.o</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+<li><pre><code class="language-bash">//bootasm.o
++ cc boot/bootasm.S
+gcc -Iboot/ -fno-builtin  -ggdb -m32 -gstabs -nostdinc  -fno-stack-protector -Ilibs/ -Os -nostdinc -c boot/bootasm.S -o obj/boot/bootasm.o
+
+//生成bootmain.o
++ cc boot/bootmain.c
+gcc -Iboot/ -fno-builtin  -ggdb -m32 -gstabs -nostdinc  -fno-stack-protector -Ilibs/ -Os -nostdinc -c boot/bootmain.c -o obj/boot/bootmain.o
+
+//ld bin/bootblock
+ld -m    elf_i386 -nostdlib -N -e start -Ttext 0x7C00 obj/boot/bootasm.o obj/boot/bootmain.o -o obj/bootblock.o
+
+&#39;obj/bootblock.out&#39; size: 468 bytes
+build 512 bytes boot sector: &#39;bin/bootblock&#39; success!
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">* **编译 Kernel**</span><br><span class="line"></span><br><span class="line">  * 操作系统本身</span><br><span class="line">  * 先把.c文件 和 .S 汇编文件生成**目标文件**，之后使用**连接器**生成 Kernel</span><br><span class="line">  * ```bash</span><br><span class="line">    + cc kern/init/init.c</span><br><span class="line">    gcc -Ikern/init/ -fno-builtin -Wall -ggdb -m32 -gstabs -nostdinc  -fno-stack-protector -Ilibs/ -Ikern/debug/ -Ikern/driver/ -Ikern/trap/ -Ikern/mm/ -c kern/init/init.c -o obj/kern/init/init.o</span><br><span class="line">    + cc kern/libs/readline.c</span><br><span class="line">    gcc -Ikern/libs/ -fno-builtin -Wall -ggdb -m32 -gstabs -nostdinc  -fno-stack-protector -Ilibs/ -Ikern/debug/ -Ikern/driver/ -Ikern/trap/ -Ikern/mm/ -c kern/libs/readline.c -o obj/kern/libs/readline.o</span><br><span class="line">    + cc kern/libs/stdio.c</span><br><span class="line">    gcc -Ikern/libs/ -fno-builtin -Wall -ggdb -m32 -gstabs -nostdinc  -fno-stack-protector -Ilibs/ -Ikern/debug/ -Ikern/driver/ -Ikern/trap/ -Ikern/mm/ -c kern/libs/stdio.c -o obj/kern/libs/stdio.o</span><br><span class="line">    + cc kern/debug/kdebug.c</span><br><span class="line">    gcc -Ikern/debug/ -fno-builtin -Wall -ggdb -m32 -gstabs -nostdinc  -fno-stack-protector -Ilibs/ -Ikern/debug/ -Ikern/driver/ -Ikern/trap/ -Ikern/mm/ -c kern/debug/kdebug.c -o obj/kern/debug/kdebug.o</span><br><span class="line">    + cc kern/debug/kmonitor.c</span><br><span class="line">    gcc -Ikern/debug/ -fno-builtin -Wall -ggdb -m32 -gstabs -nostdinc  -fno-stack-protector -Ilibs/ -Ikern/debug/ -Ikern/driver/ -Ikern/trap/ -Ikern/mm/ -c kern/debug/kmonitor.c -o obj/kern/debug/kmonitor.o</span><br><span class="line">    + cc kern/debug/panic.c</span><br><span class="line">    gcc -Ikern/debug/ -fno-builtin -Wall -ggdb -m32 -gstabs -nostdinc  -fno-stack-protector -Ilibs/ -Ikern/debug/ -Ikern/driver/ -Ikern/trap/ -Ikern/mm/ -c kern/debug/panic.c -o obj/kern/debug/panic.o</span><br><span class="line">    + cc kern/driver/clock.c</span><br><span class="line">    gcc -Ikern/driver/ -fno-builtin -Wall -ggdb -m32 -gstabs -nostdinc  -fno-stack-protector -Ilibs/ -Ikern/debug/ -Ikern/driver/ -Ikern/trap/ -Ikern/mm/ -c kern/driver/clock.c -o obj/kern/driver/clock.o</span><br><span class="line">    + cc kern/driver/console.c</span><br><span class="line">    gcc -Ikern/driver/ -fno-builtin -Wall -ggdb -m32 -gstabs -nostdinc  -fno-stack-protector -Ilibs/ -Ikern/debug/ -Ikern/driver/ -Ikern/trap/ -Ikern/mm/ -c kern/driver/console.c -o obj/kern/driver/console.o</span><br><span class="line">    + cc kern/driver/intr.c</span><br><span class="line">    gcc -Ikern/driver/ -fno-builtin -Wall -ggdb -m32 -gstabs -nostdinc  -fno-stack-protector -Ilibs/ -Ikern/debug/ -Ikern/driver/ -Ikern/trap/ -Ikern/mm/ -c kern/driver/intr.c -o obj/kern/driver/intr.o</span><br><span class="line">    + cc kern/driver/picirq.c</span><br><span class="line">    gcc -Ikern/driver/ -fno-builtin -Wall -ggdb -m32 -gstabs -nostdinc  -fno-stack-protector -Ilibs/ -Ikern/debug/ -Ikern/driver/ -Ikern/trap/ -Ikern/mm/ -c kern/driver/picirq.c -o obj/kern/driver/picirq.o</span><br><span class="line">    + cc kern/trap/trap.c</span><br><span class="line">    gcc -Ikern/trap/ -fno-builtin -Wall -ggdb -m32 -gstabs -nostdinc  -fno-stack-protector -Ilibs/ -Ikern/debug/ -Ikern/driver/ -Ikern/trap/ -Ikern/mm/ -c kern/trap/trap.c -o obj/kern/trap/trap.o</span><br><span class="line">    + cc kern/trap/trapentry.S</span><br><span class="line">    gcc -Ikern/trap/ -fno-builtin -Wall -ggdb -m32 -gstabs -nostdinc  -fno-stack-protector -Ilibs/ -Ikern/debug/ -Ikern/driver/ -Ikern/trap/ -Ikern/mm/ -c kern/trap/trapentry.S -o obj/kern/trap/trapentry.o</span><br><span class="line">    + cc kern/trap/vectors.S</span><br><span class="line">    gcc -Ikern/trap/ -fno-builtin -Wall -ggdb -m32 -gstabs -nostdinc  -fno-stack-protector -Ilibs/ -Ikern/debug/ -Ikern/driver/ -Ikern/trap/ -Ikern/mm/ -c kern/trap/vectors.S -o obj/kern/trap/vectors.o</span><br><span class="line">    + cc kern/mm/pmm.c</span><br><span class="line">    gcc -Ikern/mm/ -fno-builtin -Wall -ggdb -m32 -gstabs -nostdinc  -fno-stack-protector -Ilibs/ -Ikern/debug/ -Ikern/driver/ -Ikern/trap/ -Ikern/mm/ -c kern/mm/pmm.c -o obj/kern/mm/pmm.o</span><br><span class="line">    + cc libs/printfmt.c</span><br><span class="line">    gcc -Ilibs/ -fno-builtin -Wall -ggdb -m32 -gstabs -nostdinc  -fno-stack-protector -Ilibs/  -c libs/printfmt.c -o obj/libs/printfmt.o</span><br><span class="line">    + cc libs/string.c</span><br><span class="line">    gcc -Ilibs/ -fno-builtin -Wall -ggdb -m32 -gstabs -nostdinc  -fno-stack-protector -Ilibs/  -c libs/string.c -o obj/libs/string.o</span><br><span class="line"></span><br><span class="line">    + ld bin/kernel</span><br><span class="line">    ld -m    elf_i386 -nostdlib -T tools/kernel.ld -o bin/kernel  obj/kern/init/init.o obj/kern/libs/readline.o obj/kern/libs/stdio.o obj/kern/debug/kdebug.o obj/kern/debug/kmonitor.o obj/kern/debug/panic.o obj/kern/driver/clock.o obj/kern/driver/console.o obj/kern/driver/intr.o obj/kern/driver/picirq.o obj/kern/trap/trap.o obj/kern/trap/trapentry.o obj/kern/trap/vectors.o obj/kern/mm/pmm.o  obj/libs/printfmt.o obj/libs/string.o</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</code></pre>
+</li>
 </ul>
 </li>
 <li><p><strong>编译 sign</strong></p>
 <ul>
 <li>用于生成一个<strong>符合规范</strong> 的 <strong>硬盘主引导扇区</strong></li>
-<li>```bash<ul>
-<li>cc tools/sign.c<br>gcc -Itools/ -g -Wall -O2 -c tools/sign.c -o obj/sign/tools/sign.o<br>gcc -g -Wall -O2 obj/sign/tools/sign.o -o bin/sign<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">* **生成 ucore.img**</span><br><span class="line"></span><br><span class="line">  * **dd** - **转换和拷贝文件**</span><br><span class="line"></span><br><span class="line">    * &gt; `if`  代表**输入文件**。如果不指定if，默认就会从 `stdin`中读取输入。</span><br><span class="line">      &gt; `of`  代表**输出文件**。如果不指定of，默认就会将 `stdout`作为默认输出。</span><br><span class="line">      &gt; `bs` 代表字节为单位的块大小。</span><br><span class="line">      &gt; `count` 代表被复制的块数。</span><br><span class="line">      &gt; `/dev/zero` 是一个字符设备，会不断返回0值字节（\0）</span><br><span class="line">      &gt; `conv=notrunc`    输入文件的时候，源文件不会被截断</span><br><span class="line">      &gt; `seek=blocks`     从输出文件开头跳过 blocks(512字节) 个块后再开始复制</span><br><span class="line">      &gt;</span><br><span class="line">  * **过程**：生成一个空的软盘镜像，然后把 bootloader 以不截断的方式填充到**开始的块**中，然后 kernel 跳过bootloader 所在的块，再填充</span><br><span class="line">  * ```bash</span><br><span class="line">    dd if=/dev/zero of=bin/ucore.img count=10000</span><br><span class="line">    dd if=bin/bootblock of=bin/ucore.img conv=notrunc</span><br><span class="line">    dd if=bin/kernel of=bin/ucore.img seek=1 conv=notrunc</span><br></pre></td></tr></table></figure></li>
-</ul>
+<li><pre><code class="language-bash">+ cc tools/sign.c
+gcc -Itools/ -g -Wall -O2 -c tools/sign.c -o obj/sign/tools/sign.o
+gcc -g -Wall -O2 obj/sign/tools/sign.o -o bin/sign
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">* **生成 ucore.img**</span><br><span class="line"></span><br><span class="line">  * **dd** - **转换和拷贝文件**</span><br><span class="line"></span><br><span class="line">    * &gt; `if`  代表**输入文件**。如果不指定if，默认就会从 `stdin`中读取输入。</span><br><span class="line">      &gt; `of`  代表**输出文件**。如果不指定of，默认就会将 `stdout`作为默认输出。</span><br><span class="line">      &gt; `bs` 代表字节为单位的块大小。</span><br><span class="line">      &gt; `count` 代表被复制的块数。</span><br><span class="line">      &gt; `/dev/zero` 是一个字符设备，会不断返回0值字节（\0）</span><br><span class="line">      &gt; `conv=notrunc`    输入文件的时候，源文件不会被截断</span><br><span class="line">      &gt; `seek=blocks`     从输出文件开头跳过 blocks(512字节) 个块后再开始复制</span><br><span class="line">      &gt;</span><br><span class="line">  * **过程**：生成一个空的软盘镜像，然后把 bootloader 以不截断的方式填充到**开始的块**中，然后 kernel 跳过bootloader 所在的块，再填充</span><br><span class="line">  * ```bash</span><br><span class="line">    dd if=/dev/zero of=bin/ucore.img count=10000</span><br><span class="line">    dd if=bin/bootblock of=bin/ucore.img conv=notrunc</span><br><span class="line">    dd if=bin/kernel of=bin/ucore.img seek=1 conv=notrunc</span><br></pre></td></tr></table></figure>
+</code></pre>
 </li>
 </ul>
 </li>
 </ul>
 <p><strong>uCore.img的生成过程：</strong></p>
 <ol>
-<li><strong>编译</strong>所有生成 bin/<strong>kernel</strong> 所需的文件(.S汇编文件, .c文件)</li>
-<li><strong>链接</strong>生成 bin/<strong>kernel</strong></li>
+<li><strong>编译</strong>所有生成 bin&#x2F;<strong>kernel</strong> 所需的文件(.S汇编文件, .c文件)</li>
+<li><strong>链接</strong>生成 bin&#x2F;<strong>kernel</strong></li>
 <li><strong>编译</strong> bootasm.S bootmain.c  sign.c</li>
-<li>根据 sign 规范<strong>生成</strong> obj/bootblock.o</li>
+<li>根据 sign 规范<strong>生成</strong> obj&#x2F;bootblock.o</li>
 <li>生成 <strong>ucore.img</strong></li>
 </ol>
 <ul>
@@ -298,7 +394,7 @@
 </ol>
 </li>
 </ul>
-<h5 id="问题二：一个被系统认为是符合规范的-硬盘主引导扇区-的特征是什么"><a href="#问题二：一个被系统认为是符合规范的-硬盘主引导扇区-的特征是什么" class="headerlink" title="问题二：一个被系统认为是符合规范的 硬盘主引导扇区 的特征是什么"></a><strong>问题二：</strong>一个被系统认为是<strong>符合规范的 硬盘主引导扇区 的特征</strong>是什么</h5><ul>
+<h5 id="问题二：一个被系统认为是符合规范的-硬盘主引导扇区-的特征是什么"><a href="#问题二：一个被系统认为是符合规范的-硬盘主引导扇区-的特征是什么" class="headerlink" title="问题二：一个被系统认为是符合规范的 硬盘主引导扇区 的特征是什么"></a><strong>问题二：<strong>一个被系统认为是</strong>符合规范的 硬盘主引导扇区 的特征</strong>是什么</h5><ul>
 <li><code>less tools/sign.c</code><ul>
 <li><img src="C:\Users\Light\AppData\Roaming\Typora\typora-user-images\image-20210405162827372.png" alt="image-20210405162827372"></li>
 <li>该扇区第 510 个字节是 <code>0x55</code>, 第 511 个字节是 <code>0xAA</code></li>
@@ -320,7 +416,11 @@
 </li>
 <li><p>提示：查看 <code>labcodes_answer/lab1_result/tools/lab1init </code>文件，用如下命令试试如何调试bootloader第一条指令：</p>
 <ul>
-<li>```<br>$ cd labcodes_answer/lab1_result/<br>$ make lab1-mon<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">* **默认的 gdb 需要进行一些额外的配置才进行 qemu 的调试**，qemu 和gdb之间使用 网络端口 1234 进行通讯</span><br><span class="line"></span><br><span class="line">  * 打开qemu 进行模拟之后，执行gdb并输入 `target remote local:1234`</span><br><span class="line">  * 可连接qemu，此时qemu进入停止状态，听从 gdb 命令</span><br><span class="line">* *gdb 的地址断点*：</span><br><span class="line"></span><br><span class="line">  * `b *[地址]`：在指定内存地址设置断点，当qemu 中的 CPU 执行到指定地址时，便会将控制权交给 gdb</span><br><span class="line">* *关于代码的反汇编*</span><br><span class="line"></span><br><span class="line">  * 可能 gdb 无法正确获取 当前 qemu 执行的汇编指令，如下配置可以在每次 gdb 命令行前强制反汇编当前的指令，在 gdb 命令行或配置文件中添加：</span><br><span class="line"></span><br><span class="line">    * ```</span><br><span class="line">      define hook-stop</span><br><span class="line">      x/i $pc</span><br><span class="line">      end</span><br></pre></td></tr></table></figure></li>
+<li><pre><code>$ cd labcodes_answer/lab1_result/
+$ make lab1-mon
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">* **默认的 gdb 需要进行一些额外的配置才进行 qemu 的调试**，qemu 和gdb之间使用 网络端口 1234 进行通讯</span><br><span class="line"></span><br><span class="line">  * 打开qemu 进行模拟之后，执行gdb并输入 `target remote local:1234`</span><br><span class="line">  * 可连接qemu，此时qemu进入停止状态，听从 gdb 命令</span><br><span class="line">* *gdb 的地址断点*：</span><br><span class="line"></span><br><span class="line">  * `b *[地址]`：在指定内存地址设置断点，当qemu 中的 CPU 执行到指定地址时，便会将控制权交给 gdb</span><br><span class="line">* *关于代码的反汇编*</span><br><span class="line"></span><br><span class="line">  * 可能 gdb 无法正确获取 当前 qemu 执行的汇编指令，如下配置可以在每次 gdb 命令行前强制反汇编当前的指令，在 gdb 命令行或配置文件中添加：</span><br><span class="line"></span><br><span class="line">    * ```</span><br><span class="line">      define hook-stop</span><br><span class="line">      x/i $pc</span><br><span class="line">      end</span><br></pre></td></tr></table></figure>
+</code></pre>
+</li>
 </ul>
 </li>
 <li><p><em>gdb 的单步命令：</em></p>
@@ -354,7 +454,13 @@
 </li>
 <li><p><code>gdbinit  </code>原内容为：对内核代码进行调试，并且将断点设置在内核代码的入口地址，即 <code>kern_intit</code>  函数</p>
 <ul>
-<li>```<br>file bin/kernel            //对内核代码进行调试<br>target remote :1234<br>break kern_init            //将断点设置在kern_init<br>continue<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">* 为了从CPU 加电后执行的第一条指令开始调试，将 `gdbinit`内容改为：</span><br><span class="line"></span><br><span class="line">  * ```</span><br><span class="line">    set architecture i8086		//改动</span><br><span class="line"></span><br><span class="line">    target remote :1234</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+<li><pre><code>file bin/kernel            //对内核代码进行调试
+target remote :1234
+break kern_init            //将断点设置在kern_init
+continue
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">* 为了从CPU 加电后执行的第一条指令开始调试，将 `gdbinit`内容改为：</span><br><span class="line"></span><br><span class="line">  * ```</span><br><span class="line">    set architecture i8086		//改动</span><br><span class="line"></span><br><span class="line">    target remote :1234</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</code></pre>
+</li>
 </ul>
 </li>
 <li><p>执行 <code>make debug</code>：弹出 QEMU 和 Terminal窗口，因为我们在 Makefile 中定义了debug的操作正是启动 QEMU、Terminal并在其中运行 gdb</p>
@@ -380,12 +486,13 @@
 <li>-tui：可以将终端屏幕分成源文本窗口和控制台的多个子窗口</li>
 </ul>
 </li>
-<li><p>```<br>debug: $(UCOREIMG)</p>
-<pre><code>$(V)$(QEMU) -S -s -parallel stdio -hda $&lt; -serial null &amp;    
-$(V)sleep 2
-$(V)$(TERMINAL) -e &quot;gdb -q -tui -x tools/gdbinit&quot;
+<li><pre><code>debug: $(UCOREIMG)
+    $(V)$(QEMU) -S -s -parallel stdio -hda $&lt; -serial null &amp;    
+    $(V)sleep 2
+    $(V)$(TERMINAL) -e &quot;gdb -q -tui -x tools/gdbinit&quot;
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">* `make debug` : Terminal 窗口此时停在 `0x0000fff0`位置，这是 eip 寄存器的值</span><br><span class="line"></span><br><span class="line">      而cs 寄存器的值为`0xf000`</span><br><span class="line"></span><br><span class="line">  ![image-20210406205944058](E:\LearningNotes\TH操作系统\操作系统实验\Lab 1 系统软件启动过程.assets\image-20210406205944058.png)</span><br><span class="line">* 输入 `si`，执行一步, eip 变成 `0xe05b`，而cs 不变</span><br><span class="line"></span><br><span class="line">  * ![image-20210406210105732](E:\LearningNotes\TH操作系统\操作系统实验\Lab 1 系统软件启动过程.assets\image-20210406210105732.png)</span><br><span class="line"></span><br><span class="line">##### 2.2 在初始化位置设置 0x7c00 设置时地址断点，测试断点正常</span><br><span class="line"></span><br><span class="line">* `break *adress`: 在指定地址处设置断点，一般在没有源代码时使用</span><br><span class="line">* 输入 `break *0x7c00`</span><br><span class="line">* 输入 `continue`</span><br><span class="line"></span><br><span class="line">  * ![image-20210406210223703](E:\LearningNotes\TH操作系统\操作系统实验\Lab 1 系统软件启动过程.assets\image-20210406210223703.png)</span><br><span class="line"></span><br><span class="line">##### 2.3 从 0x7c00 开始跟踪代码运行，将单步跟踪反汇编得到的代码与 bootasm.S 和 bootblock.asm 进行比较</span><br><span class="line"></span><br><span class="line">* `x/10i $pc`:显示程序当前位置开始往后 10 条汇编指令</span><br><span class="line">* 输入 `x/10i $pc`</span><br><span class="line"></span><br><span class="line">  * ![image-20210406210251460](E:\LearningNotes\TH操作系统\操作系统实验\Lab 1 系统软件启动过程.assets\image-20210406210251460.png)</span><br><span class="line"></span><br><span class="line">##### 2.4 自己找一个 bootloader 或内核中的代码位置，设置断点并进行测试</span><br><span class="line"></span><br><span class="line">* 调试 bootblock 的代码</span><br><span class="line">* 设置断点为 0x7c00地址 处</span><br><span class="line">* 修改 `tools/gdbinit`为</span><br><span class="line"></span><br><span class="line">  * ```</span><br><span class="line">    //tools/gdbinit&quot;  </span><br><span class="line">    file obj/bootblock.o </span><br><span class="line">    target remote :1234 </span><br><span class="line">    set architecture i8086 </span><br><span class="line">    b *0x7c00 </span><br><span class="line">    continue </span><br><span class="line">    x /10i $pc</span><br></pre></td></tr></table></figure>
 </code></pre>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">* `make debug` : Terminal 窗口此时停在 `0x0000fff0`位置，这是 eip 寄存器的值</span><br><span class="line"></span><br><span class="line">      而cs 寄存器的值为`0xf000`</span><br><span class="line"></span><br><span class="line">  ![image-20210406205944058](E:\LearningNotes\TH操作系统\操作系统实验\Lab 1 系统软件启动过程.assets\image-20210406205944058.png)</span><br><span class="line">* 输入 `si`，执行一步, eip 变成 `0xe05b`，而cs 不变</span><br><span class="line"></span><br><span class="line">  * ![image-20210406210105732](E:\LearningNotes\TH操作系统\操作系统实验\Lab 1 系统软件启动过程.assets\image-20210406210105732.png)</span><br><span class="line"></span><br><span class="line">##### 2.2 在初始化位置设置 0x7c00 设置时地址断点，测试断点正常</span><br><span class="line"></span><br><span class="line">* `break *adress`: 在指定地址处设置断点，一般在没有源代码时使用</span><br><span class="line">* 输入 `break *0x7c00`</span><br><span class="line">* 输入 `continue`</span><br><span class="line"></span><br><span class="line">  * ![image-20210406210223703](E:\LearningNotes\TH操作系统\操作系统实验\Lab 1 系统软件启动过程.assets\image-20210406210223703.png)</span><br><span class="line"></span><br><span class="line">##### 2.3 从 0x7c00 开始跟踪代码运行，将单步跟踪反汇编得到的代码与 bootasm.S 和 bootblock.asm 进行比较</span><br><span class="line"></span><br><span class="line">* `x/10i $pc`:显示程序当前位置开始往后 10 条汇编指令</span><br><span class="line">* 输入 `x/10i $pc`</span><br><span class="line"></span><br><span class="line">  * ![image-20210406210251460](E:\LearningNotes\TH操作系统\操作系统实验\Lab 1 系统软件启动过程.assets\image-20210406210251460.png)</span><br><span class="line"></span><br><span class="line">##### 2.4 自己找一个 bootloader 或内核中的代码位置，设置断点并进行测试</span><br><span class="line"></span><br><span class="line">* 调试 bootblock 的代码</span><br><span class="line">* 设置断点为 0x7c00地址 处</span><br><span class="line">* 修改 `tools/gdbinit`为</span><br><span class="line"></span><br><span class="line">  * ```</span><br><span class="line">    //tools/gdbinit&quot;  </span><br><span class="line">    file obj/bootblock.o </span><br><span class="line">    target remote :1234 </span><br><span class="line">    set architecture i8086 </span><br><span class="line">    b *0x7c00 </span><br><span class="line">    continue </span><br><span class="line">    x /10i $pc</span><br></pre></td></tr></table></figure></li>
+</li>
 <li><p>![image-20210405213757021](E:\LearningNotes\TH操作系统\操作系统实验\Lab 1 系统软件启动过程.assets\image-20210405213757021.png)</p>
 </li>
 <li><p>![image-20210405213817816](E:\LearningNotes\TH操作系统\操作系统实验\Lab 1 系统软件启动过程.assets\image-20210405213817816.png)</p>
@@ -490,22 +597,24 @@ $(V)$(TERMINAL) -e &quot;gdb -q -tui -x tools/gdbinit&quot;
 </li>
 <li><p>接下来，<code>readsect</code>, 读取一个硬盘扇区，</p>
 <ul>
-<li><p>```c<br>static void<br>readsect(void *dst, uint32_t secno) {</p>
-<pre><code>waitdisk(); // 等待磁盘到不忙为止
+<li><pre><code class="language-c">static void
+readsect(void *dst, uint32_t secno) {
+    waitdisk(); // 等待磁盘到不忙为止
 
-outb(0x1F2, 1);             // 往0X1F2地址中写入要读取的扇区数，由于此处需要读一个扇区，因此参数为1
-outb(0x1F3, secno &amp; 0xFF); // 输入LBA参数的0...7位；
-outb(0x1F4, (secno &gt;&gt; 8) &amp; 0xFF); // 输入LBA参数的8-15位；
-outb(0x1F5, (secno &gt;&gt; 16) &amp; 0xFF); // 输入LBA参数的16-23位；
-outb(0x1F6, ((secno &gt;&gt; 24) &amp; 0xF) | 0xE0); // 输入LBA参数的24-27位（对应到0-3位），第四位为0表示从主盘读取，其余位被强制置为1；
-outb(0x1F7, 0x20);                      // 向磁盘发出读命令0x20
+    outb(0x1F2, 1);             // 往0X1F2地址中写入要读取的扇区数，由于此处需要读一个扇区，因此参数为1
+    outb(0x1F3, secno &amp; 0xFF); // 输入LBA参数的0...7位；
+    outb(0x1F4, (secno &gt;&gt; 8) &amp; 0xFF); // 输入LBA参数的8-15位；
+    outb(0x1F5, (secno &gt;&gt; 16) &amp; 0xFF); // 输入LBA参数的16-23位；
+    outb(0x1F6, ((secno &gt;&gt; 24) &amp; 0xF) | 0xE0); // 输入LBA参数的24-27位（对应到0-3位），第四位为0表示从主盘读取，其余位被强制置为1；
+    outb(0x1F7, 0x20);                      // 向磁盘发出读命令0x20
 
-waitdisk(); // 等待磁盘直到不忙
+    waitdisk(); // 等待磁盘直到不忙
 
-insl(0x1F0, dst, SECTSIZE / 4); // 从数据端口0x1F0读取数据，除以4是因为此处是以4个字节为单位的，这个从指令是以l(long)结尾这点可以推测出来；
+    insl(0x1F0, dst, SECTSIZE / 4); // 从数据端口0x1F0读取数据，除以4是因为此处是以4个字节为单位的，这个从指令是以l(long)结尾这点可以推测出来；
+}
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">  * **读取磁盘扇区的过程：**</span><br><span class="line"></span><br><span class="line">    * 等待磁盘不忙</span><br><span class="line">    * 向 `0x1f2-0x1f6`中 设置读取扇区需要的参数，</span><br><span class="line">      * 读取的扇区数</span><br><span class="line">      * LBA 参数</span><br><span class="line">    * 向 `0x1f7`发送命令 `0X20`——读命令</span><br><span class="line">    * 等待磁盘完成读操作</span><br><span class="line">    * 从数据端口 `0x1f0`读取数据到指定内存中</span><br><span class="line">* 另外一个与读取磁盘相关的函数 `readseg`，</span><br><span class="line"></span><br><span class="line">  * 将 `readsec`进一步封装</span><br><span class="line">  * 提供能够从磁盘 第二个扇区起（kernel） offset 个位置处，读取 count 个字节到指定内存</span><br><span class="line">  * `readsec` 只能对整个扇区进行读取</span><br><span class="line"></span><br><span class="line">##### bootloader 如何将 ELF 格式的 OS 加载入内存</span><br><span class="line"></span><br><span class="line">* bootloader 加载 ELF 格式的 OS 代码位于·`bootmain.c` 中的 bootmain 函数</span><br><span class="line">  * **首先，**从磁盘的第一个扇区（kernel，第零个扇区为bootloader）中读取kernel最开始的 4 KB代码，然后判断最开始的四个字节是否等于指定的 `ELF_MAGIC`, 用于判断 ELF header是否合法</span><br><span class="line">    * ![image-20210407205626699](E:\LearningNotes\TH操作系统\操作系统实验\Lab 1 系统软件启动过程.assets\image-20210407205626699.png)</span><br><span class="line">  * **接下来**，从 `ELFHDR `——ELF 头文件中获取到 `program header`**表**的位置，以及该表的入口数目，然后遍历该表每一项，并且从每一个program header中获取到 **段** 应该被加载到内存中的位置（Load Address，虚拟地址），以及段的大小，然后调用 `readseg` 函数将每一个段加载到内存中，至此完成了将 OS 加载到内存中的操作</span><br><span class="line">    * ![image-20210407210008007](E:\LearningNotes\TH操作系统\操作系统实验\Lab 1 系统软件启动过程.assets\image-20210407210008007.png)</span><br><span class="line">  * **最后**，从 `ELFHDR`——ELF 头文件中查询到 OS kernel的**入口地址**，然后使用函数调用的方式跳转到该地址</span><br><span class="line">    * ![image-20210407210213172](E:\LearningNotes\TH操作系统\操作系统实验\Lab 1 系统软件启动过程.assets\image-20210407210213172.png)</span><br><span class="line"></span><br><span class="line">### 练习五：实现函数调用堆栈跟踪函数</span><br><span class="line"></span><br><span class="line">* 在 `lab1` 中完成 `kdebug.c` 中函数 `print_stackframe`的实现</span><br><span class="line"></span><br><span class="line">  * 可以通过该函数 跟踪函数调用堆栈中记录的返回地址</span><br><span class="line">* 若能正确实现该函数，`make qemu`后：</span><br><span class="line"></span><br><span class="line">  * ```bash</span><br><span class="line">    ……</span><br><span class="line">    ebp:0x00007b28 eip:0x00100992 args:0x00010094 0x00010094 0x00007b58 0x00100096</span><br><span class="line">        kern/debug/kdebug.c:305: print_stackframe+22</span><br><span class="line">    ebp:0x00007b38 eip:0x00100c79 args:0x00000000 0x00000000 0x00000000 0x00007ba8</span><br><span class="line">        kern/debug/kmonitor.c:125: mon_backtrace+10</span><br><span class="line">    ebp:0x00007b58 eip:0x00100096 args:0x00000000 0x00007b80 0xffff0000 0x00007b84</span><br><span class="line">        kern/init/init.c:48: grade_backtrace2+33</span><br><span class="line">    ebp:0x00007b78 eip:0x001000bf args:0x00000000 0xffff0000 0x00007ba4 0x00000029</span><br><span class="line">        kern/init/init.c:53: grade_backtrace1+38</span><br><span class="line">    ebp:0x00007b98 eip:0x001000dd args:0x00000000 0x00100000 0xffff0000 0x0000001d</span><br><span class="line">        kern/init/init.c:58: grade_backtrace0+23</span><br><span class="line">    ebp:0x00007bb8 eip:0x00100102 args:0x0010353c 0x00103520 0x00001308 0x00000000</span><br><span class="line">        kern/init/init.c:63: grade_backtrace+34</span><br><span class="line">    ebp:0x00007be8 eip:0x00100059 args:0x00000000 0x00000000 0x00000000 0x00007c53</span><br><span class="line">        kern/init/init.c:28: kern_init+88</span><br><span class="line">    ebp:0x00007bf8 eip:0x00007d73 args:0xc031fcfa 0xc08ed88e 0x64e4d08e 0xfa7502a8</span><br><span class="line">    &lt;unknow&gt;: -- 0x00007d72 –</span><br><span class="line">    ……</span><br></pre></td></tr></table></figure>
 </code></pre>
-<p>}</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">  * **读取磁盘扇区的过程：**</span><br><span class="line"></span><br><span class="line">    * 等待磁盘不忙</span><br><span class="line">    * 向 `0x1f2-0x1f6`中 设置读取扇区需要的参数，</span><br><span class="line">      * 读取的扇区数</span><br><span class="line">      * LBA 参数</span><br><span class="line">    * 向 `0x1f7`发送命令 `0X20`——读命令</span><br><span class="line">    * 等待磁盘完成读操作</span><br><span class="line">    * 从数据端口 `0x1f0`读取数据到指定内存中</span><br><span class="line">* 另外一个与读取磁盘相关的函数 `readseg`，</span><br><span class="line"></span><br><span class="line">  * 将 `readsec`进一步封装</span><br><span class="line">  * 提供能够从磁盘 第二个扇区起（kernel） offset 个位置处，读取 count 个字节到指定内存</span><br><span class="line">  * `readsec` 只能对整个扇区进行读取</span><br><span class="line"></span><br><span class="line">##### bootloader 如何将 ELF 格式的 OS 加载入内存</span><br><span class="line"></span><br><span class="line">* bootloader 加载 ELF 格式的 OS 代码位于·`bootmain.c` 中的 bootmain 函数</span><br><span class="line">  * **首先，**从磁盘的第一个扇区（kernel，第零个扇区为bootloader）中读取kernel最开始的 4 KB代码，然后判断最开始的四个字节是否等于指定的 `ELF_MAGIC`, 用于判断 ELF header是否合法</span><br><span class="line">    * ![image-20210407205626699](E:\LearningNotes\TH操作系统\操作系统实验\Lab 1 系统软件启动过程.assets\image-20210407205626699.png)</span><br><span class="line">  * **接下来**，从 `ELFHDR `——ELF 头文件中获取到 `program header`**表**的位置，以及该表的入口数目，然后遍历该表每一项，并且从每一个program header中获取到 **段** 应该被加载到内存中的位置（Load Address，虚拟地址），以及段的大小，然后调用 `readseg` 函数将每一个段加载到内存中，至此完成了将 OS 加载到内存中的操作</span><br><span class="line">    * ![image-20210407210008007](E:\LearningNotes\TH操作系统\操作系统实验\Lab 1 系统软件启动过程.assets\image-20210407210008007.png)</span><br><span class="line">  * **最后**，从 `ELFHDR`——ELF 头文件中查询到 OS kernel的**入口地址**，然后使用函数调用的方式跳转到该地址</span><br><span class="line">    * ![image-20210407210213172](E:\LearningNotes\TH操作系统\操作系统实验\Lab 1 系统软件启动过程.assets\image-20210407210213172.png)</span><br><span class="line"></span><br><span class="line">### 练习五：实现函数调用堆栈跟踪函数</span><br><span class="line"></span><br><span class="line">* 在 `lab1` 中完成 `kdebug.c` 中函数 `print_stackframe`的实现</span><br><span class="line"></span><br><span class="line">  * 可以通过该函数 跟踪函数调用堆栈中记录的返回地址</span><br><span class="line">* 若能正确实现该函数，`make qemu`后：</span><br><span class="line"></span><br><span class="line">  * ```bash</span><br><span class="line">    ……</span><br><span class="line">    ebp:0x00007b28 eip:0x00100992 args:0x00010094 0x00010094 0x00007b58 0x00100096</span><br><span class="line">        kern/debug/kdebug.c:305: print_stackframe+22</span><br><span class="line">    ebp:0x00007b38 eip:0x00100c79 args:0x00000000 0x00000000 0x00000000 0x00007ba8</span><br><span class="line">        kern/debug/kmonitor.c:125: mon_backtrace+10</span><br><span class="line">    ebp:0x00007b58 eip:0x00100096 args:0x00000000 0x00007b80 0xffff0000 0x00007b84</span><br><span class="line">        kern/init/init.c:48: grade_backtrace2+33</span><br><span class="line">    ebp:0x00007b78 eip:0x001000bf args:0x00000000 0xffff0000 0x00007ba4 0x00000029</span><br><span class="line">        kern/init/init.c:53: grade_backtrace1+38</span><br><span class="line">    ebp:0x00007b98 eip:0x001000dd args:0x00000000 0x00100000 0xffff0000 0x0000001d</span><br><span class="line">        kern/init/init.c:58: grade_backtrace0+23</span><br><span class="line">    ebp:0x00007bb8 eip:0x00100102 args:0x0010353c 0x00103520 0x00001308 0x00000000</span><br><span class="line">        kern/init/init.c:63: grade_backtrace+34</span><br><span class="line">    ebp:0x00007be8 eip:0x00100059 args:0x00000000 0x00000000 0x00000000 0x00007c53</span><br><span class="line">        kern/init/init.c:28: kern_init+88</span><br><span class="line">    ebp:0x00007bf8 eip:0x00007d73 args:0xc031fcfa 0xc08ed88e 0x64e4d08e 0xfa7502a8</span><br><span class="line">    &lt;unknow&gt;: -- 0x00007d72 –</span><br><span class="line">    ……</span><br></pre></td></tr></table></figure></li>
+</li>
 </ul>
 </li>
 <li><p>前置知识：函数堆栈：</p>
@@ -518,7 +627,7 @@ insl(0x1F0, dst, SECTSIZE / 4); // 从数据端口0x1F0读取数据，除以4是
 </li>
 </ul>
 <h4 id="报告-4"><a href="#报告-4" class="headerlink" title="报告"></a>报告</h4><p>前提知识：</p>
-<p>一般而言：<code>ss:[ebp+4]</code>为<strong>返回地址</strong>，<code>ss:[ebp+8]</code>为<strong>第一个参数值（</strong>最后一个入栈）,<code>ss:[ebp-4]</code>为第一个局部变量，<code>ss:[ebp]</code>为<strong>上一层 ebp 值</strong></p>
+<p>一般而言：<code>ss:[ebp+4]</code>为<strong>返回地址</strong>，<code>ss:[ebp+8]</code>为<strong>第一个参数值（<strong>最后一个入栈）,<code>ss:[ebp-4]</code>为第一个局部变量，<code>ss:[ebp]</code>为</strong>上一层 ebp 值</strong></p>
 <ul>
 <li><strong>ebp 中的地址处总是上一层函数调用时 ebp 的值</strong></li>
 <li>而每一层函数调用中，都能通过当时的 ebp 值，<strong>向上（栈底方向）获取返回地址，参数值；向下（栈顶方向）获取函数局部变量值</strong></li>
@@ -567,43 +676,34 @@ insl(0x1F0, dst, SECTSIZE / 4); // 从数据端口0x1F0读取数据，除以4是
 <li><code>print_debuginfo()</code></li>
 </ul>
 </li>
-<li><p>```C<br>void print_stackframe(void) {</p>
-<pre><code>uint32_t value_ebp = read_ebp();
-uint32_t value_eip = read_eip();
-for(int i = 0; i&lt;STACKFRAME_DEPTH; i++)&#123;
-    cprintf(&quot;ebp: 0x%08x eip:0x%08x&quot;,value_ebp, value_eip);
-    cprintf(&quot;arguments: &quot;);
-
-    uint32_t* p = (uint32_t*)(value_ebp+8);
-    cprintf(&quot;0x%08x 0x%08x 0x%08x 0x%08x &quot;,p[0],p[1],p[2],p[3]); 
-    //(uint32_t)calling arguments [0..4] = the contents in address (uint32_t)ebp +2 [0..4]
-
-    cprintf(&quot;\n&quot;);
-    print_debuginfo(value_eip-1);
-
-    value_eip = *(uint32_t*)(value_ebp+4);
-    value_ebp = *(uint32_t*)(value_ebp);
-    //popup a calling stackframe
-&#125;
-</code></pre>
+<li><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">print_stackframe</span><span class="params">(<span class="type">void</span>)</span> &#123;</span><br><span class="line">	<span class="type">uint32_t</span> value_ebp = read_ebp();</span><br><span class="line">	<span class="type">uint32_t</span> value_eip = read_eip();</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i&lt;STACKFRAME_DEPTH; i++)&#123;</span><br><span class="line">		cprintf(<span class="string">&quot;ebp: 0x%08x eip:0x%08x&quot;</span>,value_ebp, value_eip);</span><br><span class="line">		cprintf(<span class="string">&quot;arguments: &quot;</span>);</span><br><span class="line"></span><br><span class="line">		<span class="type">uint32_t</span>* p = (<span class="type">uint32_t</span>*)(value_ebp+<span class="number">8</span>);</span><br><span class="line">		cprintf(<span class="string">&quot;0x%08x 0x%08x 0x%08x 0x%08x &quot;</span>,p[<span class="number">0</span>],p[<span class="number">1</span>],p[<span class="number">2</span>],p[<span class="number">3</span>]); </span><br><span class="line">		<span class="comment">//(uint32_t)calling arguments [0..4] = the contents in address (uint32_t)ebp +2 [0..4]</span></span><br><span class="line"></span><br><span class="line">		cprintf(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">		print_debuginfo(value_eip<span class="number">-1</span>);</span><br><span class="line"></span><br><span class="line">		value_eip = *(<span class="type">uint32_t</span>*)(value_ebp+<span class="number">4</span>);</span><br><span class="line">		value_ebp = *(<span class="type">uint32_t</span>*)(value_ebp);</span><br><span class="line">		<span class="comment">//popup a calling stackframe</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>![image-20210409161023480](E:\LearningNotes\TH操作系统\操作系统实验\Lab 1 系统软件启动过程.assets\image-20210409161023480.png)</p>
+</li>
+<li><p>实现函数</p>
 </li>
 </ul>
-<p>  }<br>  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">* ![image-20210409161023480](E:\LearningNotes\TH操作系统\操作系统实验\Lab 1 系统软件启动过程.assets\image-20210409161023480.png)</span><br><span class="line">* 实现函数</span><br><span class="line"></span><br><span class="line">1. 首先使用read_ebp和read_eip函数获取当前stack frame的base pointer以及 `call read_eip`这条指令下一条指令的地址，存入ebp, eip两个临时变量中；</span><br><span class="line">2. 接下来使用cprint函数打印出ebp, eip的数值；</span><br><span class="line">3. 接下来打印出当前栈帧对应的函数可能的参数，根据c语言编译到x86汇编的约定，可以知道参数存放在ebp+8指向的内存上（栈），并且第一个、第二个、第三个...参数所在的内存地址分别为ebp+8, ebp+12, ebp+16, ...，根据要求读取出当前函数的前四个参数(用可能这些参数并不是全都存在，视具体函数而定)，并打印出来；</span><br><span class="line">4. 使用print_debuginfo打印出当前函数的函数名；</span><br><span class="line">5. 根据动态链查找当前函数的调用者(caller)的栈帧, 根据约定，caller的栈帧的base pointer存放在callee的ebp指向的内存单元，将其更新到ebp临时变量中，同时将eip(代码中对应的变量为ra)更新为调用当前函数的指令的下一条指令所在位置（return address），其根据约定存放在ebp+4所在的内存单元中；</span><br><span class="line">6. 如果ebp非零并且没有达到规定的STACKFRAME DEPTH的上限，则跳转到2，继续循环打印栈上栈帧和对应函数的信息；</span><br><span class="line"></span><br><span class="line">```C</span><br><span class="line">void</span><br><span class="line">print_stackframe(void) &#123;</span><br><span class="line">    uint32_t ebp = read_ebp();</span><br><span class="line">    uint32_t ra = read_eip(); </span><br><span class="line">    for (int i = 0; i &lt; STACKFRAME_DEPTH &amp;&amp; ebp != 0; ++ i) &#123;</span><br><span class="line">        cprintf(&quot;ebp:0x%08x eip:0x%08x &quot;, ebp, ra);</span><br><span class="line">        uint32_t* ptr = (uint32_t *) (ebp + 8);</span><br><span class="line">        cprintf(&quot;args:0x%08x 0x%08x 0x%08x 0x%08x\n&quot;, ptr[0], ptr[1], ptr[2], ptr[3]);</span><br><span class="line">        print_debuginfo(ra - 1);</span><br><span class="line">        ra = *((uint32_t *) (ebp + 4));</span><br><span class="line">        ebp = *((uint32_t *) ebp);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<ol>
+<li>首先使用read_ebp和read_eip函数获取当前stack frame的base pointer以及 <code>call read_eip</code>这条指令下一条指令的地址，存入ebp, eip两个临时变量中；</li>
+<li>接下来使用cprint函数打印出ebp, eip的数值；</li>
+<li>接下来打印出当前栈帧对应的函数可能的参数，根据c语言编译到x86汇编的约定，可以知道参数存放在ebp+8指向的内存上（栈），并且第一个、第二个、第三个…参数所在的内存地址分别为ebp+8, ebp+12, ebp+16, …，根据要求读取出当前函数的前四个参数(用可能这些参数并不是全都存在，视具体函数而定)，并打印出来；</li>
+<li>使用print_debuginfo打印出当前函数的函数名；</li>
+<li>根据动态链查找当前函数的调用者(caller)的栈帧, 根据约定，caller的栈帧的base pointer存放在callee的ebp指向的内存单元，将其更新到ebp临时变量中，同时将eip(代码中对应的变量为ra)更新为调用当前函数的指令的下一条指令所在位置（return address），其根据约定存放在ebp+4所在的内存单元中；</li>
+<li>如果ebp非零并且没有达到规定的STACKFRAME DEPTH的上限，则跳转到2，继续循环打印栈上栈帧和对应函数的信息；</li>
+</ol>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span></span><br><span class="line"><span class="title function_">print_stackframe</span><span class="params">(<span class="type">void</span>)</span> &#123;</span><br><span class="line">    <span class="type">uint32_t</span> ebp = read_ebp();</span><br><span class="line">    <span class="type">uint32_t</span> ra = read_eip(); </span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; STACKFRAME_DEPTH &amp;&amp; ebp != <span class="number">0</span>; ++ i) &#123;</span><br><span class="line">        cprintf(<span class="string">&quot;ebp:0x%08x eip:0x%08x &quot;</span>, ebp, ra);</span><br><span class="line">        <span class="type">uint32_t</span>* ptr = (<span class="type">uint32_t</span> *) (ebp + <span class="number">8</span>);</span><br><span class="line">        cprintf(<span class="string">&quot;args:0x%08x 0x%08x 0x%08x 0x%08x\n&quot;</span>, ptr[<span class="number">0</span>], ptr[<span class="number">1</span>], ptr[<span class="number">2</span>], ptr[<span class="number">3</span>]);</span><br><span class="line">        print_debuginfo(ra - <span class="number">1</span>);</span><br><span class="line">        ra = *((<span class="type">uint32_t</span> *) (ebp + <span class="number">4</span>));</span><br><span class="line">        ebp = *((<span class="type">uint32_t</span> *) ebp);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <ul>
-<li><p>分析最后一行输出各个数值的意义：</p>
-</li>
-<li><p>```css<br>ebp:0x00007bf8 eip:0x00007d6e args:0xc031fcfa 0xc08ed88e 0x64e4d08e 0xfa7502a8</p>
-<pre><code>&lt;unknow&gt;: -- 0x00007d6d --
-</code></pre>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">* ![image-20210408100708052](E:\LearningNotes\TH操作系统\操作系统实验\Lab 1 系统软件启动过程.assets\image-20210408100708052.png)</span><br><span class="line"></span><br><span class="line">##### 解释最后一行各个数值</span><br><span class="line"></span><br><span class="line">```bash</span><br><span class="line">ebp:0x00007bf8 eip:0x00007d6e args:0xc031fcfa 0xc08ed88e 0x64e4d08e 0xfa7502a8</span><br><span class="line">    &lt;unknow&gt;: -- 0x00007d6d --</span><br></pre></td></tr></table></figure></li>
-<li><p><code>ebp:0x00007bf8</code>:第一个被调用函数栈帧的base pointer</p>
-</li>
-<li><p><code>eip:0x00007d6e</code>: 该栈帧对应函数中调用的下一个栈帧对应函数的指令的下一条指令</p>
-</li>
-<li><p><code>args:0xc031fcfa 0xc08ed88e 0x64e4d08e</code>: 传递给第一个被调用函数的参数</p>
-</li>
-<li><p><code>   &lt;unknow&gt;: -- 0x00007d6d --</code> : bootmain 函数调用OS kernel入口函数的该指令的地址</p>
-</li>
+<li>分析最后一行输出各个数值的意义：</li>
+<li><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ebp:<span class="number">0</span>x00007bf8 eip:<span class="number">0</span>x00007d6e args:<span class="number">0</span>xc031fcfa <span class="number">0</span>xc08ed88e <span class="number">0</span>x64e4d08e <span class="number">0</span>xfa7502a8</span><br><span class="line">    &lt;unknow&gt;: -- <span class="number">0</span>x00007d6d --</span><br></pre></td></tr></table></figure></li>
+<li>![image-20210408100708052](E:\LearningNotes\TH操作系统\操作系统实验\Lab 1 系统软件启动过程.assets\image-20210408100708052.png)</li>
+</ul>
+<h5 id="解释最后一行各个数值"><a href="#解释最后一行各个数值" class="headerlink" title="解释最后一行各个数值"></a>解释最后一行各个数值</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ebp:0x00007bf8 eip:0x00007d6e args:0xc031fcfa 0xc08ed88e 0x64e4d08e 0xfa7502a8</span><br><span class="line">    &lt;unknow&gt;: -- 0x00007d6d --</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>ebp:0x00007bf8</code>:第一个被调用函数栈帧的base pointer</li>
+<li><code>eip:0x00007d6e</code>: 该栈帧对应函数中调用的下一个栈帧对应函数的指令的下一条指令</li>
+<li><code>args:0xc031fcfa 0xc08ed88e 0x64e4d08e</code>: 传递给第一个被调用函数的参数</li>
+<li><code>   &lt;unknow&gt;: -- 0x00007d6d --</code> : bootmain 函数调用OS kernel入口函数的该指令的地址</li>
 </ul>
 <h3 id="练习六：完善中断初始化和处理"><a href="#练习六：完善中断初始化和处理" class="headerlink" title="练习六：完善中断初始化和处理"></a>练习六：完善中断初始化和处理</h3><ol>
 <li>中断描述符表（保护模式下的中断向量表）中一个表项占多少字节？其中哪几位代表中断处理代码？</li>
@@ -641,26 +741,28 @@ for(int i = 0; i&lt;STACKFRAME_DEPTH; i++)&#123;
 <li><p>在idt.init函数中，依次对所有中断入口进行初始化，使用mmu.h中的SETGATE宏</p>
 <ul>
 <li><blockquote>
-<p>#define SETGATE(gate, istrap, sel, off, dpl) {<br>(gate).gd_off_15_0 = (uint32_t)(off) &amp; 0xffff;<br>(gate).gd_ss = (sel);<br>(gate).gd_args = 0;<br>(gate).gd_rsv1 = 0;<br>(gate).gd_type = (istrap) ? STS_TG32 : STS_IG32;<br>(gate).gd_s = 0;<br>(gate).gd_dpl = (dpl);<br>(gate).gd_p = 1;<br>(gate).gd_off_31_16 = (uint32_t)(off) &gt;&gt; 16;<br>}<br>参数：<br>gate:<br>istrap:陷阱门设为1，中断门设为0.<br>sel:段选择子，全局描述符表的代码段段选择子 //memlayout.h里面有宏定义GD_KTEXT<br>off:处理函数的入口地址，即__vectors[]中的内容。<br>dpl:特权级.从实验指导书中可知，ucore中的应用程序处于特权级3，内核态特权级为0.</p>
+<p>#define SETGATE(gate, istrap, sel, off, dpl) {<br>(gate).gd_off_15_0 &#x3D; (uint32_t)(off) &amp; 0xffff;<br>(gate).gd_ss &#x3D; (sel);<br>(gate).gd_args &#x3D; 0;<br>(gate).gd_rsv1 &#x3D; 0;<br>(gate).gd_type &#x3D; (istrap) ? STS_TG32 : STS_IG32;<br>(gate).gd_s &#x3D; 0;<br>(gate).gd_dpl &#x3D; (dpl);<br>(gate).gd_p &#x3D; 1;<br>(gate).gd_off_31_16 &#x3D; (uint32_t)(off) &gt;&gt; 16;<br>}<br>参数：<br>gate:<br>istrap:陷阱门设为1，中断门设为0.<br>sel:段选择子，全局描述符表的代码段段选择子 &#x2F;&#x2F;memlayout.h里面有宏定义GD_KTEXT<br>off:处理函数的入口地址，即__vectors[]中的内容。<br>dpl:特权级.从实验指导书中可知，ucore中的应用程序处于特权级3，内核态特权级为0.</p>
 </blockquote>
 </li>
 </ul>
 </li>
 <li><p>根据注释：</p>
 <ul>
-<li>```C<br>/* LAB1 YOUR CODE : STEP 2 */<pre><code> /* (1) Where are the entry addrs of each Interrupt Service Routine (ISR)?
-  *     All ISR&#39;s entry addrs are stored in __vectors. where is uintptr_t __vectors[] ?
-  *     __vectors[] is in kern/trap/vector.S which is produced by tools/vector.c
-  *     (try &quot;make&quot; command in lab1, then you will find vector.S in kern/trap DIR)
-  *     You can use  &quot;extern uintptr_t __vectors[];&quot; to define this extern variable which will be used later.
-  * (2) Now you should setup the entries of ISR in Interrupt Description Table (IDT).
-  *     Can you see idt[256] in this file? Yes, it&#39;s IDT! you can use SETGATE macro to setup each item of IDT
-  * (3) After setup the contents of IDT, you will let CPU know where is the IDT by using &#39;lidt&#39; instruction.
-  *     You don&#39;t know the meaning of this instruction? just google it! and check the libs/x86.h to know more.
-  *     Notice: the argument of lidt is idt_pd. try to find it!
-  */
+<li><pre><code class="language-C">/* LAB1 YOUR CODE : STEP 2 */
+     /* (1) Where are the entry addrs of each Interrupt Service Routine (ISR)?
+      *     All ISR&#39;s entry addrs are stored in __vectors. where is uintptr_t __vectors[] ?
+      *     __vectors[] is in kern/trap/vector.S which is produced by tools/vector.c
+      *     (try &quot;make&quot; command in lab1, then you will find vector.S in kern/trap DIR)
+      *     You can use  &quot;extern uintptr_t __vectors[];&quot; to define this extern variable which will be used later.
+      * (2) Now you should setup the entries of ISR in Interrupt Description Table (IDT).
+      *     Can you see idt[256] in this file? Yes, it&#39;s IDT! you can use SETGATE macro to setup each item of IDT
+      * (3) After setup the contents of IDT, you will let CPU know where is the IDT by using &#39;lidt&#39; instruction.
+      *     You don&#39;t know the meaning of this instruction? just google it! and check the libs/x86.h to know more.
+      *     Notice: the argument of lidt is idt_pd. try to find it!
+      */
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">* ```C</span><br><span class="line">  void</span><br><span class="line">  idt_init(void) &#123;</span><br><span class="line">      extern uintptr_t __vectors[];</span><br><span class="line">      for(int i = 0; i &lt; sizeof(idt)/sizeof(struct gatedesc); i++)</span><br><span class="line">      &#123;</span><br><span class="line">          SETGATE(idt[i], 0, GD_KTEXT, __vectors[i]; 0);</span><br><span class="line">      &#125;</span><br><span class="line">      SETGATE(idt[T_SYSCALL], 0, GD_KTEXT, __vectors[T_SYSCALL]; 3);</span><br><span class="line">      lidt(&amp;idt_pd);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
 </code></pre>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">* ```C</span><br><span class="line">  void</span><br><span class="line">  idt_init(void) &#123;</span><br><span class="line">      extern uintptr_t __vectors[];</span><br><span class="line">      for(int i = 0; i &lt; sizeof(idt)/sizeof(struct gatedesc); i++)</span><br><span class="line">      &#123;</span><br><span class="line">          SETGATE(idt[i], 0, GD_KTEXT, __vectors[i]; 0);</span><br><span class="line">      &#125;</span><br><span class="line">      SETGATE(idt[T_SYSCALL], 0, GD_KTEXT, __vectors[T_SYSCALL]; 3);</span><br><span class="line">      lidt(&amp;idt_pd);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure></li>
+</li>
 </ul>
 </li>
 </ul>
@@ -677,16 +779,16 @@ for(int i = 0; i&lt;STACKFRAME_DEPTH; i++)&#123;
 <li><strong>最终引导加载程序</strong> 把操作系统内核映像 加载到 RAM中，并将系统控制权传递给它</li>
 </ul>
 </li>
-<li><p>操作系统和应用软件 存放在 磁盘（硬盘/软盘）、光盘、EPROM、ROM、Flash等 可在掉电后继续保存数据的存储介质</p>
+<li><p>操作系统和应用软件 存放在 磁盘（硬盘&#x2F;软盘）、光盘、EPROM、ROM、Flash等 可在掉电后继续保存数据的存储介质</p>
 </li>
 <li><p>计算机启动后，CPU 一开始会到一个特定的地址 开始执行指令，</p>
 <ul>
-<li>这个特定的地址 存放了<strong>系统初始化软件</strong>（Intel 80386 中是 BIOS, 其本质是一个固定在主板Flash/CMOS 上的软件），负责完成计算机的 <strong>基本的I/O初始化</strong></li>
+<li>这个特定的地址 存放了<strong>系统初始化软件</strong>（Intel 80386 中是 BIOS, 其本质是一个固定在主板Flash&#x2F;CMOS 上的软件），负责完成计算机的 <strong>基本的I&#x2F;O初始化</strong></li>
 </ul>
 </li>
-<li><p><strong>系统初始化软件</strong>：由 <strong>BIOS</strong> 和 位于 软盘/硬盘<strong>引导扇区</strong>中的 <strong>OS Bootloader</strong>（在ucore 中的 bootasm.S 和 bootmain.c ）一起组成</p>
+<li><p><strong>系统初始化软件</strong>：由 <strong>BIOS</strong> 和 位于 软盘&#x2F;硬盘<strong>引导扇区</strong>中的 <strong>OS Bootloader</strong>（在ucore 中的 bootasm.S 和 bootmain.c ）一起组成</p>
 </li>
-<li><p><strong>BIOS</strong> ：<strong>固定在计算机 ROM（</strong>只读存储器） 芯片上的一个特殊软件，为上层软件提供最底层的、最直接的硬件控制与支持</p>
+<li><p><strong>BIOS</strong> ：**固定在计算机 ROM（**只读存储器） 芯片上的一个特殊软件，为上层软件提供最底层的、最直接的硬件控制与支持</p>
 <ul>
 <li>是 PC计算机硬件 与 上层软件程序 之间的桥梁，负责<strong>访问和控制硬件</strong></li>
 </ul>
@@ -798,7 +900,7 @@ for(int i = 0; i&lt;STACKFRAME_DEPTH; i++)&#123;
 <li><p>保护模式下的分段管理机制，每个段有三个参数构成：</p>
 <ul>
 <li><blockquote>
-<p>在ucore中的kern/mm/mmu.h中的struct segdesc 数据结构中有具体的定义。</p>
+<p>在ucore中的kern&#x2F;mm&#x2F;mmu.h中的struct segdesc 数据结构中有具体的定义。</p>
 </blockquote>
 </li>
 <li><p><strong>段基地址（Base Address）</strong>：规定线性地址空间中 段的起始地址</p>
@@ -843,7 +945,7 @@ for(int i = 0; i&lt;STACKFRAME_DEPTH; i++)&#123;
 <ul>
 <li>对于含有 N 个描述符的描述符表，段界限可设为 <code>8*N-1</code></li>
 <li><blockquote>
-<p>在ucore中的boot/bootasm.S中的gdt地址处和kern/mm/pmm.c中的全局变量数组gdt[]分别有基于汇编语言和C语言的全局描述符表的具体实现</p>
+<p>在ucore中的boot&#x2F;bootasm.S中的gdt地址处和kern&#x2F;mm&#x2F;pmm.c中的全局变量数组gdt[]分别有基于汇编语言和C语言的全局描述符表的具体实现</p>
 </blockquote>
 </li>
 </ul>
@@ -875,7 +977,7 @@ for(int i = 0; i&lt;STACKFRAME_DEPTH; i++)&#123;
 <li>ring 3 最低特权级：一般给 应用程序使用，用户态</li>
 </ul>
 </li>
-<li>受到保护的资源：内存，I/O端口，执行特殊机器指令的能力</li>
+<li>受到保护的资源：内存，I&#x2F;O端口，执行特殊机器指令的能力</li>
 <li>在任意时刻，x86 CPU 都是在一个特定的特权级下运行的<ul>
 <li>决定代码可以做什么，不可以做什么</li>
 </ul>
@@ -923,7 +1025,7 @@ for(int i = 0; i&lt;STACKFRAME_DEPTH; i++)&#123;
 <h3 id="ELF-格式文件概述"><a href="#ELF-格式文件概述" class="headerlink" title="ELF 格式文件概述"></a>ELF 格式文件概述</h3><ul>
 <li><p><strong>Executable and Linking Format</strong></p>
 <ul>
-<li>是 Linux 系统下的一种常用<strong>目标文件（object file）</strong>格式，三种主要类型<ul>
+<li>是 Linux 系统下的一种常用**目标文件（object file）**格式，三种主要类型<ul>
 <li><strong>用于执行的可执行文件（Executable file）</strong>，用于提供程序的进程映像，加载的内存执行</li>
 <li><strong>用于连接的可重定位文件（relocatable file）</strong>，可与其他目标文件一起创建可执行文件和共享目标文件</li>
 <li><strong>共享目标文件（shared object file）</strong>，连接器可将他与其他可重定位文件和共享目标文件连接成其他的目标文件，动态链接器又可将它与可执行文件和其他共享目标文件结合起来创建一个进程映像</li>
@@ -950,12 +1052,24 @@ for(int i = 0; i&lt;STACKFRAME_DEPTH; i++)&#123;
 <ul>
 <li><p>程序头部的数据结构：</p>
 <ul>
-<li>```C<br>struct proghdr {<br>  uint type;   // 段类型<br>  uint offset;  // 段相对文件头的偏移值<br>  uint va;     // 段的第一个字节将被放到内存中的虚拟地址<br>  uint pa;<br>  uint filesz;<br>  uint memsz;  // 段在内存映像中占用的字节数<br>  uint flags;<br>  uint align;<br>};<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">* 根据 `elfhdr`, `prohdr`的结构描述，bootloader 可以完成对 ELF 格式的ucore的加载过程</span><br><span class="line"></span><br><span class="line">## 3.3 操作系统启动过程</span><br><span class="line"></span><br><span class="line">### 3.3.1 函数堆栈</span><br><span class="line"></span><br><span class="line">* 理解调用栈：**栈的结构** 和 **EBP寄存器的使用**</span><br><span class="line">* ebp ：基址寄存器</span><br><span class="line">* esp：栈指针寄存器</span><br><span class="line">* eip：程序指令指针，当前程序运行的指令</span><br><span class="line">* 一个函数调用动作：</span><br><span class="line"></span><br><span class="line">  * 0-n 个 **PUSH** 指令，一个 **CALL** 指令。**CALL** 指令内部暗含一个将**返回地址**压栈的动作</span><br><span class="line">    * PUSH ： 参数入栈</span><br><span class="line">    * 返回地址：CALL 指令下一条指令的地址</span><br><span class="line">    * 将返回地址压栈：由硬件完成</span><br><span class="line">* 几乎每个本地编译器都会在每个函数体之前插入：</span><br><span class="line"></span><br><span class="line">  * ```assembly</span><br><span class="line">    pushl   %ebp</span><br><span class="line">    movl   %esp , %ebp</span><br></pre></td></tr></table></figure></li>
+<li><pre><code class="language-C">struct proghdr {
+  uint type;   // 段类型
+  uint offset;  // 段相对文件头的偏移值
+  uint va;     // 段的第一个字节将被放到内存中的虚拟地址
+  uint pa;
+  uint filesz;
+  uint memsz;  // 段在内存映像中占用的字节数
+  uint flags;
+  uint align;
+};
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">* 根据 `elfhdr`, `prohdr`的结构描述，bootloader 可以完成对 ELF 格式的ucore的加载过程</span><br><span class="line"></span><br><span class="line">## 3.3 操作系统启动过程</span><br><span class="line"></span><br><span class="line">### 3.3.1 函数堆栈</span><br><span class="line"></span><br><span class="line">* 理解调用栈：**栈的结构** 和 **EBP寄存器的使用**</span><br><span class="line">* ebp ：基址寄存器</span><br><span class="line">* esp：栈指针寄存器</span><br><span class="line">* eip：程序指令指针，当前程序运行的指令</span><br><span class="line">* 一个函数调用动作：</span><br><span class="line"></span><br><span class="line">  * 0-n 个 **PUSH** 指令，一个 **CALL** 指令。**CALL** 指令内部暗含一个将**返回地址**压栈的动作</span><br><span class="line">    * PUSH ： 参数入栈</span><br><span class="line">    * 返回地址：CALL 指令下一条指令的地址</span><br><span class="line">    * 将返回地址压栈：由硬件完成</span><br><span class="line">* 几乎每个本地编译器都会在每个函数体之前插入：</span><br><span class="line"></span><br><span class="line">  * ```assembly</span><br><span class="line">    pushl   %ebp</span><br><span class="line">    movl   %esp , %ebp</span><br></pre></td></tr></table></figure>
+</code></pre>
+</li>
 </ul>
 </li>
 <li><p>执行到程序的实际指令前，参数、返回地址、ebp寄存器 已按顺序入栈：</p>
 <ul>
-<li><pre><code class="assembly">+|  栈底方向        | 高位地址
+<li><pre><code class="language-assembly">+|  栈底方向        | 高位地址
  |    ...        |
  |    ...        |
  |  参数3        |
@@ -998,7 +1112,7 @@ for(int i = 0; i&lt;STACKFRAME_DEPTH; i++)&#123;
 <li>该机制即为中断机制</li>
 </ul>
 </li>
-<li><p>中断机制给操作系统提供了处理意外情况的能力，同时也是实现 进程/线程 抢占式调度的重要基石</p>
+<li><p>中断机制给操作系统提供了处理意外情况的能力，同时也是实现 进程&#x2F;线程 抢占式调度的重要基石</p>
 </li>
 <li><p>三种特殊的中断事件：</p>
 <ul>
@@ -1036,13 +1150,13 @@ for(int i = 0; i&lt;STACKFRAME_DEPTH; i++)&#123;
 <li><p>操作 IDTR 的指令：LIDT，SIDT</p>
 <ul>
 <li>都有一个显示的操作数：一个6 字节表示的内存地址</li>
-<li><strong>LIDT(Load IDT Register)：</strong>使用一个包含线性地址 <strong>基质和界限</strong> 的内存操作数加载IDT。<ul>
+<li>**LIDT(Load IDT Register)：**使用一个包含线性地址 <strong>基质和界限</strong> 的内存操作数加载IDT。<ul>
 <li>操作系统创建 IDT 时，需要执行它来设定<strong>IDT的起始地址</strong></li>
 <li>该指令只能在特权级 0 执行</li>
 <li><code>libs/x86.h</code>中的lidt函数实现，是一条汇编指令</li>
 </ul>
 </li>
-<li><strong>SIDT(Store IDT Register)：</strong>拷贝 IDTR 的 <strong>基址和界限</strong>部分到一个内存地址<ul>
+<li>**SIDT(Store IDT Register)：**拷贝 IDTR 的 <strong>基址和界限</strong>部分到一个内存地址<ul>
 <li>可在任意特权级执行</li>
 </ul>
 </li>
@@ -1050,16 +1164,16 @@ for(int i = 0; i&lt;STACKFRAME_DEPTH; i++)&#123;
 </ul>
 </li>
 <li><blockquote>
-<p>在保护模式下，最多会存在256个Interrupt/<strong>Exception Vectors</strong>。</p>
+<p>在保护模式下，最多会存在256个Interrupt&#x2F;<strong>Exception Vectors</strong>。</p>
 <p>范围[0，31]内的32个向量被异常Exception和NMI使用，但当前并非所有这32个向量都已经被使用，有几个当前没有被使用的，请不要擅自使用它们，它们被保留，以备将来可能增加新的Exception。</p>
-<p>范围[32，255]内的向量被保留给用户定义的Interrupts。Intel没有定义，也没有保留这些Interrupts。用户可以将它们用作外部I/O设备中断（8259A IRQ），或者系统调用（System Call 、Software Interrupts）等</p>
+<p>范围[32，255]内的向量被保留给用户定义的Interrupts。Intel没有定义，也没有保留这些Interrupts。用户可以将它们用作外部I&#x2F;O设备中断（8259A IRQ），或者系统调用（System Call 、Software Interrupts）等</p>
 </blockquote>
 </li>
 </ul>
 </li>
 <li><p><strong>IDT gate descriptors</strong></p>
 <ul>
-<li><strong>Interrupts/Exceptions</strong> 应该使用<strong>Interrupt Gate</strong>和<strong>Trap Gate</strong><ul>
+<li><strong>Interrupts&#x2F;Exceptions</strong> 应该使用<strong>Interrupt Gate</strong>和<strong>Trap Gate</strong><ul>
 <li>唯一的区别：当调用Interrupt Gate时，<strong>Interrupt会被CPU自动禁止</strong><ul>
 <li>自动禁止：CPU 跳转到Interrupt Gate里的地址时，在将EFLAGS保存在栈上后，清除EFLAGS里的IF位，以免重复触发中断。</li>
 </ul>
@@ -1145,79 +1259,133 @@ for(int i = 0; i&lt;STACKFRAME_DEPTH; i++)&#123;
 </ol>
 </li>
 </ul>
-</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="https://zihao256.github.io">zihao</a><!-- 在此处添加签名图片--></span><div class="signature" style="display: inline-block; margin-left: 10px;"><img src="https://cdn.jsdelivr.net/gh/ZiHao256/Gallery@master/uPic/2024/09/Ma_Zahi1.svg" alt="Signature" style="width: 100px; height: auto;"></div></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://zihao256.github.io/p/32a74a00.html">https://zihao256.github.io/p/32a74a00.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></div><div class="post_share"><div class="social-share" data-image="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven13.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/p/e2bef277.html"><img class="prev-cover" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven8.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info">Lab 2 物理内存管理</div></div></a></div><div class="next-post pull-right"><a href="/p/a525d295.html"><img class="next-cover" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/star_sky.webp" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">Linux 入门学习3</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><div><a href="/p/4b288195.html" title="专题四设备驱动"><img class="cover" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven4.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-05-19</div><div class="title">专题四设备驱动</div></div></a></div><div><a href="/p/69488089.html" title="专题三内核模块"><img class="cover" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven1.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-05-19</div><div class="title">专题三内核模块</div></div></a></div><div><a href="/p/6e049acd.html" title="专题二系统调用"><img class="cover" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven8.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-05-19</div><div class="title">专题二系统调用</div></div></a></div><div><a href="/p/d1d6ca89.html" title="专题一内核编译"><img class="cover" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven-kxd1md.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-05-19</div><div class="title">专题一内核编译</div></div></a></div><div><a href="/p/a3ec7244.html" title="创建进程、子进程和进程间通信"><img class="cover" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/pathway-middle-green-leafed-trees-with-sun-shining-through-branches.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-05-19</div><div class="title">创建进程、子进程和进程间通信</div></div></a></div><div><a href="/p/bf869091.html" title="Lab1"><img class="cover" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven-gpdvj3.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-05-07</div><div class="title">Lab1</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> Comment</span></div></div><div class="comment-wrap"><div><div id="gitalk-container"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://github.com/ZiHao256/ZiHao256.github.io/blob/hexo/images/stitch.JPG?raw=true" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">zihao</div><div class="author-info__description">Why be afraid of the infinity of truth? Joy resides in every step of growth.</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">66</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">48</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">16</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/ZiHao256"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/ZiHao256" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/atom.xml" target="_blank" title="RSS链接"><i class="fa fa-rss"></i></a><a class="social-icon" href="mailto:zihao626@gmail.com" target="_blank" title="gmail"><i class="fa-brands fa-google"></i></a><a class="social-icon" href="mailto:zh_ma@stu.xidian.edu.cn" target="_blank" title="xdu-mail"><i class="fa fa-graduation-cap"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">keep moving in 2024</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Lab-1-%E7%B3%BB%E7%BB%9F%E8%BD%AF%E4%BB%B6%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B"><span class="toc-text">Lab 1 系统软件启动过程</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#1-%E5%AE%9E%E9%AA%8C%E7%9B%AE%E7%9A%84"><span class="toc-text">1 实验目的</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-%E5%AE%9E%E9%AA%8C%E5%86%85%E5%AE%B9"><span class="toc-text">2 实验内容</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1-%E7%BB%83%E4%B9%A0"><span class="toc-text">2.1 练习</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%83%E4%B9%A0%E4%B8%80%EF%BC%9A%E7%90%86%E8%A7%A3%E9%80%9A%E8%BF%87-make-%E7%94%9F%E6%88%90%E6%89%A7%E8%A1%8C%E6%96%87%E4%BB%B6%E7%9A%84%E8%BF%87%E7%A8%8B"><span class="toc-text">练习一：理解通过 make 生成执行文件的过程</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8A%A5%E5%91%8A"><span class="toc-text">报告</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%97%AE%E9%A2%98%E4%B8%80%EF%BC%9A%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E9%95%9C%E5%83%8F%E6%96%87%E4%BB%B6-ucore-img-%E5%A6%82%E4%BD%95%E4%B8%80%E6%AD%A5%E4%B8%80%E6%AD%A5%E7%94%9F%E6%88%90%E7%9A%84%EF%BC%88%E9%9C%80%E8%A6%81%E6%AF%94%E8%BE%83%E8%AF%A6%E7%BB%86%E7%9A%84%E8%A7%A3%E9%87%8AMakefile-%E4%B8%AD%E6%AF%8F%E4%B8%80%E6%9D%A1%E7%9B%B8%E5%85%B3%E5%91%BD%E4%BB%A4%E5%92%8C%E5%91%BD%E4%BB%A4%E5%8F%82%E6%95%B0%E7%9A%84%E5%90%AB%E4%B9%89%EF%BC%8C%E4%BB%A5%E5%8F%8A%E8%AF%B4%E6%98%8E%E5%91%BD%E4%BB%A4%E5%AF%BC%E8%87%B4%E7%9A%84%E7%BB%93%E6%9E%9C%EF%BC%89"><span class="toc-text">问题一：操作系统镜像文件 ucore.img 如何一步一步生成的（需要比较详细的解释Makefile 中每一条相关命令和命令参数的含义，以及说明命令导致的结果）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%97%AE%E9%A2%98%E4%BA%8C%EF%BC%9A%E4%B8%80%E4%B8%AA%E8%A2%AB%E7%B3%BB%E7%BB%9F%E8%AE%A4%E4%B8%BA%E6%98%AF%E7%AC%A6%E5%90%88%E8%A7%84%E8%8C%83%E7%9A%84-%E7%A1%AC%E7%9B%98%E4%B8%BB%E5%BC%95%E5%AF%BC%E6%89%87%E5%8C%BA-%E7%9A%84%E7%89%B9%E5%BE%81%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-text">问题二：一个被系统认为是符合规范的 硬盘主引导扇区 的特征是什么</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%83%E4%B9%A0%E4%BA%8C%EF%BC%9A%E4%BD%BF%E7%94%A8-qemu-%E6%89%A7%E8%A1%8C%E5%B9%B6%E8%B0%83%E8%AF%95-lab-1-%E4%B8%AD%E7%9A%84%E8%BD%AF%E4%BB%B6%EF%BC%88%E5%9C%A8%E6%8A%A5%E5%91%8A%E4%B8%AD%E5%86%99%E5%87%BA%E7%BB%83%E4%B9%A0%E8%BF%87%E7%A8%8B%EF%BC%89"><span class="toc-text">练习二：使用 qemu 执行并调试 lab 1 中的软件（在报告中写出练习过程）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8A%A5%E5%91%8A-1"><span class="toc-text">报告</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#2-1-%E4%BB%8ECPU-%E5%8A%A0%E7%94%B5%E5%90%8E%E6%89%A7%E8%A1%8C%E7%9A%84%E7%AC%AC%E4%B8%80%E6%9D%A1%E6%8C%87%E4%BB%A4%E5%BC%80%E5%A7%8B%EF%BC%8C%E5%8D%95%E6%AD%A5%E8%B7%9F%E8%B8%AA-BIOS-%E7%9A%84%E6%89%A7%E8%A1%8C"><span class="toc-text">2.1 从CPU 加电后执行的第一条指令开始，单步跟踪 BIOS 的执行</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%83%E4%B9%A0%E4%B8%89%EF%BC%9A%E5%88%86%E6%9E%90-bootloader-%E8%BF%9B%E5%85%A5%E4%BF%9D%E6%8A%A4%E6%A8%A1%E5%BC%8F%E7%9A%84%E8%BF%87%E7%A8%8B"><span class="toc-text">练习三：分析 bootloader 进入保护模式的过程</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8A%A5%E5%91%8A-2"><span class="toc-text">报告</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%B8%BA%E4%BD%95%E5%BC%80%E5%90%AF-A20-%EF%BC%8C-%E5%A6%82%E4%BD%95%E5%BC%80%E5%90%AFA-20"><span class="toc-text">为何开启 A20 ， 如何开启A 20</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E5%88%9D%E5%A7%8B%E5%8C%96-GDT%EF%BC%88%E5%85%A8%E5%B1%80%E6%8F%8F%E8%BF%B0%E7%AC%A6%E8%A1%A8%EF%BC%89"><span class="toc-text">如何初始化 GDT（全局描述符表）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%A6%82%E4%BD%95-%E4%BD%BF%E8%83%BD-%E5%92%8C-%E8%BF%9B%E5%85%A5%E4%BF%9D%E6%8A%A4%E6%A8%A1%E5%BC%8F"><span class="toc-text">如何 使能 和 进入保护模式</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%83%E4%B9%A0%E5%9B%9B%EF%BC%9A%E5%88%86%E6%9E%90-bootloader-%E5%8A%A0%E8%BD%BD-ELF-%E6%A0%BC%E5%BC%8F%E7%9A%84-OS-%E7%9A%84%E8%BF%87%E7%A8%8B"><span class="toc-text">练习四：分析 bootloader 加载 ELF 格式的 OS 的过程</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8A%A5%E5%91%8A-3"><span class="toc-text">报告</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#bootloader-%E5%A6%82%E4%BD%95%E8%AF%BB%E5%8F%96%E7%A1%AC%E7%9B%98%E6%89%87%E5%8C%BA"><span class="toc-text">bootloader 如何读取硬盘扇区</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8A%A5%E5%91%8A-4"><span class="toc-text">报告</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%83%E4%B9%A0%E5%85%AD%EF%BC%9A%E5%AE%8C%E5%96%84%E4%B8%AD%E6%96%AD%E5%88%9D%E5%A7%8B%E5%8C%96%E5%92%8C%E5%A4%84%E7%90%86"><span class="toc-text">练习六：完善中断初始化和处理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8A%A5%E5%91%8A-5"><span class="toc-text">报告</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E9%97%AE"><span class="toc-text">第一问</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E9%97%AE"><span class="toc-text">第二问</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E9%97%AE"><span class="toc-text">第三问</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-%E4%BB%8E%E6%9C%BA%E5%99%A8%E5%90%AF%E5%8A%A8%E5%88%B0%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%BF%90%E8%A1%8C%E7%9A%84%E8%BF%87%E7%A8%8B"><span class="toc-text">3 从机器启动到操作系统运行的过程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-1-BIOS-%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B"><span class="toc-text">3.1 BIOS 启动过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-2-Bootloader-%E7%9A%84%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B"><span class="toc-text">3.2 Bootloader 的启动过程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-1-%E4%BF%9D%E6%8A%A4%E6%A8%A1%E5%BC%8F%E5%92%8C%E5%88%86%E6%AE%B5%E6%9C%BA%E5%88%B6"><span class="toc-text">3.2.1 保护模式和分段机制</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9E%E6%A8%A1%E5%BC%8F"><span class="toc-text">实模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BF%9D%E6%8A%A4%E6%A8%A1%E5%BC%8F"><span class="toc-text">保护模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%86%E6%AE%B5%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E6%9C%BA%E5%88%B6"><span class="toc-text">分段存储管理机制</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%AE%B5%E6%8F%8F%E8%BF%B0%E7%AC%A6"><span class="toc-text">段描述符</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%85%A8%E5%B1%80%E6%8F%8F%E8%BF%B0%E7%AC%A6%E8%A1%A8"><span class="toc-text">全局描述符表</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%80%89%E6%8B%A9%E5%AD%90"><span class="toc-text">选择子</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BF%9D%E6%8A%A4%E6%A8%A1%E5%BC%8F%E4%B8%8B%E7%9A%84%E7%89%B9%E6%9D%83%E7%BA%A7"><span class="toc-text">保护模式下的特权级</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-3-%E7%A1%AC%E7%9B%98%E8%AE%BF%E9%97%AE%E6%A6%82%E8%BF%B0"><span class="toc-text">3.2.3 硬盘访问概述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ELF-%E6%A0%BC%E5%BC%8F%E6%96%87%E4%BB%B6%E6%A6%82%E8%BF%B0"><span class="toc-text">ELF 格式文件概述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-2-%E4%B8%AD%E6%96%AD%E4%B8%8E%E5%BC%82%E5%B8%B8"><span class="toc-text">3.3.2 中断与异常</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/p/10f62ef4.html" title="PROJECT #4: CONCURRENCY CONTROL"><img src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven-gpdvj3.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="PROJECT #4: CONCURRENCY CONTROL"/></a><div class="content"><a class="title" href="/p/10f62ef4.html" title="PROJECT #4: CONCURRENCY CONTROL">PROJECT #4: CONCURRENCY CONTROL</a><time datetime="2024-05-16T01:01:13.000Z" title="Created 2024-05-16 09:01:13">2024-05-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/c186cbfd.html" title="Project #3: Query Execution"><img src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/drain.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Project #3: Query Execution"/></a><div class="content"><a class="title" href="/p/c186cbfd.html" title="Project #3: Query Execution">Project #3: Query Execution</a><time datetime="2024-05-16T00:59:16.000Z" title="Created 2024-05-16 08:59:16">2024-05-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/2acafc61.html" title="rustlings"><img src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/in-the-early-morning-of-forest-wallpaper.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="rustlings"/></a><div class="content"><a class="title" href="/p/2acafc61.html" title="rustlings">rustlings</a><time datetime="2023-11-28T09:46:15.000Z" title="Created 2023-11-28 17:46:15">2023-11-28</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/d028ccc3.html" title="基于Actix-Web(Rust)和Vue的Web开发记录"><img src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven-4ggvml.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="基于Actix-Web(Rust)和Vue的Web开发记录"/></a><div class="content"><a class="title" href="/p/d028ccc3.html" title="基于Actix-Web(Rust)和Vue的Web开发记录">基于Actix-Web(Rust)和Vue的Web开发记录</a><time datetime="2023-11-13T13:42:48.000Z" title="Created 2023-11-13 21:42:48">2023-11-13</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/517dd8ea.html" title="Project#2: Extendible Hash Index"><img src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/john-towner-3Kv48NS4WUU-unsplash.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Project#2: Extendible Hash Index"/></a><div class="content"><a class="title" href="/p/517dd8ea.html" title="Project#2: Extendible Hash Index">Project#2: Extendible Hash Index</a><time datetime="2023-10-30T13:56:01.000Z" title="Created 2023-10-30 21:56:01">2023-10-30</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven13.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2021 - 2024 By zihao</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Hi, welcome to my <a href="https://zihao256.github.io/">Blog</a>!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="Toggle Between Traditional Chinese And Simplified Chinese">简</button><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="Scroll To Comments"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">Search</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  Loading the Database</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="Search for Posts" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script src="/js/search/local-search.js"></script><script>var preloader = {
-  endLoading: () => {
-    document.body.style.overflow = 'auto';
-    document.getElementById('loading-box').classList.add("loaded")
-  },
-  initLoading: () => {
-    document.body.style.overflow = '';
-    document.getElementById('loading-box').classList.remove("loaded")
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="https://zihao256.github.io">zihao</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="https://zihao256.github.io/p/32a74a00.html">https://zihao256.github.io/p/32a74a00.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles on this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless otherwise stated.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></div><div class="post-share"><div class="social-share" data-image="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/pathway-middle-green-leafed-trees-with-sun-shining-through-branches.jpg" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/p/e2bef277.html" title="Lab 2 物理内存管理"><img class="cover" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven-yx7vmk.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">Previous</div><div class="info-item-2">Lab 2 物理内存管理</div></div><div class="info-2"><div class="info-item-1">Lab 2 物理内存管理1 实验目的 理解基于段页式内存地址的转换机制 页表的建立和使用 物理内存的管理方法  2 实验内容三个部分：  发现系统中的物理内存 建立对物理内存的初步管理：了解连续内存管理 建立页表实现虚拟内存到物理内存之间的映射，了解段页式内存管理机制  2.1 练习 分析 ucore提供的答案，说明自己的实现与参考答案区别 列出本实验中重要的知识点 对应的 OS 原理   未出现但很重要的知识点  练习0：填写已有实验 本实验依赖于实验一 需要将实验一的代码填入lab2相应位置  练习1：实现first-fit 连续物理内存分配算法3 物理内存管理3.1 实验执行流程概述 总控函数：kern_init 调用完成物理内存初始化的pmm_init函数之前和之后的区别： 首先，bootloader工作有所增加，在bootloader中完成了对内存资源的探测工作，使得 ucore kernel 在后续执行中能够基于其探测出的物理内存情况进行物理内存管理初始化工作 其次，bootloader 不像lab1，直接调用kern_init，而是先调用kern_entry函数（/...</div></div></div></a><a class="pagination-related" href="/p/a525d295.html" title="Linux 入门学习3"><img class="cover" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven6.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">Next</div><div class="info-item-2">Linux 入门学习3</div></div><div class="info-2"><div class="info-item-1">Linux 入门学习3[toc]  学习使用 Vim 编辑器，编辑、保存文件，以及查看、浏览文件  1 使用文本编辑器 Vim1.1 基本命令  任何文件需要编辑默认化的编辑器 功能强大的全屏幕文本编辑器 新建、编辑、显示文件 Vim只有 命令，没有 菜单 命令： vi: 新建一个文件 语法：vi 文件名   编辑：回车后进入全屏幕的命令模式 进入命令模式：Vim 等待输入指令 输入 i, a, o， 进入输入模式（左下角会有 insert） i: 在当前光标所在字符的前面，转为输入模式 I： 在当前光标所在行的行首转换为输入模式 a: 在当前光标所在字符的后面，转为输入模式 A: o: 在当前光标所在行的下方，新建一行，并转为输入模式 O: s: 删除光标所在字符 r: 替换光标处字符   退出编辑：按 ESC ESC 后进入命令模式，&#x3D;&#x3D;先输入 冒号&#x3D;&#x3D;： w: 保存不退出 w!: 强制保存不退出 wq或 x: 保存并退出 wq!: 强制保存并退出 q: 不保存退出 q!: 不保存强制退出 e!: 放弃所有修改，从上次保存文件开始编辑 ...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/p/d1d6ca89.html" title="专题一内核编译"><img class="cover" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven5.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2021-05-19</div><div class="info-item-2">专题一内核编译</div></div><div class="info-2"><div class="info-item-1">   作业要求：  完成本专题教学内容中的验收测试题并提交验收材料。  验收材料要求:  新内核引导成功前：  \1. 执行命令：uname –a,提交截屏结果1    新内核引导成功后：  \2. 执行命令：uname –a,提交截屏结果2    \3. 进入目录&#x2F;boot，执行命令：ls -l,提交截屏结果3     &#x3D;&#x3D;tips:&#x3D;&#x3D;  在创建虚拟机时，最好分配 50 GB 以上从磁盘空间，四个以上内核  最重要的是：分配 4 GB 以上的内存，防止在内存中死锁  最最重要的是：新版本的 Linux 内核make install安装后，不再需要手动引导内核！！！即不再需要配置 grub   1 [知识点]什么是 Linux 内核 操作系统的结构    操作系统：Kernel + Shell    Kernel的组成和功能：     Linux 发行版本和内核版本之间的关系：  例如教学视频中：Ubuntu10.04 &#x3D; Kernel2.6.30 + SHELL + USERS APPLICATIONS 两者独立  ...</div></div></div></a><a class="pagination-related" href="/p/a3ec7244.html" title="创建进程、子进程和进程间通信"><img class="cover" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/in-the-early-morning-of-forest-wallpaper.jpeg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2021-05-19</div><div class="info-item-2">创建进程、子进程和进程间通信</div></div><div class="info-2"><div class="info-item-1">fork() 方法fork 原型：  pid_t fork(void)  fork的定义： 父进程在调用 fork 派生子进程，实际上相当于创建了一个进程拷贝  调用一次 fork() 会返回两次  一次：在调用该方法的进程中返回 子进程的 id 二次：在子进程中返回 0 若在调用该方法时返回 -1 则表示调用失败   根据 fork 的返回值判断当前进程是父进程还是子进程：  #include&lt;stdio.h&gt; #include&lt;unistd.h&gt; int main(){      pid_t pid = fork();     if(pid == 0){         printf(&quot;child\n&quot;);     }     else{         printf(&quot;father\n&quot;);     }      return 0;  }      进程间通信 IPCInter-Process Communication: 多个进程之间相互沟通的一种方法 管道、命名管道、消息队列、信号、信号量、共享内存、内存映...</div></div></div></a><a class="pagination-related" href="/p/6e049acd.html" title="专题二系统调用"><img class="cover" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/narrow-muddy-road-dark-forest.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2021-05-19</div><div class="info-item-2">专题二系统调用</div></div><div class="info-2"><div class="info-item-1"> 实验要求：  为Linux内核增加一个系统调用，并编写用户进程的程序来测试。 要求该系统调用能够完成以下功能： 	(1) 该系统调用有1个整型参数，接收输入自己的学号； 	 	(2) 若参数为奇数，则返回自己学号的最后5位。如你的学号为16130120101 ，则返回20101； 	 	(3) 若参数为偶数，则返回自己的学号的最后6位。如你的学号为16130120102 ，则返回120102 。  提交内容为：   截图1： 运行结果   截图2：源代码  1 [知识点] 什么是系统调用系统调用Linux 的运行空间：内核空间 和 用户空间  逻辑上相互隔离 用户进程通常情况下 不允许 访问内核数据，也无法使用内核函数 内核 提供了 用户进程与内核进行交互的一组接口：用户进程可以通过这组接口来获得操作系统内核提供的服务  系统调用的作用 提供用户模式的进程和硬件设备的接口 保证系统的稳定和安全 实现多任务和虚拟内存  系统调用的分类 控制硬件 硬件资源 与 用户空间的抽象接口 读写文件：write&#x2F;read   进程管理 保证系统中的进程能以多任务在虚拟内存环境下运行...</div></div></div></a><a class="pagination-related" href="/p/a525d295.html" title="Linux 入门学习3"><img class="cover" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven6.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2021-03-12</div><div class="info-item-2">Linux 入门学习3</div></div><div class="info-2"><div class="info-item-1">Linux 入门学习3[toc]  学习使用 Vim 编辑器，编辑、保存文件，以及查看、浏览文件  1 使用文本编辑器 Vim1.1 基本命令  任何文件需要编辑默认化的编辑器 功能强大的全屏幕文本编辑器 新建、编辑、显示文件 Vim只有 命令，没有 菜单 命令： vi: 新建一个文件 语法：vi 文件名   编辑：回车后进入全屏幕的命令模式 进入命令模式：Vim 等待输入指令 输入 i, a, o， 进入输入模式（左下角会有 insert） i: 在当前光标所在字符的前面，转为输入模式 I： 在当前光标所在行的行首转换为输入模式 a: 在当前光标所在字符的后面，转为输入模式 A: o: 在当前光标所在行的下方，新建一行，并转为输入模式 O: s: 删除光标所在字符 r: 替换光标处字符   退出编辑：按 ESC ESC 后进入命令模式，&#x3D;&#x3D;先输入 冒号&#x3D;&#x3D;： w: 保存不退出 w!: 强制保存不退出 wq或 x: 保存并退出 wq!: 强制保存并退出 q: 不保存退出 q!: 不保存强制退出 e!: 放弃所有修改，从上次保存文件开始编辑 ...</div></div></div></a><a class="pagination-related" href="/p/9750b399.html" title="LinuxLearning"><img class="cover" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/star_sky.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2021-03-05</div><div class="info-item-2">LinuxLearning</div></div><div class="info-2"><div class="info-item-1">LinuxLearning[toc] 0 Linux 系统简介0.0 历史 操作系统始于二十世纪五十年代，当时的操作系统能运行批处理程序。批处理程序不需要用户的交互，它从文件或者穿孔卡片读取数据，然后输出到另外一个文件或者打印机 二十世纪六十年代初，交互式操作系统开始流行。它不仅仅可以交互，还能使多个用户从不同的终端同时操作主机。这样的操作系统被称作分时操作系统，它的出现对批处理操作系统是个极大的挑战。 UNIX 最初免费发布并因此在大学里受到欢迎。后来，UNIX 实现了 TCP&#x2F;IP 协议栈 Linux 本身只是操作系统的内核。内核是使其它程序能够运行的基础。它实现了多任务和硬件管理，用户或者系统管理员交互运行的所有程序实际上都运行在内核之上 其中有些程序是必需的，比如说，命令行解释器（shell），它用于用户交互和编写 shell 脚本。   许多重要的软件，包括 C 编译器，都来自于自由软件基金 GNU 项目。GNU 项目开始于 1984 年，目的是为了开发一个完全类似于 UNIX 的免费操作系统。为了表扬 GNU 对 Linux 的贡献，许多人把 Linux 称...</div></div></div></a><a class="pagination-related" href="/p/69488089.html" title="专题三内核模块"><img class="cover" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven6.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2021-05-19</div><div class="info-item-2">专题三内核模块</div></div><div class="info-2"><div class="info-item-1"> 实验要求： 题目一 编写一个内核模块； 编译该模块； 加载、卸载该模块； 题目二 用内核模块的方式为系统添加一个系统调用 具体要求同专题二 提交内容： ​        内核模块加载&#x2F;卸载截图 评分标准： 至少完成题目一（60-80分） 自主完成题目二（90-100分）  1 内核模块概念 是一段可以 动态加入内核，并且成为内核一部分的代码 优点： 通过动态加载内核模块，使得在运行过程中扩展内核的功能 减小内核映像大小，增加系统灵活性 只需要修改内核，而不必重新编译整个内核    2 内核模块相关命令 加载内核模块： #insmod module_name   卸载内核模块： #rmmod module_name 或者 #modprobe -r module_name   查看系统已经加载的模块： #lsmod   查看系统已经加载的模块信息： #modinfo module_name    3 内核模块的编写，例子内核模块源代码： 12345678910111213141516171819202122#include&lt;linux/init.h&gt;			//...</div></div></div></a></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> Comments</span></div></div><div class="comment-wrap"><div><div id="gitalk-container"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="https://github.com/ZiHao256/ZiHao256.github.io/blob/hexo/images/stitch.JPG?raw=true" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">zihao</div><div class="author-info-description">Why be afraid of the infinity of truth? Joy resides in every step of growth.</div><div class="site-data"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">66</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">48</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">16</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/ZiHao256"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/ZiHao256" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/atom.xml" target="_blank" title="RSS"><i class="fa fa-rss"></i></a><a class="social-icon" href="mailto:zihao626@gmail.com" target="_blank" title="Gmail"><i class="fa-brands fa-google"></i></a><a class="social-icon" href="mailto:zh_ma@stu.xidian.edu.cn" target="_blank" title="XDU Mail"><i class="fa fa-graduation-cap"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">keep moving in 2024</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Lab-1-%E7%B3%BB%E7%BB%9F%E8%BD%AF%E4%BB%B6%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B"><span class="toc-text">Lab 1 系统软件启动过程</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#1-%E5%AE%9E%E9%AA%8C%E7%9B%AE%E7%9A%84"><span class="toc-text">1 实验目的</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-%E5%AE%9E%E9%AA%8C%E5%86%85%E5%AE%B9"><span class="toc-text">2 实验内容</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1-%E7%BB%83%E4%B9%A0"><span class="toc-text">2.1 练习</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%83%E4%B9%A0%E4%B8%80%EF%BC%9A%E7%90%86%E8%A7%A3%E9%80%9A%E8%BF%87-make-%E7%94%9F%E6%88%90%E6%89%A7%E8%A1%8C%E6%96%87%E4%BB%B6%E7%9A%84%E8%BF%87%E7%A8%8B"><span class="toc-text">练习一：理解通过 make 生成执行文件的过程</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8A%A5%E5%91%8A"><span class="toc-text">报告</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%97%AE%E9%A2%98%E4%B8%80%EF%BC%9A%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E9%95%9C%E5%83%8F%E6%96%87%E4%BB%B6-ucore-img-%E5%A6%82%E4%BD%95%E4%B8%80%E6%AD%A5%E4%B8%80%E6%AD%A5%E7%94%9F%E6%88%90%E7%9A%84%EF%BC%88%E9%9C%80%E8%A6%81%E6%AF%94%E8%BE%83%E8%AF%A6%E7%BB%86%E7%9A%84%E8%A7%A3%E9%87%8AMakefile-%E4%B8%AD%E6%AF%8F%E4%B8%80%E6%9D%A1%E7%9B%B8%E5%85%B3%E5%91%BD%E4%BB%A4%E5%92%8C%E5%91%BD%E4%BB%A4%E5%8F%82%E6%95%B0%E7%9A%84%E5%90%AB%E4%B9%89%EF%BC%8C%E4%BB%A5%E5%8F%8A%E8%AF%B4%E6%98%8E%E5%91%BD%E4%BB%A4%E5%AF%BC%E8%87%B4%E7%9A%84%E7%BB%93%E6%9E%9C%EF%BC%89"><span class="toc-text">问题一：操作系统镜像文件 ucore.img 如何一步一步生成的（需要比较详细的解释Makefile 中每一条相关命令和命令参数的含义，以及说明命令导致的结果）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%97%AE%E9%A2%98%E4%BA%8C%EF%BC%9A%E4%B8%80%E4%B8%AA%E8%A2%AB%E7%B3%BB%E7%BB%9F%E8%AE%A4%E4%B8%BA%E6%98%AF%E7%AC%A6%E5%90%88%E8%A7%84%E8%8C%83%E7%9A%84-%E7%A1%AC%E7%9B%98%E4%B8%BB%E5%BC%95%E5%AF%BC%E6%89%87%E5%8C%BA-%E7%9A%84%E7%89%B9%E5%BE%81%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-text">问题二：一个被系统认为是符合规范的 硬盘主引导扇区 的特征是什么</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%83%E4%B9%A0%E4%BA%8C%EF%BC%9A%E4%BD%BF%E7%94%A8-qemu-%E6%89%A7%E8%A1%8C%E5%B9%B6%E8%B0%83%E8%AF%95-lab-1-%E4%B8%AD%E7%9A%84%E8%BD%AF%E4%BB%B6%EF%BC%88%E5%9C%A8%E6%8A%A5%E5%91%8A%E4%B8%AD%E5%86%99%E5%87%BA%E7%BB%83%E4%B9%A0%E8%BF%87%E7%A8%8B%EF%BC%89"><span class="toc-text">练习二：使用 qemu 执行并调试 lab 1 中的软件（在报告中写出练习过程）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8A%A5%E5%91%8A-1"><span class="toc-text">报告</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#2-1-%E4%BB%8ECPU-%E5%8A%A0%E7%94%B5%E5%90%8E%E6%89%A7%E8%A1%8C%E7%9A%84%E7%AC%AC%E4%B8%80%E6%9D%A1%E6%8C%87%E4%BB%A4%E5%BC%80%E5%A7%8B%EF%BC%8C%E5%8D%95%E6%AD%A5%E8%B7%9F%E8%B8%AA-BIOS-%E7%9A%84%E6%89%A7%E8%A1%8C"><span class="toc-text">2.1 从CPU 加电后执行的第一条指令开始，单步跟踪 BIOS 的执行</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%83%E4%B9%A0%E4%B8%89%EF%BC%9A%E5%88%86%E6%9E%90-bootloader-%E8%BF%9B%E5%85%A5%E4%BF%9D%E6%8A%A4%E6%A8%A1%E5%BC%8F%E7%9A%84%E8%BF%87%E7%A8%8B"><span class="toc-text">练习三：分析 bootloader 进入保护模式的过程</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8A%A5%E5%91%8A-2"><span class="toc-text">报告</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%B8%BA%E4%BD%95%E5%BC%80%E5%90%AF-A20-%EF%BC%8C-%E5%A6%82%E4%BD%95%E5%BC%80%E5%90%AFA-20"><span class="toc-text">为何开启 A20 ， 如何开启A 20</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E5%88%9D%E5%A7%8B%E5%8C%96-GDT%EF%BC%88%E5%85%A8%E5%B1%80%E6%8F%8F%E8%BF%B0%E7%AC%A6%E8%A1%A8%EF%BC%89"><span class="toc-text">如何初始化 GDT（全局描述符表）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%A6%82%E4%BD%95-%E4%BD%BF%E8%83%BD-%E5%92%8C-%E8%BF%9B%E5%85%A5%E4%BF%9D%E6%8A%A4%E6%A8%A1%E5%BC%8F"><span class="toc-text">如何 使能 和 进入保护模式</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%83%E4%B9%A0%E5%9B%9B%EF%BC%9A%E5%88%86%E6%9E%90-bootloader-%E5%8A%A0%E8%BD%BD-ELF-%E6%A0%BC%E5%BC%8F%E7%9A%84-OS-%E7%9A%84%E8%BF%87%E7%A8%8B"><span class="toc-text">练习四：分析 bootloader 加载 ELF 格式的 OS 的过程</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8A%A5%E5%91%8A-3"><span class="toc-text">报告</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#bootloader-%E5%A6%82%E4%BD%95%E8%AF%BB%E5%8F%96%E7%A1%AC%E7%9B%98%E6%89%87%E5%8C%BA"><span class="toc-text">bootloader 如何读取硬盘扇区</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8A%A5%E5%91%8A-4"><span class="toc-text">报告</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%A7%A3%E9%87%8A%E6%9C%80%E5%90%8E%E4%B8%80%E8%A1%8C%E5%90%84%E4%B8%AA%E6%95%B0%E5%80%BC"><span class="toc-text">解释最后一行各个数值</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%83%E4%B9%A0%E5%85%AD%EF%BC%9A%E5%AE%8C%E5%96%84%E4%B8%AD%E6%96%AD%E5%88%9D%E5%A7%8B%E5%8C%96%E5%92%8C%E5%A4%84%E7%90%86"><span class="toc-text">练习六：完善中断初始化和处理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8A%A5%E5%91%8A-5"><span class="toc-text">报告</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E9%97%AE"><span class="toc-text">第一问</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E9%97%AE"><span class="toc-text">第二问</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E9%97%AE"><span class="toc-text">第三问</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-%E4%BB%8E%E6%9C%BA%E5%99%A8%E5%90%AF%E5%8A%A8%E5%88%B0%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%BF%90%E8%A1%8C%E7%9A%84%E8%BF%87%E7%A8%8B"><span class="toc-text">3 从机器启动到操作系统运行的过程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-1-BIOS-%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B"><span class="toc-text">3.1 BIOS 启动过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-2-Bootloader-%E7%9A%84%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B"><span class="toc-text">3.2 Bootloader 的启动过程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-1-%E4%BF%9D%E6%8A%A4%E6%A8%A1%E5%BC%8F%E5%92%8C%E5%88%86%E6%AE%B5%E6%9C%BA%E5%88%B6"><span class="toc-text">3.2.1 保护模式和分段机制</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9E%E6%A8%A1%E5%BC%8F"><span class="toc-text">实模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BF%9D%E6%8A%A4%E6%A8%A1%E5%BC%8F"><span class="toc-text">保护模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%86%E6%AE%B5%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E6%9C%BA%E5%88%B6"><span class="toc-text">分段存储管理机制</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%AE%B5%E6%8F%8F%E8%BF%B0%E7%AC%A6"><span class="toc-text">段描述符</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%85%A8%E5%B1%80%E6%8F%8F%E8%BF%B0%E7%AC%A6%E8%A1%A8"><span class="toc-text">全局描述符表</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%80%89%E6%8B%A9%E5%AD%90"><span class="toc-text">选择子</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BF%9D%E6%8A%A4%E6%A8%A1%E5%BC%8F%E4%B8%8B%E7%9A%84%E7%89%B9%E6%9D%83%E7%BA%A7"><span class="toc-text">保护模式下的特权级</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-3-%E7%A1%AC%E7%9B%98%E8%AE%BF%E9%97%AE%E6%A6%82%E8%BF%B0"><span class="toc-text">3.2.3 硬盘访问概述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ELF-%E6%A0%BC%E5%BC%8F%E6%96%87%E4%BB%B6%E6%A6%82%E8%BF%B0"><span class="toc-text">ELF 格式文件概述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-2-%E4%B8%AD%E6%96%AD%E4%B8%8E%E5%BC%82%E5%B8%B8"><span class="toc-text">3.3.2 中断与异常</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Posts</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/p/10f62ef4.html" title="PROJECT #4: CONCURRENCY CONTROL"><img src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/joseph-barrientos-oQl0eVYd_n8-unsplash.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="PROJECT #4: CONCURRENCY CONTROL"/></a><div class="content"><a class="title" href="/p/10f62ef4.html" title="PROJECT #4: CONCURRENCY CONTROL">PROJECT #4: CONCURRENCY CONTROL</a><time datetime="2024-05-16T01:01:13.000Z" title="Created 2024-05-16 09:01:13">2024-05-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/c186cbfd.html" title="Project #3: Query Execution"><img src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven-gpdvj3.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Project #3: Query Execution"/></a><div class="content"><a class="title" href="/p/c186cbfd.html" title="Project #3: Query Execution">Project #3: Query Execution</a><time datetime="2024-05-16T00:59:16.000Z" title="Created 2024-05-16 08:59:16">2024-05-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/2acafc61.html" title="rustlings"><img src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/pathway-middle-green-leafed-trees-with-sun-shining-through-branches.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="rustlings"/></a><div class="content"><a class="title" href="/p/2acafc61.html" title="rustlings">rustlings</a><time datetime="2023-11-28T09:46:15.000Z" title="Created 2023-11-28 17:46:15">2023-11-28</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/d028ccc3.html" title="基于Actix-Web(Rust)和Vue的Web开发记录"><img src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven-kxd1md.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="基于Actix-Web(Rust)和Vue的Web开发记录"/></a><div class="content"><a class="title" href="/p/d028ccc3.html" title="基于Actix-Web(Rust)和Vue的Web开发记录">基于Actix-Web(Rust)和Vue的Web开发记录</a><time datetime="2023-11-13T13:42:48.000Z" title="Created 2023-11-13 21:42:48">2023-11-13</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/517dd8ea.html" title="Project#2: Extendible Hash Index"><img src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven5.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Project#2: Extendible Hash Index"/></a><div class="content"><a class="title" href="/p/517dd8ea.html" title="Project#2: Extendible Hash Index">Project#2: Extendible Hash Index</a><time datetime="2023-10-30T13:56:01.000Z" title="Created 2023-10-30 21:56:01">2023-10-30</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2021 - 2026 By zihao</span><span class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.2</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.7.0</a></span></div><div class="footer_custom_text">Hi, welcome to my <a href="https://zihao256.github.io/">Blog</a>!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Reading Mode"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="Toggle Between Traditional and Simplified Chinese">简</button><button id="darkmode" type="button" title="Toggle Between Light and Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle Between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Settings"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table of Contents"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="Scroll to Comments"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="Back to Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.7.0"></script><script src="/js/main.js?v=5.7.0"></script><script src="/js/tw_cn.js?v=5.7.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1.14/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>(() => {
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = null
 
+  const commentCount = n => {
+    const isCommentCount = document.querySelector('#post-meta .gitalk-comment-count')
+    if (isCommentCount) {
+      isCommentCount.textContent= n
+    }
   }
-}
-window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><script>function addGitalkSource () {
-  const ele = document.createElement('link')
-  ele.rel = 'stylesheet'
-  ele.href= 'https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.css'
-  document.getElementsByTagName('head')[0].appendChild(ele)
-}
 
-function loadGitalk () {
-  function initGitalk () {
-    var gitalk = new Gitalk(Object.assign({
+  const initGitalk = (el, path) => {
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyGitalk = () => {
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+
+    const gitalk = new Gitalk({
       clientID: '3b2ff3959cccdea73272',
       clientSecret: 'ff54cd4f8d455c066e787ca2dc1684a21094e488',
       repo: 'ZiHao256.github.io',
       owner: 'ZiHao256',
       admin: ['ZiHao256'],
-      id: '847aae2717141bc47e4f465b953dc21e',
-      updateCountCallback: commentCount
-    },null))
+      updateCountCallback: commentCount,
+      ...option,
+      id: isShuoshuo ? path : (option && option.id) || '847aae2717141bc47e4f465b953dc21e'
+    })
 
     gitalk.render('gitalk-container')
   }
 
-  if (typeof Gitalk === 'function') initGitalk()
-  else {
-    addGitalkSource()
-    getScript('https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.js').then(initGitalk)
+  const loadGitalk = async(el, path) => {
+    if (typeof Gitalk === 'function') initGitalk(el, path)
+    else {
+      await btf.getCSS('https://cdn.jsdelivr.net/npm/gitalk@1.8.0/dist/gitalk.min.css')
+      await btf.getScript('https://cdn.jsdelivr.net/npm/gitalk@1.8.0/dist/gitalk.min.js')
+      initGitalk(el, path)
+    }
   }
-}
 
-function commentCount(n){
-  let isCommentCount = document.querySelector('#post-meta .gitalk-comment-count')
-  if (isCommentCount) {
-    isCommentCount.innerHTML= n
+  if (isShuoshuo) {
+    'Gitalk' === 'Gitalk'
+      ? window.shuoshuoComment = { loadComment: loadGitalk }
+      : window.loadOtherComment = loadGitalk
+    return
   }
-}
 
-if ('Gitalk' === 'Gitalk' || !false) {
-  if (false) btf.loadComment(document.getElementById('gitalk-container'), loadGitalk)
-  else loadGitalk()
-} else {
-  function loadOtherComment () {
-    loadGitalk()
+  if ('Gitalk' === 'Gitalk' || !false) {
+    if (false) btf.loadComment(document.getElementById('gitalk-container'), loadGitalk)
+    else loadGitalk()
+  } else {
+    window.loadOtherComment = loadGitalk
   }
-}</script></div><script>window.addEventListener('load', () => {
-  const changeContent = (content) => {
+})()</script></div><script>window.newestComments = {
+  changeContent: content => {
     if (content === '') return content
 
-    content = content.replace(/<img.*?src="(.*?)"?[^\>]+>/ig, '[image]') // replace image link
-    content = content.replace(/<a[^>]+?href=["']?([^"']+)["']?[^>]*>([^<]+)<\/a>/gi, '[link]') // replace url
-    content = content.replace(/<pre><code>.*?<\/pre>/gi, '[code]') // replace code
-    content = content.replace(/<[^>]+>/g,"") // remove html tag
+    content = content.replace(/<img.*?src="(.*?)"?[^\>]+>/ig, '[Image]') // replace image link
+    content = content.replace(/<a[^>]+?href=["']?([^"']+)["']?[^>]*>([^<]+)<\/a>/gi, '[Link]') // replace url
+    content = content.replace(/<pre><code>.*?<\/pre>/gi, '[Code]') // replace code
+    content = content.replace(/<code>.*?<\/code>/gi, '[Code]') // replace code
+    content = content.replace(/<[^>]+>/g, "") // remove html tag
 
     if (content.length > 150) {
-      content = content.substring(0,150) + '...'
+      content = content.substring(0, 150) + '...'
     }
     return content
-  }
+  },
 
-  const findTrueUrl = (array) => {
+  generateHtml: (array, ele) => {
+    let result = ''
+
+    if (array.length) {
+      for (let i = 0; i < array.length; i++) {
+        result += '<div class="aside-list-item">'
+
+        if (true && array[i].avatar) {
+          const imgAttr = 'src'
+          const lazyloadNative = ''
+          result += `<a href="${array[i].url}" class="thumbnail"><img ${imgAttr}="${array[i].avatar}" alt="${array[i].nick}" ${lazyloadNative}></a>`
+        }
+
+        result += `<div class="content">
+        <a class="comment" href="${array[i].url}" title="${array[i].content}">${array[i].content}</a>
+        <div class="name"><span>${array[i].nick} / </span><time datetime="${array[i].date}">${btf.diffDate(array[i].date, true)}</time></div>
+        </div></div>`
+      }
+    } else {
+      result += 'No comments'
+    }
+
+    ele.innerHTML = result
+    window.lazyLoadInstance && window.lazyLoadInstance.update()
+    window.pjax && window.pjax.refresh(ele)
+  },
+
+  newestCommentInit: (name, getComment) => {
+    const $dom = document.querySelector('#card-newest-comments .aside-list')
+    if ($dom) {
+      const data = btf.saveToLocal.get(name)
+      if (data) {
+        newestComments.generateHtml(JSON.parse(data), $dom)
+      } else {
+        getComment($dom)
+      }
+    }
+  },
+
+  run: (name, getComment) => {
+    newestComments.newestCommentInit(name, getComment)
+    btf.addGlobalFn('pjaxComplete', () => newestComments.newestCommentInit(name, getComment), name)
+  }
+}</script><script>window.addEventListener('load', () => {
+  const keyName = 'github-newest-comments'
+  const { changeContent, generateHtml, run } = window.newestComments
+
+  const findTrueUrl = (array, ele) => {
     Promise.all(array.map(item =>
       fetch(item.url).then(resp => resp.json()).then(data => {
-        const urlArray = data.body.match(/(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?/ig)
+        let urlArray = data.body ? data.body.match(/(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?/ig) : []
+        if (!Array.isArray(urlArray) || urlArray.length === 0) {
+          urlArray = [`${data.html_url}`]
+        }
         if (data.user.login === 'utterances-bot') {
           return urlArray.pop()
         } else {
@@ -1232,12 +1400,12 @@ if ('Gitalk' === 'Gitalk' || !false) {
           }
         })
 
-        saveToLocal.set('github-newest-comments', JSON.stringify(array), 10/(60*24))
-        generateHtml(array)
+        btf.saveToLocal.set(keyName, JSON.stringify(array), 10/(60*24))
+        generateHtml(array, ele)
     });
   }
 
-  const getComment = () => {
+  const getComment = ele => {
     fetch('https://api.github.com/repos/ZiHao256/ZiHao256.github.io/issues/comments?sort=updated&direction=desc&per_page=6&page=1',{
       "headers": {
         Accept: 'application/vnd.github.v3.html+json'
@@ -1248,128 +1416,75 @@ if ('Gitalk' === 'Gitalk' || !false) {
         const githubArray = data.map(item => {
           return {
             'avatar': item.user.avatar_url,
-            'content': changeContent(item.body_html),
+            'content': changeContent(item.body_html || item.body),
             'nick': item.user.login,
             'url': item.issue_url,
-            'date': item.updated_at,
-            'githubUrl': item.html_url
+            'date': item.updated_at
           }
         })
-        findTrueUrl(githubArray)
+        findTrueUrl(githubArray, ele)
       }).catch(e => {
-        const $dom = document.querySelector('#card-newest-comments .aside-list')
-        $dom.innerHTML= "Unable to get the data, please make sure the settings are correct."
+        console.error(e)
+        ele.textContent= "Unable to retrieve comments, please check the configuration"
       })
   }
+  run(keyName, getComment)
+})</script><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/dist/canvas-fluttering-ribbon.min.js"></script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/dist/click-heart.min.js" async="async" mobile="true"></script><script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js" defer="defer"></script><script>document.addEventListener('DOMContentLoaded', () => {
+  const pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
 
-  const generateHtml = array => {
-    let result = ''
-
-    if (array.length) {
-      for (let i = 0; i < array.length; i++) {
-        result += '<div class=\'aside-list-item\'>'
-
-        if (true) {
-          const name = 'src'
-          result += `<a href='${array[i].url}' class='thumbnail'><img ${name}='${array[i].avatar}' alt='${array[i].nick}'></a>`
-        }
-
-        result += `<div class='content'>
-        <a class='comment' href='${array[i].url}' title='${array[i].content}'>${array[i].content}</a>
-        <div class='name'><span>${array[i].nick} / </span><time datetime="${array[i].date}">${btf.diffDate(array[i].date, true)}</time></div>
-        </div></div>`
-      }
-    } else {
-      result += 'No Comment'
-    }
-
-    let $dom = document.querySelector('#card-newest-comments .aside-list')
-    $dom.innerHTML= result
-    window.lazyLoadInstance && window.lazyLoadInstance.update()
-    window.pjax && window.pjax.refresh($dom)
-  }
-
-  const newestCommentInit = () => {
-    if (document.querySelector('#card-newest-comments .aside-list')) {
-      const data = saveToLocal.get('github-newest-comments')
-      if (data) {
-        generateHtml(JSON.parse(data))
-      } else {
-        getComment()
-      }
-    }
-  }
-
-  newestCommentInit()
-  document.addEventListener('pjax:complete', newestCommentInit)
-})</script><div class="aplayer no-destroy" data-id="6738460302" data-server="netease" data-type="playlist" data-fixed="true" data-autoplay="true"> </div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-heart.min.js" async="async" mobile="true"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
-
-var pjax = new Pjax({
-  elements: 'a:not([target="_blank"])',
-  selectors: pjaxSelectors,
-  cacheBust: false,
-  analytics: false,
-  scrollRestoration: false
-})
-
-document.addEventListener('pjax:send', function () {
-
-  // removeEventListener scroll 
-  window.tocScrollFn && window.removeEventListener('scroll', window.tocScrollFn)
-  window.scrollCollect && window.removeEventListener('scroll', scrollCollect)
-
-  typeof preloader === 'object' && preloader.initLoading()
-  document.getElementById('rightside').style.cssText = "opacity: ''; transform: ''"
-  
-  if (window.aplayers) {
-    for (let i = 0; i < window.aplayers.length; i++) {
-      if (!window.aplayers[i].options.fixed) {
-        window.aplayers[i].destroy()
-      }
-    }
-  }
-
-  typeof typed === 'object' && typed.destroy()
-
-  //reset readmode
-  const $bodyClassList = document.body.classList
-  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
-
-  typeof disqusjs === 'object' && disqusjs.destroy()
-})
-
-document.addEventListener('pjax:complete', function () {
-  window.refreshFn()
-
-  document.querySelectorAll('script[data-pjax]').forEach(item => {
-    const newScript = document.createElement('script')
-    const content = item.text || item.textContent || item.innerHTML || ""
-    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
-    newScript.appendChild(document.createTextNode(content))
-    item.parentNode.replaceChild(newScript, item)
+  window.pjax = new Pjax({
+    elements: 'a:not([target="_blank"]):not([data-fancybox])',
+    selectors: pjaxSelectors,
+    cacheBust: false,
+    analytics: false,
+    scrollRestoration: false
   })
 
-  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
-
-  typeof chatBtnFn === 'function' && chatBtnFn()
-  typeof panguInit === 'function' && panguInit()
-
-  // google analytics
-  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
-
-  // baidu analytics
-  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
-
-  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
-
-  // prismjs
-  typeof Prism === 'object' && Prism.highlightAll()
-
-  typeof preloader === 'object' && preloader.endLoading()
-})
-
-document.addEventListener('pjax:error', (e) => {
-  if (e.request.status === 404) {
-    pjax.loadUrl('/404.html')
+  const triggerPjaxFn = (val) => {
+    if (!val) return
+    Object.values(val).forEach(fn => {
+      try {
+        fn()
+      } catch (err) {
+        console.debug('Pjax callback failed:', err)
+      }
+    })
   }
-})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
+
+  document.addEventListener('pjax:send', () => {
+    // removeEventListener
+    btf.removeGlobalFnEvent('pjaxSendOnce')
+    btf.removeGlobalFnEvent('themeChange')
+
+    // reset readmode
+    const $bodyClassList = document.body.classList
+    if ($bodyClassList.contains('read-mode')) $bodyClassList.remove('read-mode')
+
+    triggerPjaxFn(window.globalFn.pjaxSend)
+  })
+
+  document.addEventListener('pjax:complete', () => {
+    btf.removeGlobalFnEvent('pjaxCompleteOnce')
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+      if (!item.parentNode) return
+      const newScript = document.createElement('script')
+      const content = item.text || item.textContent || ''
+      Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+      newScript.appendChild(document.createTextNode(content))
+      item.parentNode.replaceChild(newScript, item)
+    })
+
+    triggerPjaxFn(window.globalFn.pjaxComplete)
+  })
+
+  document.addEventListener('pjax:error', e => {
+    const responseURL = e.request && e.request.responseURL
+    if (e.request && e.request.status === 404) {
+      true
+        ? pjax.loadUrl('/404.html')
+        : responseURL && (window.location.href = responseURL)
+    } else if (responseURL) {
+      window.location.href = responseURL
+    }
+  })
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">Search</span><i class="fas fa-spinner fa-pulse" id="loading-status" hidden="hidden"></i><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  Loading Database</span></div><div class="local-search-input"><input placeholder="Search for Posts" type="text"/></div><hr/><div id="local-search-results"></div><div class="ais-Pagination" id="local-search-pagination" style="display:none;"><ul class="ais-Pagination-list"></ul></div><div id="local-search-stats"></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=5.7.0"></script></div></div></body></html>

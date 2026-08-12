@@ -1,37 +1,183 @@
-<!DOCTYPE html><html lang="zh-Hans" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>Project#2: Extendible Hash Index | ZiHao's Blog</title><meta name="keywords" content="Container,Database System,C++"><meta name="author" content="zihao"><meta name="copyright" content="zihao"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="撰写本文的目的：记录本人在不参考其他任何形式的解决方法（思路&#x2F;源码）、仅靠课程提供的资源（课本&#x2F;参考资料）和Discord中high level的讨论的情况下，独立完成该课程的过程。 欢迎大家和我讨论学习中所遇到的问题。 ZiHao’s Blog   Project #2: Extendible Hash Index  先记录完成的过程，然后再总结和思考  准备Due：四个星期左右（通过本地测试-">
+<!DOCTYPE html><html lang="zh-Hans" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Project#2: Extendible Hash Index | ZiHao's Blog</title><meta name="author" content="zihao"><meta name="copyright" content="zihao"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="撰写本文的目的：记录本人在不参考其他任何形式的解决方法（思路&#x2F;源码）、仅靠课程提供的资源（课本&#x2F;参考资料）和Discord中high level的讨论的情况下，独立完成该课程的过程。 欢迎大家和我讨论学习中所遇到的问题。 ZiHao’s Blog   Project #2: Extendible Hash Index  先记录完成的过程，然后再总结和思考  准备Due：四个星期">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Project#2: Extendible Hash Index">
 <meta property="og:url" content="https://zihao256.github.io/p/517dd8ea.html">
 <meta property="og:site_name" content="ZiHao&#39;s Blog">
-<meta property="og:description" content="撰写本文的目的：记录本人在不参考其他任何形式的解决方法（思路&#x2F;源码）、仅靠课程提供的资源（课本&#x2F;参考资料）和Discord中high level的讨论的情况下，独立完成该课程的过程。 欢迎大家和我讨论学习中所遇到的问题。 ZiHao’s Blog   Project #2: Extendible Hash Index  先记录完成的过程，然后再总结和思考  准备Due：四个星期左右（通过本地测试-">
+<meta property="og:description" content="撰写本文的目的：记录本人在不参考其他任何形式的解决方法（思路&#x2F;源码）、仅靠课程提供的资源（课本&#x2F;参考资料）和Discord中high level的讨论的情况下，独立完成该课程的过程。 欢迎大家和我讨论学习中所遇到的问题。 ZiHao’s Blog   Project #2: Extendible Hash Index  先记录完成的过程，然后再总结和思考  准备Due：四个星期">
 <meta property="og:locale">
-<meta property="og:image" content="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/john-towner-3Kv48NS4WUU-unsplash.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven5.jpg">
 <meta property="article:published_time" content="2023-10-30T13:56:01.000Z">
-<meta property="article:modified_time" content="2024-05-16T01:00:31.479Z">
+<meta property="article:modified_time" content="2026-08-12T03:20:22.000Z">
 <meta property="article:author" content="zihao">
+<meta property="article:tag" content="C++">
 <meta property="article:tag" content="Container">
 <meta property="article:tag" content="Database System">
-<meta property="article:tag" content="C++">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/john-towner-3Kv48NS4WUU-unsplash.jpg"><link rel="shortcut icon" href="https://github.com/ZiHao256/ZiHao256.github.io/blob/hexo/images/stitch.JPG?raw=true"><link rel="canonical" href="https://zihao256.github.io/p/517dd8ea"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+<meta name="twitter:image" content="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven5.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Project#2: Extendible Hash Index",
+  "url": "https://zihao256.github.io/p/517dd8ea.html",
+  "image": "https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven5.jpg",
+  "datePublished": "2023-10-30T13:56:01.000Z",
+  "dateModified": "2026-08-12T03:20:22.000Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "zihao",
+      "url": "https://zihao256.github.io"
+    }
+  ]
+}</script><link rel="shortcut icon" href="https://github.com/ZiHao256/ZiHao256.github.io/blob/hexo/images/stitch.JPG?raw=true"><link rel="canonical" href="https://zihao256.github.io/p/517dd8ea.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.7.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.3.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1.14/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        const data = { value }
+
+        if (ttl != null) {
+          data.expiry = Date.now() + ttl * 86400000
+        }
+
+        localStorage.setItem(key, JSON.stringify(data))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return
+
+        try {
+          const data = JSON.parse(itemStr)
+
+          if (data.expiry && Date.now() > data.expiry) {
+            localStorage.removeItem(key)
+            return
+          }
+
+          return data.value
+        } catch {
+          localStorage.removeItem(key)
+        }
+      }
+    }
+
+    const scriptCache = new Map()
+    const cssCache = new Map()
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => {
+        if (scriptCache.has(url)) {
+          return scriptCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const script = document.createElement('script')
+
+          script.src = url
+          script.async = true
+
+          for (const key in attr) {
+            script.setAttribute(key, attr[key])
+          }
+
+          script.onload = resolve
+          script.onerror = reject
+
+          document.head.appendChild(script)
+        })
+
+        scriptCache.set(url, promise)
+
+        return promise
+      },
+      getCSS: (url, id) => {
+        if (cssCache.has(url)) {
+          return cssCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const link = document.createElement('link')
+
+          link.rel = 'stylesheet'
+          link.href = url
+
+          if (id) {
+            link.id = id
+          }
+
+          link.onload = resolve
+          link.onerror = reject
+
+          document.head.appendChild(link)
+        })
+
+        cssCache.set(url, promise)
+
+        return promise
+      },
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!true && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const metaThemeColor = document.querySelector('meta[name="theme-color"]')
+      const activateDarkMode = () => {
+        document.documentElement.dataset.theme = 'dark'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.dataset.theme = 'light'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
   root: '/',
   algolia: undefined,
-  localSearch: {"path":"/search.xml","preload":true,"languages":{"hits_empty":"We didn't find any results for the search: ${query}"}},
+  localSearch: {"path":"/search.xml","preload":true,"top_n_per_article":1,"unescape":false,"pagination":{"enable":false,"hitsPerPage":8},"languages":{"hits_empty":"No results found for: ${query}","hits_stats":"${hits} articles found"}},
   translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
-  noticeOutdate: undefined,
-  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":true},
   copy: {
-    success: 'Copy successfully',
-    error: 'Copy error',
-    noSupport: 'The browser does not support'
+    success: 'Copy Successful',
+    error: 'Copy Failed',
+    noSupport: 'Browser Not Supported'
   },
   relativeDate: {
     homepage: true,
     post: true
   },
-  runtime: '天',
-  date_suffix: {
-    just: 'Just',
+  runtime: 'days',
+  dateSuffix: {
+    just: 'Just now',
     min: 'minutes ago',
     hour: 'hours ago',
     day: 'days ago',
@@ -40,112 +186,55 @@
   copyright: undefined,
   lightbox: 'fancybox',
   Snackbar: undefined,
-  source: {
-    justifiedGallery: {
-      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
-      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
-    }
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
   },
   isPhotoFigcaption: true,
-  islazyload: false,
-  isAnchor: false
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
 }</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
   title: 'Project#2: Extendible Hash Index',
-  isPost: true,
-  isHome: false,
   isHighlightShrink: true,
   isToc: true,
-  postUpdate: '2024-05-16 09:00:31'
-}</script><noscript><style type="text/css">
-  #nav {
-    opacity: 1
-  }
-  .justified-gallery img {
-    opacity: 1
-  }
-
-  #recent-posts time,
-  #post-meta time {
-    display: inline !important
-  }
-</style></noscript><script>(win=>{
-    win.saveToLocal = {
-      set: function setWithExpiry(key, value, ttl) {
-        if (ttl === 0) return
-        const now = new Date()
-        const expiryDay = ttl * 86400000
-        const item = {
-          value: value,
-          expiry: now.getTime() + expiryDay,
-        }
-        localStorage.setItem(key, JSON.stringify(item))
-      },
-
-      get: function getWithExpiry(key) {
-        const itemStr = localStorage.getItem(key)
-
-        if (!itemStr) {
-          return undefined
-        }
-        const item = JSON.parse(itemStr)
-        const now = new Date()
-
-        if (now.getTime() > item.expiry) {
-          localStorage.removeItem(key)
-          return undefined
-        }
-        return item.value
-      }
+  pageType: 'post'
+}</script><link rel="stylesheet" href="//at.alicdn.com/t/c/font_4263496_xe5w6zp8g5c.css"><meta name="generator" content="Hexo 8.1.2"><link rel="alternate" href="/atom.xml" title="ZiHao's Blog" type="application/atom+xml">
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">Loading...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      if ($loadingBox.classList.contains('loaded')) return
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
     }
-  
-    win.getScript = url => new Promise((resolve, reject) => {
-      const script = document.createElement('script')
-      script.src = url
-      script.async = true
-      script.onerror = reject
-      script.onload = script.onreadystatechange = function() {
-        const loadState = this.readyState
-        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
-        script.onload = script.onreadystatechange = null
-        resolve()
-      }
-      document.head.appendChild(script)
-    })
-  
-      win.activateDarkMode = function () {
-        document.documentElement.setAttribute('data-theme', 'dark')
-        if (document.querySelector('meta[name="theme-color"]') !== null) {
-          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
-        }
-      }
-      win.activateLightMode = function () {
-        document.documentElement.setAttribute('data-theme', 'light')
-        if (document.querySelector('meta[name="theme-color"]') !== null) {
-          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
-        }
-      }
-      const t = saveToLocal.get('theme')
-    
-          if (t === 'dark') activateDarkMode()
-          else if (t === 'light') activateLightMode()
-        
-      const asideStatus = saveToLocal.get('aside-status')
-      if (asideStatus !== undefined) {
-        if (asideStatus === 'hide') {
-          document.documentElement.classList.add('hide-aside')
-        } else {
-          document.documentElement.classList.remove('hide-aside')
-        }
-      }
-    
-    const detectApple = () => {
-      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
-        document.documentElement.classList.add('apple')
-      }
-    }
-    detectApple()
-    })(window)</script><link rel="stylesheet" href="//at.alicdn.com/t/c/font_4263496_xe5w6zp8g5c.css"><meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="/atom.xml" title="ZiHao's Blog" type="application/atom+xml">
-<style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}</style></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">Loading...</div></div></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://github.com/ZiHao256/ZiHao256.github.io/blob/hexo/images/stitch.JPG?raw=true" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">66</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">48</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">16</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/log"><i class="fa-fw fas fa-book"></i><span> Log</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fa fa-camera-retro"></i><span> Gallery</span></a></li><li><a class="site-page child" href="/Map/"><i class="fa-fw fa fa-map-signs"></i><span> Map</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div><div class="menus_item"><a class="site-page" href="/omnisearch/"><i class="fa-fw fas fa-search"></i><span> Omni Search</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/john-towner-3Kv48NS4WUU-unsplash.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">ZiHao's Blog</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> Search</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/log"><i class="fa-fw fas fa-book"></i><span> Log</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fa fa-camera-retro"></i><span> Gallery</span></a></li><li><a class="site-page child" href="/Map/"><i class="fa-fw fa fa-map-signs"></i><span> Map</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div><div class="menus_item"><a class="site-page" href="/omnisearch/"><i class="fa-fw fas fa-search"></i><span> Omni Search</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Project#2: Extendible Hash Index</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2023-10-30T13:56:01.000Z" title="Created 2023-10-30 21:56:01">2023-10-30</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2024-05-16T01:00:31.479Z" title="Updated 2024-05-16 09:00:31">2024-05-16</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/">学无止境</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/CMU15-445-2023FALL/">CMU15-445(2023FALL)</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">Word count:</span><span class="word-count">9.6k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">Reading time:</span><span>41min</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Project#2: Extendible Hash Index"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">Comments:</span><a href="/p/517dd8ea.html#post-comment"><span class="gitalk-comment-count"><i class="fa-solid fa-spinner fa-spin"></i></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><div class="note warning simple"><p><strong>撰写本文的目的</strong>：记录本人在不参考其他任何形式的解决方法（思路/源码）、仅靠课程提供的资源（课本/参考资料）和<code>Discord</code>中<code>high level</code>的讨论的情况下，独立完成该课程的过程。</p>
+  }
+
+  preloader.initLoading()
+
+  if (document.readyState === 'complete') {
+    preloader.endLoading()
+  } else {
+    window.addEventListener('load', preloader.endLoading)
+    document.addEventListener('DOMContentLoaded', preloader.endLoading)
+    // Add timeout protection: force end after 7 seconds
+    setTimeout(preloader.endLoading, 7000)
+  }
+
+  if (true) {
+    btf.addGlobalFn('pjaxSend', preloader.initLoading, 'preloader_init')
+    btf.addGlobalFn('pjaxComplete', preloader.endLoading, 'preloader_end')
+  }
+})()</script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="https://github.com/ZiHao256/ZiHao256.github.io/blob/hexo/images/stitch.JPG?raw=true" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">66</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">48</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">16</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/log"><i class="fa-fw fas fa-book"></i><span> Log</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><span class="site-page group hide"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fa fa-camera-retro"></i><span> Gallery</span></a></li><li><a class="site-page child" href="/Map/"><i class="fa-fw fa fa-map-signs"></i><span> Map</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven5.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">ZiHao's Blog</span></a><a class="nav-page-title" href="/"><span class="site-name">Project#2: Extendible Hash Index</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  Back to Home</span></span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> Search</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/log"><i class="fa-fw fas fa-book"></i><span> Log</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><span class="site-page group hide"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fa fa-camera-retro"></i><span> Gallery</span></a></li><li><a class="site-page child" href="/Map/"><i class="fa-fw fa fa-map-signs"></i><span> Map</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">Project#2: Extendible Hash Index</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2023-10-30T13:56:01.000Z" title="Created 2023-10-30 21:56:01">2023-10-30</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2026-08-12T03:20:22.000Z" title="Updated 2026-08-12 11:20:22">2026-08-12</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/">学无止境</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/CMU15-445-2023FALL/">CMU15-445(2023FALL)</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">Word Count:</span><span class="word-count">9.6k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">Reading Time:</span><span>41mins</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">Comments:</span><a href="/p/517dd8ea.html#post-comment"><span class="gitalk-comment-count"><i class="fa-solid fa-spinner fa-spin"></i></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><div class="note warning simple"><p><strong>撰写本文的目的</strong>：记录本人在不参考其他任何形式的解决方法（思路&#x2F;源码）、仅靠课程提供的资源（课本&#x2F;参考资料）和<code>Discord</code>中<code>high level</code>的讨论的情况下，独立完成该课程的过程。</p>
 <p>欢迎大家和我讨论学习中所遇到的问题。</p>
 <p><a href="https://zihao256.github.io/">ZiHao’s Blog</a></p>
 </div>
@@ -157,42 +246,42 @@
 <h1 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h1><p><strong>Due</strong>：四个星期左右（通过本地测试-4天左右+通过线上测试-一周左右，但由于中途有其他事情，时间跨度很大）</p>
 <p>在开始完成该项目之前，首先确保两件事</p>
 <ol>
-<li> 确保Project#1的代码实现是正确的，最好多提交几次，因为测试用例可能会有不同</li>
-<li> 一定要先从原bustub仓库pull最新的代码，不然可能会缺少一些给定的实现</li>
+<li>确保Project#1的代码实现是正确的，最好多提交几次，因为测试用例可能会有不同</li>
+<li>一定要先从原bustub仓库pull最新的代码，不然可能会缺少一些给定的实现</li>
 </ol>
 <p><strong>实验环境：</strong></p>
 <ul>
-<li>  MacOS</li>
-<li>  CLion/VSCode</li>
+<li>MacOS</li>
+<li>CLion&#x2F;VSCode</li>
 </ul>
-<h1 id="Task-1-Read-Write-Page-Guards"><a href="#Task-1-Read-Write-Page-Guards" class="headerlink" title="Task #1-Read/Write Page Guards"></a>Task #1-Read/Write Page Guards</h1><ul>
+<h1 id="Task-1-Read-Write-Page-Guards"><a href="#Task-1-Read-Write-Page-Guards" class="headerlink" title="Task #1-Read&#x2F;Write Page Guards"></a>Task #1-Read&#x2F;Write Page Guards</h1><ul>
 <li><p>数据成员：存储指针</p>
 <ul>
-<li>  指向BPM</li>
-<li>  指向Page对象</li>
+<li>指向BPM</li>
+<li>指向Page对象</li>
 </ul>
 </li>
-<li><p>  析构函数：确保当BasicPageGuard对象离开作用域的时候：自动调用<code>UnpinPage</code></p>
+<li><p>析构函数：确保当BasicPageGuard对象离开作用域的时候：自动调用<code>UnpinPage</code></p>
 </li>
-<li><p>  方法成员：除此之外，需要提供方法使得能够手动unpin</p>
+<li><p>方法成员：除此之外，需要提供方法使得能够手动unpin</p>
 </li>
 <li><p>数据成员：writer-reader latch</p>
 <ul>
-<li>  可以尝试调用Page中的相关方法</li>
+<li>可以尝试调用Page中的相关方法</li>
 </ul>
 </li>
-<li><p>  方法成员：能够在对象离开作用域时，自动释放latch</p>
+<li><p>方法成员：能够在对象离开作用域时，自动释放latch</p>
 </li>
 </ul>
-<h2 id="BasicPageGuard-ReadPageGuard-WritePageGuard"><a href="#BasicPageGuard-ReadPageGuard-WritePageGuard" class="headerlink" title="BasicPageGuard/ReadPageGuard/WritePageGuard"></a>BasicPageGuard/ReadPageGuard/WritePageGuard</h2><p>可以看到每个<code>Guard</code>的拷贝操作都是默认为<code>delete</code>，只能使用默认构造器和<code>move</code>相关的操作</p>
+<h2 id="BasicPageGuard-ReadPageGuard-WritePageGuard"><a href="#BasicPageGuard-ReadPageGuard-WritePageGuard" class="headerlink" title="BasicPageGuard&#x2F;ReadPageGuard&#x2F;WritePageGuard"></a>BasicPageGuard&#x2F;ReadPageGuard&#x2F;WritePageGuard</h2><p>可以看到每个<code>Guard</code>的拷贝操作都是默认为<code>delete</code>，只能使用默认构造器和<code>move</code>相关的操作</p>
 <p><strong>对于BasicPageGuard</strong></p>
 <ul>
 <li><p><code>PageGuard(PageGuard &amp;&amp;that)</code>: Move constructor.</p>
 <ul>
 <li><p>参考C++Primer</p>
 <ul>
-<li>  移动构造的时候从给定对象中窃取资源而非拷贝资源，即移动构造函数不分配任何新内存</li>
-<li>  需要确保移后源对象销毁是安全的</li>
+<li>移动构造的时候从给定对象中窃取资源而非拷贝资源，即移动构造函数不分配任何新内存</li>
+<li>需要确保移后源对象销毁是安全的</li>
 </ul>
 </li>
 </ul>
@@ -201,15 +290,15 @@
 <ul>
 <li><p>需要处理移动赋值对象是自身的情况</p>
 <ul>
-<li>  直接返回*this</li>
+<li>直接返回*this</li>
 </ul>
 </li>
 <li><p>否则，需要处理this和that</p>
 <ul>
-<li>  直接调用this的Drop</li>
-<li>  将that的内容交予this</li>
+<li>直接调用this的Drop</li>
+<li>将that的内容交予this</li>
 <li>安全地将that的内容清空<ul>
-<li>  <strong>Hint</strong>：需要确保that不会对内部Page对象调用<code>Unpin</code></li>
+<li><strong>Hint</strong>：需要确保that不会对内部Page对象调用<code>Unpin</code></li>
 </ul>
 </li>
 </ul>
@@ -219,25 +308,25 @@
 <li><p><code>Drop()</code>: </p>
 <ul>
 <li>先清空内容，再调用UnpinPage<ul>
-<li>  <strong>Hint</strong>: 确保page成员非空时</li>
+<li><strong>Hint</strong>: 确保page成员非空时</li>
 </ul>
 </li>
 </ul>
 </li>
 <li><p><code>~PageGuard()</code>: Destructor.</p>
 <ul>
-<li>  直接调用Drop</li>
+<li>直接调用Drop</li>
 </ul>
 </li>
 <li><p><code>read-only</code>和<code>write data</code>APIs</p>
 <ul>
 <li>分别为<code>As</code>和<code>AsMut</code><ul>
-<li>  <code>As</code>以<code>const</code>修饰符返回Page内部的data</li>
-<li>  <code>AsMut</code>则不然，并且注意<code>AsMut</code>会将PageGuard的成员变量<code>is_dirty</code>置为true</li>
+<li><code>As</code>以<code>const</code>修饰符返回Page内部的data</li>
+<li><code>AsMut</code>则不然，并且注意<code>AsMut</code>会将PageGuard的成员变量<code>is_dirty</code>置为true</li>
 </ul>
 </li>
 <li>可以在编译时期检查<code>data</code>用法是否正确：<ul>
-<li>  例如，在实现Task3或Task4的<code>Insert</code>时，你可能认为某个部分仅仅是查阅了<code>HeaderPage</code>，因此以<code>As</code>返回，却没想到其实有可能在<code>HeaderPage</code>中无相应<code>DirectoryPage</code>后，会修改<code>HeaderPage</code>。<del>例子可能不大恰当</del></li>
+<li>例如，在实现Task3或Task4的<code>Insert</code>时，你可能认为某个部分仅仅是查阅了<code>HeaderPage</code>，因此以<code>As</code>返回，却没想到其实有可能在<code>HeaderPage</code>中无相应<code>DirectoryPage</code>后，会修改<code>HeaderPage</code>。<del>例子可能不大恰当</del></li>
 </ul>
 </li>
 </ul>
@@ -247,20 +336,20 @@
 <ul>
 <li><p>移动构造和移动赋值都可以使用std::move完成：</p>
 <ul>
-<li>  （Update——通过<code>MoveTest</code>） <strong>Hint：</strong>注意，需要先对<code>this</code>调用<code>Drop</code>函数，先释放<code>this</code>指向的page所持有的锁！</li>
-<li>  std::move()移动赋值时，会对赋值guard调用析构函数并调用Drop，因此不必担心赋值后移后源对象会对page造成影响</li>
+<li>（Update——通过<code>MoveTest</code>） **Hint：**注意，需要先对<code>this</code>调用<code>Drop</code>函数，先释放<code>this</code>指向的page所持有的锁！</li>
+<li>std::move()移动赋值时，会对赋值guard调用析构函数并调用Drop，因此不必担心赋值后移后源对象会对page造成影响</li>
 </ul>
 </li>
 <li><p>需要注意Drop中资源的释放顺序，需要在Drop BasicPage之前释放RLatch，</p>
 <ul>
 <li>否则可能会因为Unpin调用了RLatch而死锁<ul>
-<li>  <strong>Hint</strong>: 确保page非空</li>
+<li><strong>Hint</strong>: 确保page非空</li>
 </ul>
 </li>
-<li>  <strong>更重要的原因</strong>：先UnpinPage的话，可能会被replacer evit，导致锁住的是另一个进入该Page对象的Disk Page</li>
+<li><strong>更重要的原因</strong>：先UnpinPage的话，可能会被replacer evit，导致锁住的是另一个进入该Page对象的Disk Page</li>
 </ul>
 </li>
-<li><p>  需要在析构函数中判断是否已经手动drop/移动赋值/移动构造过，避免重复Drop导致重复释放Latch</p>
+<li><p>需要在析构函数中判断是否已经手动drop&#x2F;移动赋值&#x2F;移动构造过，避免重复Drop导致重复释放Latch</p>
 </li>
 </ul>
 <p><strong>对于WritePageGuard</strong>：同上</p>
@@ -268,9 +357,11 @@
 <p>guarantee that the protected page is not evicted from the buffer pool during the upgrade</p>
 </blockquote>
 <ul>
-<li><p><code>UpgradeRead()</code>: Upgrade to a <code>ReadPageGuard</code></p>
+<li><p><input checked="" disabled="" type="checkbox"> 
+<code>UpgradeRead()</code>: Upgrade to a <code>ReadPageGuard</code></p>
 </li>
-<li><p><code>UpgradeWrite()</code>: Upgrade to a <code>WritePageGuard</code></p>
+<li><p><input checked="" disabled="" type="checkbox"> 
+<code>UpgradeWrite()</code>: Upgrade to a <code>WritePageGuard</code></p>
 </li>
 </ul>
 <p>目前这两个函数我都没有使用到，或者说是不知道该如何实现以及使用：</p>
@@ -281,17 +372,17 @@
 <li><del>因此我在<code>InsertToNewDirectory</code>和<code>InsertToNewBucket</code>中都只是用了<code>BasicPageGuard</code>并且调用了<code>AsMut</code>，而未使用<code>WritePageGuard</code>。并且这是<strong>能够</strong>通过本地测试的</del></li>
 </ul>
 </li>
-<li><strong>Hint：</strong>如何确保<code>Upgrade</code>时不会使得<code>pin_count</code>改变？<ul>
+<li>**Hint：**如何确保<code>Upgrade</code>时不会使得<code>pin_count</code>改变？<ul>
 <li>调用<code>BasicPageGuarde</code>对象<code>Drop</code>之前，先将Page对象指针置空，这样就会告诉<code>Drop</code>不要调用<code>Unpin</code></li>
 </ul>
 </li>
 <li>（——Update：通过<code>BPMTest</code>）：经过gradescope的测试，必须俩函数内部来获得锁，之前以为调用该函数前用户手动获得锁</li>
 </ul>
 <h2 id="Wrappers"><a href="#Wrappers" class="headerlink" title="Wrappers"></a>Wrappers</h2><ul>
-<li>  <code>FetchPageBasic(page_id_t page_id)</code></li>
-<li>  <code>FetchPageRead(page_id_t page_id)</code></li>
-<li>  <code>FetchPageWrite(page_id_t page_id)</code></li>
-<li>  <code>NewPageGuarded(page_id_t *page_id)</code></li>
+<li><code>FetchPageBasic(page_id_t page_id)</code></li>
+<li><code>FetchPageRead(page_id_t page_id)</code></li>
+<li><code>FetchPageWrite(page_id_t page_id)</code></li>
+<li><code>NewPageGuarded(page_id_t *page_id)</code></li>
 </ul>
 <p>注释中说明得足够清晰，不再赘述</p>
 <h2 id="LocalTest-SimpleTest"><a href="#LocalTest-SimpleTest" class="headerlink" title="LocalTest-SimpleTest"></a>LocalTest-SimpleTest</h2><p><img src="https://cdn.jsdelivr.net/gh/ZiHao256/Gallery@master/uPic/2023/10/image-20231030220121826.png" alt="local test"></p>
@@ -311,7 +402,7 @@
 <h3 id="✅-BPMTest"><a href="#✅-BPMTest" class="headerlink" title="- [✅] BPMTest"></a>- [✅] BPMTest</h3><p>根据Log信息，该测试只使用了一个线程，但是死锁了：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br></pre></td><td class="code"><pre><span class="line">71: [13112912036602121027] invoke BufferPoolManager: new BPM pool_size-[10] replacer_k-[2]</span><br><span class="line">71: [13112912036602121027] invoke NewPageGuarded</span><br><span class="line">71: [13112912036602121027] invoke NewPage</span><br><span class="line">71: [13112912036602121027] invoke NewPage: new_page-0</span><br><span class="line">71: invoke BasicPageGuard: page-0</span><br><span class="line">71: [13112912036602121027] invoke FetchPage: page-0</span><br><span class="line">71: [13112912036602121027] invoke FetchPage: page-0 has been in frame-0</span><br><span class="line">71: [13112912036602121027] invoke Drop: page-0</span><br><span class="line">71: [13112912036602121027] invoke UnpinPage: page-0 is_dirty-0</span><br><span class="line">71: [13112912036602121027] page-0 pin_count-1</span><br><span class="line">71: [13112912036602121027] invoke Drop: page--1</span><br><span class="line">71: [13112912036602121027] invoke FetchPageBasic: page-0</span><br><span class="line">71: [13112912036602121027] invoke FetchPage: page-0</span><br><span class="line">71: [13112912036602121027] invoke FetchPage: page-0 has been in frame-0</span><br><span class="line">71: invoke BasicPageGuard: page-0</span><br><span class="line">71: [13112912036602121027] invoke operator=: this-page--1 that-page-0</span><br><span class="line">71: [13112912036602121027] invoke Drop: page--1</span><br><span class="line">71: [13112912036602121027] invoke Drop: page--1</span><br><span class="line">71: [13112912036602121027] invoke ~BasicPageGuard: page--1</span><br><span class="line">71: [13112912036602121027] invoke Drop: page--1</span><br><span class="line">71: [13112912036602121027] invoke Drop: page-0</span><br><span class="line">71: [13112912036602121027] invoke UnpinPage: page-0 is_dirty-1</span><br><span class="line">71: [13112912036602121027] page-0 pin_count-1</span><br><span class="line">71: [13112912036602121027] set page-0 dirty</span><br><span class="line">71: [13112912036602121027] invoke UnpinPage: page-0 is_dirty-0</span><br><span class="line">71: [13112912036602121027] page-0 pin_count-0</span><br><span class="line">71: [13112912036602121027] set page-0 evictable</span><br><span class="line">71: [13112912036602121027] invoke NewPageGuarded</span><br><span class="line">71: [13112912036602121027] invoke NewPage</span><br><span class="line">71: [13112912036602121027] invoke NewPage: new_page-1</span><br><span class="line">71: invoke BasicPageGuard: page-1</span><br><span class="line">71: [13112912036602121027] invoke FetchPage: page-1</span><br><span class="line">71: [13112912036602121027] invoke FetchPage: page-1 has been in frame-1</span><br><span class="line">71: [13112912036602121027] invoke UpgradeRead: page-1</span><br><span class="line">71: invoke BasicPageGuard: page-1</span><br><span class="line">71: invoke ReadPageGuard: page-1</span><br><span class="line">71: [13112912036602121027] invoke Drop: page--1</span><br><span class="line">71: [13112912036602121027] invoke Drop: page--1</span><br><span class="line">71: [13112912036602121027] invoke Drop: this-page-1</span><br><span class="line">71: [13112912036602121027] invoke Drop: page-1</span><br><span class="line">71: [13112912036602121027] invoke UnpinPage: page-1 is_dirty-0</span><br><span class="line">71: [13112912036602121027] page-1 pin_count-1</span><br><span class="line">71: [13112912036602121027] invoke FetchPageBasic: page-1</span><br><span class="line">71: [13112912036602121027] invoke FetchPage: page-1</span><br><span class="line">71: [13112912036602121027] invoke FetchPage: page-1 has been in frame-1</span><br><span class="line">71: invoke BasicPageGuard: page-1</span><br><span class="line">71: [13112912036602121027] invoke operator=: this-page--1 that-page-1</span><br><span class="line">71: [13112912036602121027] invoke Drop: page--1</span><br><span class="line">71: [13112912036602121027] invoke Drop: page--1</span><br><span class="line">71: [13112912036602121027] invoke ~BasicPageGuard: page--1</span><br><span class="line">71: [13112912036602121027] invoke Drop: page--1</span><br><span class="line">71: [13112912036602121027] invoke UpgradeWrite: page-1</span><br><span class="line">71: invoke BasicPageGuard: page-1</span><br><span class="line">71: invoke WritePageGuard: page-1</span><br><span class="line">71: [13112912036602121027] invoke Drop: page--1</span><br><span class="line">71: [13112912036602121027] invoke Drop: page--1</span><br><span class="line">71: [13112912036602121027] invoke Drop: this-page-1</span><br><span class="line">71: [13112912036602121027] invoke Drop: page-1</span><br><span class="line">71: [13112912036602121027] invoke UnpinPage: page-1 is_dirty-0</span><br><span class="line">71: [13112912036602121027] page-1 pin_count-1</span><br><span class="line">71: [13112912036602121027] invoke UnpinPage: page-1 is_dirty-0</span><br><span class="line">71: [13112912036602121027] page-1 pin_count-0</span><br><span class="line">71: [13112912036602121027] set page-1 evictable</span><br><span class="line">71: [13112912036602121027] invoke ~WritePageGuard: this-page--1</span><br><span class="line">71: [13112912036602121027] invoke Drop: this-page--1</span><br><span class="line">71: [13112912036602121027] invoke ~BasicPageGuard: page--1</span><br><span class="line">71: [13112912036602121027] invoke Drop: page--1</span><br><span class="line">71: [13112912036602121027] invoke ~BasicPageGuard: page--1</span><br><span class="line">71: [13112912036602121027] invoke Drop: page--1</span><br><span class="line">71: [13112912036602121027] invoke ~ReadPageGuard: this-page--1</span><br><span class="line">71: [13112912036602121027] invoke Drop: this-page--1</span><br><span class="line">71: [13112912036602121027] invoke ~BasicPageGuard: page--1</span><br><span class="line">71: [13112912036602121027] invoke Drop: page--1</span><br><span class="line">71: [13112912036602121027] invoke ~BasicPageGuard: page--1</span><br><span class="line">71: [13112912036602121027] invoke Drop: page--1</span><br><span class="line">71: [13112912036602121027] invoke NewPage</span><br><span class="line">71: [13112912036602121027] invoke NewPage: new_page-2</span><br><span class="line">71: [13112912036602121027] invoke NewPage</span><br><span class="line">71: [13112912036602121027] invoke NewPage: new_page-3</span><br><span class="line">71: [13112912036602121027] invoke NewPage</span><br><span class="line">71: [13112912036602121027] invoke NewPage: new_page-4</span><br><span class="line">71: [13112912036602121027] invoke NewPage</span><br><span class="line">71: [13112912036602121027] invoke NewPage: new_page-5</span><br><span class="line">71: [13112912036602121027] invoke NewPage</span><br><span class="line">71: [13112912036602121027] invoke NewPage: new_page-6</span><br><span class="line">71: [13112912036602121027] invoke NewPage</span><br><span class="line"></span><br><span class="line">Program exited with -1 in 35.036s (timed out after 30 secs, force kill)</span><br></pre></td></tr></table></figure>
 
-<p>(Update——) 在修改了<code>ReadPageGuard</code>的移动构造/赋值函数后，log没任何变化</p>
+<p>(Update——) 在修改了<code>ReadPageGuard</code>的移动构造&#x2F;赋值函数后，log没任何变化</p>
 <ul>
 <li><input checked="" disabled="" type="checkbox"> 该测试似乎是新建page1和page2，然后反复访问两个page，后续新建多个page，来判断<code>pin_count</code>或者replcaer的运行是否正确<ul>
 <li><input checked="" disabled="" type="checkbox"> 似乎是page0无法被evict</li>
@@ -326,7 +417,7 @@
 <p>这里主要实现三层可扩展哈希表的三个部分，如上图所示：</p>
 <ol>
 <li><strong>Header Page</strong>：<ol>
-<li>课本中的2-Level并没有该部分，该部分的max depth/prefix（例如上图中的2）是固定的</li>
+<li>课本中的2-Level并没有该部分，该部分的max depth&#x2F;prefix（例如上图中的2）是固定的</li>
 <li>主要是用来索引能够索引到存储key的<code>BucketPage</code>位置的<code>Directory Page</code>在<code>Header Page</code>中的位置（比较拗口）<ol>
 <li>通过<code>HashToDirecotryIndex</code>实现</li>
 </ol>
@@ -340,7 +431,7 @@
 </li>
 <li><strong>Directory Page</strong><ol>
 <li>与课本中一致<ol>
-<li><strong>global depth = hash prefix</strong>：三个作用<ol>
+<li><strong>global depth &#x3D; hash prefix</strong>：三个作用<ol>
 <li>用来限制某个时刻可以使用的Directory条目数量$2^{global depth}$个</li>
 <li>用来获得哈希值从LSB开始的global_depth个位，作为在dierctory中的索引，找到key所在的bucket<ol>
 <li><code>HashToBucketIndex</code>实现</li>
@@ -349,7 +440,7 @@
 <li>并且在某个bucket满时，通过比较<code>global depth</code>和<code>local depth</code>来决定如何处理<code>split</code></li>
 </ol>
 </li>
-<li><strong>local depth = bucket hash prefix</strong><ol>
+<li><strong>local depth &#x3D; bucket hash prefix</strong><ol>
 <li>通过比较和global_depth的关系，判断指向当前bucket的指针数量，分裂时如何处理</li>
 </ol>
 </li>
@@ -365,79 +456,79 @@
 </ol>
 <p>Task2中相关源码的注释并没有很详细，需要自己根据本地测试来判断该函数具体完成了什么工作</p>
 <ul>
-<li>  可以在实现<code>Header Pages</code>和<code>Directory Pages</code>的时候，通过<code>HeaderDirectoryPageSampleTest</code>来测试或者Debug</li>
-<li>  实现<code>Bucket Pages</code>的时候，通过<code>BucketPageSampleTest</code>测试</li>
-<li>  例如：<code>HashToDirectoryIndex</code>是通过hash value的<code>max_depth</code>个MSB求得的</li>
+<li>可以在实现<code>Header Pages</code>和<code>Directory Pages</code>的时候，通过<code>HeaderDirectoryPageSampleTest</code>来测试或者Debug</li>
+<li>实现<code>Bucket Pages</code>的时候，通过<code>BucketPageSampleTest</code>测试</li>
+<li>例如：<code>HashToDirectoryIndex</code>是通过hash value的<code>max_depth</code>个MSB求得的</li>
 </ul>
 <h2 id="Hash-Table-Header-Pages"><a href="#Hash-Table-Header-Pages" class="headerlink" title="Hash Table Header Pages"></a>Hash Table Header Pages</h2><h3 id="成员变量："><a href="#成员变量：" class="headerlink" title="成员变量："></a><strong>成员变量：</strong></h3><p><code>directory_page_ids</code>：page_id（4B）的数组</p>
 <ul>
 <li><p><strong>元素个数</strong>：1&lt;&lt;9</p>
 <ul>
-<li>  即512个</li>
+<li>即512个</li>
 </ul>
 </li>
-<li><p>  <strong>占用内存</strong>：512*4 = 2048</p>
+<li><p><strong>占用内存</strong>：512*4 &#x3D; 2048</p>
 </li>
 </ul>
 <p><code>max_depth_</code>: 通过page_id(32位)哈希值的高max_depth_位，来判断page_id在directory_page_ids_中的位置</p>
 <ul>
-<li>  <strong>占用内存</strong>：4B</li>
+<li><strong>占用内存</strong>：4B</li>
 </ul>
 <h3 id="方法实现："><a href="#方法实现：" class="headerlink" title="方法实现："></a><strong>方法实现：</strong></h3><p>- [✅] <code>HashToDirectoryIndex(uint32_t hash)</code></p>
 <ul>
-<li>  通过测试可以看到，实际上该函数是将hash的高max_depth_位，作为directory page id在数组directory_page_ids_的索引</li>
-<li>  将hash向右移动<code>32-max_depth_</code>位，可以获得高<code>max_depth_</code>位对应的uint32_t表示</li>
-<li>  <code>Hint</code>: 考虑<code>max_depth_</code>为0的情况，实际上对于4B的整型右移<code>32</code>位是<code>undefined</code>？</li>
+<li>通过测试可以看到，实际上该函数是将hash的高max_depth_位，作为directory page id在数组directory_page_ids_的索引</li>
+<li>将hash向右移动<code>32-max_depth_</code>位，可以获得高<code>max_depth_</code>位对应的uint32_t表示</li>
+<li><code>Hint</code>: 考虑<code>max_depth_</code>为0的情况，实际上对于4B的整型右移<code>32</code>位是<code>undefined</code>？</li>
 </ul>
 <p>- [✅] <code>MaxSize()：</code>Get the maximum number of directory page ids the header page could handle</p>
 <ul>
-<li><p>  由于directory_page_ids中每个条目只能存放一个page id元素，因此directory_page_ids_最大能存入<code>HTABLE_HEADER_ARRAY_SIZE</code>directory page id</p>
+<li><p>由于directory_page_ids中每个条目只能存放一个page id元素，因此directory_page_ids_最大能存入<code>HTABLE_HEADER_ARRAY_SIZE</code>directory page id</p>
 </li>
 <li><p>而<code>max_depth_</code></p>
 <ul>
-<li>  对于线性探测解决冲突的哈希表：会决定<code>directory_page_ids</code>的大小</li>
-<li>  不使用线性探测解决冲突：似乎并不会影响<code>directory_page_ids_</code>的大小，</li>
+<li>对于线性探测解决冲突的哈希表：会决定<code>directory_page_ids</code>的大小</li>
+<li>不使用线性探测解决冲突：似乎并不会影响<code>directory_page_ids_</code>的大小，</li>
 </ul>
 </li>
-<li><p>  根据题目要求，<code>Header Pages</code>并没有使用线性探测，因此需要返回<code>max_depth_</code>能表示数的数量和<code>HTABLE_HEADER_ARRAY_SIZE</code>之中的较小值</p>
+<li><p>根据题目要求，<code>Header Pages</code>并没有使用线性探测，因此需要返回<code>max_depth_</code>能表示数的数量和<code>HTABLE_HEADER_ARRAY_SIZE</code>之中的较小值</p>
 </li>
 </ul>
 <h2 id="Hash-Table-Directory-Pages"><a href="#Hash-Table-Directory-Pages" class="headerlink" title="Hash Table Directory Pages"></a>Hash Table Directory Pages</h2><h3 id="成员变量：-1"><a href="#成员变量：-1" class="headerlink" title="成员变量："></a><strong>成员变量：</strong></h3><p><code>max_depth_</code>：</p>
 <ul>
-<li>  4B</li>
-<li>  Header Page的directory page id数组中，所有的directory page拥有相同的max_depth值，代表一个directory能够用的掩码的最大位数</li>
+<li>4B</li>
+<li>Header Page的directory page id数组中，所有的directory page拥有相同的max_depth值，代表一个directory能够用的掩码的最大位数</li>
 </ul>
 <p><code>global_depth_</code>：</p>
 <ul>
-<li><p>  4B</p>
+<li><p>4B</p>
 </li>
-<li><p>  类似于: 课本中的bucket address table的global prefix，用来控制当前table使用条目的数量，上限是2^max_depth</p>
+<li><p>类似于: 课本中的bucket address table的global prefix，用来控制当前table使用条目的数量，上限是2^max_depth</p>
 </li>
-<li><p>  <strong>简而言之</strong>：global_depth用来掩码hash value，以获得存储key的bucket在directory 中的索引</p>
+<li><p><strong>简而言之</strong>：global_depth用来掩码hash value，以获得存储key的bucket在directory 中的索引</p>
 </li>
-<li><p>  global_depth&lt;=max_depth_</p>
+<li><p>global_depth&lt;&#x3D;max_depth_</p>
 </li>
 </ul>
 <p><code>local_depth_s</code>：数组</p>
 <ul>
-<li>  1B * (Size of array of Bucket page id )</li>
-<li>  类似于：课本中每个bucket持有的local prefix，用来按需生成bucket，进行local prefix后拥有相同值的entry指向同一个bucket</li>
-<li>  简而言之：local_depth用来掩码，使得确定其在哪个bucket page中</li>
+<li>1B * (Size of array of Bucket page id )</li>
+<li>类似于：课本中每个bucket持有的local prefix，用来按需生成bucket，进行local prefix后拥有相同值的entry指向同一个bucket</li>
+<li>简而言之：local_depth用来掩码，使得确定其在哪个bucket page中</li>
 </ul>
 <p><code>bucket_page_ids_</code></p>
 <ul>
-<li>  存储bucket page id的数组</li>
+<li>存储bucket page id的数组</li>
 </ul>
 <h3 id="方法实现：-1"><a href="#方法实现：-1" class="headerlink" title="方法实现："></a><strong>方法实现：</strong></h3><p>- [✅] <code>Init</code>:</p>
 <ul>
-<li>  将global depth和local depth初始化0</li>
-<li>  bucket page id初始化为-1或者其他特殊标记</li>
+<li>将global depth和local depth初始化0</li>
+<li>bucket page id初始化为-1或者其他特殊标记</li>
 </ul>
 <p>- [✅] <code>HashToBucketIndex</code>:</p>
 <ul>
-<li>  类似于<code>Header Page</code>中的<code>HashToDirectoryIndex</code>，只不过掩码长度为<code>global_depth_</code>，并且是将Hash值的低<code>global_depth_</code>位(从LSB开始)处理作为bucket在directory中的索引</li>
+<li>类似于<code>Header Page</code>中的<code>HashToDirectoryIndex</code>，只不过掩码长度为<code>global_depth_</code>，并且是将Hash值的低<code>global_depth_</code>位(从LSB开始)处理作为bucket在directory中的索引</li>
 <li>像测试中直接<code>%Size()</code>是极好的，但是我一开始脑子没转过来，<ul>
-<li>  一直想用位操作。。。🐽</li>
+<li>一直想用位操作。。。🐽</li>
 </ul>
 </li>
 </ul>
@@ -445,25 +536,25 @@
 <ul>
 <li><p>分两种情况：</p>
 <ul>
-<li>  local_depth_ &gt; global_depth_：代表后续需要double directory</li>
-<li>  local_depth_ &lt;= global_depth_</li>
+<li>local_depth_ &gt; global_depth_：代表后续需要double directory</li>
+<li>local_depth_ &lt;&#x3D; global_depth_</li>
 </ul>
 </li>
-<li><p>  观察得到，为了获得directory扩展后当前bucket_idx分裂后映像的索引，只需要将bucket_idx的第新global_depth_位取反即可</p>
+<li><p>观察得到，为了获得directory扩展后当前bucket_idx分裂后映像的索引，只需要将bucket_idx的第新global_depth_位取反即可</p>
 </li>
 <li><p>两种情况可以使用同一种位运算来解决</p>
 <ul>
 <li><p>只需要对原进行split的bucket_idx进行如下位运算</p>
 <ul>
 <li>第一种情况：需要double directory<ul>
-<li>  第global_depth_位与1异或</li>
+<li>第global_depth_位与1异或</li>
 </ul>
 </li>
 <li>第二种情况：不需要double<ul>
-<li>  第global_depth_-1位与1异或</li>
+<li>第global_depth_-1位与1异或</li>
 </ul>
 </li>
-<li>  其他位与0异或</li>
+<li>其他位与0异或</li>
 </ul>
 </li>
 </ul>
@@ -473,37 +564,37 @@
 <ul>
 <li><p>同上，分两种情况</p>
 <ol>
-<li> 先根据local_dpth和global_depth的关系，获得split_bucket_idx</li>
+<li>先根据local_dpth和global_depth的关系，获得split_bucket_idx</li>
 </ol>
 </li>
 </ul>
 <ol start="2">
-<li> 如何将两个bucket的local_depth<strong>同时设置为新</strong>的即可</li>
+<li>如何将两个bucket的local_depth<strong>同时设置为新</strong>的即可</li>
 </ol>
 <p>- [✅] <code>IncrGlobalDepth</code></p>
 <ul>
 <li><p>需要找到当前directory可用的条目中，local_depth小于等于当前global_depth的项：</p>
 <ul>
-<li>  使得其在double后的split_entry拥有相同的bucket page id和local_depth</li>
+<li>使得其在double后的split_entry拥有相同的bucket page id和local_depth</li>
 </ul>
 </li>
-<li><p>  global_depth++</p>
+<li><p>global_depth++</p>
 </li>
-<li><p>  <strong>Hint:</strong> global_depth &lt;= max_depth</p>
+<li><p><strong>Hint:</strong> global_depth &lt;&#x3D; max_depth</p>
 </li>
 </ul>
 <p>- [✅] <code>DecrGlobalDepth</code></p>
 <ul>
-<li>  直接将index在区间[2^{global_depth-1}, 2^{global_depth}-1]的两个数组元素初始化为{-1, 0}</li>
+<li>直接将index在区间[2^{global_depth-1}, 2^{global_depth}-1]的两个数组元素初始化为{-1, 0}</li>
 </ul>
 <p>- [✅] <code>GetGlobalDepthMask</code>:</p>
 <ul>
-<li>  通过注释我们可以知道，<code>global_depth_</code>是用于生成从哈希值的<code>LSB</code>开始的<code>global_depth_mask</code></li>
-<li>  而<code>Header Page</code>中的<code>max_depth_</code>则是用于生成<code>MSB</code>的掩码</li>
+<li>通过注释我们可以知道，<code>global_depth_</code>是用于生成从哈希值的<code>LSB</code>开始的<code>global_depth_mask</code></li>
+<li>而<code>Header Page</code>中的<code>max_depth_</code>则是用于生成<code>MSB</code>的掩码</li>
 </ul>
 <p>- [✅] <code>GetLocalDepthMask</code>:</p>
 <ul>
-<li>  同理</li>
+<li>同理</li>
 </ul>
 <p>- [✅] <code>CanShrink</code></p>
 <ul>
@@ -511,7 +602,7 @@
 <ul>
 <li><p>如果没有，则说明所有&lt;bucket_idx, split_bucket_idx&gt;所包含的bucket page id都相同</p>
 <ul>
-<li>  因此table可以去除冗余部分，缩小一倍</li>
+<li>因此table可以去除冗余部分，缩小一倍</li>
 </ul>
 </li>
 </ul>
@@ -522,7 +613,7 @@
 <p><code>array_</code>：An array of bucket page local depths</p>
 <h3 id="方法实现"><a href="#方法实现" class="headerlink" title="方法实现"></a>方法实现</h3><p><code>Init</code>:</p>
 <ul>
-<li><p>  对max_size_初始化</p>
+<li><p>对max_size_初始化</p>
 </li>
 <li><p>对于array_中的每一个pair&lt;Key, Value&gt;进行初始化</p>
 <ul>
@@ -530,12 +621,12 @@
 <ol>
 <li><p>可以直接使用构造列表，来直接构造模版类的临时对象：</p>
 <ol>
-<li> Key可以使用{-1}来与测试中的i==0区别，Value可以直接使用{}因为RID的默认构造函数会使用-1来表示无效</li>
+<li>Key可以使用{-1}来与测试中的i&#x3D;&#x3D;0区别，Value可以直接使用{}因为RID的默认构造函数会使用-1来表示无效</li>
 </ol>
 </li>
 <li><p>或者使用模版参数类型构造</p>
 <ol>
-<li> 同理</li>
+<li>同理</li>
 </ol>
 </li>
 </ol>
@@ -547,7 +638,7 @@
 <ul>
 <li>（Update——SplitGrowTest）把Size()作为遍历上限，遍历其中的键值对：<ul>
 <li>使用模版类对象cmp的重载函数()，来比较Key是否相同<ul>
-<li>  返回0表示相同</li>
+<li>返回0表示相同</li>
 </ul>
 </li>
 </ul>
@@ -556,43 +647,38 @@
 <p><code>Remove</code>:</p>
 <ul>
 <li>（Update——SpltGrowTest）把Size()作为遍历上限，找到对应的Key后删除<ul>
-<li>（Update——RemoveTest/RecursiveMergeTest）<strong>Hint：</strong>根据<code>BucketPage</code>默认提供的<code>PrintBucket</code>方法，在Move之后需要将数组紧凑：即将被删除元素后的元素往前移动或者拿最后一个元素补上去</li>
+<li>（Update——RemoveTest&#x2F;RecursiveMergeTest）**Hint：**根据<code>BucketPage</code>默认提供的<code>PrintBucket</code>方法，在Move之后需要将数组紧凑：即将被删除元素后的元素往前移动或者拿最后一个元素补上去</li>
 </ul>
 </li>
 </ul>
 <p>注意Insert和Remove之后需要对size进行增减</p>
-<h2 id="LocalTest-BucketPageSampleTest-HeaderDirectoryPageTest"><a href="#LocalTest-BucketPageSampleTest-HeaderDirectoryPageTest" class="headerlink" title="LocalTest-BucketPageSampleTest/HeaderDirectoryPageTest"></a>LocalTest-BucketPageSampleTest/HeaderDirectoryPageTest</h2><p><img src="https://cdn.jsdelivr.net/gh/ZiHao256/Gallery@master/uPic/2023/10/image-20231030220149510.png" alt="local test"></p>
+<h2 id="LocalTest-BucketPageSampleTest-HeaderDirectoryPageTest"><a href="#LocalTest-BucketPageSampleTest-HeaderDirectoryPageTest" class="headerlink" title="LocalTest-BucketPageSampleTest&#x2F;HeaderDirectoryPageTest"></a>LocalTest-BucketPageSampleTest&#x2F;HeaderDirectoryPageTest</h2><p><img src="https://cdn.jsdelivr.net/gh/ZiHao256/Gallery@master/uPic/2023/10/image-20231030220149510.png" alt="local test"></p>
 <h2 id="GradeScope"><a href="#GradeScope" class="headerlink" title="GradeScope"></a>GradeScope</h2><p>线上没有对可扩展哈希表的Page类进行测试</p>
 <h1 id="Task-3-Extenable-Hashing-Implementation"><a href="#Task-3-Extenable-Hashing-Implementation" class="headerlink" title="Task #3-Extenable Hashing Implementation"></a>Task #3-Extenable Hashing Implementation</h1><p>课本中的实现步骤：<a href="https://zihao256.github.io/p/76b71367.html">Extendible Hash Table</a></p>
 <p>最好也是参考着测试样例来实现</p>
 <blockquote>
-<p><span style="color: rgb(13, 13, 13)">Each extendible hash table header/directory/bucket page corresponds to the content (i.e., the </span><code>data_</code> part) of a memory page fetched by the buffer pool.</p>
+<p><span style="color: rgb(13, 13, 13)">Each extendible hash table header&#x2F;directory&#x2F;bucket page corresponds to the content (i.e., the </span><code>data_</code> part) of a memory page fetched by the buffer pool.</p>
 <p><strong>Every time you read or write a page, you must first fetch the page from the buffer pool (using its unique <strong><code>page_id</code></strong>), reinterpret cast it the corresponding type, and unpin the page after reading or writing it.</strong></p>
 <p>We strongly encourage you to <strong>take advantage of the <strong><code>PageGuard</code></strong> APIs</strong> you implemented in <strong><u>Task #1</u></strong> to achieve this.</p>
 </blockquote>
 <p><strong>假设：</strong></p>
 <ul>
-<li>  只支持unique keys</li>
+<li>只支持unique keys</li>
 </ul>
 <p><strong>注意：</strong></p>
 <ul>
-<li><p>  需要使用Task2中的三种Page类和meta data（page id, global/local depth）来实现基于disk的hash table</p>
+<li><p>需要使用Task2中的三种Page类和meta data（page id, global&#x2F;local depth）来实现基于disk的hash table</p>
 </li>
-<li><p>  不允许使用内存数据结构例如unordered_map</p>
+<li><p>不允许使用内存数据结构例如unordered_map</p>
 </li>
-<li><p>  take a <code>Transaction*</code> with default value <code>nullptr</code>.</p>
+<li><p>take a <code>Transaction*</code> with default value <code>nullptr</code>.</p>
+<p>template &lt;typename KeyType,<br>          typename ValueType,<br>          typename KeyComparator&gt;</p>
 </li>
-</ul>
-<pre><code>template &lt;typename KeyType,
-          typename ValueType,
-          typename KeyComparator&gt;
-</code></pre>
-<ul>
 <li><p>三种类型在Task #2的<code>Bucket Pages</code>中都见过：</p>
 <ul>
-<li>  <code>KeyType</code>:<code>GenericKey</code></li>
-<li>  <code>ValueType</code>:<code>RID</code></li>
-<li>  <code>KeyComparator</code>: 比较两个Key的大小</li>
+<li><code>KeyType</code>:<code>GenericKey</code></li>
+<li><code>ValueType</code>:<code>RID</code></li>
+<li><code>KeyComparator</code>: 比较两个Key的大小</li>
 </ul>
 </li>
 </ul>
@@ -604,7 +690,8 @@
 <li><p><strong>对于已创建的page</strong>：</p>
 <ol>
 <li><p>开始就直接获得<code>WritePageGuard</code></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">auto raw_page = FetchPage(page_id)</span><br><span class="line">raw_page.WLatch()</span><br><span class="line">auto page_guard = WritePageGuard(raw_page)</span><br><span class="line">auto page = page_guard.AsMut()</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">auto raw_page = FetchPage(page_id)</span><br><span class="line">raw_page.WLatch()</span><br><span class="line">auto page_guard = WritePageGuard(raw_page)</span><br><span class="line">auto page = page_guard.AsMut()</span><br></pre></td></tr></table></figure>
+</li>
 <li><p>先获得Basic，后续按需求，再调用<code>Upgrade</code>获得<code>WriteGuard</code></p>
 </li>
 </ol>
@@ -612,7 +699,8 @@
 <li><p><strong>对于新Page</strong>：</p>
 <ol>
 <li><p>先获得raw_page，然后使用构造函数构造：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">auto raw_page = NewPage(&amp;page_id)</span><br><span class="line">raw_page.WLatch()</span><br><span class="line">auto page_guard = WritePageGuard(raw_page)</span><br><span class="line">auto page = page_guard.AsMut()</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">auto raw_page = NewPage(&amp;page_id)</span><br><span class="line">raw_page.WLatch()</span><br><span class="line">auto page_guard = WritePageGuard(raw_page)</span><br><span class="line">auto page = page_guard.AsMut()</span><br></pre></td></tr></table></figure>
+</li>
 <li><p>先获得Basci，后续按需求调用<code>Upgrade</code>获得<code>WriteGuard</code></p>
 </li>
 </ol>
@@ -653,30 +741,30 @@
 </li>
 </ul>
 <h3 id="Remove方法"><a href="#Remove方法" class="headerlink" title="Remove方法"></a>Remove方法</h3><h3 id="GetValue方法"><a href="#GetValue方法" class="headerlink" title="GetValue方法"></a>GetValue方法</h3><h2 id="GradeScope要求的功能"><a href="#GradeScope要求的功能" class="headerlink" title="GradeScope要求的功能"></a>GradeScope要求的功能</h2><blockquote>
-<p>实现<strong>bucket splitting/merging</strong> and <strong>directory growing/shrinking</strong></p>
+<p>实现<strong>bucket splitting&#x2F;merging</strong> and <strong>directory growing&#x2F;shrinking</strong></p>
 </blockquote>
 <h3 id="✅-Empty-Table"><a href="#✅-Empty-Table" class="headerlink" title="- [✅] Empty Table"></a>- [✅] Empty Table</h3><ul>
-<li>  构造函数中新建一个Header Page，并Init</li>
-<li>  通过实现辅助函数<code>InsertToNewDirectory</code>和<code>InsertToNewBucket</code>来实现按需生成Buckets</li>
+<li>构造函数中新建一个Header Page，并Init</li>
+<li>通过实现辅助函数<code>InsertToNewDirectory</code>和<code>InsertToNewBucket</code>来实现按需生成Buckets</li>
 </ul>
 <h3 id="✅-Header-Indexing"><a href="#✅-Header-Indexing" class="headerlink" title="- [✅] Header Indexing"></a>- [✅] Header Indexing</h3><ul>
-<li>  Hash(key)</li>
-<li>  对hash value调用HashToDirectoryIndex</li>
+<li>Hash(key)</li>
+<li>对hash value调用HashToDirectoryIndex</li>
 </ul>
 <h3 id="✅-Directory-Indexing"><a href="#✅-Directory-Indexing" class="headerlink" title="- [✅] Directory Indexing"></a>- [✅] Directory Indexing</h3><ul>
-<li>  Hash(key)</li>
-<li>  对hash value调用HashToBucketIndex</li>
+<li>Hash(key)</li>
+<li>对hash value调用HashToBucketIndex</li>
 </ul>
 <h3 id="✅-Bucket-Splitting"><a href="#✅-Bucket-Splitting" class="headerlink" title="- [✅] Bucket Splitting"></a>- [✅] Bucket Splitting</h3><ul>
 <li><p>按照课本上的步骤来实现即可</p>
 <ul>
 <li><p>可以通过实现源码中给定的工具函数<code>UpdateDirectoryMapping</code>来辅助实现</p>
 <ul>
-<li>  可能该函数内部调用了<code>MigrateEntries</code>函数，但是我并没有实现，直接在<code>UpdateDirectoryMapping</code>中实现了Rehash操作</li>
+<li>可能该函数内部调用了<code>MigrateEntries</code>函数，但是我并没有实现，直接在<code>UpdateDirectoryMapping</code>中实现了Rehash操作</li>
 <li>**Hint:**该函数如果直接在Insert中调用的话函数签名中可以自己修改并多传入两个<code>ExtendibleHTableBucketPage</code><ul>
-<li>  <code>old_bucket_page</code>：需要进行分裂，并rehash的bucket</li>
-<li>  <code>new_bucket_page</code>：新建的bucket</li>
-<li>  这样可以不必重新<code>FetchPage</code></li>
+<li><code>old_bucket_page</code>：需要进行分裂，并rehash的bucket</li>
+<li><code>new_bucket_page</code>：新建的bucket</li>
+<li>这样可以不必重新<code>FetchPage</code></li>
 </ul>
 </li>
 </ul>
@@ -693,7 +781,7 @@
 </blockquote>
 <ul>
 <li>Shrink只有当所有的local_depth_都小于global_depth时才进行<ul>
-<li>  在<code>Task2</code>中实现了相关操作</li>
+<li>在<code>Task2</code>中实现了相关操作</li>
 </ul>
 </li>
 </ul>
@@ -709,9 +797,9 @@
 <li>结束循环</li>
 </ol>
 </li>
-<li>若否：开始合并；（Update——GrowShrinkTest）<strong>Hint：</strong>对于合并情况，不需要使用到header page，参考<code>Crabbing</code>策略，应该立刻释放header page guard<ol>
+<li>若否：开始合并；（Update——GrowShrinkTest）**Hint：**对于合并情况，不需要使用到header page，参考<code>Crabbing</code>策略，应该立刻释放header page guard<ol>
 <li>删除当前<code>Bucket Page</code></li>
-<li>在<code>directory page</code>中将被删除bucket对应的指针/页id置为Image Bucket</li>
+<li>在<code>directory page</code>中将被删除bucket对应的指针&#x2F;页id置为Image Bucket</li>
 <li>判断local depth是否大于0<ol>
 <li>若是将两个Bucket 的local depth减一<ol>
 <li><strong>重要</strong>：接着判断是否可以Shrink，若可以则调用<code>DecrGlobalDepth</code><ol>
@@ -738,14 +826,16 @@
 </li>
 </ol>
 <h4 id="Bug"><a href="#Bug" class="headerlink" title="Bug"></a>Bug</h4><ul>
-<li><p><input checked="" disabled="" type="checkbox">  本地测试会有死锁</p>
+<li><p><input checked="" disabled="" type="checkbox"> 
+本地测试会有死锁</p>
 <ul>
 <li><p>可以利用<code>DiskExtendibleHTable::PrintHT</code>和其他<code>Page</code>类的<code>Print</code>方法来检查</p>
 <ul>
 <li><img src="https://cdn.jsdelivr.net/gh/ZiHao256/Gallery@master/uPic/2023/11/image-20231120142020823.png" alt="image-20231120142020823"></li>
 </ul>
 </li>
-<li><p><input checked="" disabled="" type="checkbox">  solution：是while循环中未设置跳出条件，需要Merging+Shrinking一起实现</p>
+<li><p><input checked="" disabled="" type="checkbox"> 
+solution：是while循环中未设置跳出条件，需要Merging+Shrinking一起实现</p>
 </li>
 </ul>
 </li>
@@ -758,15 +848,16 @@
 <li>无论是本地还是线上测试都没有对Dirctory Split进行要求</li>
 </ul>
 <p>本地测试中似乎并没有测试到<code>Bucket Merging</code>, <code>Directory Growing</code>和<code>Directory Shrinking</code>，因此无法验证实现的正确性</p>
-<h2 id="LocalTest-InsertTest-RemoveTest"><a href="#LocalTest-InsertTest-RemoveTest" class="headerlink" title="LocalTest-InsertTest/RemoveTest"></a>LocalTest-InsertTest/RemoveTest</h2><p>（Update——RecursiveMergeTest）这里<code>RemoveTest</code>测试的比较简单。</p>
+<h2 id="LocalTest-InsertTest-RemoveTest"><a href="#LocalTest-InsertTest-RemoveTest" class="headerlink" title="LocalTest-InsertTest&#x2F;RemoveTest"></a>LocalTest-InsertTest&#x2F;RemoveTest</h2><p>（Update——RecursiveMergeTest）这里<code>RemoveTest</code>测试的比较简单。</p>
 <p><img src="https://cdn.jsdelivr.net/gh/ZiHao256/Gallery@master/uPic/2023/10/image-20231030220211309.png" alt="local test"></p>
 <h2 id="GradeScope-ExtendibleHTableTest"><a href="#GradeScope-ExtendibleHTableTest" class="headerlink" title="GradeScope: ExtendibleHTableTest"></a>GradeScope: ExtendibleHTableTest</h2><p>通过<code>PageGuardTest</code>后，仅剩下以下四个测试未通过：</p>
 <h3 id="✅-InsertTest3"><a href="#✅-InsertTest3" class="headerlink" title="- [✅] InsertTest3"></a>- [✅] InsertTest3</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br></pre></td><td class="code"><pre><span class="line">33: [2381364519534583625] invoke BufferPoolManager: new BPM pool_size-[50] replacer_k-[10]</span><br><span class="line">33: [2381364519534583625] invoke DiskExtendibleHashTable header_max_depth-2 directory_max_depth-3 bucket_max_size-2</span><br><span class="line">33: [2381364519534583625] invoke NewPage</span><br><span class="line">33: [2381364519534583625] invoke NewPage: new_page-0</span><br><span class="line">33: invoke BasicPageGuard: page-0</span><br><span class="line">33: invoke WritePageGuard: page-0</span><br><span class="line">33: invoke AsMut: page-0</span><br><span class="line">33: [2381364519534583625] invoke ~WritePageGuard: this-page-0</span><br><span class="line">33: [2381364519534583625] invoke Drop: this-page-0</span><br><span class="line">33: [2381364519534583625] invoke Drop: page-0</span><br><span class="line">33: [2381364519534583625] invoke UnpinPage: page-0 is_dirty-1</span><br><span class="line">33: [2381364519534583625] page-0 pin_count-0</span><br><span class="line">33: [2381364519534583625] set page-0 evictable</span><br><span class="line">33: [2381364519534583625] set page-0 dirty</span><br><span class="line">33: [2381364519534583625] invoke ~BasicPageGuard: page--1</span><br><span class="line">33: [2381364519534583625] invoke Drop: page--1</span><br><span class="line">33: [2381364519534583625] invoke Insert: key= 0 value=0</span><br><span class="line">33: [2381364519534583625] invoke FetchPageWrite: page-0</span><br><span class="line">33: [2381364519534583625] invoke FetchPage: page-0</span><br><span class="line">33: [2381364519534583625] invoke FetchPage: page-0 has been in frame-0</span><br><span class="line">33: invoke BasicPageGuard: page-0</span><br><span class="line">33: invoke WritePageGuard: page-0</span><br><span class="line">33: [2381364519534583625] invoke operator=: this-page--1 that-page-0</span><br><span class="line">33: [2381364519534583625] invoke Drop: this-page--1</span><br><span class="line">33: [2381364519534583625] invoke operator=: this-page--1 that-page-0</span><br><span class="line">33: [2381364519534583625] invoke Drop: page--1</span><br><span class="line">33: [2381364519534583625] invoke Drop: page--1</span><br><span class="line">33: [2381364519534583625] invoke ~WritePageGuard: this-page--1</span><br><span class="line">33: [2381364519534583625] invoke Drop: this-page--1</span><br><span class="line">33: [2381364519534583625] invoke ~BasicPageGuard: page--1</span><br><span class="line">33: [2381364519534583625] invoke Drop: page--1</span><br><span class="line">33: invoke As: page-0</span><br><span class="line">33: invoke AsMut: page-0</span><br><span class="line">33: [2381364519534583625] invoke InsertToNewDirectory</span><br><span class="line">33: [2381364519534583625] invoke NewPageGuarded</span><br><span class="line">33: [2381364519534583625] invoke NewPage</span><br><span class="line">33: [2381364519534583625] invoke NewPage: new_page-1</span><br><span class="line">33: invoke BasicPageGuard: page-1</span><br><span class="line">33: invoke AsMut: page-1</span><br><span class="line">33: [2381364519534583625] invoke InsertToNewBucket</span><br><span class="line">33: [2381364519534583625] invoke NewPageGuarded</span><br><span class="line">33: [2381364519534583625] invoke NewPage</span><br><span class="line">33: [2381364519534583625] invoke NewPage: new_page-2</span><br><span class="line">33: invoke BasicPageGuard: page-2</span><br><span class="line">33: invoke AsMut: page-2</span><br><span class="line">33: [2381364519534583625] invoke ~BasicPageGuard: page-2</span><br><span class="line">33: [2381364519534583625] invoke Drop: page-2</span><br><span class="line">33: [2381364519534583625] invoke UnpinPage: page-2 is_dirty-1</span><br><span class="line">33: [2381364519534583625] page-2 pin_count-0</span><br><span class="line">33: [2381364519534583625] set page-2 evictable</span><br><span class="line">33: [2381364519534583625] set page-2 dirty</span><br><span class="line">33: [2381364519534583625] invoke ~BasicPageGuard: page-1</span><br><span class="line">33: [2381364519534583625] invoke Drop: page-1</span><br><span class="line">33: [2381364519534583625] invoke UnpinPage: page-1 is_dirty-1</span><br><span class="line">33: [2381364519534583625] page-1 pin_count-0</span><br><span class="line">33: [2381364519534583625] set page-1 evictable</span><br><span class="line">33: [2381364519534583625] set page-1 dirty</span><br><span class="line">33: [2381364519534583625] invoke ~WritePageGuard: this-page-0</span><br><span class="line">33: [2381364519534583625] invoke Drop: this-page-0</span><br><span class="line">33: [2381364519534583625] invoke Drop: page-0</span><br><span class="line">33: [2381364519534583625] invoke UnpinPage: page-0 is_dirty-1</span><br><span class="line">33: [2381364519534583625] page-0 pin_count-0</span><br><span class="line">33: [2381364519534583625] set page-0 evictable</span><br><span class="line">33: [2381364519534583625] set page-0 dirty</span><br><span class="line">33: [2381364519534583625] invoke ~BasicPageGuard: page--1</span><br><span class="line">33: [2381364519534583625] invoke Drop: page--1</span><br><span class="line">33: [2381364519534583625] invoke GetValue</span><br><span class="line">33: [2381364519534583625] invoke FetchPageRead: page-0</span><br><span class="line">33: [2381364519534583625] invoke FetchPage: page-0</span><br><span class="line">33: [2381364519534583625] invoke FetchPage: page-0 has been in frame-0</span><br><span class="line">33: invoke BasicPageGuard: page-0</span><br><span class="line">33: invoke ReadPageGuard: page-0</span><br><span class="line">33: [2381364519534583625] invoke operator=: this-page--1 that-page-0</span><br><span class="line">33: [2381364519534583625] invoke Drop: this-page--1</span><br><span class="line">33: [2381364519534583625] invoke operator=: this-page--1 that-page-0</span><br><span class="line">33: [2381364519534583625] invoke Drop: page--1</span><br><span class="line">33: [2381364519534583625] invoke Drop: page--1</span><br><span class="line">33: [2381364519534583625] invoke ~ReadPageGuard: this-page--1</span><br><span class="line">33: [2381364519534583625] invoke Drop: this-page--1</span><br><span class="line">33: [2381364519534583625] invoke ~BasicPageGuard: page--1</span><br><span class="line">33: [2381364519534583625] invoke Drop: page--1</span><br><span class="line">33: invoke As: page-0</span><br><span class="line">33: [2381364519534583625] invoke FetchPageRead: page-1</span><br><span class="line">33: [2381364519534583625] invoke FetchPage: page-1</span><br><span class="line">33: [2381364519534583625] invoke FetchPage: page-1 has been in frame-1</span><br><span class="line">33: invoke BasicPageGuard: page-1</span><br><span class="line">33: invoke ReadPageGuard: page-1</span><br><span class="line">33: [2381364519534583625] invoke operator=: this-page--1 that-page-1</span><br><span class="line">33: [2381364519534583625] invoke Drop: this-page--1</span><br><span class="line">33: [2381364519534583625] invoke operator=: this-page--1 that-page-1</span><br><span class="line">33: [2381364519534583625] invoke Drop: page--1</span><br><span class="line">33: [2381364519534583625] invoke Drop: page--1</span><br><span class="line">33: [2381364519534583625] invoke ~ReadPageGuard: this-page--1</span><br><span class="line">33: [2381364519534583625] invoke Drop: this-page--1</span><br><span class="line">33: [2381364519534583625] invoke ~BasicPageGuard: page--1</span><br><span class="line">33: [2381364519534583625] invoke Drop: page--1</span><br><span class="line">33: [2381364519534583625] invoke Drop: this-page-0</span><br><span class="line">33: [2381364519534583625] invoke Drop: page-0</span><br><span class="line">33: [2381364519534583625] invoke UnpinPage: page-0 is_dirty-0</span><br><span class="line">33: [2381364519534583625] page-0 pin_count-0</span><br><span class="line">33: [2381364519534583625] set page-0 evictable</span><br><span class="line">33: invoke As: page-1</span><br><span class="line">33: [2381364519534583625] invoke FetchPageRead: page-2</span><br><span class="line">33: [2381364519534583625] invoke FetchPage: page-2</span><br><span class="line">33: [2381364519534583625] invoke FetchPage: page-2 has been in frame-2</span><br><span class="line">33: invoke BasicPageGuard: page-2</span><br><span class="line">33: invoke ReadPageGuard: page-2</span><br><span class="line">33: [2381364519534583625] invoke operator=: this-page--1 that-page-2</span><br><span class="line">33: [2381364519534583625] invoke Drop: this-page--1</span><br><span class="line">33: [2381364519534583625] invoke operator=: this-page--1 that-page-2</span><br><span class="line">33: [2381364519534583625] invoke Drop: page--1</span><br><span class="line">33: [2381364519534583625] invoke Drop: page--1</span><br><span class="line">33: [2381364519534583625] invoke ~ReadPageGuard: this-page--1</span><br><span class="line">33: [2381364519534583625] invoke Drop: this-page--1</span><br><span class="line">33: [2381364519534583625] invoke ~BasicPageGuard: page--1</span><br><span class="line">33: [2381364519534583625] invoke Drop: page--1</span><br><span class="line">33: [2381364519534583625] invoke Drop: this-page-1</span><br><span class="line">33: [2381364519534583625] invoke Drop: page-1</span><br><span class="line">33: [2381364519534583625] invoke UnpinPage: page-1 is_dirty-0</span><br><span class="line">33: [2381364519534583625] page-1 pin_count-0</span><br><span class="line">33: [2381364519534583625] set page-1 evictable</span><br><span class="line">33: invoke As: page-2</span><br><span class="line">33: [2381364519534583625] invoke ~ReadPageGuard: this-page-2</span><br><span class="line">33: [2381364519534583625] invoke Drop: this-page-2</span><br><span class="line">33: [2381364519534583625] invoke Drop: page-2</span><br><span class="line">33: [2381364519534583625] invoke UnpinPage: page-2 is_dirty-0</span><br><span class="line">33: [2381364519534583625] page-2 pin_count-0</span><br><span class="line">33: [2381364519534583625] set page-2 evictable</span><br><span class="line">33: [2381364519534583625] invoke ~BasicPageGuard: page--1</span><br><span class="line">33: [2381364519534583625] invoke Drop: page--1</span><br><span class="line">33: [2381364519534583625] invoke ~ReadPageGuard: this-page--1</span><br><span class="line">33: [2381364519534583625] invoke Drop: this-page--1</span><br><span class="line">33: [2381364519534583625] invoke ~BasicPageGuard: page--1</span><br><span class="line">33: [2381364519534583625] invoke Drop: page--1</span><br><span class="line">33: [2381364519534583625] invoke ~ReadPageGuard: this-page--1</span><br><span class="line">33: [2381364519534583625] invoke Drop: this-page--1</span><br><span class="line">33: [2381364519534583625] invoke ~BasicPageGuard: page--1</span><br><span class="line">33: [2381364519534583625] invoke Drop: page--1</span><br><span class="line">33: [2381364519534583625] invoke Insert: key= 1 value=1</span><br><span class="line">。。。</span><br><span class="line">33: [2381364519534583625] invoke Insert: key= 3 value=3</span><br><span class="line">33: [2381364519534583625] invoke FetchPageWrite: page-0</span><br><span class="line">33: [2381364519534583625] invoke FetchPage: page-0</span><br><span class="line">33: [2381364519534583625] invoke FetchPage: page-0 has been in frame-0</span><br><span class="line">33: invoke BasicPageGuard: page-0</span><br><span class="line">33: invoke WritePageGuard: page-0</span><br><span class="line">33: [2381364519534583625] invoke operator=: this-page--1 that-page-0</span><br><span class="line">33: [2381364519534583625] invoke Drop: this-page--1</span><br><span class="line">33: [2381364519534583625] invoke operator=: this-page--1 that-page-0</span><br><span class="line">33: [2381364519534583625] invoke Drop: page--1</span><br><span class="line">33: [2381364519534583625] invoke Drop: page--1</span><br><span class="line">33: [2381364519534583625] invoke ~WritePageGuard: this-page--1</span><br><span class="line">33: [2381364519534583625] invoke Drop: this-page--1</span><br><span class="line">33: [2381364519534583625] invoke ~BasicPageGuard: page--1</span><br><span class="line">33: [2381364519534583625] invoke Drop: page--1</span><br><span class="line">33: invoke As: page-0</span><br><span class="line">33: [2381364519534583625] invoke FetchPageWrite: page-1</span><br><span class="line">33: [2381364519534583625] invoke FetchPage: page-1</span><br><span class="line">33: [2381364519534583625] invoke FetchPage: page-1 has been in frame-1</span><br><span class="line">33: invoke BasicPageGuard: page-1</span><br><span class="line">33: invoke WritePageGuard: page-1</span><br><span class="line">33: [2381364519534583625] invoke operator=: this-page--1 that-page-1</span><br><span class="line">33: [2381364519534583625] invoke Drop: this-page--1</span><br><span class="line">33: [2381364519534583625] invoke operator=: this-page--1 that-page-1</span><br><span class="line">33: [2381364519534583625] invoke Drop: page--1</span><br><span class="line">33: [2381364519534583625] invoke Drop: page--1</span><br><span class="line">33: [2381364519534583625] invoke ~WritePageGuard: this-page--1</span><br><span class="line">33: [2381364519534583625] invoke Drop: this-page--1</span><br><span class="line">33: [2381364519534583625] invoke ~BasicPageGuard: page--1</span><br><span class="line">33: [2381364519534583625] invoke Drop: page--1</span><br><span class="line">33: [2381364519534583625] invoke Drop: this-page-0</span><br><span class="line">33: [2381364519534583625] invoke Drop: page-0</span><br><span class="line">33: [2381364519534583625] invoke UnpinPage: page-0 is_dirty-0</span><br><span class="line">33: [2381364519534583625] page-0 pin_count-0</span><br><span class="line">33: [2381364519534583625] set page-0 evictable</span><br><span class="line">33: invoke As: page-1</span><br><span class="line">33: [2381364519534583625] invoke FetchPageWrite: page-3</span><br><span class="line">33: [2381364519534583625] invoke FetchPage: page-3</span><br><span class="line">33: [2381364519534583625] invoke FetchPage: page-3 has been in frame-3</span><br><span class="line">33: invoke BasicPageGuard: page-3</span><br><span class="line">33: invoke WritePageGuard: page-3</span><br><span class="line">33: [2381364519534583625] invoke operator=: this-page--1 that-page-3</span><br><span class="line">33: [2381364519534583625] invoke Drop: this-page--1</span><br><span class="line">33: [2381364519534583625] invoke operator=: this-page--1 that-page-3</span><br><span class="line">33: [2381364519534583625] invoke Drop: page--1</span><br><span class="line">33: [2381364519534583625] invoke Drop: page--1</span><br><span class="line">33: [2381364519534583625] invoke ~WritePageGuard: this-page--1</span><br><span class="line">33: [2381364519534583625] invoke Drop: this-page--1</span><br><span class="line">33: [2381364519534583625] invoke ~BasicPageGuard: page--1</span><br><span class="line">33: [2381364519534583625] invoke Drop: page--1</span><br><span class="line">33: invoke AsMut: page-3</span><br><span class="line">33: [2381364519534583625] invoke ~WritePageGuard: this-page-3</span><br><span class="line">33: [2381364519534583625] invoke Drop: this-page-3</span><br><span class="line">33: [2381364519534583625] invoke Drop: page-3</span><br><span class="line">33: [2381364519534583625] invoke UnpinPage: page-3 is_dirty-1</span><br><span class="line">33: [2381364519534583625] page-3 pin_count-0</span><br><span class="line">33: [2381364519534583625] set page-3 evictable</span><br><span class="line">33: [2381364519534583625] set page-3 dirty</span><br><span class="line">33: [2381364519534583625] invoke ~BasicPageGuard: page--1</span><br><span class="line">33: [2381364519534583625] invoke Drop: page--1</span><br><span class="line">33: [2381364519534583625] invoke ~WritePageGuard: this-page-1</span><br><span class="line">33: [2381364519534583625] invoke Drop: this-page-1</span><br><span class="line">33: [2381364519534583625] invoke Drop: page-1</span><br><span class="line">33: [2381364519534583625] invoke UnpinPage: page-1 is_dirty-0</span><br><span class="line">33: [2381364519534583625] page-1 pin_count-0</span><br><span class="line">33: [2381364519534583625] set page-1 evictable</span><br><span class="line">33: [2381364519534583625] invoke ~BasicPageGuard: page--1</span><br><span class="line">33: [2381364519534583625] invoke Drop: page--1</span><br><span class="line">33: [2381364519534583625] invoke ~WritePageGuard: this-page--1</span><br><span class="line">33: [2381364519534583625] invoke Drop: this-page--1</span><br><span class="line">33: [2381364519534583625] invoke ~BasicPageGuard: page--1</span><br><span class="line">33: [2381364519534583625] invoke Drop: page--1</span><br><span class="line">33: /autograder/source/bustub/test/container/disk/hash/grading_extendible_htable_test.cpp:125: Failure</span><br><span class="line">33: Value of: inserted</span><br><span class="line">33:   Actual: true</span><br><span class="line">33: Expected: false</span><br></pre></td></tr></table></figure>
 
 <ul>
-<li><p><input checked="" disabled="" type="checkbox">  在<code>Insert</code>函数中输出<code>key, value</code>的值，log如上</p>
+<li><p><input checked="" disabled="" type="checkbox"> 
+在<code>Insert</code>函数中输出<code>key, value</code>的值，log如上</p>
 <ul>
-<li><p><strong>分析该测试</strong>：对于header_page_depth=2, directory_page_depth=3, bucket_size=2的哈希表，</p>
+<li><p><strong>分析该测试</strong>：对于header_page_depth&#x3D;2, directory_page_depth&#x3D;3, bucket_size&#x3D;2的哈希表，</p>
 <ul>
 <li><p>第一遍依次插入<code>&lt;0,0&gt;</code>,<code>&lt;1,1&gt;</code>, <code>&lt;2,2&gt;</code>,<code>&lt;3,3&gt;</code>, <code>&lt;4,4&gt;</code>，</p>
 </li>
@@ -785,7 +876,8 @@
 <li>上述实现忽略了：既<code>bucket full</code>又<code>duplicate key</code>的情况</li>
 </ul>
 </li>
-<li><p><strong>solution:</strong> 因此需要在<code>DiskExtendibleHashTable::Insert</code>函数中先调用<code>DiskExtendibleHashTable::GetValue</code>来判断是否为重复key，并直接返回false</p>
+<li><p><input checked="" disabled="" type="checkbox"> 
+<strong>solution:</strong> 因此需要在<code>DiskExtendibleHashTable::Insert</code>函数中先调用<code>DiskExtendibleHashTable::GetValue</code>来判断是否为重复key，并直接返回false</p>
 <ul>
 <li>至于第二遍插入到<code>&lt;3,3&gt;</code>时才出错，这也是因为插入前三个key时错误以为是full bucket的情况，因此错误地进行了桶分裂</li>
 </ul>
@@ -797,7 +889,7 @@
 <li><input checked="" disabled="" type="checkbox"> <strong>BUG</strong>：<code>36 - ExtendibleHTableTest.RecursiveMergeTest (Subprocess aborted)</code><ul>
 <li><p>根据打出的日志重现测试用例：</p>
 <ul>
-<li>创建HTable：header_depth=1, directory_depth=2, bucket_size=2</li>
+<li>创建HTable：header_depth&#x3D;1, directory_depth&#x3D;2, bucket_size&#x3D;2</li>
 <li>依次插入：<code>&lt;4,0&gt;</code>,<code>&lt;5,0&gt;</code>,<code>&lt;6,0&gt;</code>和<code>&lt;14,0&gt;</code></li>
 <li>接着删除<code>&lt;5&gt;</code>,<code>&lt;14&gt;</code>, <code>&lt;4&gt;</code></li>
 <li>判断<code>GlobalDepth == 0</code></li>
@@ -805,19 +897,22 @@
 </li>
 <li><p>果然本地运行后一直循环</p>
 </li>
-<li><p><strong>solution：</strong> </p>
+<li><p><input checked="" disabled="" type="checkbox"> 
+<strong>solution：</strong> </p>
 <ul>
 <li><p>原来是在合并前，忘记判断此时<code>local_depth</code>是否等于<code>global_depth</code>，即此时<code>directory_bucket</code>中两个bucket条目是否分别指向不同的Page。</p>
 <ul>
 <li>因此需要在合并前判断，若是则不需要合并</li>
 </ul>
 </li>
-<li><p><strong>BUG：</strong>在完成上述代码后，GradeScope卡死</p>
+<li><p><input checked="" disabled="" type="checkbox"> 
+**BUG：**在完成上述代码后，GradeScope卡死</p>
 <ul>
 <li>分析：<code>Insert</code>中Bucket Split的逻辑有些问题，循环后插入的桶选的有问题</li>
 </ul>
 </li>
-<li><p><strong>BUG：</strong> <code>GlobalDepth</code>为2而非0</p>
+<li><p><input checked="" disabled="" type="checkbox"> 
+<strong>BUG：</strong> <code>GlobalDepth</code>为2而非0</p>
 <ul>
 <li><input checked="" disabled="" type="checkbox"> 分析：<code>Merge</code>逻辑有问题，删除<code>&lt;5&gt;</code>后该如何处理？</li>
 <li><input checked="" disabled="" type="checkbox"> <strong>solution:</strong> 根据Merge后是否需要Shrink，来分两种情况处理：<ol>
@@ -833,36 +928,84 @@
 </li>
 </ul>
 <h3 id="✅-SplitGrowTest"><a href="#✅-SplitGrowTest" class="headerlink" title="- [✅] SplitGrowTest"></a>- [✅] SplitGrowTest</h3><ul>
-<li><p><strong>BUG:</strong></p>
+<li><p><input checked="" disabled="" type="checkbox"> 
+<strong>BUG:</strong></p>
 </li>
-<li><p>```<br>39: [  FAILED  ] ExtendibleHTableTest.SplitGrowTest (2055 ms)<br>39: [———-] 1 test from ExtendibleHTableTest (2055 ms total)<br>39:<br>39: [———-] Global test environment tear-down<br>39: [==========] 1 test from 1 test suite ran. (2055 ms total)<br>39: [  PASSED  ] 0 tests.<br>39: [  FAILED  ] 1 test, listed below:<br>39: [  FAILED  ] ExtendibleHTableTest.SplitGrowTest<br>39:<br>39:  1 FAILED TEST<br>1/1 Test #39: ExtendibleHTableTest.SplitGrowTest …***Failed    2.09 sec</p>
-<p>0% tests passed, 1 tests failed out of 1</p>
-<p>Total Test time (real) =   2.13 sec</p>
-<p>The following tests FAILED:</p>
-<pre><code> 39 - ExtendibleHTableTest.SplitGrowTest (Failed)
-</code></pre>
-<p>Errors while running CTest</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- **分析：** （Update——GrowShrinkTest）概率是插入的问题，因为日志中并没有Remove相关日志。有些很奇怪的现象：</span><br><span class="line">  </span><br><span class="line">  - 并且明明只需要插入512个键值对，却在日志中看到了page-651。很可能是Bucket Split的问题</span><br><span class="line">  - 并且日志最后一直调用`FetchPageBasic`（大几百的page id），但是实际上DiskExtendible中并没有调用该函数</span><br><span class="line">- **复现：** </span><br><span class="line">  </span><br><span class="line">  - HTable初始化：bpm-pool_size=4, header_max_depth=9, directory_max_depth=9, bucket_max_size=511</span><br><span class="line">  - 依次插入: &lt;0,0&gt; 到 &lt;511,511&gt;</span><br><span class="line">- **solution**：实际上日志中**打印的行很多但是信息很少**，取消BPM和PageGuard的日志打印，只打印ETH的插入删除和查找，并且打印出ETH的初始条件</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>  39: Note: Google Test filter = ExtendibleHTableTest.SplitGrowTest<br>  39: [==========] Running 1 test from 1 test suite.<br>  39: [———-] Global test environment set-up.<br>  39: [———-] 1 test from ExtendibleHTableTest<br>  39: [ RUN      ] ExtendibleHTableTest.SplitGrowTest<br>  39: [12573574369822553037] invoke DiskExtendibleHashTable header_max_depth-9 directory_max_depth-9 bucket_max_size-511 pair&lt;K,&gt;-8<br>  39: [12573574369822553037] invoke Insert: key= 0 value=0<br>  39: [12573574369822553037] invoke GetValue: key= 0 pair&lt;K,V&gt;-8 header_max_depth-9 directory_max_depth-9 bucket_max_size_511<br>  39: GetValue-0:<br>  39: [12573574369822553037] invoke InsertToNewDirectory<br>  39: [12573574369822553037] invoke InsertToNewBucket<br>  39: [12573574369822553037] invoke GetValue: key= 0 pair&lt;K,V&gt;-8 header_max_depth-9 directory_max_depth-9 bucket_max_size_511<br>  39: GetValue-1: 0<br>  39: [12573574369822553037] invoke Insert: key= 1 value=1<br>  39: [12573574369822553037] invoke GetValue: key= 1 pair&lt;K,V&gt;-8 header_max_depth-9 directory_max_depth-9 bucket_max_size_511<br>  39: GetValue-0:<br>  39: [12573574369822553037] invoke GetValue: key= 1 pair&lt;K,V&gt;-8 header_max_depth-9 directory_max_depth-9 bucket_max_size_511<br>  39: GetValue-1: 1<br>  39: [12573574369822553037] invoke Insert: key= 2 value=2<br>  39: [12573574369822553037] invoke GetValue: key= 2 pair&lt;K,V&gt;-8 header_max_depth-9 directory_max_depth-9 bucket_max_size_511<br>  39: GetValue-0:<br>  39: [12573574369822553037] invoke GetValue: key= 2 pair&lt;K,V&gt;-8 header_max_depth-9 directory_max_depth-9 bucket_max_size_511<br>  39: GetValue-1: 2<br>  …<br>  39: [12573574369822553037] invoke GetValue: key= 139 pair&lt;K,V&gt;-8 header_max_depth-9 directory_max_depth-9 bucket_max_size_511<br>  39: GetValue-1: 139<br>  39: [12573574369822553037] invoke Insert: key= 140 value=140<br>  39: [12573574369822553037[…(truncated)…] slot_num: 215<br>  39:<br>  39: [12573574369822553037] invoke GetValue: key= 216 pair&lt;K,V&gt;-72 header_max_depth-9 directory_max_depth-9 bucket_max_size_56<br>  39: GetValue-1: page_id: 0 slot_num: 216<br>  …<br>  39: [12573574369822553037] invoke GetValue: key= 255 pair&lt;K,V&gt;-72 header_max_depth-9 directory_max_depth-9 bucket_max_size_56<br>  39: GetValue-1: page_id: -1 slot_num: 0<br>  39:<br>  39: /autograder/source/bustub/test/container/disk/hash/grading_extendible_htable_test.cpp:459: Failure<br>  39: Expected equality of these values:<br>  39:   value<br>  39:     Which is: page_id: 0 slot_num: 255<br>  39:<br>  39:   res[0]<br>  39:     Which is: page_id: -1 slot_num: 0<br>  39:<br>  39:<br>  39: [12573574369822553037] invoke GetValue: key= 256 pair&lt;K,V&gt;-72 header_max_depth-9 directory_max_depth-9 bucket_max_size_56<br>  39: GetValue-1: page_id: 0 slot_num: 256<br>  …<br>  39: [4066364812871771751] invoke GetValue: key= 499<br>  39: GetValue-1: page_id: 0 slot_num: 499<br>  39:<br>  39: [  FAILED  ] ExtendibleHTableTest.SplitGrowTest (1642 ms)<br>  39: [———-] 1 test from ExtendibleHTableTest (1642 ms total)<br>  39:<br>  39: [———-] Global test environment tear-down<br>  39: [==========] 1 test from 1 test suite ran. (1642 ms total)<br>  39: [  PASSED  ] 0 tests.<br>  39: [  FAILED  ] 1 test, listed below:<br>  39: [  FAILED  ] ExtendibleHTableTest.SplitGrowTest<br>  39:<br>  39:  1 FAILED TEST<br>  1/1 Test #39: ExtendibleHTableTest.SplitGrowTest …***Failed    1.68 sec</p>
-  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">  </span><br><span class="line">    - **分析**：此时可以看到实际上测试如下进行，分别创建了两种类型的ETH进行测试：</span><br><span class="line">      - 首先，创建第一种类型的ETH：`pair&lt;K,V&gt;-8 header_max_depth-9 directory_max_depth-9 bucket_max_size_511`</span><br><span class="line">        - 依次插入&lt;0,0&gt; ... &lt;511,511&gt;个键值对，每次插入后GetValue验证</span><br><span class="line">      - 接着，创建第二种类型的ETH：`pair&lt;K,V&gt;-72 header_max_depth-9 directory_max_depth-9 bucket_max_size_56`</span><br><span class="line">        - 通过打印的K+V大小为72，并且V类型为RID=8Bytes，可以判断K类型大小为64Bytes</span><br><span class="line">        - 因此依次插入递增的&lt;64Bytes, RID&gt;键值对</span><br><span class="line">        - 接着，又直接GetValue(499)，此时出错</span><br><span class="line">    - **solution**：在本地复现上述测试</span><br><span class="line">      - 分析：发现是BucektPage的Remove/Insert等方法实现有问题：</span><br><span class="line">        - 遍历上限使用max_size_，并且没有在删除后对数组重新组织，也就是说对数组的维护几乎为零，因此可能遍历到初始化为默认值的键值对。</span><br><span class="line">        - 这里就有个问题：当key值恰好等于默认值的数组，此时错误的以为该key存在于Bucket中</span><br><span class="line">      - 因此，只需要将Bucketpage的Insert/LookUp/Remove/RemoveAt的遍历上限都设置为Size()，并且每次删除后都都数组进行调整：将当前键值赋值为默认值，然后将其与最后一个键值对swap即可</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### - [✅] GrowShrinkTest</span><br><span class="line"></span><br><span class="line">**Hint：**该测试需要注意`BufferPoolManager: new BPM pool_size-[3] replacer_k-[10]`，pool size仅仅为3，因此在并发安全的前提下需要确保同一时间持有page guard的数量，特别是在Insert函数中针对Bucket Split的情况。</span><br><span class="line"></span><br><span class="line">- 这里我是一开始就使用了课程中提到的`Crabbing`策略，即在获得下一层的Page后立刻释放父层的Page，因此并没有遇到该问题</span><br><span class="line"></span><br><span class="line">我的问题如下：</span><br><span class="line"></span><br><span class="line">- [x] **BUG：**</span><br><span class="line"></span><br><span class="line">- ```</span><br><span class="line">  40: [AddressSanitizer:DEADLYSIGNAL</span><br><span class="line">  40: =================================================================</span><br><span class="line">  40: ==15095==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000008 (pc 0x55da00abfec1 bp 0x7fff2102aab0 sp 0x7fff2102aa90 T0)</span><br><span class="line">  40: ==15095==The signal is caused by a READ memory access.</span><br><span class="line">  40: ==15095==Hint: address points to the zero page.</span><br><span class="line">  40:     #0 0x55da00abfec1 in bustub::Page::GetPageId() /autograder/source/bustub/src/include/storage/page/page.h:46:49</span><br><span class="line">  40:     #1 0x55da00b4e13a in bustub::BasicPageGuard::BasicPageGuard(bustub::BufferPoolManager*, bustub::Page*) /autograder/source/bustub/src/include/storage/page/page_guard.h:25:5</span><br><span class="line">  40:     #2 0x55da00b4e1a8 in bustub::ReadPageGuard::ReadPageGuard(bustub::BufferPoolManager*, bustub::Page*) /autograder/source/bustub/src/include/storage/page/page_guard.h:130:55</span><br><span class="line">  40:     #3 0x55da00b4b0c1 in bustub::BufferPoolManager::FetchPageRead(int) /autograder/source/bustub/src/buffer/buffer_pool_manager.cpp:410:20</span><br><span class="line">  40:     #4 0x55da00b7155b in bustub::DiskExtendibleHashTable&lt;int, int, bustub::IntComparator&gt;::Remove(int const&amp;, bustub::Transaction*) /autograder/source/bustub/src/container/disk/hash/disk_extendible_hash_table.cpp:396:61</span><br><span class="line">  40:     #5 0x55da00aaf5fc in void bustub::GrowShrinkTestCall&lt;int, int, bustub::IntComparator&gt;(int, int, bustub::IntComparator) /autograder/source/bustub/test/container/disk/hash/grading_extendible_htable_test.cpp:539:8</span><br><span class="line">  40:     #6 0x55da00a9d1d7 in bustub::ExtendibleHTableTest_GrowShrinkTest_Test::TestBody() /autograder/source/bustub/test/container/disk/hash/grading_extendible_htable_test.cpp:608:3</span><br><span class="line">  40:     #7 0x55da00c9dd2e in void testing::internal::HandleExceptionsInMethodIfSupported&lt;testing::Test, void&gt;(testing::Test*, void (testing::Test::*)(), char const*) /autograder/source/bustub/third_party/googletest/googletest/src/gtest.cc:2670:12</span><br><span class="line">  40:     #8 0x55da00c4a6cc in testing::Test::Run() /autograder/source/bustub/third_party/googletest/googletest/src/gtest.cc:2687:5</span><br><span class="line">  40:     #9 0x55da00c4c554 in testing::TestInfo::Run() /autograder/source/bustub/third_party/googletest/googletest/src/gtest.cc:2836:11</span><br><span class="line">  40:     #10 0x55da00c4dd77 in testing::TestSuite::Run() /autograder/source/bustub/third_party/googletest/googletest/src/gtest.cc:3015:30</span><br><span class="line">  40:     #11 0x55da00c71989 in testing::internal::UnitTestImpl::RunAllTests() /autograder/source/bustub/third_party/googletest/googletest/src/gtest.cc:5920:44</span><br><span class="line">  40:     #12 0x55da00ca4453 in bool testing::internal::HandleExceptionsInMethodIfSupported&lt;testing::internal::UnitTestImpl, bool&gt;(testing::internal::UnitTestImpl*, bool (testing::internal::UnitTestImpl::*)(), char const*) /autograder/source/bustub/third_party/googletest/googletest/src/gtest.cc:2670:12</span><br><span class="line">  40:     #13 0x55da00c70cc2 in testing::UnitTest::Run() /autograder/source/bustub/third_party/googletest/googletest/src/gtest.cc:5484:10</span><br><span class="line">  40:     #14 0x55da00cfe2c0 in RUN_ALL_TESTS() /autograder/source/bustub/third_party/googletest/googletest/include/gtest/gtest.h:2317:73</span><br><span class="line">  40:     #15 0x55da00cfe251 in main /autograder/source/bustub/third_party/googletest/googlemock/src/gmock_main.cc:71:10</span><br><span class="line">  40:     #16 0x7f5e188b5d8f in __libc_start_call_main csu/../sysdeps/nptl/libc_start_call_main.h:58:16</span><br><span class="line">  40:     #17 0x7f5e188b5e3f in __libc_start_main csu/../csu/libc-start.c:392:3</span><br><span class="line">  40:     #18 0x55da009ce824 in _start (/autograder/source/bustub/build/test/grading_extendible_htable_test+0x63824) (BuildId: dcdd5fa2c6c086b92a05090ca5692ce4b4af5cab)</span><br><span class="line">  40: </span><br><span class="line">  40: AddressSanitizer can not provide additional info.</span><br><span class="line">  40: SUMMARY: AddressSanitizer: SEGV /autograder/source/bustub/src/include/storage/page/page.h:46:49 in bustub::Page::GetPageId()</span><br><span class="line">  40: ==15095==ABORTING</span><br><span class="line">  1/1 Test #40: ExtendibleHTableTest.GrowShrinkTest ...***Failed    1.66 sec</span><br></pre></td></tr></table></figure>
+<li><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">39: [  FAILED  ] ExtendibleHTableTest.SplitGrowTest (2055 ms)</span><br><span class="line">39: [----------] 1 test from ExtendibleHTableTest (2055 ms total)</span><br><span class="line">39: </span><br><span class="line">39: [----------] Global test environment tear-down</span><br><span class="line">39: [==========] 1 test from 1 test suite ran. (2055 ms total)</span><br><span class="line">39: [  PASSED  ] 0 tests.</span><br><span class="line">39: [  FAILED  ] 1 test, listed below:</span><br><span class="line">39: [  FAILED  ] ExtendibleHTableTest.SplitGrowTest</span><br><span class="line">39: </span><br><span class="line">39:  1 FAILED TEST</span><br><span class="line">1/1 Test #39: ExtendibleHTableTest.SplitGrowTest ...***Failed    2.09 sec</span><br><span class="line"></span><br><span class="line">0% tests passed, 1 tests failed out of 1</span><br><span class="line"></span><br><span class="line">Total Test time (real) =   2.13 sec</span><br><span class="line"></span><br><span class="line">The following tests FAILED:</span><br><span class="line">	 39 - ExtendibleHTableTest.SplitGrowTest (Failed)</span><br><span class="line">Errors while running CTest</span><br></pre></td></tr></table></figure>
 
 <ul>
-<li><p><strong>分析：</strong>根据前面几行，似乎是<code>DiskExtendibleHTable::Remove</code>方法中调用<code>FetchReadPage</code>读入的Page：不存在或者是死锁</p>
+<li><p><strong>分析：</strong> （Update——GrowShrinkTest）概率是插入的问题，因为日志中并没有Remove相关日志。有些很奇怪的现象：</p>
+<ul>
+<li>并且明明只需要插入512个键值对，却在日志中看到了page-651。很可能是Bucket Split的问题</li>
+<li>并且日志最后一直调用<code>FetchPageBasic</code>（大几百的page id），但是实际上DiskExtendible中并没有调用该函数</li>
+</ul>
+</li>
+<li><p><strong>复现：</strong> </p>
+<ul>
+<li>HTable初始化：bpm-pool_size&#x3D;4, header_max_depth&#x3D;9, directory_max_depth&#x3D;9, bucket_max_size&#x3D;511</li>
+<li>依次插入: &lt;0,0&gt; 到 &lt;511,511&gt;</li>
+</ul>
+</li>
+<li><p><strong>solution</strong>：实际上日志中<strong>打印的行很多但是信息很少</strong>，取消BPM和PageGuard的日志打印，只打印ETH的插入删除和查找，并且打印出ETH的初始条件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line">39: Note: Google Test filter = ExtendibleHTableTest.SplitGrowTest</span><br><span class="line">39: [==========] Running 1 test from 1 test suite.</span><br><span class="line">39: [----------] Global test environment set-up.</span><br><span class="line">39: [----------] 1 test from ExtendibleHTableTest</span><br><span class="line">39: [ RUN      ] ExtendibleHTableTest.SplitGrowTest</span><br><span class="line">39: [12573574369822553037] invoke DiskExtendibleHashTable header_max_depth-9 directory_max_depth-9 bucket_max_size-511 pair&lt;K,&gt;-8</span><br><span class="line">39: [12573574369822553037] invoke Insert: key= 0 value=0</span><br><span class="line">39: [12573574369822553037] invoke GetValue: key= 0 pair&lt;K,V&gt;-8 header_max_depth-9 directory_max_depth-9 bucket_max_size_511</span><br><span class="line">39: GetValue-0: </span><br><span class="line">39: [12573574369822553037] invoke InsertToNewDirectory</span><br><span class="line">39: [12573574369822553037] invoke InsertToNewBucket</span><br><span class="line">39: [12573574369822553037] invoke GetValue: key= 0 pair&lt;K,V&gt;-8 header_max_depth-9 directory_max_depth-9 bucket_max_size_511</span><br><span class="line">39: GetValue-1: 0</span><br><span class="line">39: [12573574369822553037] invoke Insert: key= 1 value=1</span><br><span class="line">39: [12573574369822553037] invoke GetValue: key= 1 pair&lt;K,V&gt;-8 header_max_depth-9 directory_max_depth-9 bucket_max_size_511</span><br><span class="line">39: GetValue-0: </span><br><span class="line">39: [12573574369822553037] invoke GetValue: key= 1 pair&lt;K,V&gt;-8 header_max_depth-9 directory_max_depth-9 bucket_max_size_511</span><br><span class="line">39: GetValue-1: 1</span><br><span class="line">39: [12573574369822553037] invoke Insert: key= 2 value=2</span><br><span class="line">39: [12573574369822553037] invoke GetValue: key= 2 pair&lt;K,V&gt;-8 header_max_depth-9 directory_max_depth-9 bucket_max_size_511</span><br><span class="line">39: GetValue-0: </span><br><span class="line">39: [12573574369822553037] invoke GetValue: key= 2 pair&lt;K,V&gt;-8 header_max_depth-9 directory_max_depth-9 bucket_max_size_511</span><br><span class="line">39: GetValue-1: 2</span><br><span class="line">...</span><br><span class="line">39: [12573574369822553037] invoke GetValue: key= 139 pair&lt;K,V&gt;-8 header_max_depth-9 directory_max_depth-9 bucket_max_size_511</span><br><span class="line">39: GetValue-1: 139</span><br><span class="line">39: [12573574369822553037] invoke Insert: key= 140 value=140</span><br><span class="line">39: [12573574369822553037[...(truncated)...] slot_num: 215</span><br><span class="line">39: </span><br><span class="line">39: [12573574369822553037] invoke GetValue: key= 216 pair&lt;K,V&gt;-72 header_max_depth-9 directory_max_depth-9 bucket_max_size_56</span><br><span class="line">39: GetValue-1: page_id: 0 slot_num: 216</span><br><span class="line">...</span><br><span class="line">39: [12573574369822553037] invoke GetValue: key= 255 pair&lt;K,V&gt;-72 header_max_depth-9 directory_max_depth-9 bucket_max_size_56</span><br><span class="line">39: GetValue-1: page_id: -1 slot_num: 0</span><br><span class="line">39: </span><br><span class="line">39: /autograder/source/bustub/test/container/disk/hash/grading_extendible_htable_test.cpp:459: Failure</span><br><span class="line">39: Expected equality of these values:</span><br><span class="line">39:   value</span><br><span class="line">39:     Which is: page_id: 0 slot_num: 255</span><br><span class="line">39: </span><br><span class="line">39:   res[0]</span><br><span class="line">39:     Which is: page_id: -1 slot_num: 0</span><br><span class="line">39: </span><br><span class="line">39: </span><br><span class="line">39: [12573574369822553037] invoke GetValue: key= 256 pair&lt;K,V&gt;-72 header_max_depth-9 directory_max_depth-9 bucket_max_size_56</span><br><span class="line">39: GetValue-1: page_id: 0 slot_num: 256</span><br><span class="line">...</span><br><span class="line">39: [4066364812871771751] invoke GetValue: key= 499</span><br><span class="line">39: GetValue-1: page_id: 0 slot_num: 499</span><br><span class="line">39: </span><br><span class="line">39: [  FAILED  ] ExtendibleHTableTest.SplitGrowTest (1642 ms)</span><br><span class="line">39: [----------] 1 test from ExtendibleHTableTest (1642 ms total)</span><br><span class="line">39: </span><br><span class="line">39: [----------] Global test environment tear-down</span><br><span class="line">39: [==========] 1 test from 1 test suite ran. (1642 ms total)</span><br><span class="line">39: [  PASSED  ] 0 tests.</span><br><span class="line">39: [  FAILED  ] 1 test, listed below:</span><br><span class="line">39: [  FAILED  ] ExtendibleHTableTest.SplitGrowTest</span><br><span class="line">39: </span><br><span class="line">39:  1 FAILED TEST</span><br><span class="line">1/1 Test #39: ExtendibleHTableTest.SplitGrowTest ...***Failed    1.68 sec</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>分析</strong>：此时可以看到实际上测试如下进行，分别创建了两种类型的ETH进行测试：<ul>
+<li>首先，创建第一种类型的ETH：<code>pair&lt;K,V&gt;-8 header_max_depth-9 directory_max_depth-9 bucket_max_size_511</code><ul>
+<li>依次插入&lt;0,0&gt; … &lt;511,511&gt;个键值对，每次插入后GetValue验证</li>
+</ul>
+</li>
+<li>接着，创建第二种类型的ETH：<code>pair&lt;K,V&gt;-72 header_max_depth-9 directory_max_depth-9 bucket_max_size_56</code><ul>
+<li>通过打印的K+V大小为72，并且V类型为RID&#x3D;8Bytes，可以判断K类型大小为64Bytes</li>
+<li>因此依次插入递增的&lt;64Bytes, RID&gt;键值对</li>
+<li>接着，又直接GetValue(499)，此时出错</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>solution</strong>：在本地复现上述测试<ul>
+<li>分析：发现是BucektPage的Remove&#x2F;Insert等方法实现有问题：<ul>
+<li>遍历上限使用max_size_，并且没有在删除后对数组重新组织，也就是说对数组的维护几乎为零，因此可能遍历到初始化为默认值的键值对。</li>
+<li>这里就有个问题：当key值恰好等于默认值的数组，此时错误的以为该key存在于Bucket中</li>
+</ul>
+</li>
+<li>因此，只需要将Bucketpage的Insert&#x2F;LookUp&#x2F;Remove&#x2F;RemoveAt的遍历上限都设置为Size()，并且每次删除后都都数组进行调整：将当前键值赋值为默认值，然后将其与最后一个键值对swap即可</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="✅-GrowShrinkTest"><a href="#✅-GrowShrinkTest" class="headerlink" title="- [✅] GrowShrinkTest"></a>- [✅] GrowShrinkTest</h3><p>**Hint：**该测试需要注意<code>BufferPoolManager: new BPM pool_size-[3] replacer_k-[10]</code>，pool size仅仅为3，因此在并发安全的前提下需要确保同一时间持有page guard的数量，特别是在Insert函数中针对Bucket Split的情况。</p>
+<ul>
+<li>这里我是一开始就使用了课程中提到的<code>Crabbing</code>策略，即在获得下一层的Page后立刻释放父层的Page，因此并没有遇到该问题</li>
+</ul>
+<p>我的问题如下：</p>
+<ul>
+<li><p><input checked="" disabled="" type="checkbox"> 
+<strong>BUG：</strong></p>
+</li>
+<li><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">40: [AddressSanitizer:DEADLYSIGNAL</span><br><span class="line">40: =================================================================</span><br><span class="line">40: ==15095==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000008 (pc 0x55da00abfec1 bp 0x7fff2102aab0 sp 0x7fff2102aa90 T0)</span><br><span class="line">40: ==15095==The signal is caused by a READ memory access.</span><br><span class="line">40: ==15095==Hint: address points to the zero page.</span><br><span class="line">40:     #0 0x55da00abfec1 in bustub::Page::GetPageId() /autograder/source/bustub/src/include/storage/page/page.h:46:49</span><br><span class="line">40:     #1 0x55da00b4e13a in bustub::BasicPageGuard::BasicPageGuard(bustub::BufferPoolManager*, bustub::Page*) /autograder/source/bustub/src/include/storage/page/page_guard.h:25:5</span><br><span class="line">40:     #2 0x55da00b4e1a8 in bustub::ReadPageGuard::ReadPageGuard(bustub::BufferPoolManager*, bustub::Page*) /autograder/source/bustub/src/include/storage/page/page_guard.h:130:55</span><br><span class="line">40:     #3 0x55da00b4b0c1 in bustub::BufferPoolManager::FetchPageRead(int) /autograder/source/bustub/src/buffer/buffer_pool_manager.cpp:410:20</span><br><span class="line">40:     #4 0x55da00b7155b in bustub::DiskExtendibleHashTable&lt;int, int, bustub::IntComparator&gt;::Remove(int const&amp;, bustub::Transaction*) /autograder/source/bustub/src/container/disk/hash/disk_extendible_hash_table.cpp:396:61</span><br><span class="line">40:     #5 0x55da00aaf5fc in void bustub::GrowShrinkTestCall&lt;int, int, bustub::IntComparator&gt;(int, int, bustub::IntComparator) /autograder/source/bustub/test/container/disk/hash/grading_extendible_htable_test.cpp:539:8</span><br><span class="line">40:     #6 0x55da00a9d1d7 in bustub::ExtendibleHTableTest_GrowShrinkTest_Test::TestBody() /autograder/source/bustub/test/container/disk/hash/grading_extendible_htable_test.cpp:608:3</span><br><span class="line">40:     #7 0x55da00c9dd2e in void testing::internal::HandleExceptionsInMethodIfSupported&lt;testing::Test, void&gt;(testing::Test*, void (testing::Test::*)(), char const*) /autograder/source/bustub/third_party/googletest/googletest/src/gtest.cc:2670:12</span><br><span class="line">40:     #8 0x55da00c4a6cc in testing::Test::Run() /autograder/source/bustub/third_party/googletest/googletest/src/gtest.cc:2687:5</span><br><span class="line">40:     #9 0x55da00c4c554 in testing::TestInfo::Run() /autograder/source/bustub/third_party/googletest/googletest/src/gtest.cc:2836:11</span><br><span class="line">40:     #10 0x55da00c4dd77 in testing::TestSuite::Run() /autograder/source/bustub/third_party/googletest/googletest/src/gtest.cc:3015:30</span><br><span class="line">40:     #11 0x55da00c71989 in testing::internal::UnitTestImpl::RunAllTests() /autograder/source/bustub/third_party/googletest/googletest/src/gtest.cc:5920:44</span><br><span class="line">40:     #12 0x55da00ca4453 in bool testing::internal::HandleExceptionsInMethodIfSupported&lt;testing::internal::UnitTestImpl, bool&gt;(testing::internal::UnitTestImpl*, bool (testing::internal::UnitTestImpl::*)(), char const*) /autograder/source/bustub/third_party/googletest/googletest/src/gtest.cc:2670:12</span><br><span class="line">40:     #13 0x55da00c70cc2 in testing::UnitTest::Run() /autograder/source/bustub/third_party/googletest/googletest/src/gtest.cc:5484:10</span><br><span class="line">40:     #14 0x55da00cfe2c0 in RUN_ALL_TESTS() /autograder/source/bustub/third_party/googletest/googletest/include/gtest/gtest.h:2317:73</span><br><span class="line">40:     #15 0x55da00cfe251 in main /autograder/source/bustub/third_party/googletest/googlemock/src/gmock_main.cc:71:10</span><br><span class="line">40:     #16 0x7f5e188b5d8f in __libc_start_call_main csu/../sysdeps/nptl/libc_start_call_main.h:58:16</span><br><span class="line">40:     #17 0x7f5e188b5e3f in __libc_start_main csu/../csu/libc-start.c:392:3</span><br><span class="line">40:     #18 0x55da009ce824 in _start (/autograder/source/bustub/build/test/grading_extendible_htable_test+0x63824) (BuildId: dcdd5fa2c6c086b92a05090ca5692ce4b4af5cab)</span><br><span class="line">40: </span><br><span class="line">40: AddressSanitizer can not provide additional info.</span><br><span class="line">40: SUMMARY: AddressSanitizer: SEGV /autograder/source/bustub/src/include/storage/page/page.h:46:49 in bustub::Page::GetPageId()</span><br><span class="line">40: ==15095==ABORTING</span><br><span class="line">1/1 Test #40: ExtendibleHTableTest.GrowShrinkTest ...***Failed    1.66 sec</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>**分析：**根据前面几行，似乎是<code>DiskExtendibleHTable::Remove</code>方法中调用<code>FetchReadPage</code>读入的Page：不存在或者是死锁</p>
 </li>
 <li><p><strong>复现：</strong></p>
 <ul>
-<li>HTable初始化：bpm-pool_size=3, header_max_depth=9, directory_max_depth=9, bucket_max_size=511</li>
+<li>HTable初始化：bpm-pool_size&#x3D;3, header_max_depth&#x3D;9, directory_max_depth&#x3D;9, bucket_max_size&#x3D;511</li>
 <li>依次插入: &lt;0,0&gt; 到 &lt;511,511&gt;</li>
 <li>依次删除：&lt;0,0&gt; 到&lt;511, 511&gt;</li>
 <li>删除到496时报如上错误</li>
 <li>本地测试：删除到510会报错<ul>
-<li><code>DiskExtendibleHTable::Remove</code>方法中对PageId为3的调用了<code>FetchPageRead</code>，内部调用的<code>fetchpage</code>返回为nullpter，但是实际上Page=3是创建过的</li>
+<li><code>DiskExtendibleHTable::Remove</code>方法中对PageId为3的调用了<code>FetchPageRead</code>，内部调用的<code>fetchpage</code>返回为nullpter，但是实际上Page&#x3D;3是创建过的</li>
 <li>紧接着<code>FetchPageRead</code>调用了<code>BasicGuard</code>、<code>ReadPageGuard</code>、<code>WritePageGuard</code>的默认构造函数，其中<code>PGG_LOG</code>使用时直接调用了传入page的GetPageId函数，忘记考虑nullptr情况</li>
 </ul>
 </li>
 </ul>
 </li>
-<li><p><input checked="" disabled="" type="checkbox">  **Solution: **</p>
+<li><p><input checked="" disabled="" type="checkbox"> 
+**Solution: **</p>
 <ul>
 <li>一开始实现的时候就对<code>DiskExtendibleHTable::Remove</code>使用<code>Crabbing</code>策略来确保同一时间持有的page guard数量，但是疏忽了<code>Bucket Merge</code>的情形，因为针对该if分支并没有使用到header page，可以立刻释放header page。</li>
 <li>因此解决方法就是：实现<code>Crabbing</code>于<code>DiskExtendibleHTable</code>的所有方法，以确保同时拥有的page guard数量小于等于3，因为本项目实现的ExtendibleHTable就是三层级，一个线程最多持有三个层的一个Page</li>
@@ -870,9 +1013,8 @@
 </li>
 </ul>
 </li>
-</ul>
-<ul>
-<li><p><strong>BUG：</strong>解决上述问题后变成了和<code>SplitGrowTest</code>一样的问题：</p>
+<li><p><input checked="" disabled="" type="checkbox"> 
+**BUG：**解决上述问题后变成了和<code>SplitGrowTest</code>一样的问题：</p>
 <ul>
 <li><pre><code>40: [  FAILED  ] ExtendibleHTableTest.GrowShrinkTest (13554 ms)
 40: [----------] 1 test from ExtendibleHTableTest (13554 ms total)
@@ -895,9 +1037,9 @@ The following tests FAILED:
 Errors while running CTest
 </code></pre>
 </li>
-<li><p><strong>分析：</strong>大概率是插入的问题，因为日志中并没有Remove相关日志，并且明明只需要插入512个键值对，却在日志中看到了page-651，这很奇怪。大概率是Bucket Split的问题</p>
+<li><p>**分析：**大概率是插入的问题，因为日志中并没有Remove相关日志，并且明明只需要插入512个键值对，却在日志中看到了page-651，这很奇怪。大概率是Bucket Split的问题</p>
 </li>
-<li><p><strong>solution</strong>：和SplitGrowTest问题一样，都是BucketPage对bucket数组的初始化默认值+Remove/Insert/LookUp的遍历上限有问题，修复后两个测试均通过</p>
+<li><p><strong>solution</strong>：和SplitGrowTest问题一样，都是BucketPage对bucket数组的初始化默认值+Remove&#x2F;Insert&#x2F;LookUp的遍历上限有问题，修复后两个测试均通过</p>
 </li>
 </ul>
 </li>
@@ -907,7 +1049,7 @@ Errors while running CTest
 <ul>
 <li><p><strong>Latch Crabbing</strong></p>
 <ul>
-<li>  The thread traversing the index should acquire latches on hash table pages as necessary to ensure safe concurrent operations, and should release latches on parent pages as soon as it is possible to determine that it is safe to do so.</li>
+<li>The thread traversing the index should acquire latches on hash table pages as necessary to ensure safe concurrent operations, and should release latches on parent pages as soon as it is possible to determine that it is safe to do so.</li>
 </ul>
 </li>
 </ul>
@@ -919,31 +1061,35 @@ Errors while running CTest
 <p><strong><span style="color: rgb(13, 13, 13)"><span style="background-color: #ff666680">Note</span>:</span></strong><span style="color: rgb(13, 13, 13)"> You should never acquire the same read lock twice in a single thread. It might lead to deadlock.</span></p>
 <p><strong><span style="color: rgb(13, 13, 13)"><span style="background-color: #ff666680">Note</span>:</span></strong><span style="color: rgb(13, 13, 13)"> You should make careful design decisions on latching.</span></p>
 <ul>
-<li>  <span style="color: rgb(13, 13, 13)">Always holding a global latch the entire hash table is probably not a good idea.</span></li>
+<li><span style="color: rgb(13, 13, 13)">Always holding a global latch the entire hash table is probably not a good idea.</span></li>
 </ul>
 </blockquote>
 <h2 id="PageGuard"><a href="#PageGuard" class="headerlink" title="PageGuard"></a>PageGuard</h2><p><code>Insert</code></p>
 <ul>
-<li>  的BasicPage尽量替换WritePageGuard，先不用Read；</li>
+<li>的BasicPage尽量替换WritePageGuard，先不用Read；</li>
 </ul>
 <p><code>GetValue</code>：</p>
 <ul>
-<li>  可以全部使用ReadGuard</li>
+<li>可以全部使用ReadGuard</li>
 </ul>
 <p><code>Remove</code>:</p>
 <ul>
-<li>  只需要对bucket page使用write guard</li>
+<li>只需要对bucket page使用write guard</li>
 </ul>
 <p>需要使用<code>Latch Crabbing</code>策略来尽快而又安全地释放父Page的Latch</p>
 <ul>
-<li>  <strong>Crabbing</strong>：（Update——GrowShrinkTest）这对于通过<code>GrowShrinkTest</code>至关重要，因为该测试中pool size只有3，因此必须确保在Insert分裂情况时，所持有的page guard数量小于等于3.</li>
-<li>先获得header page的page guard</li>
-<li>然后尝试获得directory page的page guard<ul>
+<li><p><strong>Crabbing</strong>：（Update——GrowShrinkTest）这对于通过<code>GrowShrinkTest</code>至关重要，因为该测试中pool size只有3，因此必须确保在Insert分裂情况时，所持有的page guard数量小于等于3.</p>
+</li>
+<li><p>先获得header page的page guard</p>
+</li>
+<li><p>然后尝试获得directory page的page guard</p>
+<ul>
 <li>若成功获得，确保不会用到header时，再释放header page的page guard</li>
 </ul>
 </li>
-<li>尝试获得bucket page的page guard<ul>
-<li>  若成功获得，确保不会用到directory时，释放directory page的page guard</li>
+<li><p>尝试获得bucket page的page guard</p>
+<ul>
+<li>若成功获得，确保不会用到directory时，释放directory page的page guard</li>
 </ul>
 </li>
 </ul>
@@ -953,20 +1099,20 @@ Errors while running CTest
 <h5 id="BUGs"><a href="#BUGs" class="headerlink" title="BUGs"></a>BUGs</h5><ul>
 <li><p>- [✅] BUG</p>
 <ul>
-<li><p>  在Project #1中图方便，在NewPage直接使用了一把函数粒度的递归锁lock_guard</p>
+<li><p>在Project #1中图方便，在NewPage直接使用了一把函数粒度的递归锁lock_guard</p>
 </li>
 <li><p>导致有一种死锁的可能：</p>
 <ul>
-<li><p>  线程一先调用Insert，并通过调用FetchWritePage获得了page0（即header page ）的WLatch</p>
+<li><p>线程一先调用Insert，并通过调用FetchWritePage获得了page0（即header page ）的WLatch</p>
 </li>
 <li><p>线程二后调用Insert，也尝试通过调用FetchWritePage获得page0，但是进入到FetchPage后尝试获取page0的WLatch失败，只能waiting</p>
 <ul>
-<li>  注意，此时线程二拿到了BPM的递归锁lock_guard</li>
+<li>注意，此时线程二拿到了BPM的递归锁lock_guard</li>
 </ul>
 </li>
-<li><p>  线程一继续完成Insert：尝试InsertToNewDirectory时，内部也尝试调用NewWritePage获得bpm的递归锁。</p>
+<li><p>线程一继续完成Insert：尝试InsertToNewDirectory时，内部也尝试调用NewWritePage获得bpm的递归锁。</p>
 </li>
-<li><p>  最终导致了DeadLock</p>
+<li><p>最终导致了DeadLock</p>
 </li>
 </ul>
 </li>
@@ -974,59 +1120,66 @@ Errors while running CTest
 <ul>
 <li><p>- [✅] 新BUG</p>
 <ul>
-<li><p>  <strong>描述</strong>：使用该方法会导致BPM的并发问题，可能是unlock之后被其他线程修改了相应的部分</p>
+<li><p><strong>描述</strong>：使用该方法会导致BPM的并发问题，可能是unlock之后被其他线程修改了相应的部分</p>
 </li>
-<li><p>  <strong>solution:</strong> 能确保BPM100分</p>
+<li><p><strong>solution:</strong> 能确保BPM100分</p>
 </li>
 </ul>
 </li>
-<li><p>不使用递归锁，不主动unlock，</p>
-<pre><code>  *   只对NewPage, FetchPage和DeletePage加锁，
-  *   并且在FetchPage中处理已经在bufferpool情况的分支中不对Page加锁
-</code></pre>
+<li><p>不使用递归锁，不主动unlock，<br>*   只对NewPage, FetchPage和DeletePage加锁，<br>*   并且在FetchPage中处理已经在bufferpool情况的分支中不对Page加锁</p>
 </li>
 </ul>
 </li>
 <li><p><span style="background-color: #ff666680">- [✅] 新BUG</span></p>
 <ul>
-<li><strong>描述：</strong><ul>
-<li>线程一:Insert-&gt;WritePageGuard.Drop-&gt;guard.Drop-&gt;Unpin(is_dirty=true)——waiting在Unpin获得BPM的latch步骤</li>
-<li>线程二: Insert-&gt;FetchWritePageGuard-&gt;FetchPage——正在FetchPage中尝试读出某页的数据<ul>
-<li>  报出异常，读出的位置为空数据</li>
+<li><p><strong>描述：</strong></p>
+<ul>
+<li><p>线程一:Insert-&gt;WritePageGuard.Drop-&gt;guard.Drop-&gt;Unpin(is_dirty&#x3D;true)——waiting在Unpin获得BPM的latch步骤</p>
+</li>
+<li><p>线程二: Insert-&gt;FetchWritePageGuard-&gt;FetchPage——正在FetchPage中尝试读出某页的数据</p>
+<ul>
+<li>报出异常，读出的位置为空数据</li>
 </ul>
 </li>
 </ul>
 </li>
-<li><span style="background-color: #2ea8e580">尝试LogOut:</span><ul>
-<li>page id&gt;50即超过了buffer pool的大小，某次新建page会导致evcit时，会有之前某个dirty page并没有flush回disk<pre><code>  *   某次NewPage时，并没有将该dirty page flush回disk，可能是UnPinPage时没有标志is\_dirty\_
-</code></pre>
-</li>
+<li><p><span style="background-color: #2ea8e580">尝试LogOut:</span></p>
+<ul>
+<li>page id&gt;50即超过了buffer pool的大小，某次新建page会导致evcit时，会有之前某个dirty page并没有flush回disk<br>*   某次NewPage时，并没有将该dirty page flush回disk，可能是UnPinPage时没有标志is_dirty_</li>
 </ul>
 </li>
-<li>**<span style="background-color: #5fb23680">可能solution</span>**：<ul>
-<li>  不使用UpgradeWrite，该函数实现有问题，并没有在Upgrade期间对pin_count_++，导致drop中Unpin中不会将其的is_dirty写入到page的metadata中</li>
+<li><p><strong><span style="background-color: #5fb23680">可能solution</span></strong>：</p>
+<ul>
+<li>不使用UpgradeWrite，该函数实现有问题，并没有在Upgrade期间对pin_count_++，导致drop中Unpin中不会将其的is_dirty写入到page的metadata中</li>
 </ul>
 </li>
 </ul>
 </li>
 <li><p><span style="background-color: #ff666680">- [✅] 新BUG</span></p>
 <ul>
-<li><strong>描述：</strong><ul>
+<li><p><strong>描述：</strong></p>
+<ul>
 <li>死锁</li>
 </ul>
 </li>
-<li><span style="background-color: #2ea8e580">尝试Log Out线程编号：可以使用</span><code>std::hash(std::this_thread::get_id())</code>返回当前线程的id（hash后）<ul>
-<li><img src="https://cdn.jsdelivr.net/gh/ZiHao256/Gallery@master/uPic/2023/10/image-20231030220305729.png" alt="logs"></li>
-<li>Debug过程中发现<code>UnpinPage</code>函数在unpin page0（即header page），对其内部使用Page的读写锁是多此一举的，由于判断pin_count的目的就是判断是否有多线程正在使用该Page（读或者写）。通过BPM的线上测试也能证实这一点<ul>
-<li>  并且将Page锁去除后，该BUG消失</li>
+<li><p><span style="background-color: #2ea8e580">尝试Log Out线程编号：可以使用</span><code>std::hash(std::this_thread::get_id())</code>返回当前线程的id（hash后）</p>
+<ul>
+<li><p><img src="https://cdn.jsdelivr.net/gh/ZiHao256/Gallery@master/uPic/2023/10/image-20231030220305729.png" alt="logs"></p>
+</li>
+<li><p>Debug过程中发现<code>UnpinPage</code>函数在unpin page0（即header page），对其内部使用Page的读写锁是多此一举的，由于判断pin_count的目的就是判断是否有多线程正在使用该Page（读或者写）。通过BPM的线上测试也能证实这一点</p>
+<ul>
+<li>并且将Page锁去除后，该BUG消失</li>
 </ul>
 </li>
-<li>这时才想起来<code>header_page_guard.AsMut</code>函数内部会访问Page的Data</li>
-<li>推测是两个线程在UnpinPage和AsMut中思索了？？？</li>
+<li><p>这时才想起来<code>header_page_guard.AsMut</code>函数内部会访问Page的Data</p>
+</li>
+<li><p>推测是两个线程在UnpinPage和AsMut中思索了？？？</p>
+</li>
 </ul>
 </li>
-<li><strong>solution</strong>：<ul>
-<li>  去除UnpinPage内部的Page锁</li>
+<li><p><strong>solution</strong>：</p>
+<ul>
+<li>去除UnpinPage内部的Page锁</li>
 </ul>
 </li>
 </ul>
@@ -1059,79 +1212,133 @@ Errors while running CTest
 <p><img src="https://cdn.jsdelivr.net/gh/ZiHao256/Gallery@master/uPic/2023/12/image-20231211142421415.png" alt="image-20231211142421415"></p>
 <h1 id="Optimization"><a href="#Optimization" class="headerlink" title="Optimization"></a>Optimization</h1><p>最终通过了AG，但是很明显效率很低，可能与Project#1的实现有关，等后续再对其进行优化</p>
 <p><img src="https://cdn.jsdelivr.net/gh/ZiHao256/Gallery@master/uPic/2023/12/image-20231211143337147.png" alt="image-20231211143337147"></p>
-</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="https://zihao256.github.io">zihao</a><!-- 在此处添加签名图片--></span><div class="signature" style="display: inline-block; margin-left: 10px;"><img src="https://cdn.jsdelivr.net/gh/ZiHao256/Gallery@master/uPic/2024/09/Ma_Zahi1.svg" alt="Signature" style="width: 100px; height: auto;"></div></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://zihao256.github.io/p/517dd8ea.html">https://zihao256.github.io/p/517dd8ea.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Container/">Container</a><a class="post-meta__tags" href="/tags/Database-System/">Database System</a><a class="post-meta__tags" href="/tags/C/">C++</a></div><div class="post_share"><div class="social-share" data-image="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/john-towner-3Kv48NS4WUU-unsplash.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/p/d028ccc3.html"><img class="prev-cover" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven-4ggvml.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info">基于Actix-Web(Rust)和Vue的Web开发记录</div></div></a></div><div class="next-post pull-right"><a href="/p/76b71367.html"><img class="next-cover" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven-4ggvml.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">Extendible Hash Table</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><div><a href="/p/10f62ef4.html" title="PROJECT #4: CONCURRENCY CONTROL"><img class="cover" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven-gpdvj3.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-05-16</div><div class="title">PROJECT #4: CONCURRENCY CONTROL</div></div></a></div><div><a href="/p/c186cbfd.html" title="Project #3: Query Execution"><img class="cover" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/drain.webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-05-16</div><div class="title">Project #3: Query Execution</div></div></a></div><div><a href="/p/1c228cd6.html" title="Project#1: Buffer Pool"><img class="cover" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven1.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-10-03</div><div class="title">Project#1: Buffer Pool</div></div></a></div><div><a href="/p/6fa5e9a2.html" title="Project#0: C++ Primer"><img class="cover" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/beautiful-milky-way-night-sky.webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-10-01</div><div class="title">Project#0: C++ Primer</div></div></a></div><div><a href="/p/76b71367.html" title="Extendible Hash Table"><img class="cover" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven-4ggvml.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-10-29</div><div class="title">Extendible Hash Table</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> Comment</span></div></div><div class="comment-wrap"><div><div id="gitalk-container"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://github.com/ZiHao256/ZiHao256.github.io/blob/hexo/images/stitch.JPG?raw=true" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">zihao</div><div class="author-info__description">Why be afraid of the infinity of truth? Joy resides in every step of growth.</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">66</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">48</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">16</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/ZiHao256"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/ZiHao256" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/atom.xml" target="_blank" title="RSS链接"><i class="fa fa-rss"></i></a><a class="social-icon" href="mailto:zihao626@gmail.com" target="_blank" title="gmail"><i class="fa-brands fa-google"></i></a><a class="social-icon" href="mailto:zh_ma@stu.xidian.edu.cn" target="_blank" title="xdu-mail"><i class="fa fa-graduation-cap"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">keep moving in 2024</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%87%86%E5%A4%87"><span class="toc-text">准备</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Task-1-Read-Write-Page-Guards"><span class="toc-text">Task #1-Read&#x2F;Write Page Guards</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#BasicPageGuard-ReadPageGuard-WritePageGuard"><span class="toc-text">BasicPageGuard&#x2F;ReadPageGuard&#x2F;WritePageGuard</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Upgrade"><span class="toc-text">Upgrade</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Wrappers"><span class="toc-text">Wrappers</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#LocalTest-SimpleTest"><span class="toc-text">LocalTest-SimpleTest</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GradeScope-PageGuardTest"><span class="toc-text">GradeScope: PageGuardTest</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9C%85-MoveTest"><span class="toc-text">- [✅] MoveTest</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9C%85-BPMTest"><span class="toc-text">- [✅] BPMTest</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Task-2-Extendible-Hash-Table-Pages"><span class="toc-text">Task #2-Extendible Hash Table Pages</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Hash-Table-Header-Pages"><span class="toc-text">Hash Table Header Pages</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%88%90%E5%91%98%E5%8F%98%E9%87%8F%EF%BC%9A"><span class="toc-text">成员变量：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E5%AE%9E%E7%8E%B0%EF%BC%9A"><span class="toc-text">方法实现：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Hash-Table-Directory-Pages"><span class="toc-text">Hash Table Directory Pages</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%88%90%E5%91%98%E5%8F%98%E9%87%8F%EF%BC%9A-1"><span class="toc-text">成员变量：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E5%AE%9E%E7%8E%B0%EF%BC%9A-1"><span class="toc-text">方法实现：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Hash-Table-Bucket-Page"><span class="toc-text">Hash Table Bucket Page</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%88%90%E5%91%98%E5%8F%98%E9%87%8F%EF%BC%9A-2"><span class="toc-text">成员变量：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E5%AE%9E%E7%8E%B0"><span class="toc-text">方法实现</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#LocalTest-BucketPageSampleTest-HeaderDirectoryPageTest"><span class="toc-text">LocalTest-BucketPageSampleTest&#x2F;HeaderDirectoryPageTest</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GradeScope"><span class="toc-text">GradeScope</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Task-3-Extenable-Hashing-Implementation"><span class="toc-text">Task #3-Extenable Hashing Implementation</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E5%AE%9E%E7%8E%B0-1"><span class="toc-text">方法实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Insert%E6%96%B9%E6%B3%95"><span class="toc-text">Insert方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Remove%E6%96%B9%E6%B3%95"><span class="toc-text">Remove方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GetValue%E6%96%B9%E6%B3%95"><span class="toc-text">GetValue方法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GradeScope%E8%A6%81%E6%B1%82%E7%9A%84%E5%8A%9F%E8%83%BD"><span class="toc-text">GradeScope要求的功能</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9C%85-Empty-Table"><span class="toc-text">- [✅] Empty Table</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9C%85-Header-Indexing"><span class="toc-text">- [✅] Header Indexing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9C%85-Directory-Indexing"><span class="toc-text">- [✅] Directory Indexing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9C%85-Bucket-Splitting"><span class="toc-text">- [✅] Bucket Splitting</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9C%85-Bucket-Merging-%E2%9C%85-Directory-Shrinking"><span class="toc-text">- [✅] Bucket Merging + [✅]Directory Shrinking</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Bug"><span class="toc-text">Bug</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9C%85-Directory-Growing"><span class="toc-text">- [✅] Directory Growing</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#LocalTest-InsertTest-RemoveTest"><span class="toc-text">LocalTest-InsertTest&#x2F;RemoveTest</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GradeScope-ExtendibleHTableTest"><span class="toc-text">GradeScope: ExtendibleHTableTest</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9C%85-InsertTest3"><span class="toc-text">- [✅] InsertTest3</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9C%85-RecursiveMergeTest"><span class="toc-text">- [✅] RecursiveMergeTest</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9C%85-SplitGrowTest"><span class="toc-text">- [✅] SplitGrowTest</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Task-4-Concurrency-Control"><span class="toc-text">Task #4-Concurrency Control</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#PageGuard"><span class="toc-text">PageGuard</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#LocalTest"><span class="toc-text">LocalTest</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ExtendibleHTableTest"><span class="toc-text">ExtendibleHTableTest</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ExtendibleHTableConcurrentTest"><span class="toc-text">ExtendibleHTableConcurrentTest</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#InsertTest1"><span class="toc-text">InsertTest1</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#BUGs"><span class="toc-text">BUGs</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#InsertTest2"><span class="toc-text">InsertTest2</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#DeleteTest1"><span class="toc-text">DeleteTest1</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#DeleteTest2"><span class="toc-text">DeleteTest2</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#MixTest1"><span class="toc-text">MixTest1</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#MixTest2"><span class="toc-text">MixTest2</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GradeScope-ExtendibleHTableConcurrentTest"><span class="toc-text">GradeScope: ExtendibleHTableConcurrentTest</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Optimization"><span class="toc-text">Optimization</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/p/10f62ef4.html" title="PROJECT #4: CONCURRENCY CONTROL"><img src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven-gpdvj3.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="PROJECT #4: CONCURRENCY CONTROL"/></a><div class="content"><a class="title" href="/p/10f62ef4.html" title="PROJECT #4: CONCURRENCY CONTROL">PROJECT #4: CONCURRENCY CONTROL</a><time datetime="2024-05-16T01:01:13.000Z" title="Created 2024-05-16 09:01:13">2024-05-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/c186cbfd.html" title="Project #3: Query Execution"><img src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/drain.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Project #3: Query Execution"/></a><div class="content"><a class="title" href="/p/c186cbfd.html" title="Project #3: Query Execution">Project #3: Query Execution</a><time datetime="2024-05-16T00:59:16.000Z" title="Created 2024-05-16 08:59:16">2024-05-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/2acafc61.html" title="rustlings"><img src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/in-the-early-morning-of-forest-wallpaper.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="rustlings"/></a><div class="content"><a class="title" href="/p/2acafc61.html" title="rustlings">rustlings</a><time datetime="2023-11-28T09:46:15.000Z" title="Created 2023-11-28 17:46:15">2023-11-28</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/d028ccc3.html" title="基于Actix-Web(Rust)和Vue的Web开发记录"><img src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven-4ggvml.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="基于Actix-Web(Rust)和Vue的Web开发记录"/></a><div class="content"><a class="title" href="/p/d028ccc3.html" title="基于Actix-Web(Rust)和Vue的Web开发记录">基于Actix-Web(Rust)和Vue的Web开发记录</a><time datetime="2023-11-13T13:42:48.000Z" title="Created 2023-11-13 21:42:48">2023-11-13</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/517dd8ea.html" title="Project#2: Extendible Hash Index"><img src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/john-towner-3Kv48NS4WUU-unsplash.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Project#2: Extendible Hash Index"/></a><div class="content"><a class="title" href="/p/517dd8ea.html" title="Project#2: Extendible Hash Index">Project#2: Extendible Hash Index</a><time datetime="2023-10-30T13:56:01.000Z" title="Created 2023-10-30 21:56:01">2023-10-30</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/john-towner-3Kv48NS4WUU-unsplash.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2021 - 2024 By zihao</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Hi, welcome to my <a href="https://zihao256.github.io/">Blog</a>!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="Toggle Between Traditional Chinese And Simplified Chinese">简</button><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="Scroll To Comments"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">Search</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  Loading the Database</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="Search for Posts" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script src="/js/search/local-search.js"></script><script>var preloader = {
-  endLoading: () => {
-    document.body.style.overflow = 'auto';
-    document.getElementById('loading-box').classList.add("loaded")
-  },
-  initLoading: () => {
-    document.body.style.overflow = '';
-    document.getElementById('loading-box').classList.remove("loaded")
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="https://zihao256.github.io">zihao</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="https://zihao256.github.io/p/517dd8ea.html">https://zihao256.github.io/p/517dd8ea.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles on this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless otherwise stated.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Container/">Container</a><a class="post-meta__tags" href="/tags/Database-System/">Database System</a><a class="post-meta__tags" href="/tags/C/">C++</a></div><div class="post-share"><div class="social-share" data-image="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven5.jpg" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/p/d028ccc3.html" title="基于Actix-Web(Rust)和Vue的Web开发记录"><img class="cover" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven-kxd1md.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">Previous</div><div class="info-item-2">基于Actix-Web(Rust)和Vue的Web开发记录</div></div><div class="info-2"><div class="info-item-1">后端（基于actix-web）login  登录后，使用session存储用户的相关信息用于导出功能  登录后，生成token返回给前端作为信息认证  register  注册后转到登录界面  Homeexport &amp; export_in_db   用户使用该功能时，需要在请求header中传回token来认证    bug: 1GET http://localhost:8080/export/x x x 401 (Unauthorized)    分析：授权问题    solution：logger + debug  发现是 actix-session中设置的内容并没有在后续操作被访问，  因为在postman中，actix-session返回的set-cookie会默认填充到cookie中  而浏览器并没有这个功能，需要前端实现。    这波是postman的锅    bug：为了actix-session能够正常使用（需要将actix-session放置于响应头中的set-cookie，置于其他请求头中），需要使用axios的axios.defaults.withC...</div></div></div></a><a class="pagination-related" href="/p/76b71367.html" title="Extendible Hash Table"><img class="cover" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/sebastian-unrau-sp-p7uuT0tw-unsplash.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">Next</div><div class="info-item-2">Extendible Hash Table</div></div><div class="info-2"><div class="info-item-1">Extendible Hash Table  hash function  对于给定key生成32bit的值   bucket address table  对于每个32bit的hash value，都有一个table entry相对应 但在某一时刻该table的实际使用大小由global prefix控制   global prefix：用于生成global mask  在实际使用时，global prefix用于控制当前bucket address table实际使用的大小  具体为2^(global prefix)个条目     local prefix：用于生成local mask  不会为所有hash value都生成一个bucket，而是按需生成  用于判断当前table entry指向的bucket  如果local prefix &#x3D;&#x3D; glocal prefix：  则说明只有该entry拥有指向的bucket   按需体现在local prefix &lt; global prefix:  拥有相同local prefix的entry指向同一...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/p/10f62ef4.html" title="PROJECT #4: CONCURRENCY CONTROL"><img class="cover" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/joseph-barrientos-oQl0eVYd_n8-unsplash.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-05-16</div><div class="info-item-2">PROJECT #4: CONCURRENCY CONTROL</div></div><div class="info-2"><div class="info-item-1">撰写本文的目的：记录本人在不参考其他任何形式的解决方法（思路&#x2F;源码）、仅靠课程提供的资源（课本&#x2F;参考资料）和Discord中high level的讨论的情况下，独立完成该课程的过程。 欢迎大家和我讨论学习中所遇到的问题。 ZiHao’s Blog 在gradescope获得80分，后续有时间再完成 实际完成时间：5.1-5.7   Task #1 - Timestamps- [✅] 1.1 Timestamp Allocation When a transaction begins, the read timestamp will be the timestamp of the latest committed transaction, so that the transaction will be able to see everything committed before the transaction begins.   即，该事务能够读到，每个对象的指定版本：时间戳小于等于read stamp中最大的那个版本   Commit timestamp i...</div></div></div></a><a class="pagination-related" href="/p/1c228cd6.html" title="Project#1: Buffer Pool"><img class="cover" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven8.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2023-10-03</div><div class="info-item-2">Project#1: Buffer Pool</div></div><div class="info-2"><div class="info-item-1">撰写本文的目的：记录本人在不参考其他任何形式的解决方法（思路&#x2F;源码）、仅靠课程提供的资源（课本&#x2F;参考资料）和Discord中high level的讨论的情况下，独立完成该课程的过程。 欢迎大家和我讨论学习中所遇到的问题。 ZiHao’s Blog 由于gradescope中对non-cmu students仅开放了Project#0，本文方法仅通过了本地测试，极有可能有错误（并发访问） 目前通过了GradeScope所有测试并且拿到了100.0/100.0，但是性能较差（与Leaderboard上第一名有十倍的性能差距)，打算在下一篇文章记录一下对BPM的性能进行优化，例如本文中提到的DiskScheduler创建的对Request的处理Thread实际上是串行的，后续再保证顺序正确的情况下对其进行适当的并行处理。   Task#1 - LRU-K Replacement Policy思路：  基本可以参考源码中给出的注释，一步一步实现 每次RecordAccess一个Frame时，都会使得leu_replacer的current_timestamp_自增1，...</div></div></div></a><a class="pagination-related" href="/p/c186cbfd.html" title="Project #3: Query Execution"><img class="cover" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven-gpdvj3.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-05-16</div><div class="info-item-2">Project #3: Query Execution</div></div><div class="info-2"><div class="info-item-1">撰写本文的目的：记录本人在不参考其他任何形式的解决方法（思路&#x2F;源码）、仅靠课程提供的资源（课本&#x2F;参考资料）和Discord中high level的讨论的情况下，独立完成该课程的过程。 欢迎大家和我讨论学习中所遇到的问题。 ZiHao’s Blog 已在grade scope获得100分，但是性能仍有待提升 实际完成时间：4.6、4.24-4.30     If you are using CLion to run the BusTub shell, please add a –disable-tty parameter to the shell, so that it works correctly in the CLion terminal.  Task #1 - Access Method Executors- [✅] SeqScan给SeqScanExecutor增加了一个iterator_字段，不知道是不是多此一举哈 - [✅] Insert called_字段   - [✅] Update called_字段  - [✅] Delete- [✅] I...</div></div></div></a><a class="pagination-related" href="/p/6fa5e9a2.html" title="Project#0: C++ Primer"><img class="cover" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/star_sky.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2023-10-01</div><div class="info-item-2">Project#0: C++ Primer</div></div><div class="info-2"><div class="info-item-1">撰写本文的目的：记录本人在不参考其他任何形式的解决方法（思路&#x2F;源码）、仅靠课程提供的资源（课本&#x2F;参考资料）和Discord中high level的讨论的情况下，独立完成该课程的过程。 欢迎大家和我讨论学习中所遇到的问题。 ZiHao’s Blog   Task#1 - Copy-On-Write Trie按照源码中给的提示即可完成 总体思路：use std::shared_ptr to traverse, then reuse nodes that do not need to be modified and use std::shared_ptr  with Clone to build and modify memebers from the bottom up on nodes that need to be modified. GetGet函数实现较为简单 Put 遍历trie，在vector中存储每个遍历过的TrieNode，判断key对应的node是否存在 若存在： 则直接创建一个新的TrieNodeWithValue（可能有孩子节点） 并且利用v...</div></div></div></a><a class="pagination-related" href="/p/76b71367.html" title="Extendible Hash Table"><img class="cover" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/sebastian-unrau-sp-p7uuT0tw-unsplash.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2023-10-29</div><div class="info-item-2">Extendible Hash Table</div></div><div class="info-2"><div class="info-item-1">Extendible Hash Table  hash function  对于给定key生成32bit的值   bucket address table  对于每个32bit的hash value，都有一个table entry相对应 但在某一时刻该table的实际使用大小由global prefix控制   global prefix：用于生成global mask  在实际使用时，global prefix用于控制当前bucket address table实际使用的大小  具体为2^(global prefix)个条目     local prefix：用于生成local mask  不会为所有hash value都生成一个bucket，而是按需生成  用于判断当前table entry指向的bucket  如果local prefix &#x3D;&#x3D; glocal prefix：  则说明只有该entry拥有指向的bucket   按需体现在local prefix &lt; global prefix:  拥有相同local prefix的entry指向同一...</div></div></div></a></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> Comments</span></div></div><div class="comment-wrap"><div><div id="gitalk-container"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="https://github.com/ZiHao256/ZiHao256.github.io/blob/hexo/images/stitch.JPG?raw=true" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">zihao</div><div class="author-info-description">Why be afraid of the infinity of truth? Joy resides in every step of growth.</div><div class="site-data"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">66</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">48</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">16</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/ZiHao256"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/ZiHao256" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/atom.xml" target="_blank" title="RSS"><i class="fa fa-rss"></i></a><a class="social-icon" href="mailto:zihao626@gmail.com" target="_blank" title="Gmail"><i class="fa-brands fa-google"></i></a><a class="social-icon" href="mailto:zh_ma@stu.xidian.edu.cn" target="_blank" title="XDU Mail"><i class="fa fa-graduation-cap"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">keep moving in 2024</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%87%86%E5%A4%87"><span class="toc-text">准备</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Task-1-Read-Write-Page-Guards"><span class="toc-text">Task #1-Read&#x2F;Write Page Guards</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#BasicPageGuard-ReadPageGuard-WritePageGuard"><span class="toc-text">BasicPageGuard&#x2F;ReadPageGuard&#x2F;WritePageGuard</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Upgrade"><span class="toc-text">Upgrade</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Wrappers"><span class="toc-text">Wrappers</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#LocalTest-SimpleTest"><span class="toc-text">LocalTest-SimpleTest</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GradeScope-PageGuardTest"><span class="toc-text">GradeScope: PageGuardTest</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9C%85-MoveTest"><span class="toc-text">- [✅] MoveTest</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9C%85-BPMTest"><span class="toc-text">- [✅] BPMTest</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Task-2-Extendible-Hash-Table-Pages"><span class="toc-text">Task #2-Extendible Hash Table Pages</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Hash-Table-Header-Pages"><span class="toc-text">Hash Table Header Pages</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%88%90%E5%91%98%E5%8F%98%E9%87%8F%EF%BC%9A"><span class="toc-text">成员变量：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E5%AE%9E%E7%8E%B0%EF%BC%9A"><span class="toc-text">方法实现：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Hash-Table-Directory-Pages"><span class="toc-text">Hash Table Directory Pages</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%88%90%E5%91%98%E5%8F%98%E9%87%8F%EF%BC%9A-1"><span class="toc-text">成员变量：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E5%AE%9E%E7%8E%B0%EF%BC%9A-1"><span class="toc-text">方法实现：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Hash-Table-Bucket-Page"><span class="toc-text">Hash Table Bucket Page</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%88%90%E5%91%98%E5%8F%98%E9%87%8F%EF%BC%9A-2"><span class="toc-text">成员变量：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E5%AE%9E%E7%8E%B0"><span class="toc-text">方法实现</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#LocalTest-BucketPageSampleTest-HeaderDirectoryPageTest"><span class="toc-text">LocalTest-BucketPageSampleTest&#x2F;HeaderDirectoryPageTest</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GradeScope"><span class="toc-text">GradeScope</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Task-3-Extenable-Hashing-Implementation"><span class="toc-text">Task #3-Extenable Hashing Implementation</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E5%AE%9E%E7%8E%B0-1"><span class="toc-text">方法实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Insert%E6%96%B9%E6%B3%95"><span class="toc-text">Insert方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Remove%E6%96%B9%E6%B3%95"><span class="toc-text">Remove方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GetValue%E6%96%B9%E6%B3%95"><span class="toc-text">GetValue方法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GradeScope%E8%A6%81%E6%B1%82%E7%9A%84%E5%8A%9F%E8%83%BD"><span class="toc-text">GradeScope要求的功能</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9C%85-Empty-Table"><span class="toc-text">- [✅] Empty Table</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9C%85-Header-Indexing"><span class="toc-text">- [✅] Header Indexing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9C%85-Directory-Indexing"><span class="toc-text">- [✅] Directory Indexing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9C%85-Bucket-Splitting"><span class="toc-text">- [✅] Bucket Splitting</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9C%85-Bucket-Merging-%E2%9C%85-Directory-Shrinking"><span class="toc-text">- [✅] Bucket Merging + [✅]Directory Shrinking</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Bug"><span class="toc-text">Bug</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9C%85-Directory-Growing"><span class="toc-text">- [✅] Directory Growing</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#LocalTest-InsertTest-RemoveTest"><span class="toc-text">LocalTest-InsertTest&#x2F;RemoveTest</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GradeScope-ExtendibleHTableTest"><span class="toc-text">GradeScope: ExtendibleHTableTest</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9C%85-InsertTest3"><span class="toc-text">- [✅] InsertTest3</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9C%85-RecursiveMergeTest"><span class="toc-text">- [✅] RecursiveMergeTest</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9C%85-SplitGrowTest"><span class="toc-text">- [✅] SplitGrowTest</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9C%85-GrowShrinkTest"><span class="toc-text">- [✅] GrowShrinkTest</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Task-4-Concurrency-Control"><span class="toc-text">Task #4-Concurrency Control</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#PageGuard"><span class="toc-text">PageGuard</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#LocalTest"><span class="toc-text">LocalTest</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ExtendibleHTableTest"><span class="toc-text">ExtendibleHTableTest</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ExtendibleHTableConcurrentTest"><span class="toc-text">ExtendibleHTableConcurrentTest</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#InsertTest1"><span class="toc-text">InsertTest1</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#BUGs"><span class="toc-text">BUGs</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#InsertTest2"><span class="toc-text">InsertTest2</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#DeleteTest1"><span class="toc-text">DeleteTest1</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#DeleteTest2"><span class="toc-text">DeleteTest2</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#MixTest1"><span class="toc-text">MixTest1</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#MixTest2"><span class="toc-text">MixTest2</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GradeScope-ExtendibleHTableConcurrentTest"><span class="toc-text">GradeScope: ExtendibleHTableConcurrentTest</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Optimization"><span class="toc-text">Optimization</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Posts</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/p/10f62ef4.html" title="PROJECT #4: CONCURRENCY CONTROL"><img src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/joseph-barrientos-oQl0eVYd_n8-unsplash.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="PROJECT #4: CONCURRENCY CONTROL"/></a><div class="content"><a class="title" href="/p/10f62ef4.html" title="PROJECT #4: CONCURRENCY CONTROL">PROJECT #4: CONCURRENCY CONTROL</a><time datetime="2024-05-16T01:01:13.000Z" title="Created 2024-05-16 09:01:13">2024-05-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/c186cbfd.html" title="Project #3: Query Execution"><img src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven-gpdvj3.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Project #3: Query Execution"/></a><div class="content"><a class="title" href="/p/c186cbfd.html" title="Project #3: Query Execution">Project #3: Query Execution</a><time datetime="2024-05-16T00:59:16.000Z" title="Created 2024-05-16 08:59:16">2024-05-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/2acafc61.html" title="rustlings"><img src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/pathway-middle-green-leafed-trees-with-sun-shining-through-branches.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="rustlings"/></a><div class="content"><a class="title" href="/p/2acafc61.html" title="rustlings">rustlings</a><time datetime="2023-11-28T09:46:15.000Z" title="Created 2023-11-28 17:46:15">2023-11-28</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/d028ccc3.html" title="基于Actix-Web(Rust)和Vue的Web开发记录"><img src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven-kxd1md.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="基于Actix-Web(Rust)和Vue的Web开发记录"/></a><div class="content"><a class="title" href="/p/d028ccc3.html" title="基于Actix-Web(Rust)和Vue的Web开发记录">基于Actix-Web(Rust)和Vue的Web开发记录</a><time datetime="2023-11-13T13:42:48.000Z" title="Created 2023-11-13 21:42:48">2023-11-13</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/517dd8ea.html" title="Project#2: Extendible Hash Index"><img src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven5.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Project#2: Extendible Hash Index"/></a><div class="content"><a class="title" href="/p/517dd8ea.html" title="Project#2: Extendible Hash Index">Project#2: Extendible Hash Index</a><time datetime="2023-10-30T13:56:01.000Z" title="Created 2023-10-30 21:56:01">2023-10-30</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2021 - 2026 By zihao</span><span class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.2</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.7.0</a></span></div><div class="footer_custom_text">Hi, welcome to my <a href="https://zihao256.github.io/">Blog</a>!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Reading Mode"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="Toggle Between Traditional and Simplified Chinese">简</button><button id="darkmode" type="button" title="Toggle Between Light and Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle Between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Settings"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table of Contents"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="Scroll to Comments"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="Back to Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.7.0"></script><script src="/js/main.js?v=5.7.0"></script><script src="/js/tw_cn.js?v=5.7.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1.14/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>(() => {
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = null
 
+  const commentCount = n => {
+    const isCommentCount = document.querySelector('#post-meta .gitalk-comment-count')
+    if (isCommentCount) {
+      isCommentCount.textContent= n
+    }
   }
-}
-window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><script>function addGitalkSource () {
-  const ele = document.createElement('link')
-  ele.rel = 'stylesheet'
-  ele.href= 'https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.css'
-  document.getElementsByTagName('head')[0].appendChild(ele)
-}
 
-function loadGitalk () {
-  function initGitalk () {
-    var gitalk = new Gitalk(Object.assign({
+  const initGitalk = (el, path) => {
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyGitalk = () => {
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+
+    const gitalk = new Gitalk({
       clientID: '3b2ff3959cccdea73272',
       clientSecret: 'ff54cd4f8d455c066e787ca2dc1684a21094e488',
       repo: 'ZiHao256.github.io',
       owner: 'ZiHao256',
       admin: ['ZiHao256'],
-      id: '450fb73a418ff1ec3f66c8763157d15d',
-      updateCountCallback: commentCount
-    },null))
+      updateCountCallback: commentCount,
+      ...option,
+      id: isShuoshuo ? path : (option && option.id) || '450fb73a418ff1ec3f66c8763157d15d'
+    })
 
     gitalk.render('gitalk-container')
   }
 
-  if (typeof Gitalk === 'function') initGitalk()
-  else {
-    addGitalkSource()
-    getScript('https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.js').then(initGitalk)
+  const loadGitalk = async(el, path) => {
+    if (typeof Gitalk === 'function') initGitalk(el, path)
+    else {
+      await btf.getCSS('https://cdn.jsdelivr.net/npm/gitalk@1.8.0/dist/gitalk.min.css')
+      await btf.getScript('https://cdn.jsdelivr.net/npm/gitalk@1.8.0/dist/gitalk.min.js')
+      initGitalk(el, path)
+    }
   }
-}
 
-function commentCount(n){
-  let isCommentCount = document.querySelector('#post-meta .gitalk-comment-count')
-  if (isCommentCount) {
-    isCommentCount.innerHTML= n
+  if (isShuoshuo) {
+    'Gitalk' === 'Gitalk'
+      ? window.shuoshuoComment = { loadComment: loadGitalk }
+      : window.loadOtherComment = loadGitalk
+    return
   }
-}
 
-if ('Gitalk' === 'Gitalk' || !false) {
-  if (false) btf.loadComment(document.getElementById('gitalk-container'), loadGitalk)
-  else loadGitalk()
-} else {
-  function loadOtherComment () {
-    loadGitalk()
+  if ('Gitalk' === 'Gitalk' || !false) {
+    if (false) btf.loadComment(document.getElementById('gitalk-container'), loadGitalk)
+    else loadGitalk()
+  } else {
+    window.loadOtherComment = loadGitalk
   }
-}</script></div><script>window.addEventListener('load', () => {
-  const changeContent = (content) => {
+})()</script></div><script>window.newestComments = {
+  changeContent: content => {
     if (content === '') return content
 
-    content = content.replace(/<img.*?src="(.*?)"?[^\>]+>/ig, '[image]') // replace image link
-    content = content.replace(/<a[^>]+?href=["']?([^"']+)["']?[^>]*>([^<]+)<\/a>/gi, '[link]') // replace url
-    content = content.replace(/<pre><code>.*?<\/pre>/gi, '[code]') // replace code
-    content = content.replace(/<[^>]+>/g,"") // remove html tag
+    content = content.replace(/<img.*?src="(.*?)"?[^\>]+>/ig, '[Image]') // replace image link
+    content = content.replace(/<a[^>]+?href=["']?([^"']+)["']?[^>]*>([^<]+)<\/a>/gi, '[Link]') // replace url
+    content = content.replace(/<pre><code>.*?<\/pre>/gi, '[Code]') // replace code
+    content = content.replace(/<code>.*?<\/code>/gi, '[Code]') // replace code
+    content = content.replace(/<[^>]+>/g, "") // remove html tag
 
     if (content.length > 150) {
-      content = content.substring(0,150) + '...'
+      content = content.substring(0, 150) + '...'
     }
     return content
-  }
+  },
 
-  const findTrueUrl = (array) => {
+  generateHtml: (array, ele) => {
+    let result = ''
+
+    if (array.length) {
+      for (let i = 0; i < array.length; i++) {
+        result += '<div class="aside-list-item">'
+
+        if (true && array[i].avatar) {
+          const imgAttr = 'src'
+          const lazyloadNative = ''
+          result += `<a href="${array[i].url}" class="thumbnail"><img ${imgAttr}="${array[i].avatar}" alt="${array[i].nick}" ${lazyloadNative}></a>`
+        }
+
+        result += `<div class="content">
+        <a class="comment" href="${array[i].url}" title="${array[i].content}">${array[i].content}</a>
+        <div class="name"><span>${array[i].nick} / </span><time datetime="${array[i].date}">${btf.diffDate(array[i].date, true)}</time></div>
+        </div></div>`
+      }
+    } else {
+      result += 'No comments'
+    }
+
+    ele.innerHTML = result
+    window.lazyLoadInstance && window.lazyLoadInstance.update()
+    window.pjax && window.pjax.refresh(ele)
+  },
+
+  newestCommentInit: (name, getComment) => {
+    const $dom = document.querySelector('#card-newest-comments .aside-list')
+    if ($dom) {
+      const data = btf.saveToLocal.get(name)
+      if (data) {
+        newestComments.generateHtml(JSON.parse(data), $dom)
+      } else {
+        getComment($dom)
+      }
+    }
+  },
+
+  run: (name, getComment) => {
+    newestComments.newestCommentInit(name, getComment)
+    btf.addGlobalFn('pjaxComplete', () => newestComments.newestCommentInit(name, getComment), name)
+  }
+}</script><script>window.addEventListener('load', () => {
+  const keyName = 'github-newest-comments'
+  const { changeContent, generateHtml, run } = window.newestComments
+
+  const findTrueUrl = (array, ele) => {
     Promise.all(array.map(item =>
       fetch(item.url).then(resp => resp.json()).then(data => {
-        const urlArray = data.body.match(/(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?/ig)
+        let urlArray = data.body ? data.body.match(/(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?/ig) : []
+        if (!Array.isArray(urlArray) || urlArray.length === 0) {
+          urlArray = [`${data.html_url}`]
+        }
         if (data.user.login === 'utterances-bot') {
           return urlArray.pop()
         } else {
@@ -1146,12 +1353,12 @@ if ('Gitalk' === 'Gitalk' || !false) {
           }
         })
 
-        saveToLocal.set('github-newest-comments', JSON.stringify(array), 10/(60*24))
-        generateHtml(array)
+        btf.saveToLocal.set(keyName, JSON.stringify(array), 10/(60*24))
+        generateHtml(array, ele)
     });
   }
 
-  const getComment = () => {
+  const getComment = ele => {
     fetch('https://api.github.com/repos/ZiHao256/ZiHao256.github.io/issues/comments?sort=updated&direction=desc&per_page=6&page=1',{
       "headers": {
         Accept: 'application/vnd.github.v3.html+json'
@@ -1162,128 +1369,75 @@ if ('Gitalk' === 'Gitalk' || !false) {
         const githubArray = data.map(item => {
           return {
             'avatar': item.user.avatar_url,
-            'content': changeContent(item.body_html),
+            'content': changeContent(item.body_html || item.body),
             'nick': item.user.login,
             'url': item.issue_url,
-            'date': item.updated_at,
-            'githubUrl': item.html_url
+            'date': item.updated_at
           }
         })
-        findTrueUrl(githubArray)
+        findTrueUrl(githubArray, ele)
       }).catch(e => {
-        const $dom = document.querySelector('#card-newest-comments .aside-list')
-        $dom.innerHTML= "Unable to get the data, please make sure the settings are correct."
+        console.error(e)
+        ele.textContent= "Unable to retrieve comments, please check the configuration"
       })
   }
+  run(keyName, getComment)
+})</script><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/dist/canvas-fluttering-ribbon.min.js"></script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/dist/click-heart.min.js" async="async" mobile="true"></script><script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js" defer="defer"></script><script>document.addEventListener('DOMContentLoaded', () => {
+  const pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
 
-  const generateHtml = array => {
-    let result = ''
-
-    if (array.length) {
-      for (let i = 0; i < array.length; i++) {
-        result += '<div class=\'aside-list-item\'>'
-
-        if (true) {
-          const name = 'src'
-          result += `<a href='${array[i].url}' class='thumbnail'><img ${name}='${array[i].avatar}' alt='${array[i].nick}'></a>`
-        }
-
-        result += `<div class='content'>
-        <a class='comment' href='${array[i].url}' title='${array[i].content}'>${array[i].content}</a>
-        <div class='name'><span>${array[i].nick} / </span><time datetime="${array[i].date}">${btf.diffDate(array[i].date, true)}</time></div>
-        </div></div>`
-      }
-    } else {
-      result += 'No Comment'
-    }
-
-    let $dom = document.querySelector('#card-newest-comments .aside-list')
-    $dom.innerHTML= result
-    window.lazyLoadInstance && window.lazyLoadInstance.update()
-    window.pjax && window.pjax.refresh($dom)
-  }
-
-  const newestCommentInit = () => {
-    if (document.querySelector('#card-newest-comments .aside-list')) {
-      const data = saveToLocal.get('github-newest-comments')
-      if (data) {
-        generateHtml(JSON.parse(data))
-      } else {
-        getComment()
-      }
-    }
-  }
-
-  newestCommentInit()
-  document.addEventListener('pjax:complete', newestCommentInit)
-})</script><div class="aplayer no-destroy" data-id="6738460302" data-server="netease" data-type="playlist" data-fixed="true" data-autoplay="true"> </div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-heart.min.js" async="async" mobile="true"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
-
-var pjax = new Pjax({
-  elements: 'a:not([target="_blank"])',
-  selectors: pjaxSelectors,
-  cacheBust: false,
-  analytics: false,
-  scrollRestoration: false
-})
-
-document.addEventListener('pjax:send', function () {
-
-  // removeEventListener scroll 
-  window.tocScrollFn && window.removeEventListener('scroll', window.tocScrollFn)
-  window.scrollCollect && window.removeEventListener('scroll', scrollCollect)
-
-  typeof preloader === 'object' && preloader.initLoading()
-  document.getElementById('rightside').style.cssText = "opacity: ''; transform: ''"
-  
-  if (window.aplayers) {
-    for (let i = 0; i < window.aplayers.length; i++) {
-      if (!window.aplayers[i].options.fixed) {
-        window.aplayers[i].destroy()
-      }
-    }
-  }
-
-  typeof typed === 'object' && typed.destroy()
-
-  //reset readmode
-  const $bodyClassList = document.body.classList
-  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
-
-  typeof disqusjs === 'object' && disqusjs.destroy()
-})
-
-document.addEventListener('pjax:complete', function () {
-  window.refreshFn()
-
-  document.querySelectorAll('script[data-pjax]').forEach(item => {
-    const newScript = document.createElement('script')
-    const content = item.text || item.textContent || item.innerHTML || ""
-    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
-    newScript.appendChild(document.createTextNode(content))
-    item.parentNode.replaceChild(newScript, item)
+  window.pjax = new Pjax({
+    elements: 'a:not([target="_blank"]):not([data-fancybox])',
+    selectors: pjaxSelectors,
+    cacheBust: false,
+    analytics: false,
+    scrollRestoration: false
   })
 
-  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
-
-  typeof chatBtnFn === 'function' && chatBtnFn()
-  typeof panguInit === 'function' && panguInit()
-
-  // google analytics
-  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
-
-  // baidu analytics
-  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
-
-  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
-
-  // prismjs
-  typeof Prism === 'object' && Prism.highlightAll()
-
-  typeof preloader === 'object' && preloader.endLoading()
-})
-
-document.addEventListener('pjax:error', (e) => {
-  if (e.request.status === 404) {
-    pjax.loadUrl('/404.html')
+  const triggerPjaxFn = (val) => {
+    if (!val) return
+    Object.values(val).forEach(fn => {
+      try {
+        fn()
+      } catch (err) {
+        console.debug('Pjax callback failed:', err)
+      }
+    })
   }
-})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
+
+  document.addEventListener('pjax:send', () => {
+    // removeEventListener
+    btf.removeGlobalFnEvent('pjaxSendOnce')
+    btf.removeGlobalFnEvent('themeChange')
+
+    // reset readmode
+    const $bodyClassList = document.body.classList
+    if ($bodyClassList.contains('read-mode')) $bodyClassList.remove('read-mode')
+
+    triggerPjaxFn(window.globalFn.pjaxSend)
+  })
+
+  document.addEventListener('pjax:complete', () => {
+    btf.removeGlobalFnEvent('pjaxCompleteOnce')
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+      if (!item.parentNode) return
+      const newScript = document.createElement('script')
+      const content = item.text || item.textContent || ''
+      Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+      newScript.appendChild(document.createTextNode(content))
+      item.parentNode.replaceChild(newScript, item)
+    })
+
+    triggerPjaxFn(window.globalFn.pjaxComplete)
+  })
+
+  document.addEventListener('pjax:error', e => {
+    const responseURL = e.request && e.request.responseURL
+    if (e.request && e.request.status === 404) {
+      true
+        ? pjax.loadUrl('/404.html')
+        : responseURL && (window.location.href = responseURL)
+    } else if (responseURL) {
+      window.location.href = responseURL
+    }
+  })
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">Search</span><i class="fas fa-spinner fa-pulse" id="loading-status" hidden="hidden"></i><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  Loading Database</span></div><div class="local-search-input"><input placeholder="Search for Posts" type="text"/></div><hr/><div id="local-search-results"></div><div class="ais-Pagination" id="local-search-pagination" style="display:none;"><ul class="ais-Pagination-list"></ul></div><div id="local-search-stats"></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=5.7.0"></script></div></div></body></html>

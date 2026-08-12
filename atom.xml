@@ -1,583 +1,387 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>ZiHao&#39;s Blog</title>
-  
-  <subtitle>keep moving</subtitle>
-  <link href="https://zihao256.github.io/atom.xml" rel="self"/>
-  
-  <link href="https://zihao256.github.io/"/>
-  <updated>2024-05-16T01:15:28.720Z</updated>
-  <id>https://zihao256.github.io/</id>
-  
   <author>
     <name>zihao</name>
-    
   </author>
-  
   <generator uri="https://hexo.io/">Hexo</generator>
-  
+  <id>https://zihao256.github.io/</id>
+  <link href="https://zihao256.github.io/" rel="alternate"/>
+  <link href="https://zihao256.github.io/atom.xml" rel="self"/>
+  <rights>All rights reserved 2026, zihao</rights>
+  <subtitle>keep moving</subtitle>
+  <title>ZiHao's Blog</title>
+  <updated>2026-08-12T03:20:21.997Z</updated>
   <entry>
-    <title>PROJECT #4: CONCURRENCY CONTROL</title>
-    <link href="https://zihao256.github.io/p/10f62ef4.html"/>
+    <author>
+      <name>zihao</name>
+    </author>
+    <category term="学无止境" scheme="https://zihao256.github.io/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/"/>
+    <category term="CMU15-445(2023FALL)" scheme="https://zihao256.github.io/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/CMU15-445-2023FALL/"/>
+    <category term="Database System" scheme="https://zihao256.github.io/tags/Database-System/"/>
+    <category term="C++" scheme="https://zihao256.github.io/tags/C/"/>
+    <category term="MVCC" scheme="https://zihao256.github.io/tags/MVCC/"/>
+    <category term="Query Execution" scheme="https://zihao256.github.io/tags/Query-Execution/"/>
     <id>https://zihao256.github.io/p/10f62ef4.html</id>
+    <link href="https://zihao256.github.io/p/10f62ef4.html"/>
     <published>2024-05-16T01:01:13.000Z</published>
-    <updated>2024-05-16T01:15:28.720Z</updated>
-    
-    
-      
-      
-    <summary type="html">&lt;div class=&quot;note warning simple&quot;&gt;&lt;p&gt;&lt;strong&gt;撰写本文的目的&lt;/strong&gt;：记录本人在不参考其他任何形式的解决方法（思路/源码）、仅靠课程提供的资源（课本/参考资料）和&lt;code&gt;Discord&lt;/code&gt;中&lt;code&gt;high l</summary>
-      
-    
-    
-    
-    <category term="学无止境" scheme="https://zihao256.github.io/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/"/>
-    
-    <category term="CMU15-445(2023FALL)" scheme="https://zihao256.github.io/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/CMU15-445-2023FALL/"/>
-    
-    
-    <category term="Database System" scheme="https://zihao256.github.io/tags/Database-System/"/>
-    
-    <category term="C++" scheme="https://zihao256.github.io/tags/C/"/>
-    
-    <category term="MVCC" scheme="https://zihao256.github.io/tags/MVCC/"/>
-    
-    <category term="Query Execution" scheme="https://zihao256.github.io/tags/Query-Execution/"/>
-    
+    <summary>
+      <![CDATA[<div class="note warning simple"><p><strong>撰写本文的目的</strong>：记录本人在不参考其他任何形式的解决方法（思路&#x2F;源码）、仅靠课程提供的资源（课本&#x2F;参考资料）和<code>Discord</code>中<c]]>
+    </summary>
+    <title>PROJECT #4: CONCURRENCY CONTROL</title>
+    <updated>2026-08-12T03:20:21.997Z</updated>
   </entry>
-  
   <entry>
-    <title>Project #3: Query Execution</title>
-    <link href="https://zihao256.github.io/p/c186cbfd.html"/>
-    <id>https://zihao256.github.io/p/c186cbfd.html</id>
-    <published>2024-05-16T00:59:16.000Z</published>
-    <updated>2024-05-16T01:13:49.198Z</updated>
-    
-    
-      
-      
-    <summary type="html">&lt;div class=&quot;note warning simple&quot;&gt;&lt;p&gt;&lt;strong&gt;撰写本文的目的&lt;/strong&gt;：记录本人在不参考其他任何形式的解决方法（思路/源码）、仅靠课程提供的资源（课本/参考资料）和&lt;code&gt;Discord&lt;/code&gt;中&lt;code&gt;high l</summary>
-      
-    
-    
-    
+    <author>
+      <name>zihao</name>
+    </author>
     <category term="学无止境" scheme="https://zihao256.github.io/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/"/>
-    
     <category term="CMU15-445(2023FALL)" scheme="https://zihao256.github.io/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/CMU15-445-2023FALL/"/>
-    
-    
     <category term="Database System" scheme="https://zihao256.github.io/tags/Database-System/"/>
-    
     <category term="C++" scheme="https://zihao256.github.io/tags/C/"/>
-    
     <category term="MVCC" scheme="https://zihao256.github.io/tags/MVCC/"/>
-    
     <category term="Query Execution" scheme="https://zihao256.github.io/tags/Query-Execution/"/>
-    
     <category term="Query Optimization" scheme="https://zihao256.github.io/tags/Query-Optimization/"/>
-    
+    <id>https://zihao256.github.io/p/c186cbfd.html</id>
+    <link href="https://zihao256.github.io/p/c186cbfd.html"/>
+    <published>2024-05-16T00:59:16.000Z</published>
+    <summary>
+      <![CDATA[<div class="note warning simple"><p><strong>撰写本文的目的</strong>：记录本人在不参考其他任何形式的解决方法（思路&#x2F;源码）、仅靠课程提供的资源（课本&#x2F;参考资料）和<code>Discord</code>中<c]]>
+    </summary>
+    <title>Project #3: Query Execution</title>
+    <updated>2026-08-12T03:20:22.001Z</updated>
   </entry>
-  
   <entry>
-    <title>rustlings</title>
-    <link href="https://zihao256.github.io/p/2acafc61.html"/>
-    <id>https://zihao256.github.io/p/2acafc61.html</id>
-    <published>2023-11-28T09:46:15.000Z</published>
-    <updated>2023-12-08T15:54:22.271Z</updated>
-    
-    
-      
-      
-    <summary type="html">&lt;blockquote&gt;
-&lt;p&gt;说来惭愧，大三寒假的时候学过一次Rust，但是只是过了一遍语法，并且没有真正有项目实践，所以很快就遗忘了。&lt;/p&gt;
-&lt;p&gt;这次开始尝试实践/项目驱动学习，正好最近需要写一个Web项目，尝试使用Rust来编写，以巩固对Rust的学习。&lt;/p&gt;
-&lt;p&gt;</summary>
-      
-    
-    
-    
+    <author>
+      <name>zihao</name>
+    </author>
     <category term="学无止境" scheme="https://zihao256.github.io/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/"/>
-    
     <category term="编程语言学习" scheme="https://zihao256.github.io/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0/"/>
-    
-    
     <category term="Rust" scheme="https://zihao256.github.io/tags/Rust/"/>
-    
+    <id>https://zihao256.github.io/p/2acafc61.html</id>
+    <link href="https://zihao256.github.io/p/2acafc61.html"/>
+    <published>2023-11-28T09:46:15.000Z</published>
+    <summary>
+      <![CDATA[<blockquote>
+<p>说来惭愧，大三寒假的时候学过一次Rust，但是只是过了一遍语法，并且没有真正有项目实践，所以很快就遗忘了。</p>
+<p>这次开始尝试实践&#x2F;项目驱动学习，正好最近需要写一个Web项目，尝试使用Rust来编写，以巩固对Rust的学习。</p]]>
+    </summary>
+    <title>rustlings</title>
+    <updated>2026-08-12T03:20:22.051Z</updated>
   </entry>
-  
   <entry>
-    <title>基于Actix-Web(Rust)和Vue的Web开发记录</title>
-    <link href="https://zihao256.github.io/p/d028ccc3.html"/>
-    <id>https://zihao256.github.io/p/d028ccc3.html</id>
-    <published>2023-11-13T13:42:48.000Z</published>
-    <updated>2023-11-17T08:57:01.441Z</updated>
-    
-    
-      
-      
-    <summary type="html">&lt;h1 id=&quot;后端（基于actix-web）&quot;&gt;&lt;a href=&quot;#后端（基于actix-web）&quot; class=&quot;headerlink&quot; title=&quot;后端（基于actix-web）&quot;&gt;&lt;/a&gt;后端（基于actix-web）&lt;/h1&gt;&lt;h2 id=&quot;login&quot;&gt;&lt;a hre</summary>
-      
-    
-    
-    
+    <author>
+      <name>zihao</name>
+    </author>
     <category term="学无止境" scheme="https://zihao256.github.io/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/"/>
-    
     <category term="开发框架学习" scheme="https://zihao256.github.io/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/%E5%BC%80%E5%8F%91%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0/"/>
-    
-    
     <category term="Rust" scheme="https://zihao256.github.io/tags/Rust/"/>
-    
     <category term="Actix-web" scheme="https://zihao256.github.io/tags/Actix-web/"/>
-    
     <category term="Vue" scheme="https://zihao256.github.io/tags/Vue/"/>
-    
+    <id>https://zihao256.github.io/p/d028ccc3.html</id>
+    <link href="https://zihao256.github.io/p/d028ccc3.html"/>
+    <published>2023-11-13T13:42:48.000Z</published>
+    <summary>
+      <![CDATA[<h1 id="后端（基于actix-web）"><a href="#后端（基于actix-web）" class="headerlink" title="后端（基于actix-web）"></a>后端（基于actix-web）</h1><h2 id="login"><a hre]]>
+    </summary>
+    <title>基于Actix-Web(Rust)和Vue的Web开发记录</title>
+    <updated>2026-08-12T03:20:22.047Z</updated>
   </entry>
-  
   <entry>
-    <title>Project#2: Extendible Hash Index</title>
-    <link href="https://zihao256.github.io/p/517dd8ea.html"/>
+    <author>
+      <name>zihao</name>
+    </author>
+    <category term="学无止境" scheme="https://zihao256.github.io/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/"/>
+    <category term="CMU15-445(2023FALL)" scheme="https://zihao256.github.io/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/CMU15-445-2023FALL/"/>
+    <category term="Container" scheme="https://zihao256.github.io/tags/Container/"/>
+    <category term="Database System" scheme="https://zihao256.github.io/tags/Database-System/"/>
+    <category term="C++" scheme="https://zihao256.github.io/tags/C/"/>
     <id>https://zihao256.github.io/p/517dd8ea.html</id>
+    <link href="https://zihao256.github.io/p/517dd8ea.html"/>
     <published>2023-10-30T13:56:01.000Z</published>
-    <updated>2024-05-16T01:00:31.479Z</updated>
-    
-    
-      
-      
-    <summary type="html">&lt;div class=&quot;note warning simple&quot;&gt;&lt;p&gt;&lt;strong&gt;撰写本文的目的&lt;/strong&gt;：记录本人在不参考其他任何形式的解决方法（思路/源码）、仅靠课程提供的资源（课本/参考资料）和&lt;code&gt;Discord&lt;/code&gt;中&lt;code&gt;high l</summary>
-      
-    
-    
-    
-    <category term="学无止境" scheme="https://zihao256.github.io/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/"/>
-    
-    <category term="CMU15-445(2023FALL)" scheme="https://zihao256.github.io/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/CMU15-445-2023FALL/"/>
-    
-    
-    <category term="Container" scheme="https://zihao256.github.io/tags/Container/"/>
-    
-    <category term="Database System" scheme="https://zihao256.github.io/tags/Database-System/"/>
-    
-    <category term="C++" scheme="https://zihao256.github.io/tags/C/"/>
-    
+    <summary>
+      <![CDATA[<div class="note warning simple"><p><strong>撰写本文的目的</strong>：记录本人在不参考其他任何形式的解决方法（思路&#x2F;源码）、仅靠课程提供的资源（课本&#x2F;参考资料）和<code>Discord</code>中<c]]>
+    </summary>
+    <title>Project#2: Extendible Hash Index</title>
+    <updated>2026-08-12T03:20:22.000Z</updated>
   </entry>
-  
   <entry>
-    <title>Extendible Hash Table</title>
-    <link href="https://zihao256.github.io/p/76b71367.html"/>
-    <id>https://zihao256.github.io/p/76b71367.html</id>
-    <published>2023-10-29T13:42:15.000Z</published>
-    <updated>2023-10-30T13:54:47.571Z</updated>
-    
-    
-      
-      
-    <summary type="html">&lt;p&gt;Extendible Hash Table&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;hash function&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;对于给定key生成32bit的值&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;bucket</summary>
-      
-    
-    
-    
+    <author>
+      <name>zihao</name>
+    </author>
     <category term="学无止境" scheme="https://zihao256.github.io/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/"/>
-    
     <category term="CMU15-445(2023FALL)" scheme="https://zihao256.github.io/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/CMU15-445-2023FALL/"/>
-    
-    
     <category term="Container" scheme="https://zihao256.github.io/tags/Container/"/>
-    
     <category term="数据结构" scheme="https://zihao256.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
-    
+    <id>https://zihao256.github.io/p/76b71367.html</id>
+    <link href="https://zihao256.github.io/p/76b71367.html"/>
+    <published>2023-10-29T13:42:15.000Z</published>
+    <summary>
+      <![CDATA[<p>Extendible Hash Table</p>
+<ul>
+<li><p><strong>hash function</strong></p>
+<ul>
+<li>对于给定key生成32bit的值</li>
+</ul>
+</li>
+<li><p><strong>bucket]]>
+    </summary>
+    <title>Extendible Hash Table</title>
+    <updated>2026-08-12T03:20:21.997Z</updated>
   </entry>
-  
   <entry>
-    <title>Project#1: Buffer Pool</title>
-    <link href="https://zihao256.github.io/p/1c228cd6.html"/>
+    <author>
+      <name>zihao</name>
+    </author>
+    <category term="学无止境" scheme="https://zihao256.github.io/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/"/>
+    <category term="CMU15-445(2023FALL)" scheme="https://zihao256.github.io/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/CMU15-445-2023FALL/"/>
+    <category term="Database System" scheme="https://zihao256.github.io/tags/Database-System/"/>
+    <category term="C++" scheme="https://zihao256.github.io/tags/C/"/>
     <id>https://zihao256.github.io/p/1c228cd6.html</id>
+    <link href="https://zihao256.github.io/p/1c228cd6.html"/>
     <published>2023-10-03T05:01:58.000Z</published>
-    <updated>2023-10-31T15:50:10.465Z</updated>
-    
-    
-      
-      
-    <summary type="html">&lt;div class=&quot;note warning simple&quot;&gt;&lt;p&gt;&lt;strong&gt;撰写本文的目的&lt;/strong&gt;：记录本人在不参考其他任何形式的解决方法（思路/源码）、仅靠课程提供的资源（课本/参考资料）和&lt;code&gt;Discord&lt;/code&gt;中&lt;code&gt;high l</summary>
-      
-    
-    
-    
-    <category term="学无止境" scheme="https://zihao256.github.io/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/"/>
-    
-    <category term="CMU15-445(2023FALL)" scheme="https://zihao256.github.io/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/CMU15-445-2023FALL/"/>
-    
-    
-    <category term="Database System" scheme="https://zihao256.github.io/tags/Database-System/"/>
-    
-    <category term="C++" scheme="https://zihao256.github.io/tags/C/"/>
-    
+    <summary>
+      <![CDATA[<div class="note warning simple"><p><strong>撰写本文的目的</strong>：记录本人在不参考其他任何形式的解决方法（思路&#x2F;源码）、仅靠课程提供的资源（课本&#x2F;参考资料）和<code>Discord</code>中<c]]>
+    </summary>
+    <title>Project#1: Buffer Pool</title>
+    <updated>2026-08-12T03:20:22.000Z</updated>
   </entry>
-  
   <entry>
-    <title>Project#0: C++ Primer</title>
-    <link href="https://zihao256.github.io/p/6fa5e9a2.html"/>
+    <author>
+      <name>zihao</name>
+    </author>
+    <category term="学无止境" scheme="https://zihao256.github.io/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/"/>
+    <category term="CMU15-445(2023FALL)" scheme="https://zihao256.github.io/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/CMU15-445-2023FALL/"/>
+    <category term="Database System" scheme="https://zihao256.github.io/tags/Database-System/"/>
+    <category term="C++" scheme="https://zihao256.github.io/tags/C/"/>
     <id>https://zihao256.github.io/p/6fa5e9a2.html</id>
+    <link href="https://zihao256.github.io/p/6fa5e9a2.html"/>
     <published>2023-10-01T06:44:47.000Z</published>
-    <updated>2023-10-31T11:18:12.446Z</updated>
-    
-    
-      
-      
-    <summary type="html">&lt;div class=&quot;note warning simple&quot;&gt;&lt;p&gt;&lt;strong&gt;撰写本文的目的&lt;/strong&gt;：记录本人在不参考其他任何形式的解决方法（思路/源码）、仅靠课程提供的资源（课本/参考资料）和&lt;code&gt;Discord&lt;/code&gt;中&lt;code&gt;high l</summary>
-      
-    
-    
-    
-    <category term="学无止境" scheme="https://zihao256.github.io/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/"/>
-    
-    <category term="CMU15-445(2023FALL)" scheme="https://zihao256.github.io/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/CMU15-445-2023FALL/"/>
-    
-    
-    <category term="Database System" scheme="https://zihao256.github.io/tags/Database-System/"/>
-    
-    <category term="C++" scheme="https://zihao256.github.io/tags/C/"/>
-    
+    <summary>
+      <![CDATA[<div class="note warning simple"><p><strong>撰写本文的目的</strong>：记录本人在不参考其他任何形式的解决方法（思路&#x2F;源码）、仅靠课程提供的资源（课本&#x2F;参考资料）和<code>Discord</code>中<c]]>
+    </summary>
+    <title>Project#0: C++ Primer</title>
+    <updated>2026-08-12T03:20:21.997Z</updated>
   </entry>
-  
   <entry>
-    <title>Paper Reading: TECCD: A Tree Embedding Approach for Code Clone Detection</title>
-    <link href="https://zihao256.github.io/p/42c77a0c.html"/>
-    <id>https://zihao256.github.io/p/42c77a0c.html</id>
-    <published>2023-05-16T06:17:01.000Z</published>
-    <updated>2023-10-03T05:07:27.565Z</updated>
-    
-    
-      
-      
-    <summary type="html">&lt;h1 id=&quot;摘要-amp-引言&quot;&gt;&lt;a href=&quot;#摘要-amp-引言&quot; class=&quot;headerlink&quot; title=&quot;摘要 &amp;amp; 引言&quot;&gt;&lt;/a&gt;摘要 &amp;amp; 引言&lt;/h1&gt;&lt;p&gt;“Abstract” (&lt;a href=&quot;zotero://select/l</summary>
-      
-    
-    
-    
+    <author>
+      <name>zihao</name>
+    </author>
     <category term="学无止境" scheme="https://zihao256.github.io/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/"/>
-    
     <category term="Paper Reading" scheme="https://zihao256.github.io/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/Paper-Reading/"/>
-    
-    
     <category term="Code Clone Detection" scheme="https://zihao256.github.io/tags/Code-Clone-Detection/"/>
-    
     <category term="AST" scheme="https://zihao256.github.io/tags/AST/"/>
-    
     <category term="Machine Learning" scheme="https://zihao256.github.io/tags/Machine-Learning/"/>
-    
     <category term="Natural Language Processing" scheme="https://zihao256.github.io/tags/Natural-Language-Processing/"/>
-    
+    <id>https://zihao256.github.io/p/42c77a0c.html</id>
+    <link href="https://zihao256.github.io/p/42c77a0c.html"/>
+    <published>2023-05-16T06:17:01.000Z</published>
+    <summary>
+      <![CDATA[<h1 id="摘要-引言"><a href="#摘要-引言" class="headerlink" title="摘要 &amp; 引言"></a>摘要 &amp; 引言</h1><p>“Abstract” (<a href="zotero://select/library/i]]>
+    </summary>
+    <title>Paper Reading: TECCD: A Tree Embedding Approach for Code Clone Detection</title>
+    <updated>2026-08-12T03:20:22.002Z</updated>
   </entry>
-  
   <entry>
-    <title>Git</title>
-    <link href="https://zihao256.github.io/p/69c3279c.html"/>
-    <id>https://zihao256.github.io/p/69c3279c.html</id>
-    <published>2023-05-15T13:42:40.000Z</published>
-    <updated>2023-09-20T06:52:02.724Z</updated>
-    
-    
-      
-      
-    <summary type="html">&lt;p&gt;记录一下因为各种需求而对Git缝缝补补的学习&lt;/p&gt;
-&lt;p&gt;比较本地仓库分支 和 远程仓库分支&lt;code&gt;commit&lt;/code&gt;的不同&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;git fetch local_repo&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;git l</summary>
-      
-    
-    
-    
+    <author>
+      <name>zihao</name>
+    </author>
     <category term="利器酷" scheme="https://zihao256.github.io/categories/%E5%88%A9%E5%99%A8%E9%85%B7/"/>
-    
     <category term="工具" scheme="https://zihao256.github.io/categories/%E5%88%A9%E5%99%A8%E9%85%B7/%E5%B7%A5%E5%85%B7/"/>
-    
-    
     <category term="Git" scheme="https://zihao256.github.io/tags/Git/"/>
-    
+    <id>https://zihao256.github.io/p/69c3279c.html</id>
+    <link href="https://zihao256.github.io/p/69c3279c.html"/>
+    <published>2023-05-15T13:42:40.000Z</published>
+    <summary>
+      <![CDATA[<p>记录一下因为各种需求而对Git缝缝补补的学习</p>
+<p>比较本地仓库分支 和 远程仓库分支<code>commit</code>的不同</p>
+<ul>
+<li><code>git fetch local_repo</code></li>
+<li><code>git l]]>
+    </summary>
+    <title>Git</title>
+    <updated>2026-08-12T03:20:21.996Z</updated>
   </entry>
-  
   <entry>
-    <title>Overleaf</title>
-    <link href="https://zihao256.github.io/p/26d71884.html"/>
-    <id>https://zihao256.github.io/p/26d71884.html</id>
-    <published>2023-05-15T11:11:58.000Z</published>
-    <updated>2023-09-20T06:52:02.729Z</updated>
-    
-    
-      
-      
-    <summary type="html">&lt;p&gt;记录一下最近尝试学习在&lt;code&gt;Overleaf&lt;/code&gt;上使用LaTeX撰写论文。为了符合&lt;code&gt;XDU&lt;/code&gt;毕设论文格式的要求，可以基于&lt;a href=&quot;https://github.com/note286/xduts&quot;&gt;note286学长提供的一些文</summary>
-      
-    
-    
-    
+    <author>
+      <name>zihao</name>
+    </author>
     <category term="利器酷" scheme="https://zihao256.github.io/categories/%E5%88%A9%E5%99%A8%E9%85%B7/"/>
-    
     <category term="工具" scheme="https://zihao256.github.io/categories/%E5%88%A9%E5%99%A8%E9%85%B7/%E5%B7%A5%E5%85%B7/"/>
-    
-    
     <category term="LaTeX" scheme="https://zihao256.github.io/tags/LaTeX/"/>
-    
+    <id>https://zihao256.github.io/p/26d71884.html</id>
+    <link href="https://zihao256.github.io/p/26d71884.html"/>
+    <published>2023-05-15T11:11:58.000Z</published>
+    <summary>
+      <![CDATA[<p>记录一下最近尝试学习在<code>Overleaf</code>上使用LaTeX撰写论文。为了符合<code>XDU</code>毕设论文格式的要求，可以基于<a href="https://github.com/note286/xduts">note286学长提供的一些文]]>
+    </summary>
+    <title>Overleaf</title>
+    <updated>2026-08-12T03:20:21.997Z</updated>
   </entry>
-  
   <entry>
-    <title>Edge浏览器</title>
-    <link href="https://zihao256.github.io/p/e75f2967.html"/>
-    <id>https://zihao256.github.io/p/e75f2967.html</id>
-    <published>2023-05-14T09:24:59.000Z</published>
-    <updated>2023-09-20T06:52:02.724Z</updated>
-    
-    
-      
-      
-    <summary type="html">&lt;h1 id=&quot;常用的插件&quot;&gt;&lt;a href=&quot;#常用的插件&quot; class=&quot;headerlink&quot; title=&quot;常用的插件&quot;&gt;&lt;/a&gt;常用的插件&lt;/h1&gt;&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;Vimium C&lt;/code&gt;&lt;ul&gt;
-&lt;li&gt;键入&lt;code&gt;?&lt;/code&gt;获得操作手册</summary>
-      
-    
-    
-    
+    <author>
+      <name>zihao</name>
+    </author>
     <category term="利器酷" scheme="https://zihao256.github.io/categories/%E5%88%A9%E5%99%A8%E9%85%B7/"/>
-    
     <category term="工具" scheme="https://zihao256.github.io/categories/%E5%88%A9%E5%99%A8%E9%85%B7/%E5%B7%A5%E5%85%B7/"/>
-    
-    
     <category term="Edge浏览器" scheme="https://zihao256.github.io/tags/Edge%E6%B5%8F%E8%A7%88%E5%99%A8/"/>
-    
     <category term="插件" scheme="https://zihao256.github.io/tags/%E6%8F%92%E4%BB%B6/"/>
-    
+    <id>https://zihao256.github.io/p/e75f2967.html</id>
+    <link href="https://zihao256.github.io/p/e75f2967.html"/>
+    <published>2023-05-14T09:24:59.000Z</published>
+    <summary>
+      <![CDATA[<h1 id="常用的插件"><a href="#常用的插件" class="headerlink" title="常用的插件"></a>常用的插件</h1><ul>
+<li><code>Vimium C</code><ul>
+<li>键入<code>?</code>获得操作手册]]>
+    </summary>
+    <title>Edge浏览器</title>
+    <updated>2026-08-12T03:20:21.996Z</updated>
   </entry>
-  
   <entry>
-    <title>Paper Reading: How good are query optimizers, really?</title>
-    <link href="https://zihao256.github.io/p/e547f891.html"/>
-    <id>https://zihao256.github.io/p/e547f891.html</id>
-    <published>2023-03-04T14:25:09.000Z</published>
-    <updated>2023-10-03T05:07:27.656Z</updated>
-    
-    
-      
-      
-    <summary type="html">&lt;h1 id=&quot;Title&quot;&gt;&lt;a href=&quot;#Title&quot; class=&quot;headerlink&quot; title=&quot;Title&quot;&gt;&lt;/a&gt;Title&lt;/h1&gt;&lt;p&gt;“How Good Are Query Optimizers, Really?” (Leis 等, 2015, p.</summary>
-      
-    
-    
-    
+    <author>
+      <name>zihao</name>
+    </author>
     <category term="学无止境" scheme="https://zihao256.github.io/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/"/>
-    
     <category term="Paper Reading" scheme="https://zihao256.github.io/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/Paper-Reading/"/>
-    
-    
     <category term="Database" scheme="https://zihao256.github.io/tags/Database/"/>
-    
     <category term="Cardinality Estimation" scheme="https://zihao256.github.io/tags/Cardinality-Estimation/"/>
-    
     <category term="Cost Model" scheme="https://zihao256.github.io/tags/Cost-Model/"/>
-    
     <category term="Search Space" scheme="https://zihao256.github.io/tags/Search-Space/"/>
-    
+    <id>https://zihao256.github.io/p/e547f891.html</id>
+    <link href="https://zihao256.github.io/p/e547f891.html"/>
+    <published>2023-03-04T14:25:09.000Z</published>
+    <summary>
+      <![CDATA[<h1 id="Title"><a href="#Title" class="headerlink" title="Title"></a>Title</h1><p>“How Good Are Query Optimizers, Really?” (Leis 等, 2015, p.]]>
+    </summary>
+    <title>Paper Reading: How good are query optimizers, really?</title>
+    <updated>2026-08-12T03:20:22.001Z</updated>
   </entry>
-  
   <entry>
-    <title>Paper Reading: Robustness metrics for relational query execution plans</title>
-    <link href="https://zihao256.github.io/p/7091acdb.html"/>
+    <author>
+      <name>zihao</name>
+    </author>
+    <category term="学无止境" scheme="https://zihao256.github.io/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/"/>
+    <category term="Paper Reading" scheme="https://zihao256.github.io/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/Paper-Reading/"/>
+    <category term="Database" scheme="https://zihao256.github.io/tags/Database/"/>
     <id>https://zihao256.github.io/p/7091acdb.html</id>
+    <link href="https://zihao256.github.io/p/7091acdb.html"/>
     <published>2023-03-04T14:09:28.000Z</published>
-    <updated>2023-10-03T05:07:27.575Z</updated>
-    
-    
-      
-      
-    <summary type="html">&lt;h1 id=&quot;笔记&quot;&gt;&lt;a href=&quot;#笔记&quot; class=&quot;headerlink&quot; title=&quot;笔记&quot;&gt;&lt;/a&gt;笔记&lt;/h1&gt;&lt;p&gt;本篇文章的两个核心内容：&lt;/p&gt;
-&lt;p&gt;“three novel metrics for the robustnes” (Florian W</summary>
-      
-    
-    
-    
-    <category term="学无止境" scheme="https://zihao256.github.io/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/"/>
-    
-    <category term="Paper Reading" scheme="https://zihao256.github.io/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/Paper-Reading/"/>
-    
-    
-    <category term="Database" scheme="https://zihao256.github.io/tags/Database/"/>
-    
+    <summary>
+      <![CDATA[<h1 id="笔记"><a href="#笔记" class="headerlink" title="笔记"></a>笔记</h1><p>本篇文章的两个核心内容：</p>
+<p>“three novel metrics for the robustnes” (Florian W]]>
+    </summary>
+    <title>Paper Reading: Robustness metrics for relational query execution plans</title>
+    <updated>2026-08-12T03:20:22.001Z</updated>
   </entry>
-  
   <entry>
-    <title>Paper Reading: On the Calculation of Optimality Ranges for Relational Query Execution Plans</title>
-    <link href="https://zihao256.github.io/p/5d3b93c8.html"/>
-    <id>https://zihao256.github.io/p/5d3b93c8.html</id>
-    <published>2023-03-04T14:07:24.000Z</published>
-    <updated>2023-10-03T05:07:27.532Z</updated>
-    
-    
-      
-      
-    <summary type="html">&lt;h1 id=&quot;笔记&quot;&gt;&lt;a href=&quot;#笔记&quot; class=&quot;headerlink&quot; title=&quot;笔记&quot;&gt;&lt;/a&gt;笔记&lt;/h1&gt;&lt;p&gt; &lt;strong&gt;最优范围的目的&lt;/strong&gt; ：指出何时最优计划仍然最优。&lt;/p&gt;
-&lt;h1 id=&quot;最优范围计算的步骤：&quot;&gt;&lt;a hr</summary>
-      
-    
-    
-    
+    <author>
+      <name>zihao</name>
+    </author>
     <category term="学无止境" scheme="https://zihao256.github.io/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/"/>
-    
     <category term="Paper Reading" scheme="https://zihao256.github.io/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/Paper-Reading/"/>
-    
-    
     <category term="Database" scheme="https://zihao256.github.io/tags/Database/"/>
-    
+    <category term="Optimizer" scheme="https://zihao256.github.io/tags/Optimizer/"/>
     <category term="Cardinality Estimation" scheme="https://zihao256.github.io/tags/Cardinality-Estimation/"/>
-    
-    <category term="Optimizer" scheme="https://zihao256.github.io/tags/Optimizer/"/>
-    
+    <id>https://zihao256.github.io/p/5d3b93c8.html</id>
+    <link href="https://zihao256.github.io/p/5d3b93c8.html"/>
+    <published>2023-03-04T14:07:24.000Z</published>
+    <summary>
+      <![CDATA[<h1 id="笔记"><a href="#笔记" class="headerlink" title="笔记"></a>笔记</h1><p> <strong>最优范围的目的</strong> ：指出何时最优计划仍然最优。</p>
+<h1 id="最优范围计算的步骤："><a hr]]>
+    </summary>
+    <title>Paper Reading: On the Calculation of Optimality Ranges for Relational Query Execution Plans</title>
+    <updated>2026-08-12T03:20:22.001Z</updated>
   </entry>
-  
   <entry>
-    <title>Paper Reading: Plan Stitch: Harnessing the Best of Many Plans</title>
-    <link href="https://zihao256.github.io/p/116cd8bd.html"/>
-    <id>https://zihao256.github.io/p/116cd8bd.html</id>
-    <published>2023-03-04T14:01:53.000Z</published>
-    <updated>2023-10-03T05:07:27.651Z</updated>
-    
-    
-      
-      
-    <summary type="html">&lt;h1 id=&quot;Title&quot;&gt;&lt;a href=&quot;#Title&quot; class=&quot;headerlink&quot; title=&quot;Title&quot;&gt;&lt;/a&gt;Title&lt;/h1&gt;&lt;p&gt;“Plan Stitch: Harnessing the Best of Many Plans” (Ding 等, </summary>
-      
-    
-    
-    
+    <author>
+      <name>zihao</name>
+    </author>
     <category term="学无止境" scheme="https://zihao256.github.io/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/"/>
-    
     <category term="Paper Reading" scheme="https://zihao256.github.io/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/Paper-Reading/"/>
-    
-    
     <category term="Database" scheme="https://zihao256.github.io/tags/Database/"/>
-    
     <category term="Optimizer" scheme="https://zihao256.github.io/tags/Optimizer/"/>
-    
     <category term="Plan Cache" scheme="https://zihao256.github.io/tags/Plan-Cache/"/>
-    
+    <id>https://zihao256.github.io/p/116cd8bd.html</id>
+    <link href="https://zihao256.github.io/p/116cd8bd.html"/>
+    <published>2023-03-04T14:01:53.000Z</published>
+    <summary>
+      <![CDATA[<h1 id="Title"><a href="#Title" class="headerlink" title="Title"></a>Title</h1><p>“Plan Stitch: Harnessing the Best of Many Plans” (Ding 等,]]>
+    </summary>
+    <title>Paper Reading: Plan Stitch: Harnessing the Best of Many Plans</title>
+    <updated>2026-08-12T03:20:22.001Z</updated>
   </entry>
-  
   <entry>
-    <title>How to read a paper</title>
-    <link href="https://zihao256.github.io/p/b4607f97.html"/>
-    <id>https://zihao256.github.io/p/b4607f97.html</id>
-    <published>2023-02-20T01:36:07.000Z</published>
-    <updated>2023-09-20T06:52:02.724Z</updated>
-    
-    
-      
-      
-    <summary type="html">&lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;“或许你永远不知道你以前读过的书能在什么时候能够派上用场，但请保持阅读，因&lt;/strong&gt;为阅读的过程也是在你大脑中建立认知的过程。”&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;“深度阅读</summary>
-      
-    
-    
-    
+    <author>
+      <name>zihao</name>
+    </author>
     <category term="利器酷" scheme="https://zihao256.github.io/categories/%E5%88%A9%E5%99%A8%E9%85%B7/"/>
-    
     <category term="方法" scheme="https://zihao256.github.io/categories/%E5%88%A9%E5%99%A8%E9%85%B7/%E6%96%B9%E6%B3%95/"/>
-    
-    
     <category term="Reading" scheme="https://zihao256.github.io/tags/Reading/"/>
-    
     <category term="Paper" scheme="https://zihao256.github.io/tags/Paper/"/>
-    
     <category term="Research" scheme="https://zihao256.github.io/tags/Research/"/>
-    
+    <id>https://zihao256.github.io/p/b4607f97.html</id>
+    <link href="https://zihao256.github.io/p/b4607f97.html"/>
+    <published>2023-02-20T01:36:07.000Z</published>
+    <summary>
+      <![CDATA[<blockquote>
+<p><strong>“或许你永远不知道你以前读过的书能在什么时候能够派上用场，但请保持阅读，因</strong>为阅读的过程也是在你大脑中建立认知的过程。”</p>
+</blockquote>
+<blockquote>
+<p><strong>“深度阅读]]>
+    </summary>
+    <title>How to read a paper</title>
+    <updated>2026-08-12T03:20:21.997Z</updated>
   </entry>
-  
   <entry>
-    <title>Hexo博客少生成了index主页文件</title>
-    <link href="https://zihao256.github.io/p/6de7b885.html"/>
-    <id>https://zihao256.github.io/p/6de7b885.html</id>
-    <published>2023-02-19T09:57:13.000Z</published>
-    <updated>2023-10-03T05:07:27.576Z</updated>
-    
-    
-      
-      
-    <summary type="html">&lt;h1 id=&quot;问题描述&quot;&gt;&lt;a href=&quot;#问题描述&quot; class=&quot;headerlink&quot; title=&quot;问题描述&quot;&gt;&lt;/a&gt;问题描述&lt;/h1&gt;&lt;p&gt;在进行 &lt;code&gt;node&lt;/code&gt; 和 &lt;code&gt;npm&lt;/code&gt; 的版本更新之后，再以此运行 &lt;code&gt;h</summary>
-      
-    
-    
-    
+    <author>
+      <name>zihao</name>
+    </author>
     <category term="学无止境" scheme="https://zihao256.github.io/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/"/>
-    
     <category term="博客更新" scheme="https://zihao256.github.io/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/%E5%8D%9A%E5%AE%A2%E6%9B%B4%E6%96%B0/"/>
-    
-    
     <category term="Blog" scheme="https://zihao256.github.io/tags/Blog/"/>
-    
     <category term="Debug" scheme="https://zihao256.github.io/tags/Debug/"/>
-    
+    <id>https://zihao256.github.io/p/6de7b885.html</id>
+    <link href="https://zihao256.github.io/p/6de7b885.html"/>
+    <published>2023-02-19T09:57:13.000Z</published>
+    <summary>
+      <![CDATA[<h1 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h1><p>在进行 <code>node</code> 和 <code>npm</code> 的版本更新之后，再以此运行 <code>h]]>
+    </summary>
+    <title>Hexo博客少生成了index主页文件</title>
+    <updated>2026-08-12T03:20:22.045Z</updated>
   </entry>
-  
   <entry>
-    <title>hexo博客勉强支持typora中的脚注功能：)</title>
-    <link href="https://zihao256.github.io/p/ef4419f0.html"/>
-    <id>https://zihao256.github.io/p/ef4419f0.html</id>
-    <published>2023-02-19T02:49:13.000Z</published>
-    <updated>2023-10-03T05:07:27.651Z</updated>
-    
-    
-      
-      
-    <summary type="html">&lt;p&gt;typora 的脚注功能类似于论文中的对文献引用。在学习或Debug后书写博客不免也要参考多篇网页，这时用脚注功能可以将引用到的所有网页统一写在博文最下方，使得文章看起来不会那么杂乱。&lt;/p&gt;
-&lt;p&gt;typora 支持的markdown脚注功能，但实际上markdown原生</summary>
-      
-    
-    
-    
+    <author>
+      <name>zihao</name>
+    </author>
     <category term="学无止境" scheme="https://zihao256.github.io/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/"/>
-    
     <category term="博客更新" scheme="https://zihao256.github.io/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/%E5%8D%9A%E5%AE%A2%E6%9B%B4%E6%96%B0/"/>
-    
-    
     <category term="Blog" scheme="https://zihao256.github.io/tags/Blog/"/>
-    
     <category term="Markdown" scheme="https://zihao256.github.io/tags/Markdown/"/>
-    
+    <id>https://zihao256.github.io/p/ef4419f0.html</id>
+    <link href="https://zihao256.github.io/p/ef4419f0.html"/>
+    <published>2023-02-19T02:49:13.000Z</published>
+    <summary>
+      <![CDATA[<p>typora 的脚注功能类似于论文中的对文献引用。在学习或Debug后书写博客不免也要参考多篇网页，这时用脚注功能可以将引用到的所有网页统一写在博文最下方，使得文章看起来不会那么杂乱。</p>
+<p>typora 支持的markdown脚注功能，但实际上markdown原生]]>
+    </summary>
+    <title>hexo博客勉强支持typora中的脚注功能：)</title>
+    <updated>2026-08-12T03:20:22.045Z</updated>
   </entry>
-  
   <entry>
-    <title>奇怪问题——fatal:无法读取远程仓库</title>
-    <link href="https://zihao256.github.io/p/fab1518.html"/>
-    <id>https://zihao256.github.io/p/fab1518.html</id>
-    <published>2023-02-18T15:29:43.000Z</published>
-    <updated>2023-10-03T05:07:27.576Z</updated>
-    
-    
-      
-      
-    <summary type="html">&lt;h1 id=&quot;问题描述&quot;&gt;&lt;a href=&quot;#问题描述&quot; class=&quot;headerlink&quot; title=&quot;问题描述&quot;&gt;&lt;/a&gt;问题描述&lt;/h1&gt;&lt;p&gt;连接校园网，运行&lt;code&gt;hexo d&lt;/code&gt;得到如下报错：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://ra</summary>
-      
-    
-    
-    
+    <author>
+      <name>zihao</name>
+    </author>
     <category term="学无止境" scheme="https://zihao256.github.io/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/"/>
-    
     <category term="博客更新" scheme="https://zihao256.github.io/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/%E5%8D%9A%E5%AE%A2%E6%9B%B4%E6%96%B0/"/>
-    
-    
     <category term="Blog" scheme="https://zihao256.github.io/tags/Blog/"/>
-    
     <category term="Bug" scheme="https://zihao256.github.io/tags/Bug/"/>
-    
+    <id>https://zihao256.github.io/p/fab1518.html</id>
+    <link href="https://zihao256.github.io/p/fab1518.html"/>
+    <published>2023-02-18T15:29:43.000Z</published>
+    <summary>
+      <![CDATA[<h1 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h1><p>连接校园网，运行<code>hexo d</code>得到如下报错：</p>
+<p><img src="https://ra]]>
+    </summary>
+    <title>奇怪问题——fatal:无法读取远程仓库</title>
+    <updated>2026-08-12T03:20:22.046Z</updated>
   </entry>
-  
 </feed>

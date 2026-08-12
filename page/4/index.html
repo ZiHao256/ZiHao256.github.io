@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="zh-Hans" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>ZiHao's Blog - keep moving</title><meta name="author" content="zihao"><meta name="copyright" content="zihao"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Why be afraid of the infinity of truth? Joy resides in every step of growth.">
+<!DOCTYPE html><html lang="zh-Hans" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>ZiHao's Blog - keep moving</title><meta name="author" content="zihao"><meta name="copyright" content="zihao"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Why be afraid of the infinity of truth? Joy resides in every step of growth.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="ZiHao&#39;s Blog">
 <meta property="og:url" content="https://zihao256.github.io/page/4/index.html">
@@ -8,25 +8,156 @@
 <meta property="og:image" content="https://github.com/ZiHao256/ZiHao256.github.io/blob/hexo/images/stitch.JPG?raw=true">
 <meta property="article:author" content="zihao">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://github.com/ZiHao256/ZiHao256.github.io/blob/hexo/images/stitch.JPG?raw=true"><link rel="shortcut icon" href="https://github.com/ZiHao256/ZiHao256.github.io/blob/hexo/images/stitch.JPG?raw=true"><link rel="canonical" href="https://zihao256.github.io/page/4/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+<meta name="twitter:image" content="https://github.com/ZiHao256/ZiHao256.github.io/blob/hexo/images/stitch.JPG?raw=true"><script type="application/ld+json"></script><link rel="shortcut icon" href="https://github.com/ZiHao256/ZiHao256.github.io/blob/hexo/images/stitch.JPG?raw=true"><link rel="canonical" href="https://zihao256.github.io/page/4/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.7.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.3.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1.14/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        const data = { value }
+
+        if (ttl != null) {
+          data.expiry = Date.now() + ttl * 86400000
+        }
+
+        localStorage.setItem(key, JSON.stringify(data))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return
+
+        try {
+          const data = JSON.parse(itemStr)
+
+          if (data.expiry && Date.now() > data.expiry) {
+            localStorage.removeItem(key)
+            return
+          }
+
+          return data.value
+        } catch {
+          localStorage.removeItem(key)
+        }
+      }
+    }
+
+    const scriptCache = new Map()
+    const cssCache = new Map()
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => {
+        if (scriptCache.has(url)) {
+          return scriptCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const script = document.createElement('script')
+
+          script.src = url
+          script.async = true
+
+          for (const key in attr) {
+            script.setAttribute(key, attr[key])
+          }
+
+          script.onload = resolve
+          script.onerror = reject
+
+          document.head.appendChild(script)
+        })
+
+        scriptCache.set(url, promise)
+
+        return promise
+      },
+      getCSS: (url, id) => {
+        if (cssCache.has(url)) {
+          return cssCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const link = document.createElement('link')
+
+          link.rel = 'stylesheet'
+          link.href = url
+
+          if (id) {
+            link.id = id
+          }
+
+          link.onload = resolve
+          link.onerror = reject
+
+          document.head.appendChild(link)
+        })
+
+        cssCache.set(url, promise)
+
+        return promise
+      },
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!true && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const metaThemeColor = document.querySelector('meta[name="theme-color"]')
+      const activateDarkMode = () => {
+        document.documentElement.dataset.theme = 'dark'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.dataset.theme = 'light'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
   root: '/',
   algolia: undefined,
-  localSearch: {"path":"/search.xml","preload":true,"languages":{"hits_empty":"We didn't find any results for the search: ${query}"}},
+  localSearch: {"path":"/search.xml","preload":true,"top_n_per_article":1,"unescape":false,"pagination":{"enable":false,"hitsPerPage":8},"languages":{"hits_empty":"No results found for: ${query}","hits_stats":"${hits} articles found"}},
   translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
-  noticeOutdate: undefined,
-  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":true},
   copy: {
-    success: 'Copy successfully',
-    error: 'Copy error',
-    noSupport: 'The browser does not support'
+    success: 'Copy Successful',
+    error: 'Copy Failed',
+    noSupport: 'Browser Not Supported'
   },
   relativeDate: {
     homepage: true,
     post: true
   },
-  runtime: '天',
-  date_suffix: {
-    just: 'Just',
+  runtime: 'days',
+  dateSuffix: {
+    just: 'Just now',
     min: 'minutes ago',
     hour: 'hours ago',
     day: 'days ago',
@@ -35,466 +166,209 @@
   copyright: undefined,
   lightbox: 'fancybox',
   Snackbar: undefined,
-  source: {
-    justifiedGallery: {
-      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
-      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
-    }
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
   },
   isPhotoFigcaption: true,
-  islazyload: false,
-  isAnchor: false
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
 }</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
   title: 'ZiHao\'s Blog',
-  isPost: false,
-  isHome: true,
   isHighlightShrink: true,
   isToc: false,
-  postUpdate: '2024-10-10 11:31:29'
-}</script><noscript><style type="text/css">
-  #nav {
-    opacity: 1
-  }
-  .justified-gallery img {
-    opacity: 1
-  }
-
-  #recent-posts time,
-  #post-meta time {
-    display: inline !important
-  }
-</style></noscript><script>(win=>{
-    win.saveToLocal = {
-      set: function setWithExpiry(key, value, ttl) {
-        if (ttl === 0) return
-        const now = new Date()
-        const expiryDay = ttl * 86400000
-        const item = {
-          value: value,
-          expiry: now.getTime() + expiryDay,
-        }
-        localStorage.setItem(key, JSON.stringify(item))
-      },
-
-      get: function getWithExpiry(key) {
-        const itemStr = localStorage.getItem(key)
-
-        if (!itemStr) {
-          return undefined
-        }
-        const item = JSON.parse(itemStr)
-        const now = new Date()
-
-        if (now.getTime() > item.expiry) {
-          localStorage.removeItem(key)
-          return undefined
-        }
-        return item.value
-      }
+  pageType: 'home'
+}</script><link rel="stylesheet" href="//at.alicdn.com/t/c/font_4263496_xe5w6zp8g5c.css"><meta name="generator" content="Hexo 8.1.2"><link rel="alternate" href="/atom.xml" title="ZiHao's Blog" type="application/atom+xml">
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">Loading...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      if ($loadingBox.classList.contains('loaded')) return
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
     }
-  
-    win.getScript = url => new Promise((resolve, reject) => {
-      const script = document.createElement('script')
-      script.src = url
-      script.async = true
-      script.onerror = reject
-      script.onload = script.onreadystatechange = function() {
-        const loadState = this.readyState
-        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
-        script.onload = script.onreadystatechange = null
-        resolve()
-      }
-      document.head.appendChild(script)
-    })
-  
-      win.activateDarkMode = function () {
-        document.documentElement.setAttribute('data-theme', 'dark')
-        if (document.querySelector('meta[name="theme-color"]') !== null) {
-          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
-        }
-      }
-      win.activateLightMode = function () {
-        document.documentElement.setAttribute('data-theme', 'light')
-        if (document.querySelector('meta[name="theme-color"]') !== null) {
-          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
-        }
-      }
-      const t = saveToLocal.get('theme')
-    
-          if (t === 'dark') activateDarkMode()
-          else if (t === 'light') activateLightMode()
-        
-      const asideStatus = saveToLocal.get('aside-status')
-      if (asideStatus !== undefined) {
-        if (asideStatus === 'hide') {
-          document.documentElement.classList.add('hide-aside')
-        } else {
-          document.documentElement.classList.remove('hide-aside')
-        }
-      }
-    
-    const detectApple = () => {
-      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
-        document.documentElement.classList.add('apple')
-      }
-    }
-    detectApple()
-    })(window)</script><link rel="stylesheet" href="//at.alicdn.com/t/c/font_4263496_xe5w6zp8g5c.css"><meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="/atom.xml" title="ZiHao's Blog" type="application/atom+xml">
-<style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}</style></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">Loading...</div></div></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://github.com/ZiHao256/ZiHao256.github.io/blob/hexo/images/stitch.JPG?raw=true" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">66</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">48</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">16</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/log"><i class="fa-fw fas fa-book"></i><span> Log</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fa fa-camera-retro"></i><span> Gallery</span></a></li><li><a class="site-page child" href="/Map/"><i class="fa-fw fa fa-map-signs"></i><span> Map</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div><div class="menus_item"><a class="site-page" href="/omnisearch/"><i class="fa-fw fas fa-search"></i><span> Omni Search</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="full_page" id="page-header" style="background-image: url('https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/john-towner-3Kv48NS4WUU-unsplash.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">ZiHao's Blog</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> Search</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/log"><i class="fa-fw fas fa-book"></i><span> Log</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fa fa-camera-retro"></i><span> Gallery</span></a></li><li><a class="site-page child" href="/Map/"><i class="fa-fw fa fa-map-signs"></i><span> Map</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div><div class="menus_item"><a class="site-page" href="/omnisearch/"><i class="fa-fw fas fa-search"></i><span> Omni Search</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="site-info"><h1 id="site-title">ZiHao's Blog</h1><div id="site_social_icons"><a class="social-icon" href="https://github.com/ZiHao256" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/atom.xml" target="_blank" title="RSS链接"><i class="fa fa-rss"></i></a><a class="social-icon" href="mailto:zihao626@gmail.com" target="_blank" title="gmail"><i class="fa-brands fa-google"></i></a><a class="social-icon" href="mailto:zh_ma@stu.xidian.edu.cn" target="_blank" title="xdu-mail"><i class="fa fa-graduation-cap"></i></a></div></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts" id="recent-posts"><div class="recent-post-item"><div class="post_cover left"><a href="/p/b58cbef5.html" title="Obsidian"><img class="post_bg" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/sebastian-unrau-sp-p7uuT0tw-unsplash.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Obsidian"></a></div><div class="recent-post-info"><a class="article-title" href="/p/b58cbef5.html" title="Obsidian">Obsidian</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time class="post-meta-date-created" datetime="2022-07-07T00:26:27.000Z" title="Created 2022-07-07 08:26:27">2022-07-07</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2024-08-28T16:17:57.920Z" title="Updated 2024-08-29 00:17:57">2024-08-29</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%88%A9%E5%99%A8%E9%85%B7/">利器酷</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/%E5%88%A9%E5%99%A8%E9%85%B7/%E5%B7%A5%E5%85%B7/">工具</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E7%A7%91%E7%A0%94/">科研</a><span class="article-meta-link">•</span><a class="article-meta__tags" href="/tags/%E8%AE%BA%E6%96%87/">论文</a><span class="article-meta-link">•</span><a class="article-meta__tags" href="/tags/%E7%AC%94%E8%AE%B0/">笔记</a></span></div><div class="content">基本 markdown 语法脚注hello world^长脚注 ^968640
-高亮==高亮==
-建立笔记与笔记之间的连接
-形成知识网，可以使用左侧进行 graph view
-
-内部链接
-链接库中某篇笔记
-
-输入 [[ 即可选择要链接的某篇库内文章：Obsidian和Typora之间的权衡
-
-输入 # 可以选择链接文章某个段落：基本 markdown 语法
-输入 ^ 可以选择链接文章某个文字段落：链接hello world
-
-反向链接
-具体显示了哪些笔记链接了当前笔记，哪些笔记提到了当前笔记的名字但并未进行链接在正文中提到了当前笔记的文件名，但没有链接当前笔记（没有用方括号括起来）
-
-
-同 链接当前文件 一样在右侧边栏显示，可以将其转换为链接
-
-在 Hexo 博客中插入本地图片
-图片保存于同一目录下的文件夹中；
-使用 Hexo3 支持的语法 &#123;% asset_img example.jpg hello%&#125; 进行插入图片；
-
-缺点是无法在本地渲染图片
-检索和管理
-文件夹、标签、链接
-
-
-点击左侧的 🔍 可以搜索文件夹、文件、链接等内容
-在阅读视图里点击 front  ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/p/22861f12.html" title="VS2019 下 C++ 项目访问MySQL数据库"><img class="post_bg" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven5.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="VS2019 下 C++ 项目访问MySQL数据库"></a></div><div class="recent-post-info"><a class="article-title" href="/p/22861f12.html" title="VS2019 下 C++ 项目访问MySQL数据库">VS2019 下 C++ 项目访问MySQL数据库</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time class="post-meta-date-created" datetime="2021-05-21T16:00:00.000Z" title="Created 2021-05-22 00:00:00">2021-05-22</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2023-10-03T05:07:27.550Z" title="Updated 2023-10-03 13:07:27">2023-10-03</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/">学无止境</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0/">编程语言学习</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/SQL/">SQL</a></span></div><div class="content">参考博客 MySQL数据库—VS019 C++访问MySQL_买代码的小猪猪的博客-CSDN博客](https://blog.csdn.net/weixin_49324123/article/details/116493884))
-CMD 命令行窗口进入mysql数据库：
-mysql -hlocalhost -uroot -p:
-
--hlocalhost：-h表示服务器名, localhost表示本地
--uroot: -u表示数据库用户名，root是MySQL默认用户名
--p: 为密码
-
-1 配置
-项目-&gt;属性-&gt;==平台为 x64==
-
-项目 -&gt; 属性 -&gt; VC++ 目录
-
-将所安装的MySQL目录下的 include lib文件夹目录分别输入包含目录库目录
-
-
-
-链接器 -&gt; 输入
-
-将 MySQL 的lib目录下的 libmysql.lib文件名输入附加依赖项，只需输入文件名
-
-
-
-将 lib 目录下的 libmysql.dll 文件复制 C:\Windows\System32目录下
-
-
-2 C++ 中 MySQL 的基本操作一个对已创建的数据库 ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/p/4d712855.html" title="SQL"><img class="post_bg" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven-yx7vmk.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="SQL"></a></div><div class="recent-post-info"><a class="article-title" href="/p/4d712855.html" title="SQL">SQL</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time class="post-meta-date-created" datetime="2021-05-19T16:00:00.000Z" title="Created 2021-05-20 00:00:00">2021-05-20</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2023-10-03T05:07:27.646Z" title="Updated 2023-10-03 13:07:27">2023-10-03</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/">学无止境</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0/">编程语言学习</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/SQL/">SQL</a></span></div><div class="content">SQL[toc]
-
-什么是 SQL 
-
-访问和处理 **关系数据库 **的 计算机标准语言
-
-
-编写程序时，只要涉及 操作关系数据库，就必须通过 SQL 完成
-
-NoSQL: 非SQL的数据库，都不是关系数据库
-
-
-1 关系数据库概述
-为什么需要数据库
-
-应用程序 需要保存用户的数据
-随着应用程序功能越来越复杂，数据量也越来越大
-读写文件并解析出数据，需要大量重复代码
-从大量数据中 快速查询出 指定数据，需要复杂的逻辑
-
-
-每个应用程序访问数据的接口不同，数据难以复用
-
-
-数据库：专门管理数据的软件
-
-应用程序通过数据库软件提供的接口来读写数据
-数据库软件来管理数据如何存储进文件
-```ascii ──────────────┐│ application  │└──────────────┘   ▲│
-   ││
-
-   read││write   ││
-   │▼
-
-┌──────────────┐│   database   │└──────────────┘1234567891011121314151617181920212223242526## 数据模型* 数据库按照 **数据 ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/p/4b288195.html" title="专题四设备驱动"><img class="post_bg" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven4.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="专题四设备驱动"></a></div><div class="recent-post-info"><a class="article-title" href="/p/4b288195.html" title="专题四设备驱动">专题四设备驱动</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time class="post-meta-date-created" datetime="2021-05-19T04:00:00.000Z" title="Created 2021-05-19 12:00:00">2021-05-19</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2023-10-03T05:07:27.576Z" title="Updated 2023-10-03 13:07:27">2023-10-03</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/">学无止境</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/XDU-OS%E8%AF%BE%E7%A8%8B%E8%AE%BE%E8%AE%A1/">XDU OS课程设计</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a><span class="article-meta-link">•</span><a class="article-meta__tags" href="/tags/%E8%AE%BE%E5%A4%87%E9%A9%B1%E5%8A%A8/">设备驱动</a></span></div><div class="content">
-完善例子中的字符设备程序，使之满足以下功能：
- i.安装设备后从设备中读出字符串为你的学号；
- ii. 设备支持每次写入字符不超过1024个，超过部分被丢弃；
- iii. 用户可以读出最近写入到设备中的字符；
- iv. 设备关闭前不能被多次打开；
- v. 设备支持系统调用ioctl(int d, int req,…),req = 0x909090, 清除设备中写入的字符串;
- 自己编写测试程序，验证以上功能
-提交内容： 测试过程截图
-
-1 概念
-操作系统中直接控制设备的程序
-
-Linux 将设备看成是一种特殊的文件（设备文件）
-
-字符型设备
-块设备
-
-
-Linux 打开读写或关闭设备文件时，在与设备驱动进行交互
-
-
-2 设计
-用户进程请求设备服务流程图
-
-
-用户进程发出IO请求，系统将处理下传到VFS上
-VFS 通过驱动程序提供的接口将任务分配到驱动程序
-驱动程序根据需要，对设备控制器进行操作
-设备控制器去控制设备
-
-
-
-
-
-
-设备驱动程序设计
-VFS 管理字符设备的接口：struct file_operations
-重要的接口函数：open,read,write,release,i ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/p/69488089.html" title="专题三内核模块"><img class="post_bg" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven1.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="专题三内核模块"></a></div><div class="recent-post-info"><a class="article-title" href="/p/69488089.html" title="专题三内核模块">专题三内核模块</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time class="post-meta-date-created" datetime="2021-05-19T02:00:00.000Z" title="Created 2021-05-19 10:00:00">2021-05-19</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2023-10-03T05:07:27.543Z" title="Updated 2023-10-03 13:07:27">2023-10-03</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/">学无止境</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/XDU-OS%E8%AF%BE%E7%A8%8B%E8%AE%BE%E8%AE%A1/">XDU OS课程设计</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a><span class="article-meta-link">•</span><a class="article-meta__tags" href="/tags/%E5%86%85%E6%A0%B8/">内核</a></span></div><div class="content">
-实验要求：
-题目一 编写一个内核模块； 编译该模块； 加载、卸载该模块；
-题目二 用内核模块的方式为系统添加一个系统调用 具体要求同专题二
-提交内容：
-​        内核模块加载/卸载截图
-评分标准： 至少完成题目一（60-80分） 自主完成题目二（90-100分）
-
-1 内核模块概念
-是一段可以 动态加入内核，并且成为内核一部分的代码
-优点：
-通过动态加载内核模块，使得在运行过程中扩展内核的功能
-减小内核映像大小，增加系统灵活性
-只需要修改内核，而不必重新编译整个内核
-
-
-
-2 内核模块相关命令
-加载内核模块：
-#insmod module_name
-
-
-卸载内核模块：
-#rmmod module_name
-或者 #modprobe -r module_name
-
-
-查看系统已经加载的模块：
-#lsmod
-
-
-查看系统已经加载的模块信息：
-#modinfo module_name
-
-
-
-3 内核模块的编写，例子内核模块源代码：
-12345678910111213141516171819202122#include&lt;linux/init.h&gt;			//for modu ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/p/6e049acd.html" title="专题二系统调用"><img class="post_bg" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven8.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="专题二系统调用"></a></div><div class="recent-post-info"><a class="article-title" href="/p/6e049acd.html" title="专题二系统调用">专题二系统调用</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time class="post-meta-date-created" datetime="2021-05-19T01:00:00.000Z" title="Created 2021-05-19 09:00:00">2021-05-19</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2023-10-03T05:07:27.786Z" title="Updated 2023-10-03 13:07:27">2023-10-03</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/">学无止境</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/XDU-OS%E8%AF%BE%E7%A8%8B%E8%AE%BE%E8%AE%A1/">XDU OS课程设计</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a><span class="article-meta-link">•</span><a class="article-meta__tags" href="/tags/%E5%86%85%E6%A0%B8/">内核</a></span></div><div class="content">
-实验要求：
- 为Linux内核增加一个系统调用，并编写用户进程的程序来测试。
-要求该系统调用能够完成以下功能：
- (1) 该系统调用有1个整型参数，接收输入自己的学号；
-       
- (2) 若参数为奇数，则返回自己学号的最后5位。如你的学号为16130120101 ，则返回20101；
-       
- (3) 若参数为偶数，则返回自己的学号的最后6位。如你的学号为16130120102 ，则返回120102 。
-
-提交内容为：
-  截图1： 运行结果
-  截图2：源代码
-
-1 [知识点] 什么是系统调用系统调用Linux 的运行空间：内核空间 和 用户空间
-
-逻辑上相互隔离
-用户进程通常情况下 不允许 访问内核数据，也无法使用内核函数
-内核 提供了 用户进程与内核进行交互的一组接口：用户进程可以通过这组接口来获得操作系统内核提供的服务
-
-系统调用的作用
-提供用户模式的进程和硬件设备的接口
-保证系统的稳定和安全
-实现多任务和虚拟内存
-
-系统调用的分类
-控制硬件
-硬件资源 与 用户空间的抽象接口
-读写文件：write/read
-
-
-进程管理
-保证系统中的进程能以多任务在虚拟内存环 ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/p/d1d6ca89.html" title="专题一内核编译"><img class="post_bg" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven-kxd1md.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="专题一内核编译"></a></div><div class="recent-post-info"><a class="article-title" href="/p/d1d6ca89.html" title="专题一内核编译">专题一内核编译</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time class="post-meta-date-created" datetime="2021-05-19T00:00:00.000Z" title="Created 2021-05-19 08:00:00">2021-05-19</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2024-08-28T15:33:36.823Z" title="Updated 2024-08-28 23:33:36">2024-08-28</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/">学无止境</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/XDU-OS%E8%AF%BE%E7%A8%8B%E8%AE%BE%E8%AE%A1/">XDU OS课程设计</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a><span class="article-meta-link">•</span><a class="article-meta__tags" href="/tags/%E7%BC%96%E8%AF%91/">编译</a><span class="article-meta-link">•</span><a class="article-meta__tags" href="/tags/%E5%86%85%E6%A0%B8/">内核</a></span></div><div class="content">
-
- 作业要求：
- 完成本专题教学内容中的验收测试题并提交验收材料。
- 验收材料要求:
- 新内核引导成功前：
- \1. 执行命令：uname –a,提交截屏结果1
- 
- 新内核引导成功后：
- \2. 执行命令：uname –a,提交截屏结果2
- 
- \3. 进入目录/boot，执行命令：ls -l,提交截屏结果3
- 
-
-
-==tips:==  在创建虚拟机时，最好分配 50 GB 以上从磁盘空间，四个以上内核
-
-最重要的是：分配 4 GB 以上的内存，防止在内存中死锁
-
-最最重要的是：新版本的 Linux 内核make install安装后，不再需要手动引导内核！！！即不再需要配置 grub
-
-
-1 [知识点]什么是 Linux 内核
-操作系统的结构
-
-
-
-操作系统：Kernel + Shell
-
-
-
-Kernel的组成和功能：
-
-
-
-
-Linux 发行版本和内核版本之间的关系：
-
-例如教学视频中：Ubuntu10.04 = Kernel2.6.30 + SHELL + USERS APPLICATIONS
-两者独立
-
-
-本次课程设计我选择的发行版本是 Ubuntu20.04.20
-
- ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/p/a3ec7244.html" title="创建进程、子进程和进程间通信"><img class="post_bg" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/pathway-middle-green-leafed-trees-with-sun-shining-through-branches.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="创建进程、子进程和进程间通信"></a></div><div class="recent-post-info"><a class="article-title" href="/p/a3ec7244.html" title="创建进程、子进程和进程间通信">创建进程、子进程和进程间通信</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time class="post-meta-date-created" datetime="2021-05-18T16:00:00.000Z" title="Created 2021-05-19 00:00:00">2021-05-19</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2023-10-03T05:07:27.651Z" title="Updated 2023-10-03 13:07:27">2023-10-03</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/">学无止境</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/XDU-OS%E8%AF%BE%E7%A8%8B%E8%AE%BE%E8%AE%A1/">XDU OS课程设计</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a><span class="article-meta-link">•</span><a class="article-meta__tags" href="/tags/Linux/">Linux</a></span></div><div class="content">fork() 方法fork 原型：
-
-pid_t fork(void)
-
-fork的定义：
-父进程在调用 fork 派生子进程，实际上相当于创建了一个进程拷贝
-
-调用一次 fork() 会返回两次
-
-一次：在调用该方法的进程中返回 子进程的 id
-二次：在子进程中返回 0
-若在调用该方法时返回 -1 则表示调用失败
-
-
-根据 fork 的返回值判断当前进程是父进程还是子进程：
-
-#include&lt;stdio.h&gt;
-#include&lt;unistd.h&gt;
-int main()&#123;
-
-    pid_t pid = fork();
-    if(pid == 0)&#123;
-        printf(&quot;child\n&quot;);
-    &#125;
-    else&#123;
-        printf(&quot;father\n&quot;);
-    &#125;
-
-    return 0;
-
-&#125;
-
-
-
-
-
-进程间通信 IPCInter-Process Communication: 多个进程之间相互沟通的一种方法
-管 ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/p/77fbe329.html" title="Django应用第二部分"><img class="post_bg" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/star_sky.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Django应用第二部分"></a></div><div class="recent-post-info"><a class="article-title" href="/p/77fbe329.html" title="Django应用第二部分">Django应用第二部分</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time class="post-meta-date-created" datetime="2021-05-07T16:00:00.000Z" title="Created 2021-05-08 00:00:00">2021-05-08</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2023-10-03T05:07:27.576Z" title="Updated 2023-10-03 13:07:27">2023-10-03</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/">学无止境</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/%E5%BC%80%E5%8F%91%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0/">开发框架学习</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/Python/">Python</a><span class="article-meta-link">•</span><a class="article-meta__tags" href="/tags/Django/">Django</a></span></div><div class="content">该部分将建立数据库，创建第一个模型module, 并主要关注Django提供的自动生成的管理页面
-数据库配置
-mysite/settings.py: 包含了项目配置的python模块
-一般，这个配置文件使用 SQLite 作为默认数据库
-
-
-更换 数据库 ——[官方文档](编写你的第一个 Django 应用，第 2 部分 | Django 文档 | Django (djangoproject.com))
-如果你想使用其他数据库，你需要安装合适的 database bindings ，然后改变设置文件中 DATABASES &#39;default&#39; 项目中的一些键值：
-
-ENGINE – 可选值有 &#39;django.db.backends.sqlite3&#39;，&#39;django.db.backends.postgresql&#39;，&#39;django.db.backends.mysql&#39;，或 &#39;django.db.backends.oracle&#39;。其它 可用后端。
-NAME – 数据库的名称。如果你使用 SQLite，数据库将是你电 ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/p/497f9043.html" title="Django 应用第一部分"><img class="post_bg" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/sebastian-unrau-sp-p7uuT0tw-unsplash.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Django 应用第一部分"></a></div><div class="recent-post-info"><a class="article-title" href="/p/497f9043.html" title="Django 应用第一部分">Django 应用第一部分</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time class="post-meta-date-created" datetime="2021-05-06T16:00:00.000Z" title="Created 2021-05-07 00:00:00">2021-05-07</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2023-10-03T05:07:27.543Z" title="Updated 2023-10-03 13:07:27">2023-10-03</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/">学无止境</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/%E5%BC%80%E5%8F%91%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0/">开发框架学习</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/Python/">Python</a><span class="article-meta-link">•</span><a class="article-meta__tags" href="/tags/Django/">Django</a></span></div><div class="content">编写第一个 Django 应用，第一部分[官方文档](初识 Django | Django 文档 | Django (djangoproject.com))
-
-目标：创建一个基本的投票应用
-
-让人们 查看和投票 的公共站点
-让开发者能 添加、修改、删除投票的管理站点
-
-
-环境：
-
-pycharm 2019
-python 3.6
-Django 3.2.1支持Python 和后续版本
-
-
-
-创建项目
-初始化设置：
-
-生成Django项目需要的 设置项集合：数据库配置、Django 配置和应用程序配置
-
-1django-admin startproject mysite(项目名)
-
-
-需要注意的是，须提前将django-admin加入环境变量，因为使用的是 Pycharm Professional 所以可以一键创建Django项目
-
-
-startproject 所创建的：
-
-![image-20210507200938455](E:\LearningNotes\python\编写第一个 Django 应用，第一部分.assets\image-20210507200938455-1620389 ...</div></div></div><nav id="pagination"><div class="pagination"><a class="extend prev" rel="prev" href="/page/3/#content-inner"><i class="fas fa-chevron-left fa-fw"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/#content-inner">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/#content-inner">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/#content-inner">7</a><a class="extend next" rel="next" href="/page/5/#content-inner"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://github.com/ZiHao256/ZiHao256.github.io/blob/hexo/images/stitch.JPG?raw=true" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">zihao</div><div class="author-info__description">Why be afraid of the infinity of truth? Joy resides in every step of growth.</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">66</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">48</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">16</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/ZiHao256"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/ZiHao256" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/atom.xml" target="_blank" title="RSS链接"><i class="fa fa-rss"></i></a><a class="social-icon" href="mailto:zihao626@gmail.com" target="_blank" title="gmail"><i class="fa-brands fa-google"></i></a><a class="social-icon" href="mailto:zh_ma@stu.xidian.edu.cn" target="_blank" title="xdu-mail"><i class="fa fa-graduation-cap"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">keep moving in 2024</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/p/10f62ef4.html" title="PROJECT #4: CONCURRENCY CONTROL"><img src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven-gpdvj3.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="PROJECT #4: CONCURRENCY CONTROL"/></a><div class="content"><a class="title" href="/p/10f62ef4.html" title="PROJECT #4: CONCURRENCY CONTROL">PROJECT #4: CONCURRENCY CONTROL</a><time datetime="2024-05-16T01:01:13.000Z" title="Created 2024-05-16 09:01:13">2024-05-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/c186cbfd.html" title="Project #3: Query Execution"><img src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/drain.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Project #3: Query Execution"/></a><div class="content"><a class="title" href="/p/c186cbfd.html" title="Project #3: Query Execution">Project #3: Query Execution</a><time datetime="2024-05-16T00:59:16.000Z" title="Created 2024-05-16 08:59:16">2024-05-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/2acafc61.html" title="rustlings"><img src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/in-the-early-morning-of-forest-wallpaper.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="rustlings"/></a><div class="content"><a class="title" href="/p/2acafc61.html" title="rustlings">rustlings</a><time datetime="2023-11-28T09:46:15.000Z" title="Created 2023-11-28 17:46:15">2023-11-28</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/d028ccc3.html" title="基于Actix-Web(Rust)和Vue的Web开发记录"><img src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven-4ggvml.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="基于Actix-Web(Rust)和Vue的Web开发记录"/></a><div class="content"><a class="title" href="/p/d028ccc3.html" title="基于Actix-Web(Rust)和Vue的Web开发记录">基于Actix-Web(Rust)和Vue的Web开发记录</a><time datetime="2023-11-13T13:42:48.000Z" title="Created 2023-11-13 21:42:48">2023-11-13</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/517dd8ea.html" title="Project#2: Extendible Hash Index"><img src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/john-towner-3Kv48NS4WUU-unsplash.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Project#2: Extendible Hash Index"/></a><div class="content"><a class="title" href="/p/517dd8ea.html" title="Project#2: Extendible Hash Index">Project#2: Extendible Hash Index</a><time datetime="2023-10-30T13:56:01.000Z" title="Created 2023-10-30 21:56:01">2023-10-30</time></div></div></div></div><div class="card-widget" id="card-newest-comments"><div class="item-headline"><i class="fas fa-comment-dots"></i><span>Newest Comments</span></div><div class="aside-list"><span>loading...</span></div></div><div class="card-widget card-categories"><div class="item-headline">
-            <i class="fas fa-folder-open"></i>
-            <span>Categories</span>
-            <a class="card-more-btn" href="/categories/" title="More">
-    <i class="fas fa-angle-right"></i></a>
-            </div>
-            <ul class="card-category-list" id="aside-cat-list">
+  }
+
+  preloader.initLoading()
+
+  if (document.readyState === 'complete') {
+    preloader.endLoading()
+  } else {
+    window.addEventListener('load', preloader.endLoading)
+    document.addEventListener('DOMContentLoaded', preloader.endLoading)
+    // Add timeout protection: force end after 7 seconds
+    setTimeout(preloader.endLoading, 7000)
+  }
+
+  if (true) {
+    btf.addGlobalFn('pjaxSend', preloader.initLoading, 'preloader_init')
+    btf.addGlobalFn('pjaxComplete', preloader.endLoading, 'preloader_end')
+  }
+})()</script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="https://github.com/ZiHao256/ZiHao256.github.io/blob/hexo/images/stitch.JPG?raw=true" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">66</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">48</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">16</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/log"><i class="fa-fw fas fa-book"></i><span> Log</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><span class="site-page group hide"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fa fa-camera-retro"></i><span> Gallery</span></a></li><li><a class="site-page child" href="/Map/"><i class="fa-fw fa fa-map-signs"></i><span> Map</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="full_page" id="page-header" style="background-image: url(https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/john-towner-3Kv48NS4WUU-unsplash.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">ZiHao's Blog</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> Search</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/log"><i class="fa-fw fas fa-book"></i><span> Log</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><span class="site-page group hide"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fa fa-camera-retro"></i><span> Gallery</span></a></li><li><a class="site-page child" href="/Map/"><i class="fa-fw fa fa-map-signs"></i><span> Map</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="site-info"><h1 id="site-title">ZiHao's Blog</h1><div id="site_social_icons"><a class="social-icon" href="https://github.com/ZiHao256" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/atom.xml" target="_blank" title="RSS"><i class="fa fa-rss"></i></a><a class="social-icon" href="mailto:zihao626@gmail.com" target="_blank" title="Gmail"><i class="fa-brands fa-google"></i></a><a class="social-icon" href="mailto:zh_ma@stu.xidian.edu.cn" target="_blank" title="XDU Mail"><i class="fa fa-graduation-cap"></i></a></div></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts nc" id="recent-posts"><div class="recent-post-items"><div class="recent-post-item"><div class="post_cover left"><a href="/p/b58cbef5.html" title="Obsidian"><img class="post-bg" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven-kxd1md.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Obsidian"></a></div><div class="recent-post-info"><a class="article-title" href="/p/b58cbef5.html" title="Obsidian">Obsidian</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time class="post-meta-date-created" datetime="2022-07-07T00:26:27.000Z" title="Created 2022-07-07 08:26:27">2022-07-07</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2026-08-12T03:20:21.996Z" title="Updated 2026-08-12 11:20:21">2026-08-12</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%88%A9%E5%99%A8%E9%85%B7/">利器酷</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%88%A9%E5%99%A8%E9%85%B7/%E5%B7%A5%E5%85%B7/">工具</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E7%AC%94%E8%AE%B0/">笔记</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E8%AE%BA%E6%96%87/">论文</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E7%A7%91%E7%A0%94/">科研</a></span></div><div class="content">基本 markdown 语法脚注hello world^长脚注 ^968640 高亮&#x3D;&#x3D;高亮&#x3D;&#x3D; 建立笔记与笔记之间的连接 形成知识网，可以使用左侧进行 graph view  内部链接 链接库中某篇笔记  输入 [[ 即可选择要链接的某篇库内文章：Obsidian和Typora之间的权衡  输入 # 可以选择链接文章某个段落：基本 markdown 语法 输入 ^ 可以选择链接文章某个文字段落：链接hello world  反向链接 具体显示了哪些笔记链接了当前笔记，哪些笔记提到了当前笔记的名字但并未进行链接在正文中提到了当前笔记的文件名，但没有链接当前笔记（没有用方括号括起来）   同 链接当前文件 一样在右侧边栏显示，可以将其转换为链接  在 Hexo 博客中插入本地图片 图片保存于同一目录下的文件夹中； 使用 Hexo3 支持的语法 &#123;% asset_img example.jpg hello%&#125; 进行插入图片；  缺点是无法在本地渲染图片 检索和管理 文件夹、标签、链接   点击左侧的 🔍 可以搜索文件夹、文...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/p/22861f12.html" title="VS2019 下 C++ 项目访问MySQL数据库"><img class="post-bg" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven-4ggvml.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="VS2019 下 C++ 项目访问MySQL数据库"></a></div><div class="recent-post-info"><a class="article-title" href="/p/22861f12.html" title="VS2019 下 C++ 项目访问MySQL数据库">VS2019 下 C++ 项目访问MySQL数据库</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time class="post-meta-date-created" datetime="2021-05-21T16:00:00.000Z" title="Created 2021-05-22 00:00:00">2021-05-22</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2026-08-12T03:20:22.051Z" title="Updated 2026-08-12 11:20:22">2026-08-12</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/">学无止境</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0/">编程语言学习</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/SQL/">SQL</a></span></div><div class="content">参考博客 MySQL数据库—VS019 C++访问MySQL_买代码的小猪猪的博客-CSDN博客](https://blog.csdn.net/weixin_49324123/article/details/116493884)) CMD 命令行窗口进入mysql数据库： mysql -hlocalhost -uroot -p:  -hlocalhost：-h表示服务器名, localhost表示本地 -uroot: -u表示数据库用户名，root是MySQL默认用户名 -p: 为密码  1 配置 项目-&gt;属性-&gt;&#x3D;&#x3D;平台为 x64&#x3D;&#x3D;  项目 -&gt; 属性 -&gt; VC++ 目录  将所安装的MySQL目录下的 include lib文件夹目录分别输入包含目录库目录    链接器 -&gt; 输入  将 MySQL 的lib目录下的 libmysql.lib文件名输入附加依赖项，只需输入文件名    将 lib 目录下的 libmysql.dll 文件复制 C:\Windows\System32目录下   2 C++ ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/p/4d712855.html" title="SQL"><img class="post-bg" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven8.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="SQL"></a></div><div class="recent-post-info"><a class="article-title" href="/p/4d712855.html" title="SQL">SQL</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time class="post-meta-date-created" datetime="2021-05-19T16:00:00.000Z" title="Created 2021-05-20 00:00:00">2021-05-20</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2026-08-12T03:20:22.050Z" title="Updated 2026-08-12 11:20:22">2026-08-12</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/">学无止境</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0/">编程语言学习</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/SQL/">SQL</a></span></div><div class="content">SQL[toc]  什么是 SQL   访问和处理 **关系数据库 **的 计算机标准语言   编写程序时，只要涉及 操作关系数据库，就必须通过 SQL 完成  NoSQL: 非SQL的数据库，都不是关系数据库   1 关系数据库概述 为什么需要数据库  应用程序 需要保存用户的数据 随着应用程序功能越来越复杂，数据量也越来越大 读写文件并解析出数据，需要大量重复代码 从大量数据中 快速查询出 指定数据，需要复杂的逻辑   每个应用程序访问数据的接口不同，数据难以复用   数据库：专门管理数据的软件  应用程序通过数据库软件提供的接口来读写数据 数据库软件来管理数据如何存储进文件  ──────────────┐ │ application  │ └──────────────┘        ▲│        ││    read││write        ││        │▼ ┌──────────────┐ │   database   │ └──────────────┘ 1234567891011121314151617181920212223242526## ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/p/4b288195.html" title="专题四设备驱动"><img class="post-bg" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/star_sky.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="专题四设备驱动"></a></div><div class="recent-post-info"><a class="article-title" href="/p/4b288195.html" title="专题四设备驱动">专题四设备驱动</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time class="post-meta-date-created" datetime="2021-05-19T04:00:00.000Z" title="Created 2021-05-19 12:00:00">2021-05-19</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2026-08-12T03:20:22.044Z" title="Updated 2026-08-12 11:20:22">2026-08-12</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/">学无止境</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/XDU-OS%E8%AF%BE%E7%A8%8B%E8%AE%BE%E8%AE%A1/">XDU OS课程设计</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E8%AE%BE%E5%A4%87%E9%A9%B1%E5%8A%A8/">设备驱动</a></span></div><div class="content"> 完善例子中的字符设备程序，使之满足以下功能：  i.安装设备后从设备中读出字符串为你的学号；  ii. 设备支持每次写入字符不超过1024个，超过部分被丢弃；  iii. 用户可以读出最近写入到设备中的字符；  iv. 设备关闭前不能被多次打开；  v. 设备支持系统调用ioctl(int d, int req,…),req &#x3D; 0x909090, 清除设备中写入的字符串;  自己编写测试程序，验证以上功能 提交内容： 测试过程截图  1 概念 操作系统中直接控制设备的程序  Linux 将设备看成是一种特殊的文件（设备文件）  字符型设备 块设备   Linux 打开读写或关闭设备文件时，在与设备驱动进行交互   2 设计 用户进程请求设备服务流程图    用户进程发出IO请求，系统将处理下传到VFS上 VFS 通过驱动程序提供的接口将任务分配到驱动程序 驱动程序根据需要，对设备控制器进行操作 设备控制器去控制设备     设备驱动程序设计  VFS 管理字符设备的接口：struct file_operations 重要的接口函数：open,read,write,r...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/p/69488089.html" title="专题三内核模块"><img class="post-bg" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven6.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="专题三内核模块"></a></div><div class="recent-post-info"><a class="article-title" href="/p/69488089.html" title="专题三内核模块">专题三内核模块</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time class="post-meta-date-created" datetime="2021-05-19T02:00:00.000Z" title="Created 2021-05-19 10:00:00">2021-05-19</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2026-08-12T03:20:22.020Z" title="Updated 2026-08-12 11:20:22">2026-08-12</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/">学无止境</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/XDU-OS%E8%AF%BE%E7%A8%8B%E8%AE%BE%E8%AE%A1/">XDU OS课程设计</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E5%86%85%E6%A0%B8/">内核</a></span></div><div class="content"> 实验要求： 题目一 编写一个内核模块； 编译该模块； 加载、卸载该模块； 题目二 用内核模块的方式为系统添加一个系统调用 具体要求同专题二 提交内容： ​        内核模块加载&#x2F;卸载截图 评分标准： 至少完成题目一（60-80分） 自主完成题目二（90-100分）  1 内核模块概念 是一段可以 动态加入内核，并且成为内核一部分的代码 优点： 通过动态加载内核模块，使得在运行过程中扩展内核的功能 减小内核映像大小，增加系统灵活性 只需要修改内核，而不必重新编译整个内核    2 内核模块相关命令 加载内核模块： #insmod module_name   卸载内核模块： #rmmod module_name 或者 #modprobe -r module_name   查看系统已经加载的模块： #lsmod   查看系统已经加载的模块信息： #modinfo module_name    3 内核模块的编写，例子内核模块源代码： 12345678910111213141516171819202122#include&lt;linux/init.h&gt;			//...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/p/6e049acd.html" title="专题二系统调用"><img class="post-bg" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/narrow-muddy-road-dark-forest.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="专题二系统调用"></a></div><div class="recent-post-info"><a class="article-title" href="/p/6e049acd.html" title="专题二系统调用">专题二系统调用</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time class="post-meta-date-created" datetime="2021-05-19T01:00:00.000Z" title="Created 2021-05-19 09:00:00">2021-05-19</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2026-08-12T03:20:22.044Z" title="Updated 2026-08-12 11:20:22">2026-08-12</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/">学无止境</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/XDU-OS%E8%AF%BE%E7%A8%8B%E8%AE%BE%E8%AE%A1/">XDU OS课程设计</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E5%86%85%E6%A0%B8/">内核</a></span></div><div class="content"> 实验要求：  为Linux内核增加一个系统调用，并编写用户进程的程序来测试。 要求该系统调用能够完成以下功能： 	(1) 该系统调用有1个整型参数，接收输入自己的学号； 	 	(2) 若参数为奇数，则返回自己学号的最后5位。如你的学号为16130120101 ，则返回20101； 	 	(3) 若参数为偶数，则返回自己的学号的最后6位。如你的学号为16130120102 ，则返回120102 。  提交内容为：   截图1： 运行结果   截图2：源代码  1 [知识点] 什么是系统调用系统调用Linux 的运行空间：内核空间 和 用户空间  逻辑上相互隔离 用户进程通常情况下 不允许 访问内核数据，也无法使用内核函数 内核 提供了 用户进程与内核进行交互的一组接口：用户进程可以通过这组接口来获得操作系统内核提供的服务  系统调用的作用 提供用户模式的进程和硬件设备的接口 保证系统的稳定和安全 实现多任务和虚拟内存  系统调用的分类 控制硬件 硬件资源 与 用户空间的抽象接口 读写文件：write&#x2F;read   进程管理 保证系统中的进程能以多任务在虚拟内存环境下运行...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/p/d1d6ca89.html" title="专题一内核编译"><img class="post-bg" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven5.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="专题一内核编译"></a></div><div class="recent-post-info"><a class="article-title" href="/p/d1d6ca89.html" title="专题一内核编译">专题一内核编译</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time class="post-meta-date-created" datetime="2021-05-19T00:00:00.000Z" title="Created 2021-05-19 08:00:00">2021-05-19</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2026-08-12T03:20:22.005Z" title="Updated 2026-08-12 11:20:22">2026-08-12</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/">学无止境</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/XDU-OS%E8%AF%BE%E7%A8%8B%E8%AE%BE%E8%AE%A1/">XDU OS课程设计</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E5%86%85%E6%A0%B8/">内核</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E7%BC%96%E8%AF%91/">编译</a></span></div><div class="content">   作业要求：  完成本专题教学内容中的验收测试题并提交验收材料。  验收材料要求:  新内核引导成功前：  \1. 执行命令：uname –a,提交截屏结果1    新内核引导成功后：  \2. 执行命令：uname –a,提交截屏结果2    \3. 进入目录&#x2F;boot，执行命令：ls -l,提交截屏结果3     &#x3D;&#x3D;tips:&#x3D;&#x3D;  在创建虚拟机时，最好分配 50 GB 以上从磁盘空间，四个以上内核  最重要的是：分配 4 GB 以上的内存，防止在内存中死锁  最最重要的是：新版本的 Linux 内核make install安装后，不再需要手动引导内核！！！即不再需要配置 grub   1 [知识点]什么是 Linux 内核 操作系统的结构    操作系统：Kernel + Shell    Kernel的组成和功能：     Linux 发行版本和内核版本之间的关系：  例如教学视频中：Ubuntu10.04 &#x3D; Kernel2.6.30 + SHELL + USERS APPLICATIONS 两者独立  ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/p/a3ec7244.html" title="创建进程、子进程和进程间通信"><img class="post-bg" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/in-the-early-morning-of-forest-wallpaper.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="创建进程、子进程和进程间通信"></a></div><div class="recent-post-info"><a class="article-title" href="/p/a3ec7244.html" title="创建进程、子进程和进程间通信">创建进程、子进程和进程间通信</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time class="post-meta-date-created" datetime="2021-05-18T16:00:00.000Z" title="Created 2021-05-19 00:00:00">2021-05-19</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2026-08-12T03:20:22.045Z" title="Updated 2026-08-12 11:20:22">2026-08-12</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/">学无止境</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/XDU-OS%E8%AF%BE%E7%A8%8B%E8%AE%BE%E8%AE%A1/">XDU OS课程设计</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/Linux/">Linux</a></span></div><div class="content">fork() 方法fork 原型：  pid_t fork(void)  fork的定义： 父进程在调用 fork 派生子进程，实际上相当于创建了一个进程拷贝  调用一次 fork() 会返回两次  一次：在调用该方法的进程中返回 子进程的 id 二次：在子进程中返回 0 若在调用该方法时返回 -1 则表示调用失败   根据 fork 的返回值判断当前进程是父进程还是子进程：  #include&lt;stdio.h&gt; #include&lt;unistd.h&gt; int main(){      pid_t pid = fork();     if(pid == 0){         printf(&quot;child\n&quot;);     }     else{         printf(&quot;father\n&quot;);     }      return 0;  }      进程间通信 IPCInter-Process Communication: 多个进程之间相互沟通的一种方法 管道、命名管道、消息队列、信号、信号量、共享内存、内存映...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/p/77fbe329.html" title="Django应用第二部分"><img class="post-bg" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven6.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Django应用第二部分"></a></div><div class="recent-post-info"><a class="article-title" href="/p/77fbe329.html" title="Django应用第二部分">Django应用第二部分</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time class="post-meta-date-created" datetime="2021-05-07T16:00:00.000Z" title="Created 2021-05-08 00:00:00">2021-05-08</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2026-08-12T03:20:22.046Z" title="Updated 2026-08-12 11:20:22">2026-08-12</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/">学无止境</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/%E5%BC%80%E5%8F%91%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0/">开发框架学习</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/Python/">Python</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/Django/">Django</a></span></div><div class="content">该部分将建立数据库，创建第一个模型module, 并主要关注Django提供的自动生成的管理页面 数据库配置 mysite/settings.py: 包含了项目配置的python模块 一般，这个配置文件使用 SQLite 作为默认数据库   更换 数据库 ——[官方文档](编写你的第一个 Django 应用，第 2 部分 | Django 文档 | Django (djangoproject.com)) 如果你想使用其他数据库，你需要安装合适的 database bindings ，然后改变设置文件中 DATABASES &#39;default&#39; 项目中的一些键值：  ENGINE – 可选值有 &#39;django.db.backends.sqlite3&#39;，&#39;django.db.backends.postgresql&#39;，&#39;django.db.backends.mysql&#39;，或 &#39;django.db.backends.oracle&#39;。其它 可用后端。 NAME – 数据库的名称。如果你使用 SQLite，数据库将...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/p/497f9043.html" title="Django 应用第一部分"><img class="post-bg" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven-gpdvj3.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Django 应用第一部分"></a></div><div class="recent-post-info"><a class="article-title" href="/p/497f9043.html" title="Django 应用第一部分">Django 应用第一部分</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time class="post-meta-date-created" datetime="2021-05-06T16:00:00.000Z" title="Created 2021-05-07 00:00:00">2021-05-07</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2026-08-12T03:20:22.046Z" title="Updated 2026-08-12 11:20:22">2026-08-12</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/">学无止境</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/%E5%BC%80%E5%8F%91%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0/">开发框架学习</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/Python/">Python</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/Django/">Django</a></span></div><div class="content">编写第一个 Django 应用，第一部分[官方文档](初识 Django | Django 文档 | Django (djangoproject.com))  目标：创建一个基本的投票应用  让人们 查看和投票 的公共站点 让开发者能 添加、修改、删除投票的管理站点   环境：  pycharm 2019 python 3.6 Django 3.2.1支持Python 和后续版本    创建项目 初始化设置：  生成Django项目需要的 设置项集合：数据库配置、Django 配置和应用程序配置  1django-admin startproject mysite(项目名)   需要注意的是，须提前将django-admin加入环境变量，因为使用的是 Pycharm Professional 所以可以一键创建Django项目   startproject 所创建的：  ![image-20210507200938455](E:\LearningNotes\python\编写第一个 Django 应用，第一部分.assets\image-20210507200938455-1620...</div></div></div></div><nav id="pagination"><div class="pagination"><a class="extend prev" rel="prev" href="/page/3/#content-inner"><i class="fas fa-chevron-left fa-fw"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/#content-inner">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/#content-inner">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/#content-inner">7</a><a class="extend next" rel="next" href="/page/5/#content-inner"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="https://github.com/ZiHao256/ZiHao256.github.io/blob/hexo/images/stitch.JPG?raw=true" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">zihao</div><div class="author-info-description">Why be afraid of the infinity of truth? Joy resides in every step of growth.</div><div class="site-data"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">66</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">48</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">16</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/ZiHao256"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/ZiHao256" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/atom.xml" target="_blank" title="RSS"><i class="fa fa-rss"></i></a><a class="social-icon" href="mailto:zihao626@gmail.com" target="_blank" title="Gmail"><i class="fa-brands fa-google"></i></a><a class="social-icon" href="mailto:zh_ma@stu.xidian.edu.cn" target="_blank" title="XDU Mail"><i class="fa fa-graduation-cap"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">keep moving in 2024</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Posts</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/p/10f62ef4.html" title="PROJECT #4: CONCURRENCY CONTROL"><img src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/joseph-barrientos-oQl0eVYd_n8-unsplash.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="PROJECT #4: CONCURRENCY CONTROL"/></a><div class="content"><a class="title" href="/p/10f62ef4.html" title="PROJECT #4: CONCURRENCY CONTROL">PROJECT #4: CONCURRENCY CONTROL</a><time datetime="2024-05-16T01:01:13.000Z" title="Created 2024-05-16 09:01:13">2024-05-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/c186cbfd.html" title="Project #3: Query Execution"><img src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven-gpdvj3.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Project #3: Query Execution"/></a><div class="content"><a class="title" href="/p/c186cbfd.html" title="Project #3: Query Execution">Project #3: Query Execution</a><time datetime="2024-05-16T00:59:16.000Z" title="Created 2024-05-16 08:59:16">2024-05-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/2acafc61.html" title="rustlings"><img src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/pathway-middle-green-leafed-trees-with-sun-shining-through-branches.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="rustlings"/></a><div class="content"><a class="title" href="/p/2acafc61.html" title="rustlings">rustlings</a><time datetime="2023-11-28T09:46:15.000Z" title="Created 2023-11-28 17:46:15">2023-11-28</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/d028ccc3.html" title="基于Actix-Web(Rust)和Vue的Web开发记录"><img src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven-kxd1md.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="基于Actix-Web(Rust)和Vue的Web开发记录"/></a><div class="content"><a class="title" href="/p/d028ccc3.html" title="基于Actix-Web(Rust)和Vue的Web开发记录">基于Actix-Web(Rust)和Vue的Web开发记录</a><time datetime="2023-11-13T13:42:48.000Z" title="Created 2023-11-13 21:42:48">2023-11-13</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/517dd8ea.html" title="Project#2: Extendible Hash Index"><img src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven5.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Project#2: Extendible Hash Index"/></a><div class="content"><a class="title" href="/p/517dd8ea.html" title="Project#2: Extendible Hash Index">Project#2: Extendible Hash Index</a><time datetime="2023-10-30T13:56:01.000Z" title="Created 2023-10-30 21:56:01">2023-10-30</time></div></div></div></div><div class="card-widget" id="card-newest-comments"><div class="item-headline"><i class="fas fa-comment-dots"></i><span>Latest Comments</span></div><div class="aside-list"><span>Loading...</span></div></div><div class="card-widget card-categories"><div class="item-headline"><i class="fas fa-folder-open"></i><span>Categories</span><a class="card-more-btn" href="/categories/" title="View More">
+      <i class="fas fa-angle-right"></i></a></div>
+          <ul class="card-category-list" id="aside-cat-list">
             <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%88%A9%E5%99%A8%E9%85%B7/"><span class="card-category-list-name">利器酷</span><span class="card-category-list-count">8</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%88%A9%E5%99%A8%E9%85%B7/%E5%B7%A5%E5%85%B7/"><span class="card-category-list-name">工具</span><span class="card-category-list-count">7</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%88%A9%E5%99%A8%E9%85%B7/%E6%96%B9%E6%B3%95/"><span class="card-category-list-name">方法</span><span class="card-category-list-count">1</span></a></li></ul></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/"><span class="card-category-list-name">学无止境</span><span class="card-category-list-count">56</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/CMU15-445-2023FALL/"><span class="card-category-list-name">CMU15-445(2023FALL)</span><span class="card-category-list-count">6</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/MIT6-824/"><span class="card-category-list-name">MIT6.824</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/Paper-Reading/"><span class="card-category-list-name">Paper Reading</span><span class="card-category-list-count">5</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/XDU-OS%E8%AF%BE%E7%A8%8B%E8%AE%BE%E8%AE%A1/"><span class="card-category-list-name">XDU OS课程设计</span><span class="card-category-list-count">5</span></a></li></ul></li>
-            </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>Tags</span></div><div class="card-tag-cloud"><a href="/tags/AST/" style="font-size: 1.1em; color: #999">AST</a> <a href="/tags/Actix-web/" style="font-size: 1.1em; color: #999">Actix-web</a> <a href="/tags/Blog/" style="font-size: 1.42em; color: #99a6b7">Blog</a> <a href="/tags/Bug/" style="font-size: 1.1em; color: #999">Bug</a> <a href="/tags/C/" style="font-size: 1.34em; color: #99a3b0">C++</a> <a href="/tags/Cardinality-Estimation/" style="font-size: 1.18em; color: #999ca1">Cardinality Estimation</a> <a href="/tags/Code-Clone-Detection/" style="font-size: 1.1em; color: #999">Code Clone Detection</a> <a href="/tags/Container/" style="font-size: 1.18em; color: #999ca1">Container</a> <a href="/tags/Cost-Model/" style="font-size: 1.1em; color: #999">Cost Model</a> <a href="/tags/DIY/" style="font-size: 1.18em; color: #999ca1">DIY</a> <a href="/tags/Database/" style="font-size: 1.34em; color: #99a3b0">Database</a> <a href="/tags/Database-System/" style="font-size: 1.34em; color: #99a3b0">Database System</a> <a href="/tags/Debug/" style="font-size: 1.1em; color: #999">Debug</a> <a href="/tags/Distributed/" style="font-size: 1.1em; color: #999">Distributed</a> <a href="/tags/Django/" style="font-size: 1.18em; color: #999ca1">Django</a> <a href="/tags/Edge%E6%B5%8F%E8%A7%88%E5%99%A8/" style="font-size: 1.1em; color: #999">Edge浏览器</a> <a href="/tags/Git/" style="font-size: 1.1em; color: #999">Git</a> <a href="/tags/LaTeX/" style="font-size: 1.1em; color: #999">LaTeX</a> <a href="/tags/Linux/" style="font-size: 1.34em; color: #99a3b0">Linux</a> <a href="/tags/MVCC/" style="font-size: 1.18em; color: #999ca1">MVCC</a> <a href="/tags/Machine-Learning/" style="font-size: 1.1em; color: #999">Machine Learning</a> <a href="/tags/Markdown/" style="font-size: 1.1em; color: #999">Markdown</a> <a href="/tags/Natural-Language-Processing/" style="font-size: 1.1em; color: #999">Natural Language Processing</a> <a href="/tags/Optimizer/" style="font-size: 1.18em; color: #999ca1">Optimizer</a> <a href="/tags/Paper/" style="font-size: 1.1em; color: #999">Paper</a> <a href="/tags/Plan-Cache/" style="font-size: 1.1em; color: #999">Plan Cache</a> <a href="/tags/Python/" style="font-size: 1.18em; color: #999ca1">Python</a> <a href="/tags/Query-Execution/" style="font-size: 1.18em; color: #999ca1">Query Execution</a> <a href="/tags/Query-Optimization/" style="font-size: 1.1em; color: #999">Query Optimization</a> <a href="/tags/Reading/" style="font-size: 1.1em; color: #999">Reading</a> <a href="/tags/Research/" style="font-size: 1.1em; color: #999">Research</a> <a href="/tags/Rust/" style="font-size: 1.18em; color: #999ca1">Rust</a> <a href="/tags/SQL/" style="font-size: 1.18em; color: #999ca1">SQL</a> <a href="/tags/Search-Space/" style="font-size: 1.1em; color: #999">Search Space</a> <a href="/tags/System/" style="font-size: 1.1em; color: #999">System</a> <a href="/tags/The-Go-Programming-Language/" style="font-size: 1.5em; color: #99a9bf">The Go Programming Language</a> <a href="/tags/Vue/" style="font-size: 1.1em; color: #999">Vue</a> <a href="/tags/%E5%86%85%E6%A0%B8/" style="font-size: 1.26em; color: #999fa8">内核</a> <a href="/tags/%E5%8D%9A%E5%B0%94%E8%B5%AB%E6%96%AF/" style="font-size: 1.1em; color: #999">博尔赫斯</a> <a href="/tags/%E5%8F%8B%E8%B0%8A/" style="font-size: 1.1em; color: #999">友谊</a></div></div><div class="card-widget card-archives"><div class="item-headline"><i class="fas fa-archive"></i><span>Archives</span><a class="card-more-btn" href="/archives/" title="More">
-    <i class="fas fa-angle-right"></i></a></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/05/"><span class="card-archive-list-date">May 2024</span><span class="card-archive-list-count">2</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/11/"><span class="card-archive-list-date">November 2023</span><span class="card-archive-list-count">2</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/10/"><span class="card-archive-list-date">October 2023</span><span class="card-archive-list-count">4</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/05/"><span class="card-archive-list-date">May 2023</span><span class="card-archive-list-count">4</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/03/"><span class="card-archive-list-date">March 2023</span><span class="card-archive-list-count">4</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/02/"><span class="card-archive-list-date">February 2023</span><span class="card-archive-list-count">7</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/10/"><span class="card-archive-list-date">October 2022</span><span class="card-archive-list-count">2</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/07/"><span class="card-archive-list-date">July 2022</span><span class="card-archive-list-count">6</span></a></li></ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站信息</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">66</div></div><div class="webinfo-item"><div class="item-name">已运行时间 :</div><div class="item-count" id="runtimeshow" data-publishDate="2021-04-15T16:00:00.000Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">网站总字数 :</div><div class="item-count">129.5k</div></div><div class="webinfo-item"><div class="item-name">本站访客数目 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总访问量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">上次推送 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2024-10-10T03:31:28.787Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/john-towner-3Kv48NS4WUU-unsplash.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2021 - 2024 By zihao</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Hi, welcome to my <a href="https://zihao256.github.io/">Blog</a>!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="translateLink" type="button" title="Toggle Between Traditional Chinese And Simplified Chinese">简</button><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">Search</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  Loading the Database</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="Search for Posts" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script src="/js/search/local-search.js"></script><script>var preloader = {
-  endLoading: () => {
-    document.body.style.overflow = 'auto';
-    document.getElementById('loading-box').classList.add("loaded")
-  },
-  initLoading: () => {
-    document.body.style.overflow = '';
-    document.getElementById('loading-box').classList.remove("loaded")
-
-  }
-}
-window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"></div><script>window.addEventListener('load', () => {
-  const changeContent = (content) => {
+          </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>Tags</span></div><div class="card-tag-cloud"><a href="/tags/Markdown/" style="font-size: 1.1em; color: #999">Markdown</a> <a href="/tags/Reading/" style="font-size: 1.1em; color: #999">Reading</a> <a href="/tags/%E5%8D%9A%E5%B0%94%E8%B5%AB%E6%96%AF/" style="font-size: 1.1em; color: #999">博尔赫斯</a> <a href="/tags/System/" style="font-size: 1.1em; color: #999">System</a> <a href="/tags/Paper/" style="font-size: 1.1em; color: #999">Paper</a> <a href="/tags/Cost-Model/" style="font-size: 1.1em; color: #999">Cost Model</a> <a href="/tags/DIY/" style="font-size: 1.18em; color: #999ca1">DIY</a> <a href="/tags/Distributed/" style="font-size: 1.1em; color: #999">Distributed</a> <a href="/tags/Machine-Learning/" style="font-size: 1.1em; color: #999">Machine Learning</a> <a href="/tags/%E6%8F%92%E4%BB%B6/" style="font-size: 1.1em; color: #999">插件</a> <a href="/tags/MVCC/" style="font-size: 1.18em; color: #999ca1">MVCC</a> <a href="/tags/Edge%E6%B5%8F%E8%A7%88%E5%99%A8/" style="font-size: 1.1em; color: #999">Edge浏览器</a> <a href="/tags/Django/" style="font-size: 1.18em; color: #999ca1">Django</a> <a href="/tags/Container/" style="font-size: 1.18em; color: #999ca1">Container</a> <a href="/tags/Query-Optimization/" style="font-size: 1.1em; color: #999">Query Optimization</a> <a href="/tags/C/" style="font-size: 1.42em; color: #99a6b7">C++</a> <a href="/tags/Python/" style="font-size: 1.18em; color: #999ca1">Python</a> <a href="/tags/Plan-Cache/" style="font-size: 1.1em; color: #999">Plan Cache</a> <a href="/tags/Vue/" style="font-size: 1.1em; color: #999">Vue</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 1.1em; color: #999">数据结构</a> <a href="/tags/Bug/" style="font-size: 1.1em; color: #999">Bug</a> <a href="/tags/Cardinality-Estimation/" style="font-size: 1.18em; color: #999ca1">Cardinality Estimation</a> <a href="/tags/%E5%8F%8B%E8%B0%8A/" style="font-size: 1.1em; color: #999">友谊</a> <a href="/tags/%E8%AE%BE%E5%A4%87%E9%A9%B1%E5%8A%A8/" style="font-size: 1.1em; color: #999">设备驱动</a> <a href="/tags/Debug/" style="font-size: 1.1em; color: #999">Debug</a> <a href="/tags/LaTeX/" style="font-size: 1.1em; color: #999">LaTeX</a> <a href="/tags/Rust/" style="font-size: 1.18em; color: #999ca1">Rust</a> <a href="/tags/%E7%A7%91%E7%A0%94/" style="font-size: 1.26em; color: #999fa8">科研</a> <a href="/tags/Database-System/" style="font-size: 1.42em; color: #99a6b7">Database System</a> <a href="/tags/%E8%AE%BA%E6%96%87/" style="font-size: 1.34em; color: #99a3b0">论文</a> <a href="/tags/%E5%86%85%E6%A0%B8/" style="font-size: 1.26em; color: #999fa8">内核</a> <a href="/tags/Query-Execution/" style="font-size: 1.18em; color: #999ca1">Query Execution</a> <a href="/tags/AST/" style="font-size: 1.1em; color: #999">AST</a> <a href="/tags/Git/" style="font-size: 1.1em; color: #999">Git</a> <a href="/tags/Linux/" style="font-size: 1.42em; color: #99a6b7">Linux</a> <a href="/tags/Research/" style="font-size: 1.1em; color: #999">Research</a> <a href="/tags/SQL/" style="font-size: 1.18em; color: #999ca1">SQL</a> <a href="/tags/Natural-Language-Processing/" style="font-size: 1.1em; color: #999">Natural Language Processing</a> <a href="/tags/Actix-web/" style="font-size: 1.1em; color: #999">Actix-web</a> <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" style="font-size: 1.5em; color: #99a9bf">操作系统</a></div></div><div class="card-widget card-archives">
+    <div class="item-headline"><i class="fas fa-archive"></i><span>Archives</span><a class="card-more-btn" href="/archives/"
+            title="View More">
+            <i class="fas fa-angle-right"></i>
+          </a></div>
+  
+    <ul class="card-archive-list">
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2024/05/">
+            <span class="card-archive-list-date">
+              May 2024
+            </span>
+            <span class="card-archive-list-count">2</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2023/11/">
+            <span class="card-archive-list-date">
+              November 2023
+            </span>
+            <span class="card-archive-list-count">2</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2023/10/">
+            <span class="card-archive-list-date">
+              October 2023
+            </span>
+            <span class="card-archive-list-count">4</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2023/05/">
+            <span class="card-archive-list-date">
+              May 2023
+            </span>
+            <span class="card-archive-list-count">4</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2023/03/">
+            <span class="card-archive-list-date">
+              March 2023
+            </span>
+            <span class="card-archive-list-count">4</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2023/02/">
+            <span class="card-archive-list-date">
+              February 2023
+            </span>
+            <span class="card-archive-list-count">7</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2022/10/">
+            <span class="card-archive-list-date">
+              October 2022
+            </span>
+            <span class="card-archive-list-count">2</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2022/07/">
+            <span class="card-archive-list-date">
+              July 2022
+            </span>
+            <span class="card-archive-list-count">6</span>
+          </a>
+        </li>
+      
+    </ul>
+  </div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>Website Info</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">Article Count :</div><div class="item-count">66</div></div><div class="webinfo-item"><div class="item-name">Runtime :</div><div class="item-count" id="runtimeshow" data-publishDate="2021-04-15T16:00:00.000Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">Total Word Count :</div><div class="item-count">129.7k</div></div><div class="webinfo-item"><div class="item-name">Unique Visitors :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">Page Views :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">Last Update :</div><div class="item-count" id="last-push-date" data-lastPushDate="2026-08-12T08:20:26.793Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2021 - 2026 By zihao</span><span class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.2</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.7.0</a></span></div><div class="footer_custom_text">Hi, welcome to my <a href="https://zihao256.github.io/">Blog</a>!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="translateLink" type="button" title="Toggle Between Traditional and Simplified Chinese">简</button><button id="darkmode" type="button" title="Toggle Between Light and Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle Between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Settings"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="Back to Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.7.0"></script><script src="/js/main.js?v=5.7.0"></script><script src="/js/tw_cn.js?v=5.7.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1.14/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script>window.newestComments = {
+  changeContent: content => {
     if (content === '') return content
 
-    content = content.replace(/<img.*?src="(.*?)"?[^\>]+>/ig, '[image]') // replace image link
-    content = content.replace(/<a[^>]+?href=["']?([^"']+)["']?[^>]*>([^<]+)<\/a>/gi, '[link]') // replace url
-    content = content.replace(/<pre><code>.*?<\/pre>/gi, '[code]') // replace code
-    content = content.replace(/<[^>]+>/g,"") // remove html tag
+    content = content.replace(/<img.*?src="(.*?)"?[^\>]+>/ig, '[Image]') // replace image link
+    content = content.replace(/<a[^>]+?href=["']?([^"']+)["']?[^>]*>([^<]+)<\/a>/gi, '[Link]') // replace url
+    content = content.replace(/<pre><code>.*?<\/pre>/gi, '[Code]') // replace code
+    content = content.replace(/<code>.*?<\/code>/gi, '[Code]') // replace code
+    content = content.replace(/<[^>]+>/g, "") // remove html tag
 
     if (content.length > 150) {
-      content = content.substring(0,150) + '...'
+      content = content.substring(0, 150) + '...'
     }
     return content
-  }
+  },
 
-  const findTrueUrl = (array) => {
+  generateHtml: (array, ele) => {
+    let result = ''
+
+    if (array.length) {
+      for (let i = 0; i < array.length; i++) {
+        result += '<div class="aside-list-item">'
+
+        if (true && array[i].avatar) {
+          const imgAttr = 'src'
+          const lazyloadNative = ''
+          result += `<a href="${array[i].url}" class="thumbnail"><img ${imgAttr}="${array[i].avatar}" alt="${array[i].nick}" ${lazyloadNative}></a>`
+        }
+
+        result += `<div class="content">
+        <a class="comment" href="${array[i].url}" title="${array[i].content}">${array[i].content}</a>
+        <div class="name"><span>${array[i].nick} / </span><time datetime="${array[i].date}">${btf.diffDate(array[i].date, true)}</time></div>
+        </div></div>`
+      }
+    } else {
+      result += 'No comments'
+    }
+
+    ele.innerHTML = result
+    window.lazyLoadInstance && window.lazyLoadInstance.update()
+    window.pjax && window.pjax.refresh(ele)
+  },
+
+  newestCommentInit: (name, getComment) => {
+    const $dom = document.querySelector('#card-newest-comments .aside-list')
+    if ($dom) {
+      const data = btf.saveToLocal.get(name)
+      if (data) {
+        newestComments.generateHtml(JSON.parse(data), $dom)
+      } else {
+        getComment($dom)
+      }
+    }
+  },
+
+  run: (name, getComment) => {
+    newestComments.newestCommentInit(name, getComment)
+    btf.addGlobalFn('pjaxComplete', () => newestComments.newestCommentInit(name, getComment), name)
+  }
+}</script><script>window.addEventListener('load', () => {
+  const keyName = 'github-newest-comments'
+  const { changeContent, generateHtml, run } = window.newestComments
+
+  const findTrueUrl = (array, ele) => {
     Promise.all(array.map(item =>
       fetch(item.url).then(resp => resp.json()).then(data => {
-        const urlArray = data.body.match(/(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?/ig)
+        let urlArray = data.body ? data.body.match(/(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?/ig) : []
+        if (!Array.isArray(urlArray) || urlArray.length === 0) {
+          urlArray = [`${data.html_url}`]
+        }
         if (data.user.login === 'utterances-bot') {
           return urlArray.pop()
         } else {
@@ -509,12 +383,12 @@ window.addEventListener('load',preloader.endLoading())</script><div class="js-pj
           }
         })
 
-        saveToLocal.set('github-newest-comments', JSON.stringify(array), 10/(60*24))
-        generateHtml(array)
+        btf.saveToLocal.set(keyName, JSON.stringify(array), 10/(60*24))
+        generateHtml(array, ele)
     });
   }
 
-  const getComment = () => {
+  const getComment = ele => {
     fetch('https://api.github.com/repos/ZiHao256/ZiHao256.github.io/issues/comments?sort=updated&direction=desc&per_page=6&page=1',{
       "headers": {
         Accept: 'application/vnd.github.v3.html+json'
@@ -525,128 +399,75 @@ window.addEventListener('load',preloader.endLoading())</script><div class="js-pj
         const githubArray = data.map(item => {
           return {
             'avatar': item.user.avatar_url,
-            'content': changeContent(item.body_html),
+            'content': changeContent(item.body_html || item.body),
             'nick': item.user.login,
             'url': item.issue_url,
-            'date': item.updated_at,
-            'githubUrl': item.html_url
+            'date': item.updated_at
           }
         })
-        findTrueUrl(githubArray)
+        findTrueUrl(githubArray, ele)
       }).catch(e => {
-        const $dom = document.querySelector('#card-newest-comments .aside-list')
-        $dom.innerHTML= "Unable to get the data, please make sure the settings are correct."
+        console.error(e)
+        ele.textContent= "Unable to retrieve comments, please check the configuration"
       })
   }
+  run(keyName, getComment)
+})</script><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/dist/canvas-fluttering-ribbon.min.js"></script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/dist/click-heart.min.js" async="async" mobile="true"></script><script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js" defer="defer"></script><script>document.addEventListener('DOMContentLoaded', () => {
+  const pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
 
-  const generateHtml = array => {
-    let result = ''
-
-    if (array.length) {
-      for (let i = 0; i < array.length; i++) {
-        result += '<div class=\'aside-list-item\'>'
-
-        if (true) {
-          const name = 'src'
-          result += `<a href='${array[i].url}' class='thumbnail'><img ${name}='${array[i].avatar}' alt='${array[i].nick}'></a>`
-        }
-
-        result += `<div class='content'>
-        <a class='comment' href='${array[i].url}' title='${array[i].content}'>${array[i].content}</a>
-        <div class='name'><span>${array[i].nick} / </span><time datetime="${array[i].date}">${btf.diffDate(array[i].date, true)}</time></div>
-        </div></div>`
-      }
-    } else {
-      result += 'No Comment'
-    }
-
-    let $dom = document.querySelector('#card-newest-comments .aside-list')
-    $dom.innerHTML= result
-    window.lazyLoadInstance && window.lazyLoadInstance.update()
-    window.pjax && window.pjax.refresh($dom)
-  }
-
-  const newestCommentInit = () => {
-    if (document.querySelector('#card-newest-comments .aside-list')) {
-      const data = saveToLocal.get('github-newest-comments')
-      if (data) {
-        generateHtml(JSON.parse(data))
-      } else {
-        getComment()
-      }
-    }
-  }
-
-  newestCommentInit()
-  document.addEventListener('pjax:complete', newestCommentInit)
-})</script><div class="aplayer no-destroy" data-id="6738460302" data-server="netease" data-type="playlist" data-fixed="true" data-autoplay="true"> </div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-heart.min.js" async="async" mobile="true"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
-
-var pjax = new Pjax({
-  elements: 'a:not([target="_blank"])',
-  selectors: pjaxSelectors,
-  cacheBust: false,
-  analytics: false,
-  scrollRestoration: false
-})
-
-document.addEventListener('pjax:send', function () {
-
-  // removeEventListener scroll 
-  window.tocScrollFn && window.removeEventListener('scroll', window.tocScrollFn)
-  window.scrollCollect && window.removeEventListener('scroll', scrollCollect)
-
-  typeof preloader === 'object' && preloader.initLoading()
-  document.getElementById('rightside').style.cssText = "opacity: ''; transform: ''"
-  
-  if (window.aplayers) {
-    for (let i = 0; i < window.aplayers.length; i++) {
-      if (!window.aplayers[i].options.fixed) {
-        window.aplayers[i].destroy()
-      }
-    }
-  }
-
-  typeof typed === 'object' && typed.destroy()
-
-  //reset readmode
-  const $bodyClassList = document.body.classList
-  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
-
-  typeof disqusjs === 'object' && disqusjs.destroy()
-})
-
-document.addEventListener('pjax:complete', function () {
-  window.refreshFn()
-
-  document.querySelectorAll('script[data-pjax]').forEach(item => {
-    const newScript = document.createElement('script')
-    const content = item.text || item.textContent || item.innerHTML || ""
-    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
-    newScript.appendChild(document.createTextNode(content))
-    item.parentNode.replaceChild(newScript, item)
+  window.pjax = new Pjax({
+    elements: 'a:not([target="_blank"]):not([data-fancybox])',
+    selectors: pjaxSelectors,
+    cacheBust: false,
+    analytics: false,
+    scrollRestoration: false
   })
 
-  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
-
-  typeof chatBtnFn === 'function' && chatBtnFn()
-  typeof panguInit === 'function' && panguInit()
-
-  // google analytics
-  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
-
-  // baidu analytics
-  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
-
-  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
-
-  // prismjs
-  typeof Prism === 'object' && Prism.highlightAll()
-
-  typeof preloader === 'object' && preloader.endLoading()
-})
-
-document.addEventListener('pjax:error', (e) => {
-  if (e.request.status === 404) {
-    pjax.loadUrl('/404.html')
+  const triggerPjaxFn = (val) => {
+    if (!val) return
+    Object.values(val).forEach(fn => {
+      try {
+        fn()
+      } catch (err) {
+        console.debug('Pjax callback failed:', err)
+      }
+    })
   }
-})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
+
+  document.addEventListener('pjax:send', () => {
+    // removeEventListener
+    btf.removeGlobalFnEvent('pjaxSendOnce')
+    btf.removeGlobalFnEvent('themeChange')
+
+    // reset readmode
+    const $bodyClassList = document.body.classList
+    if ($bodyClassList.contains('read-mode')) $bodyClassList.remove('read-mode')
+
+    triggerPjaxFn(window.globalFn.pjaxSend)
+  })
+
+  document.addEventListener('pjax:complete', () => {
+    btf.removeGlobalFnEvent('pjaxCompleteOnce')
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+      if (!item.parentNode) return
+      const newScript = document.createElement('script')
+      const content = item.text || item.textContent || ''
+      Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+      newScript.appendChild(document.createTextNode(content))
+      item.parentNode.replaceChild(newScript, item)
+    })
+
+    triggerPjaxFn(window.globalFn.pjaxComplete)
+  })
+
+  document.addEventListener('pjax:error', e => {
+    const responseURL = e.request && e.request.responseURL
+    if (e.request && e.request.status === 404) {
+      true
+        ? pjax.loadUrl('/404.html')
+        : responseURL && (window.location.href = responseURL)
+    } else if (responseURL) {
+      window.location.href = responseURL
+    }
+  })
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">Search</span><i class="fas fa-spinner fa-pulse" id="loading-status" hidden="hidden"></i><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  Loading Database</span></div><div class="local-search-input"><input placeholder="Search for Posts" type="text"/></div><hr/><div id="local-search-results"></div><div class="ais-Pagination" id="local-search-pagination" style="display:none;"><ul class="ais-Pagination-list"></ul></div><div id="local-search-stats"></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=5.7.0"></script></div></div></body></html>

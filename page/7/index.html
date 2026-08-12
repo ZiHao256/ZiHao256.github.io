@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="zh-Hans" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>ZiHao's Blog - keep moving</title><meta name="author" content="zihao"><meta name="copyright" content="zihao"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Why be afraid of the infinity of truth? Joy resides in every step of growth.">
+<!DOCTYPE html><html lang="zh-Hans" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>ZiHao's Blog - keep moving</title><meta name="author" content="zihao"><meta name="copyright" content="zihao"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Why be afraid of the infinity of truth? Joy resides in every step of growth.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="ZiHao&#39;s Blog">
 <meta property="og:url" content="https://zihao256.github.io/page/7/index.html">
@@ -8,25 +8,156 @@
 <meta property="og:image" content="https://github.com/ZiHao256/ZiHao256.github.io/blob/hexo/images/stitch.JPG?raw=true">
 <meta property="article:author" content="zihao">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://github.com/ZiHao256/ZiHao256.github.io/blob/hexo/images/stitch.JPG?raw=true"><link rel="shortcut icon" href="https://github.com/ZiHao256/ZiHao256.github.io/blob/hexo/images/stitch.JPG?raw=true"><link rel="canonical" href="https://zihao256.github.io/page/7/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+<meta name="twitter:image" content="https://github.com/ZiHao256/ZiHao256.github.io/blob/hexo/images/stitch.JPG?raw=true"><script type="application/ld+json"></script><link rel="shortcut icon" href="https://github.com/ZiHao256/ZiHao256.github.io/blob/hexo/images/stitch.JPG?raw=true"><link rel="canonical" href="https://zihao256.github.io/page/7/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.7.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.3.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1.14/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        const data = { value }
+
+        if (ttl != null) {
+          data.expiry = Date.now() + ttl * 86400000
+        }
+
+        localStorage.setItem(key, JSON.stringify(data))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return
+
+        try {
+          const data = JSON.parse(itemStr)
+
+          if (data.expiry && Date.now() > data.expiry) {
+            localStorage.removeItem(key)
+            return
+          }
+
+          return data.value
+        } catch {
+          localStorage.removeItem(key)
+        }
+      }
+    }
+
+    const scriptCache = new Map()
+    const cssCache = new Map()
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => {
+        if (scriptCache.has(url)) {
+          return scriptCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const script = document.createElement('script')
+
+          script.src = url
+          script.async = true
+
+          for (const key in attr) {
+            script.setAttribute(key, attr[key])
+          }
+
+          script.onload = resolve
+          script.onerror = reject
+
+          document.head.appendChild(script)
+        })
+
+        scriptCache.set(url, promise)
+
+        return promise
+      },
+      getCSS: (url, id) => {
+        if (cssCache.has(url)) {
+          return cssCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const link = document.createElement('link')
+
+          link.rel = 'stylesheet'
+          link.href = url
+
+          if (id) {
+            link.id = id
+          }
+
+          link.onload = resolve
+          link.onerror = reject
+
+          document.head.appendChild(link)
+        })
+
+        cssCache.set(url, promise)
+
+        return promise
+      },
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!true && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const metaThemeColor = document.querySelector('meta[name="theme-color"]')
+      const activateDarkMode = () => {
+        document.documentElement.dataset.theme = 'dark'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.dataset.theme = 'light'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
   root: '/',
   algolia: undefined,
-  localSearch: {"path":"/search.xml","preload":true,"languages":{"hits_empty":"We didn't find any results for the search: ${query}"}},
+  localSearch: {"path":"/search.xml","preload":true,"top_n_per_article":1,"unescape":false,"pagination":{"enable":false,"hitsPerPage":8},"languages":{"hits_empty":"No results found for: ${query}","hits_stats":"${hits} articles found"}},
   translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
-  noticeOutdate: undefined,
-  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":true},
   copy: {
-    success: 'Copy successfully',
-    error: 'Copy error',
-    noSupport: 'The browser does not support'
+    success: 'Copy Successful',
+    error: 'Copy Failed',
+    noSupport: 'Browser Not Supported'
   },
   relativeDate: {
     homepage: true,
     post: true
   },
-  runtime: '天',
-  date_suffix: {
-    just: 'Just',
+  runtime: 'days',
+  dateSuffix: {
+    just: 'Just now',
     min: 'minutes ago',
     hour: 'hours ago',
     day: 'days ago',
@@ -35,350 +166,209 @@
   copyright: undefined,
   lightbox: 'fancybox',
   Snackbar: undefined,
-  source: {
-    justifiedGallery: {
-      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
-      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
-    }
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
   },
   isPhotoFigcaption: true,
-  islazyload: false,
-  isAnchor: false
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
 }</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
   title: 'ZiHao\'s Blog',
-  isPost: false,
-  isHome: true,
   isHighlightShrink: true,
   isToc: false,
-  postUpdate: '2024-10-10 11:31:29'
-}</script><noscript><style type="text/css">
-  #nav {
-    opacity: 1
-  }
-  .justified-gallery img {
-    opacity: 1
-  }
-
-  #recent-posts time,
-  #post-meta time {
-    display: inline !important
-  }
-</style></noscript><script>(win=>{
-    win.saveToLocal = {
-      set: function setWithExpiry(key, value, ttl) {
-        if (ttl === 0) return
-        const now = new Date()
-        const expiryDay = ttl * 86400000
-        const item = {
-          value: value,
-          expiry: now.getTime() + expiryDay,
-        }
-        localStorage.setItem(key, JSON.stringify(item))
-      },
-
-      get: function getWithExpiry(key) {
-        const itemStr = localStorage.getItem(key)
-
-        if (!itemStr) {
-          return undefined
-        }
-        const item = JSON.parse(itemStr)
-        const now = new Date()
-
-        if (now.getTime() > item.expiry) {
-          localStorage.removeItem(key)
-          return undefined
-        }
-        return item.value
-      }
+  pageType: 'home'
+}</script><link rel="stylesheet" href="//at.alicdn.com/t/c/font_4263496_xe5w6zp8g5c.css"><meta name="generator" content="Hexo 8.1.2"><link rel="alternate" href="/atom.xml" title="ZiHao's Blog" type="application/atom+xml">
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">Loading...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      if ($loadingBox.classList.contains('loaded')) return
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
     }
-  
-    win.getScript = url => new Promise((resolve, reject) => {
-      const script = document.createElement('script')
-      script.src = url
-      script.async = true
-      script.onerror = reject
-      script.onload = script.onreadystatechange = function() {
-        const loadState = this.readyState
-        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
-        script.onload = script.onreadystatechange = null
-        resolve()
-      }
-      document.head.appendChild(script)
-    })
-  
-      win.activateDarkMode = function () {
-        document.documentElement.setAttribute('data-theme', 'dark')
-        if (document.querySelector('meta[name="theme-color"]') !== null) {
-          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
-        }
-      }
-      win.activateLightMode = function () {
-        document.documentElement.setAttribute('data-theme', 'light')
-        if (document.querySelector('meta[name="theme-color"]') !== null) {
-          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
-        }
-      }
-      const t = saveToLocal.get('theme')
-    
-          if (t === 'dark') activateDarkMode()
-          else if (t === 'light') activateLightMode()
-        
-      const asideStatus = saveToLocal.get('aside-status')
-      if (asideStatus !== undefined) {
-        if (asideStatus === 'hide') {
-          document.documentElement.classList.add('hide-aside')
-        } else {
-          document.documentElement.classList.remove('hide-aside')
-        }
-      }
-    
-    const detectApple = () => {
-      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
-        document.documentElement.classList.add('apple')
-      }
-    }
-    detectApple()
-    })(window)</script><link rel="stylesheet" href="//at.alicdn.com/t/c/font_4263496_xe5w6zp8g5c.css"><meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="/atom.xml" title="ZiHao's Blog" type="application/atom+xml">
-<style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}</style></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">Loading...</div></div></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://github.com/ZiHao256/ZiHao256.github.io/blob/hexo/images/stitch.JPG?raw=true" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">66</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">48</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">16</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/log"><i class="fa-fw fas fa-book"></i><span> Log</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fa fa-camera-retro"></i><span> Gallery</span></a></li><li><a class="site-page child" href="/Map/"><i class="fa-fw fa fa-map-signs"></i><span> Map</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div><div class="menus_item"><a class="site-page" href="/omnisearch/"><i class="fa-fw fas fa-search"></i><span> Omni Search</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="full_page" id="page-header" style="background-image: url('https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/john-towner-3Kv48NS4WUU-unsplash.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">ZiHao's Blog</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> Search</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/log"><i class="fa-fw fas fa-book"></i><span> Log</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fa fa-camera-retro"></i><span> Gallery</span></a></li><li><a class="site-page child" href="/Map/"><i class="fa-fw fa fa-map-signs"></i><span> Map</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div><div class="menus_item"><a class="site-page" href="/omnisearch/"><i class="fa-fw fas fa-search"></i><span> Omni Search</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="site-info"><h1 id="site-title">ZiHao's Blog</h1><div id="site_social_icons"><a class="social-icon" href="https://github.com/ZiHao256" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/atom.xml" target="_blank" title="RSS链接"><i class="fa fa-rss"></i></a><a class="social-icon" href="mailto:zihao626@gmail.com" target="_blank" title="gmail"><i class="fa-brands fa-google"></i></a><a class="social-icon" href="mailto:zh_ma@stu.xidian.edu.cn" target="_blank" title="xdu-mail"><i class="fa fa-graduation-cap"></i></a></div></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts" id="recent-posts"><div class="recent-post-item"><div class="post_cover left"><a href="/p/e2bef277.html" title="Lab 2 物理内存管理"><img class="post_bg" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven8.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Lab 2 物理内存管理"></a></div><div class="recent-post-info"><a class="article-title" href="/p/e2bef277.html" title="Lab 2 物理内存管理">Lab 2 物理内存管理</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time class="post-meta-date-created" datetime="2021-04-05T16:00:00.000Z" title="Created 2021-04-06 00:00:00">2021-04-06</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2023-10-03T05:07:27.652Z" title="Updated 2023-10-03 13:07:27">2023-10-03</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/">学无止境</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/%E8%AF%BE%E7%A8%8B%E5%AE%9E%E9%AA%8C/">课程实验</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></span></div><div class="content">Lab 2 物理内存管理1 实验目的
-理解基于段页式内存地址的转换机制
-页表的建立和使用
-物理内存的管理方法
+  }
 
-2 实验内容三个部分：
+  preloader.initLoading()
 
-发现系统中的物理内存
-建立对物理内存的初步管理：了解连续内存管理
-建立页表实现虚拟内存到物理内存之间的映射，了解段页式内存管理机制
+  if (document.readyState === 'complete') {
+    preloader.endLoading()
+  } else {
+    window.addEventListener('load', preloader.endLoading)
+    document.addEventListener('DOMContentLoaded', preloader.endLoading)
+    // Add timeout protection: force end after 7 seconds
+    setTimeout(preloader.endLoading, 7000)
+  }
 
-2.1 练习
-分析 ucore提供的答案，说明自己的实现与参考答案区别
-列出本实验中重要的知识点
-对应的 OS 原理
-
-
-未出现但很重要的知识点
-
-练习0：填写已有实验
-本实验依赖于实验一
-需要将实验一的代码填入lab2相应位置
-
-练习1：实现first-fit 连续物理内存分配算法3 物理内存管理3.1 实验执行流程概述
-总控函数：kern_init
-调用完成物理内存初始化的pmm_init函数之前和之后的区别：
-首先，bootloader工作有所增加，在bootloader中完成了对内存资源的探测工作，使得 ucore kernel 在后续执行中能够基于其探测出的物理内存情况进行物理内存管理初始化工作
-其次，bootloader 不像lab1，直接调用kern_init，而是先调用kern_entry函数（/lab ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/p/32a74a00.html" title="Lab 1 系统软件启动过程"><img class="post_bg" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven13.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Lab 1 系统软件启动过程"></a></div><div class="recent-post-info"><a class="article-title" href="/p/32a74a00.html" title="Lab 1 系统软件启动过程">Lab 1 系统软件启动过程</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time class="post-meta-date-created" datetime="2021-04-04T16:00:00.000Z" title="Created 2021-04-05 00:00:00">2021-04-05</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2023-10-03T05:07:27.765Z" title="Updated 2023-10-03 13:07:27">2023-10-03</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/">学无止境</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/%E8%AF%BE%E7%A8%8B%E5%AE%9E%E9%AA%8C/">课程实验</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></span></div><div class="content">Lab 1 系统软件启动过程参考博客
-参考博客
-[toc]
-1 实验目的
-需要某种机制加载并运行操作系统
-更加简单的软件——Bootloader
-能完成切换到 x86 保护模式并显示字符
-为启动 ucore
-
-
-整个 Bootloader 执行代码小于512个字节，能放到硬盘的主引导扇区
-
-分析和实现 Bootloader和ucore
-
-计算机原理
-CPU 的编址与寻址：基于分段机制的内存管理   【连续物理内存分配
-CPU 的中断机制
-外设：串口/并口/CGA（显示器），时钟（产生时钟中断），硬盘（读取）
-
-
-Bootloader
-编译运行 Bootloader 的过程
-调试的方法
-PC 启动 Bootloader 的过程
-ELF执行文件的格式和加载
-外设访问：读硬盘，在CGA上显示字符串
-
-
-ucore OS
-编译运行
-启动过程
-调试方法
-函数调用关系：在汇编级了解函数调用栈的结构和处理过程
-中断管理：与软件相关的中断处理    【系统调用，异常
-外设管理：时钟
-
-
-
-2 实验内容
-lab 1 中包含一个 Bootloader 和 一个 OS
-Bootloader 可以切换到 x8 ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/p/a525d295.html" title="Linux 入门学习3"><img class="post_bg" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/star_sky.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Linux 入门学习3"></a></div><div class="recent-post-info"><a class="article-title" href="/p/a525d295.html" title="Linux 入门学习3">Linux 入门学习3</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time class="post-meta-date-created" datetime="2021-03-11T16:00:00.000Z" title="Created 2021-03-12 00:00:00">2021-03-12</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2023-10-03T05:07:27.575Z" title="Updated 2023-10-03 13:07:27">2023-10-03</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/">学无止境</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0/">操作系统学习</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a><span class="article-meta-link">•</span><a class="article-meta__tags" href="/tags/Linux/">Linux</a></span></div><div class="content">Linux 入门学习3[toc]
-
-学习使用 Vim 编辑器，编辑、保存文件，以及查看、浏览文件
-
-1 使用文本编辑器 Vim1.1 基本命令
-
-任何文件需要编辑默认化的编辑器
-功能强大的全屏幕文本编辑器
-新建、编辑、显示文件
-Vim只有 命令，没有 菜单
-命令：
-vi: 新建一个文件
-语法：vi 文件名
-
-
-编辑：回车后进入全屏幕的命令模式
-进入命令模式：Vim 等待输入指令
-输入 i, a, o， 进入输入模式（左下角会有 insert）
-i: 在当前光标所在字符的前面，转为输入模式
-I： 在当前光标所在行的行首转换为输入模式
-a: 在当前光标所在字符的后面，转为输入模式
-A:
-o: 在当前光标所在行的下方，新建一行，并转为输入模式
-O:
-s: 删除光标所在字符
-r: 替换光标处字符
-
-
-退出编辑：按 ESC
-ESC 后进入命令模式，==先输入 冒号==：
-w: 保存不退出
-w!: 强制保存不退出
-wq或 x: 保存并退出
-wq!: 强制保存并退出
-q: 不保存退出
-q!: 不保存强制退出
-e!: 放弃所有修改，从上次保存文件开始编辑
-
-
-
-
-
-
-遇到的问题：由于我在插入模式编辑完 ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/p/d222e203.html" title="Linux 入门学习2"><img class="post_bg" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven1.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Linux 入门学习2"></a></div><div class="recent-post-info"><a class="article-title" href="/p/d222e203.html" title="Linux 入门学习2">Linux 入门学习2</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time class="post-meta-date-created" datetime="2021-03-07T16:00:00.000Z" title="Created 2021-03-08 00:00:00">2021-03-08</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2023-10-03T05:07:27.575Z" title="Updated 2023-10-03 13:07:27">2023-10-03</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/">学无止境</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0/">操作系统学习</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a><span class="article-meta-link">•</span><a class="article-meta__tags" href="/tags/Linux/">Linux</a></span></div><div class="content">Linux 入门学习2参考博客
-[toc]
-学习如何创建文件、文件夹、以及文件的复制粘贴剪切等操作。
-1 文件、文件夹的创建1.1 创建文件夹
-命令：mkdir make directories
-默认登陆所在目录是 root的 home目录
-指定在某个目录下创建：mkdir /目录名/文件夹名
-创建文件夹的同时创建子文件夹：mkdir -p 文件夹名/子文件夹名
--p选项：递归创建
-
-
-
-1.2 创建文件
-命令：touch
-语法：touch /目录/文件名
-在目录下创建文件
-
-
-注意：
-目录需要写绝对路径
-
-
-
-2 查看当前目录以及切换目录2.1 查看当前目录
-命令：pwd
-
-2.2 切换目录
-命令：cd,change directories
-语法：cd /目录
-
-3 对文件进行复制、粘贴、删除操作3.1 复制
-命令：cp,copy
-语法：cp 原文件路径 目标路径
-选项：
--r: 复制一个目录
--p: 复制文件的属性与之前原文件一致
-
-
-复制改名一起完成：再复制的目标路径最后写上文件名
-
-3.2 删除
-删除空目录
-命令：rmdir，删除空目录
-
-
-删除文件
-命令：rm
-选项
--f:  ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/p/4b2bb3b9.html" title="Linux 入门学习1"><img class="post_bg" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven13.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Linux 入门学习1"></a></div><div class="recent-post-info"><a class="article-title" href="/p/4b2bb3b9.html" title="Linux 入门学习1">Linux 入门学习1</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time class="post-meta-date-created" datetime="2021-03-06T16:00:00.000Z" title="Created 2021-03-07 00:00:00">2021-03-07</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2023-10-03T05:07:27.646Z" title="Updated 2023-10-03 13:07:27">2023-10-03</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/">学无止境</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0/">操作系统学习</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a><span class="article-meta-link">•</span><a class="article-meta__tags" href="/tags/Linux/">Linux</a></span></div><div class="content">Linux 入门学习1参考博客
-[toc]
-1 学习命令基本格式1.1 基本格式
-命令由三部分组成：命令 [-选项] [参数]
-选项与参数可以省略
-有多个选项是可以写在一起的，“-”代表选项
-参数可以是一个对象，也可以是目录
-
-
-
-例：ls -l / 代表查看目录
-
-ls: 查看目录。显示目录下的文件或者文件夹（只能看到文件名）
--l: 显示目录下的详细文件或者文件夹的信息
-/: 根目录。夹上参数后，表示查看 根目录 下的文件
-
-1.2 目录查看根目录时，可以看到许多文件夹，如下图所示：
-
-
-
-/: 根目录，无上一级
-/home: 每个用户的家目录，在我们创建一个新用户时，home目录下会创建一个以用户名文名称的文件夹
-/tmp: 临时存放文件的地方
-/bin: 命令保存的目录
-/boot: 启动目录，包含系统启动时的相关文件
-/root: root用户的家目录，
-
-2 ls 目录命令处理`ls`目录处理命令，全称: `list`
-
-其他目录命令：
-
-
-ls -a或 ls --all: 查看目录下的全部文件（包括隐藏文件）
-![image-20210307103745762](E:\L ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/p/9750b399.html" title="LinuxLearning"><img class="post_bg" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven5.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="LinuxLearning"></a></div><div class="recent-post-info"><a class="article-title" href="/p/9750b399.html" title="LinuxLearning">LinuxLearning</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time class="post-meta-date-created" datetime="2021-03-04T16:00:00.000Z" title="Created 2021-03-05 00:00:00">2021-03-05</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2023-10-03T05:07:27.651Z" title="Updated 2023-10-03 13:07:27">2023-10-03</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/">学无止境</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0/">操作系统学习</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a><span class="article-meta-link">•</span><a class="article-meta__tags" href="/tags/Linux/">Linux</a></span></div><div class="content">LinuxLearning[toc]
-0 Linux 系统简介0.0 历史
-操作系统始于二十世纪五十年代，当时的操作系统能运行批处理程序。批处理程序不需要用户的交互，它从文件或者穿孔卡片读取数据，然后输出到另外一个文件或者打印机
-二十世纪六十年代初，交互式操作系统开始流行。它不仅仅可以交互，还能使多个用户从不同的终端同时操作主机。这样的操作系统被称作分时操作系统，它的出现对批处理操作系统是个极大的挑战。
-UNIX 最初免费发布并因此在大学里受到欢迎。后来，UNIX 实现了 TCP/IP 协议栈
-Linux 本身只是操作系统的内核。内核是使其它程序能够运行的基础。它实现了多任务和硬件管理，用户或者系统管理员交互运行的所有程序实际上都运行在内核之上
-其中有些程序是必需的，比如说，命令行解释器（shell），它用于用户交互和编写 shell 脚本。
-
-
-许多重要的软件，包括 C 编译器，都来自于自由软件基金 GNU 项目。GNU 项目开始于 1984 年，目的是为了开发一个完全类似于 UNIX 的免费操作系统。为了表扬 GNU 对 Linux 的贡献，许多人把 Linux 称为 GNU/Li ...</div></div></div><nav id="pagination"><div class="pagination"><a class="extend prev" rel="prev" href="/page/6/#content-inner"><i class="fas fa-chevron-left fa-fw"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/#content-inner">6</a><span class="page-number current">7</span></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://github.com/ZiHao256/ZiHao256.github.io/blob/hexo/images/stitch.JPG?raw=true" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">zihao</div><div class="author-info__description">Why be afraid of the infinity of truth? Joy resides in every step of growth.</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">66</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">48</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">16</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/ZiHao256"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/ZiHao256" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/atom.xml" target="_blank" title="RSS链接"><i class="fa fa-rss"></i></a><a class="social-icon" href="mailto:zihao626@gmail.com" target="_blank" title="gmail"><i class="fa-brands fa-google"></i></a><a class="social-icon" href="mailto:zh_ma@stu.xidian.edu.cn" target="_blank" title="xdu-mail"><i class="fa fa-graduation-cap"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">keep moving in 2024</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/p/10f62ef4.html" title="PROJECT #4: CONCURRENCY CONTROL"><img src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven-gpdvj3.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="PROJECT #4: CONCURRENCY CONTROL"/></a><div class="content"><a class="title" href="/p/10f62ef4.html" title="PROJECT #4: CONCURRENCY CONTROL">PROJECT #4: CONCURRENCY CONTROL</a><time datetime="2024-05-16T01:01:13.000Z" title="Created 2024-05-16 09:01:13">2024-05-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/c186cbfd.html" title="Project #3: Query Execution"><img src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/drain.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Project #3: Query Execution"/></a><div class="content"><a class="title" href="/p/c186cbfd.html" title="Project #3: Query Execution">Project #3: Query Execution</a><time datetime="2024-05-16T00:59:16.000Z" title="Created 2024-05-16 08:59:16">2024-05-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/2acafc61.html" title="rustlings"><img src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/in-the-early-morning-of-forest-wallpaper.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="rustlings"/></a><div class="content"><a class="title" href="/p/2acafc61.html" title="rustlings">rustlings</a><time datetime="2023-11-28T09:46:15.000Z" title="Created 2023-11-28 17:46:15">2023-11-28</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/d028ccc3.html" title="基于Actix-Web(Rust)和Vue的Web开发记录"><img src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven-4ggvml.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="基于Actix-Web(Rust)和Vue的Web开发记录"/></a><div class="content"><a class="title" href="/p/d028ccc3.html" title="基于Actix-Web(Rust)和Vue的Web开发记录">基于Actix-Web(Rust)和Vue的Web开发记录</a><time datetime="2023-11-13T13:42:48.000Z" title="Created 2023-11-13 21:42:48">2023-11-13</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/517dd8ea.html" title="Project#2: Extendible Hash Index"><img src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/john-towner-3Kv48NS4WUU-unsplash.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Project#2: Extendible Hash Index"/></a><div class="content"><a class="title" href="/p/517dd8ea.html" title="Project#2: Extendible Hash Index">Project#2: Extendible Hash Index</a><time datetime="2023-10-30T13:56:01.000Z" title="Created 2023-10-30 21:56:01">2023-10-30</time></div></div></div></div><div class="card-widget" id="card-newest-comments"><div class="item-headline"><i class="fas fa-comment-dots"></i><span>Newest Comments</span></div><div class="aside-list"><span>loading...</span></div></div><div class="card-widget card-categories"><div class="item-headline">
-            <i class="fas fa-folder-open"></i>
-            <span>Categories</span>
-            <a class="card-more-btn" href="/categories/" title="More">
-    <i class="fas fa-angle-right"></i></a>
-            </div>
-            <ul class="card-category-list" id="aside-cat-list">
+  if (true) {
+    btf.addGlobalFn('pjaxSend', preloader.initLoading, 'preloader_init')
+    btf.addGlobalFn('pjaxComplete', preloader.endLoading, 'preloader_end')
+  }
+})()</script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="https://github.com/ZiHao256/ZiHao256.github.io/blob/hexo/images/stitch.JPG?raw=true" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">66</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">48</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">16</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/log"><i class="fa-fw fas fa-book"></i><span> Log</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><span class="site-page group hide"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fa fa-camera-retro"></i><span> Gallery</span></a></li><li><a class="site-page child" href="/Map/"><i class="fa-fw fa fa-map-signs"></i><span> Map</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="full_page" id="page-header" style="background-image: url(https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/john-towner-3Kv48NS4WUU-unsplash.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">ZiHao's Blog</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> Search</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/log"><i class="fa-fw fas fa-book"></i><span> Log</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><span class="site-page group hide"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fa fa-camera-retro"></i><span> Gallery</span></a></li><li><a class="site-page child" href="/Map/"><i class="fa-fw fa fa-map-signs"></i><span> Map</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="site-info"><h1 id="site-title">ZiHao's Blog</h1><div id="site_social_icons"><a class="social-icon" href="https://github.com/ZiHao256" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/atom.xml" target="_blank" title="RSS"><i class="fa fa-rss"></i></a><a class="social-icon" href="mailto:zihao626@gmail.com" target="_blank" title="Gmail"><i class="fa-brands fa-google"></i></a><a class="social-icon" href="mailto:zh_ma@stu.xidian.edu.cn" target="_blank" title="XDU Mail"><i class="fa fa-graduation-cap"></i></a></div></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts nc" id="recent-posts"><div class="recent-post-items"><div class="recent-post-item"><div class="post_cover left"><a href="/p/e2bef277.html" title="Lab 2 物理内存管理"><img class="post-bg" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven-yx7vmk.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Lab 2 物理内存管理"></a></div><div class="recent-post-info"><a class="article-title" href="/p/e2bef277.html" title="Lab 2 物理内存管理">Lab 2 物理内存管理</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time class="post-meta-date-created" datetime="2021-04-05T16:00:00.000Z" title="Created 2021-04-06 00:00:00">2021-04-06</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2026-08-12T03:20:22.051Z" title="Updated 2026-08-12 11:20:22">2026-08-12</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/">学无止境</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/%E8%AF%BE%E7%A8%8B%E5%AE%9E%E9%AA%8C/">课程实验</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></span></div><div class="content">Lab 2 物理内存管理1 实验目的 理解基于段页式内存地址的转换机制 页表的建立和使用 物理内存的管理方法  2 实验内容三个部分：  发现系统中的物理内存 建立对物理内存的初步管理：了解连续内存管理 建立页表实现虚拟内存到物理内存之间的映射，了解段页式内存管理机制  2.1 练习 分析 ucore提供的答案，说明自己的实现与参考答案区别 列出本实验中重要的知识点 对应的 OS 原理   未出现但很重要的知识点  练习0：填写已有实验 本实验依赖于实验一 需要将实验一的代码填入lab2相应位置  练习1：实现first-fit 连续物理内存分配算法3 物理内存管理3.1 实验执行流程概述 总控函数：kern_init 调用完成物理内存初始化的pmm_init函数之前和之后的区别： 首先，bootloader工作有所增加，在bootloader中完成了对内存资源的探测工作，使得 ucore kernel 在后续执行中能够基于其探测出的物理内存情况进行物理内存管理初始化工作 其次，bootloader 不像lab1，直接调用kern_init，而是先调用kern_entry函数（/...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/p/32a74a00.html" title="Lab 1 系统软件启动过程"><img class="post-bg" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/pathway-middle-green-leafed-trees-with-sun-shining-through-branches.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Lab 1 系统软件启动过程"></a></div><div class="recent-post-info"><a class="article-title" href="/p/32a74a00.html" title="Lab 1 系统软件启动过程">Lab 1 系统软件启动过程</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time class="post-meta-date-created" datetime="2021-04-04T16:00:00.000Z" title="Created 2021-04-05 00:00:00">2021-04-05</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2026-08-12T03:20:22.051Z" title="Updated 2026-08-12 11:20:22">2026-08-12</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/">学无止境</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/%E8%AF%BE%E7%A8%8B%E5%AE%9E%E9%AA%8C/">课程实验</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></span></div><div class="content">Lab 1 系统软件启动过程参考博客 参考博客 [toc] 1 实验目的 需要某种机制加载并运行操作系统 更加简单的软件——Bootloader 能完成切换到 x86 保护模式并显示字符 为启动 ucore   整个 Bootloader 执行代码小于512个字节，能放到硬盘的主引导扇区  分析和实现 Bootloader和ucore  计算机原理 CPU 的编址与寻址：基于分段机制的内存管理   【连续物理内存分配 CPU 的中断机制 外设：串口&#x2F;并口&#x2F;CGA（显示器），时钟（产生时钟中断），硬盘（读取）   Bootloader 编译运行 Bootloader 的过程 调试的方法 PC 启动 Bootloader 的过程 ELF执行文件的格式和加载 外设访问：读硬盘，在CGA上显示字符串   ucore OS 编译运行 启动过程 调试方法 函数调用关系：在汇编级了解函数调用栈的结构和处理过程 中断管理：与软件相关的中断处理    【系统调用，异常 外设管理：时钟    2 实验内容 lab 1 中包含一个 Bootloader 和 一个 OS Bootlo...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/p/a525d295.html" title="Linux 入门学习3"><img class="post-bg" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven6.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Linux 入门学习3"></a></div><div class="recent-post-info"><a class="article-title" href="/p/a525d295.html" title="Linux 入门学习3">Linux 入门学习3</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time class="post-meta-date-created" datetime="2021-03-11T16:00:00.000Z" title="Created 2021-03-12 00:00:00">2021-03-12</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2026-08-12T03:20:22.047Z" title="Updated 2026-08-12 11:20:22">2026-08-12</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/">学无止境</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0/">操作系统学习</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/Linux/">Linux</a></span></div><div class="content">Linux 入门学习3[toc]  学习使用 Vim 编辑器，编辑、保存文件，以及查看、浏览文件  1 使用文本编辑器 Vim1.1 基本命令  任何文件需要编辑默认化的编辑器 功能强大的全屏幕文本编辑器 新建、编辑、显示文件 Vim只有 命令，没有 菜单 命令： vi: 新建一个文件 语法：vi 文件名   编辑：回车后进入全屏幕的命令模式 进入命令模式：Vim 等待输入指令 输入 i, a, o， 进入输入模式（左下角会有 insert） i: 在当前光标所在字符的前面，转为输入模式 I： 在当前光标所在行的行首转换为输入模式 a: 在当前光标所在字符的后面，转为输入模式 A: o: 在当前光标所在行的下方，新建一行，并转为输入模式 O: s: 删除光标所在字符 r: 替换光标处字符   退出编辑：按 ESC ESC 后进入命令模式，&#x3D;&#x3D;先输入 冒号&#x3D;&#x3D;： w: 保存不退出 w!: 强制保存不退出 wq或 x: 保存并退出 wq!: 强制保存并退出 q: 不保存退出 q!: 不保存强制退出 e!: 放弃所有修改，从上次保存文件开始编辑 ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/p/d222e203.html" title="Linux 入门学习2"><img class="post-bg" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/sebastian-unrau-sp-p7uuT0tw-unsplash.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Linux 入门学习2"></a></div><div class="recent-post-info"><a class="article-title" href="/p/d222e203.html" title="Linux 入门学习2">Linux 入门学习2</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time class="post-meta-date-created" datetime="2021-03-07T16:00:00.000Z" title="Created 2021-03-08 00:00:00">2021-03-08</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2026-08-12T03:20:22.047Z" title="Updated 2026-08-12 11:20:22">2026-08-12</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/">学无止境</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0/">操作系统学习</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/Linux/">Linux</a></span></div><div class="content">Linux 入门学习2参考博客 [toc] 学习如何创建文件、文件夹、以及文件的复制粘贴剪切等操作。 1 文件、文件夹的创建1.1 创建文件夹 命令：mkdir make directories 默认登陆所在目录是 root的 home目录 指定在某个目录下创建：mkdir /目录名/文件夹名 创建文件夹的同时创建子文件夹：mkdir -p 文件夹名/子文件夹名 -p选项：递归创建    1.2 创建文件 命令：touch 语法：touch /目录/文件名 在目录下创建文件   注意： 目录需要写绝对路径    2 查看当前目录以及切换目录2.1 查看当前目录 命令：pwd  2.2 切换目录 命令：cd,change directories 语法：cd /目录  3 对文件进行复制、粘贴、删除操作3.1 复制 命令：cp,copy 语法：cp 原文件路径 目标路径 选项： -r: 复制一个目录 -p: 复制文件的属性与之前原文件一致   复制改名一起完成：再复制的目标路径最后写上文件名  3.2 删除 删除空目录 命令：rmdir，删除空目录   删除文件 命令：rm 选项 -...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/p/4b2bb3b9.html" title="Linux 入门学习1"><img class="post-bg" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven7.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Linux 入门学习1"></a></div><div class="recent-post-info"><a class="article-title" href="/p/4b2bb3b9.html" title="Linux 入门学习1">Linux 入门学习1</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time class="post-meta-date-created" datetime="2021-03-06T16:00:00.000Z" title="Created 2021-03-07 00:00:00">2021-03-07</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2026-08-12T03:20:22.047Z" title="Updated 2026-08-12 11:20:22">2026-08-12</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/">学无止境</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0/">操作系统学习</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/Linux/">Linux</a></span></div><div class="content">Linux 入门学习1参考博客 [toc] 1 学习命令基本格式1.1 基本格式 命令由三部分组成：命令 [-选项] [参数] 选项与参数可以省略 有多个选项是可以写在一起的，“-”代表选项 参数可以是一个对象，也可以是目录    例：ls -l / 代表查看目录  ls: 查看目录。显示目录下的文件或者文件夹（只能看到文件名） -l: 显示目录下的详细文件或者文件夹的信息 /: 根目录。夹上参数后，表示查看 根目录 下的文件  1.2 目录查看根目录时，可以看到许多文件夹，如下图所示：    /: 根目录，无上一级 /home: 每个用户的家目录，在我们创建一个新用户时，home目录下会创建一个以用户名文名称的文件夹 /tmp: 临时存放文件的地方 /bin: 命令保存的目录 /boot: 启动目录，包含系统启动时的相关文件 /root: root用户的家目录，  2 ls 目录命令处理`ls`目录处理命令，全称: `list`  其他目录命令：   ls -a或 ls --all: 查看目录下的全部文件（包括隐藏文件） ![image-20210307103745762](E...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/p/9750b399.html" title="LinuxLearning"><img class="post-bg" src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/star_sky.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="LinuxLearning"></a></div><div class="recent-post-info"><a class="article-title" href="/p/9750b399.html" title="LinuxLearning">LinuxLearning</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time class="post-meta-date-created" datetime="2021-03-04T16:00:00.000Z" title="Created 2021-03-05 00:00:00">2021-03-05</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2026-08-12T03:20:22.047Z" title="Updated 2026-08-12 11:20:22">2026-08-12</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/">学无止境</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0/">操作系统学习</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/Linux/">Linux</a></span></div><div class="content">LinuxLearning[toc] 0 Linux 系统简介0.0 历史 操作系统始于二十世纪五十年代，当时的操作系统能运行批处理程序。批处理程序不需要用户的交互，它从文件或者穿孔卡片读取数据，然后输出到另外一个文件或者打印机 二十世纪六十年代初，交互式操作系统开始流行。它不仅仅可以交互，还能使多个用户从不同的终端同时操作主机。这样的操作系统被称作分时操作系统，它的出现对批处理操作系统是个极大的挑战。 UNIX 最初免费发布并因此在大学里受到欢迎。后来，UNIX 实现了 TCP&#x2F;IP 协议栈 Linux 本身只是操作系统的内核。内核是使其它程序能够运行的基础。它实现了多任务和硬件管理，用户或者系统管理员交互运行的所有程序实际上都运行在内核之上 其中有些程序是必需的，比如说，命令行解释器（shell），它用于用户交互和编写 shell 脚本。   许多重要的软件，包括 C 编译器，都来自于自由软件基金 GNU 项目。GNU 项目开始于 1984 年，目的是为了开发一个完全类似于 UNIX 的免费操作系统。为了表扬 GNU 对 Linux 的贡献，许多人把 Linux 称...</div></div></div></div><nav id="pagination"><div class="pagination"><a class="extend prev" rel="prev" href="/page/6/#content-inner"><i class="fas fa-chevron-left fa-fw"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/#content-inner">6</a><span class="page-number current">7</span></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="https://github.com/ZiHao256/ZiHao256.github.io/blob/hexo/images/stitch.JPG?raw=true" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">zihao</div><div class="author-info-description">Why be afraid of the infinity of truth? Joy resides in every step of growth.</div><div class="site-data"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">66</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">48</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">16</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/ZiHao256"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/ZiHao256" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/atom.xml" target="_blank" title="RSS"><i class="fa fa-rss"></i></a><a class="social-icon" href="mailto:zihao626@gmail.com" target="_blank" title="Gmail"><i class="fa-brands fa-google"></i></a><a class="social-icon" href="mailto:zh_ma@stu.xidian.edu.cn" target="_blank" title="XDU Mail"><i class="fa fa-graduation-cap"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">keep moving in 2024</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Posts</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/p/10f62ef4.html" title="PROJECT #4: CONCURRENCY CONTROL"><img src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/joseph-barrientos-oQl0eVYd_n8-unsplash.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="PROJECT #4: CONCURRENCY CONTROL"/></a><div class="content"><a class="title" href="/p/10f62ef4.html" title="PROJECT #4: CONCURRENCY CONTROL">PROJECT #4: CONCURRENCY CONTROL</a><time datetime="2024-05-16T01:01:13.000Z" title="Created 2024-05-16 09:01:13">2024-05-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/c186cbfd.html" title="Project #3: Query Execution"><img src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven-gpdvj3.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Project #3: Query Execution"/></a><div class="content"><a class="title" href="/p/c186cbfd.html" title="Project #3: Query Execution">Project #3: Query Execution</a><time datetime="2024-05-16T00:59:16.000Z" title="Created 2024-05-16 08:59:16">2024-05-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/2acafc61.html" title="rustlings"><img src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/pathway-middle-green-leafed-trees-with-sun-shining-through-branches.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="rustlings"/></a><div class="content"><a class="title" href="/p/2acafc61.html" title="rustlings">rustlings</a><time datetime="2023-11-28T09:46:15.000Z" title="Created 2023-11-28 17:46:15">2023-11-28</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/d028ccc3.html" title="基于Actix-Web(Rust)和Vue的Web开发记录"><img src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven-kxd1md.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="基于Actix-Web(Rust)和Vue的Web开发记录"/></a><div class="content"><a class="title" href="/p/d028ccc3.html" title="基于Actix-Web(Rust)和Vue的Web开发记录">基于Actix-Web(Rust)和Vue的Web开发记录</a><time datetime="2023-11-13T13:42:48.000Z" title="Created 2023-11-13 21:42:48">2023-11-13</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/p/517dd8ea.html" title="Project#2: Extendible Hash Index"><img src="https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/wallhaven5.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Project#2: Extendible Hash Index"/></a><div class="content"><a class="title" href="/p/517dd8ea.html" title="Project#2: Extendible Hash Index">Project#2: Extendible Hash Index</a><time datetime="2023-10-30T13:56:01.000Z" title="Created 2023-10-30 21:56:01">2023-10-30</time></div></div></div></div><div class="card-widget" id="card-newest-comments"><div class="item-headline"><i class="fas fa-comment-dots"></i><span>Latest Comments</span></div><div class="aside-list"><span>Loading...</span></div></div><div class="card-widget card-categories"><div class="item-headline"><i class="fas fa-folder-open"></i><span>Categories</span><a class="card-more-btn" href="/categories/" title="View More">
+      <i class="fas fa-angle-right"></i></a></div>
+          <ul class="card-category-list" id="aside-cat-list">
             <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%88%A9%E5%99%A8%E9%85%B7/"><span class="card-category-list-name">利器酷</span><span class="card-category-list-count">8</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%88%A9%E5%99%A8%E9%85%B7/%E5%B7%A5%E5%85%B7/"><span class="card-category-list-name">工具</span><span class="card-category-list-count">7</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%88%A9%E5%99%A8%E9%85%B7/%E6%96%B9%E6%B3%95/"><span class="card-category-list-name">方法</span><span class="card-category-list-count">1</span></a></li></ul></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/"><span class="card-category-list-name">学无止境</span><span class="card-category-list-count">56</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/CMU15-445-2023FALL/"><span class="card-category-list-name">CMU15-445(2023FALL)</span><span class="card-category-list-count">6</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/MIT6-824/"><span class="card-category-list-name">MIT6.824</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/Paper-Reading/"><span class="card-category-list-name">Paper Reading</span><span class="card-category-list-count">5</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%AD%A6%E6%97%A0%E6%AD%A2%E5%A2%83/XDU-OS%E8%AF%BE%E7%A8%8B%E8%AE%BE%E8%AE%A1/"><span class="card-category-list-name">XDU OS课程设计</span><span class="card-category-list-count">5</span></a></li></ul></li>
-            </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>Tags</span></div><div class="card-tag-cloud"><a href="/tags/AST/" style="font-size: 1.1em; color: #999">AST</a> <a href="/tags/Actix-web/" style="font-size: 1.1em; color: #999">Actix-web</a> <a href="/tags/Blog/" style="font-size: 1.42em; color: #99a6b7">Blog</a> <a href="/tags/Bug/" style="font-size: 1.1em; color: #999">Bug</a> <a href="/tags/C/" style="font-size: 1.34em; color: #99a3b0">C++</a> <a href="/tags/Cardinality-Estimation/" style="font-size: 1.18em; color: #999ca1">Cardinality Estimation</a> <a href="/tags/Code-Clone-Detection/" style="font-size: 1.1em; color: #999">Code Clone Detection</a> <a href="/tags/Container/" style="font-size: 1.18em; color: #999ca1">Container</a> <a href="/tags/Cost-Model/" style="font-size: 1.1em; color: #999">Cost Model</a> <a href="/tags/DIY/" style="font-size: 1.18em; color: #999ca1">DIY</a> <a href="/tags/Database/" style="font-size: 1.34em; color: #99a3b0">Database</a> <a href="/tags/Database-System/" style="font-size: 1.34em; color: #99a3b0">Database System</a> <a href="/tags/Debug/" style="font-size: 1.1em; color: #999">Debug</a> <a href="/tags/Distributed/" style="font-size: 1.1em; color: #999">Distributed</a> <a href="/tags/Django/" style="font-size: 1.18em; color: #999ca1">Django</a> <a href="/tags/Edge%E6%B5%8F%E8%A7%88%E5%99%A8/" style="font-size: 1.1em; color: #999">Edge浏览器</a> <a href="/tags/Git/" style="font-size: 1.1em; color: #999">Git</a> <a href="/tags/LaTeX/" style="font-size: 1.1em; color: #999">LaTeX</a> <a href="/tags/Linux/" style="font-size: 1.34em; color: #99a3b0">Linux</a> <a href="/tags/MVCC/" style="font-size: 1.18em; color: #999ca1">MVCC</a> <a href="/tags/Machine-Learning/" style="font-size: 1.1em; color: #999">Machine Learning</a> <a href="/tags/Markdown/" style="font-size: 1.1em; color: #999">Markdown</a> <a href="/tags/Natural-Language-Processing/" style="font-size: 1.1em; color: #999">Natural Language Processing</a> <a href="/tags/Optimizer/" style="font-size: 1.18em; color: #999ca1">Optimizer</a> <a href="/tags/Paper/" style="font-size: 1.1em; color: #999">Paper</a> <a href="/tags/Plan-Cache/" style="font-size: 1.1em; color: #999">Plan Cache</a> <a href="/tags/Python/" style="font-size: 1.18em; color: #999ca1">Python</a> <a href="/tags/Query-Execution/" style="font-size: 1.18em; color: #999ca1">Query Execution</a> <a href="/tags/Query-Optimization/" style="font-size: 1.1em; color: #999">Query Optimization</a> <a href="/tags/Reading/" style="font-size: 1.1em; color: #999">Reading</a> <a href="/tags/Research/" style="font-size: 1.1em; color: #999">Research</a> <a href="/tags/Rust/" style="font-size: 1.18em; color: #999ca1">Rust</a> <a href="/tags/SQL/" style="font-size: 1.18em; color: #999ca1">SQL</a> <a href="/tags/Search-Space/" style="font-size: 1.1em; color: #999">Search Space</a> <a href="/tags/System/" style="font-size: 1.1em; color: #999">System</a> <a href="/tags/The-Go-Programming-Language/" style="font-size: 1.5em; color: #99a9bf">The Go Programming Language</a> <a href="/tags/Vue/" style="font-size: 1.1em; color: #999">Vue</a> <a href="/tags/%E5%86%85%E6%A0%B8/" style="font-size: 1.26em; color: #999fa8">内核</a> <a href="/tags/%E5%8D%9A%E5%B0%94%E8%B5%AB%E6%96%AF/" style="font-size: 1.1em; color: #999">博尔赫斯</a> <a href="/tags/%E5%8F%8B%E8%B0%8A/" style="font-size: 1.1em; color: #999">友谊</a></div></div><div class="card-widget card-archives"><div class="item-headline"><i class="fas fa-archive"></i><span>Archives</span><a class="card-more-btn" href="/archives/" title="More">
-    <i class="fas fa-angle-right"></i></a></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/05/"><span class="card-archive-list-date">May 2024</span><span class="card-archive-list-count">2</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/11/"><span class="card-archive-list-date">November 2023</span><span class="card-archive-list-count">2</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/10/"><span class="card-archive-list-date">October 2023</span><span class="card-archive-list-count">4</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/05/"><span class="card-archive-list-date">May 2023</span><span class="card-archive-list-count">4</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/03/"><span class="card-archive-list-date">March 2023</span><span class="card-archive-list-count">4</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/02/"><span class="card-archive-list-date">February 2023</span><span class="card-archive-list-count">7</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/10/"><span class="card-archive-list-date">October 2022</span><span class="card-archive-list-count">2</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/07/"><span class="card-archive-list-date">July 2022</span><span class="card-archive-list-count">6</span></a></li></ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站信息</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">66</div></div><div class="webinfo-item"><div class="item-name">已运行时间 :</div><div class="item-count" id="runtimeshow" data-publishDate="2021-04-15T16:00:00.000Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">网站总字数 :</div><div class="item-count">129.5k</div></div><div class="webinfo-item"><div class="item-name">本站访客数目 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总访问量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">上次推送 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2024-10-10T03:31:28.787Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('https://raw.githubusercontent.com/ZiHao256/ZiHao256.github.io/hexo/images/john-towner-3Kv48NS4WUU-unsplash.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2021 - 2024 By zihao</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Hi, welcome to my <a href="https://zihao256.github.io/">Blog</a>!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="translateLink" type="button" title="Toggle Between Traditional Chinese And Simplified Chinese">简</button><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">Search</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  Loading the Database</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="Search for Posts" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script src="/js/search/local-search.js"></script><script>var preloader = {
-  endLoading: () => {
-    document.body.style.overflow = 'auto';
-    document.getElementById('loading-box').classList.add("loaded")
-  },
-  initLoading: () => {
-    document.body.style.overflow = '';
-    document.getElementById('loading-box').classList.remove("loaded")
-
-  }
-}
-window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"></div><script>window.addEventListener('load', () => {
-  const changeContent = (content) => {
+          </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>Tags</span></div><div class="card-tag-cloud"><a href="/tags/Markdown/" style="font-size: 1.1em; color: #999">Markdown</a> <a href="/tags/Reading/" style="font-size: 1.1em; color: #999">Reading</a> <a href="/tags/%E5%8D%9A%E5%B0%94%E8%B5%AB%E6%96%AF/" style="font-size: 1.1em; color: #999">博尔赫斯</a> <a href="/tags/System/" style="font-size: 1.1em; color: #999">System</a> <a href="/tags/Paper/" style="font-size: 1.1em; color: #999">Paper</a> <a href="/tags/Cost-Model/" style="font-size: 1.1em; color: #999">Cost Model</a> <a href="/tags/DIY/" style="font-size: 1.18em; color: #999ca1">DIY</a> <a href="/tags/Distributed/" style="font-size: 1.1em; color: #999">Distributed</a> <a href="/tags/Machine-Learning/" style="font-size: 1.1em; color: #999">Machine Learning</a> <a href="/tags/%E6%8F%92%E4%BB%B6/" style="font-size: 1.1em; color: #999">插件</a> <a href="/tags/MVCC/" style="font-size: 1.18em; color: #999ca1">MVCC</a> <a href="/tags/Edge%E6%B5%8F%E8%A7%88%E5%99%A8/" style="font-size: 1.1em; color: #999">Edge浏览器</a> <a href="/tags/Django/" style="font-size: 1.18em; color: #999ca1">Django</a> <a href="/tags/Container/" style="font-size: 1.18em; color: #999ca1">Container</a> <a href="/tags/Query-Optimization/" style="font-size: 1.1em; color: #999">Query Optimization</a> <a href="/tags/C/" style="font-size: 1.42em; color: #99a6b7">C++</a> <a href="/tags/Python/" style="font-size: 1.18em; color: #999ca1">Python</a> <a href="/tags/Plan-Cache/" style="font-size: 1.1em; color: #999">Plan Cache</a> <a href="/tags/Vue/" style="font-size: 1.1em; color: #999">Vue</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 1.1em; color: #999">数据结构</a> <a href="/tags/Bug/" style="font-size: 1.1em; color: #999">Bug</a> <a href="/tags/Cardinality-Estimation/" style="font-size: 1.18em; color: #999ca1">Cardinality Estimation</a> <a href="/tags/%E5%8F%8B%E8%B0%8A/" style="font-size: 1.1em; color: #999">友谊</a> <a href="/tags/%E8%AE%BE%E5%A4%87%E9%A9%B1%E5%8A%A8/" style="font-size: 1.1em; color: #999">设备驱动</a> <a href="/tags/Debug/" style="font-size: 1.1em; color: #999">Debug</a> <a href="/tags/LaTeX/" style="font-size: 1.1em; color: #999">LaTeX</a> <a href="/tags/Rust/" style="font-size: 1.18em; color: #999ca1">Rust</a> <a href="/tags/%E7%A7%91%E7%A0%94/" style="font-size: 1.26em; color: #999fa8">科研</a> <a href="/tags/Database-System/" style="font-size: 1.42em; color: #99a6b7">Database System</a> <a href="/tags/%E8%AE%BA%E6%96%87/" style="font-size: 1.34em; color: #99a3b0">论文</a> <a href="/tags/%E5%86%85%E6%A0%B8/" style="font-size: 1.26em; color: #999fa8">内核</a> <a href="/tags/Query-Execution/" style="font-size: 1.18em; color: #999ca1">Query Execution</a> <a href="/tags/AST/" style="font-size: 1.1em; color: #999">AST</a> <a href="/tags/Git/" style="font-size: 1.1em; color: #999">Git</a> <a href="/tags/Linux/" style="font-size: 1.42em; color: #99a6b7">Linux</a> <a href="/tags/Research/" style="font-size: 1.1em; color: #999">Research</a> <a href="/tags/SQL/" style="font-size: 1.18em; color: #999ca1">SQL</a> <a href="/tags/Natural-Language-Processing/" style="font-size: 1.1em; color: #999">Natural Language Processing</a> <a href="/tags/Actix-web/" style="font-size: 1.1em; color: #999">Actix-web</a> <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" style="font-size: 1.5em; color: #99a9bf">操作系统</a></div></div><div class="card-widget card-archives">
+    <div class="item-headline"><i class="fas fa-archive"></i><span>Archives</span><a class="card-more-btn" href="/archives/"
+            title="View More">
+            <i class="fas fa-angle-right"></i>
+          </a></div>
+  
+    <ul class="card-archive-list">
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2024/05/">
+            <span class="card-archive-list-date">
+              May 2024
+            </span>
+            <span class="card-archive-list-count">2</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2023/11/">
+            <span class="card-archive-list-date">
+              November 2023
+            </span>
+            <span class="card-archive-list-count">2</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2023/10/">
+            <span class="card-archive-list-date">
+              October 2023
+            </span>
+            <span class="card-archive-list-count">4</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2023/05/">
+            <span class="card-archive-list-date">
+              May 2023
+            </span>
+            <span class="card-archive-list-count">4</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2023/03/">
+            <span class="card-archive-list-date">
+              March 2023
+            </span>
+            <span class="card-archive-list-count">4</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2023/02/">
+            <span class="card-archive-list-date">
+              February 2023
+            </span>
+            <span class="card-archive-list-count">7</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2022/10/">
+            <span class="card-archive-list-date">
+              October 2022
+            </span>
+            <span class="card-archive-list-count">2</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2022/07/">
+            <span class="card-archive-list-date">
+              July 2022
+            </span>
+            <span class="card-archive-list-count">6</span>
+          </a>
+        </li>
+      
+    </ul>
+  </div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>Website Info</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">Article Count :</div><div class="item-count">66</div></div><div class="webinfo-item"><div class="item-name">Runtime :</div><div class="item-count" id="runtimeshow" data-publishDate="2021-04-15T16:00:00.000Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">Total Word Count :</div><div class="item-count">129.7k</div></div><div class="webinfo-item"><div class="item-name">Unique Visitors :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">Page Views :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">Last Update :</div><div class="item-count" id="last-push-date" data-lastPushDate="2026-08-12T08:20:26.793Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2021 - 2026 By zihao</span><span class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.2</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.7.0</a></span></div><div class="footer_custom_text">Hi, welcome to my <a href="https://zihao256.github.io/">Blog</a>!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="translateLink" type="button" title="Toggle Between Traditional and Simplified Chinese">简</button><button id="darkmode" type="button" title="Toggle Between Light and Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle Between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Settings"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="Back to Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.7.0"></script><script src="/js/main.js?v=5.7.0"></script><script src="/js/tw_cn.js?v=5.7.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1.14/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script>window.newestComments = {
+  changeContent: content => {
     if (content === '') return content
 
-    content = content.replace(/<img.*?src="(.*?)"?[^\>]+>/ig, '[image]') // replace image link
-    content = content.replace(/<a[^>]+?href=["']?([^"']+)["']?[^>]*>([^<]+)<\/a>/gi, '[link]') // replace url
-    content = content.replace(/<pre><code>.*?<\/pre>/gi, '[code]') // replace code
-    content = content.replace(/<[^>]+>/g,"") // remove html tag
+    content = content.replace(/<img.*?src="(.*?)"?[^\>]+>/ig, '[Image]') // replace image link
+    content = content.replace(/<a[^>]+?href=["']?([^"']+)["']?[^>]*>([^<]+)<\/a>/gi, '[Link]') // replace url
+    content = content.replace(/<pre><code>.*?<\/pre>/gi, '[Code]') // replace code
+    content = content.replace(/<code>.*?<\/code>/gi, '[Code]') // replace code
+    content = content.replace(/<[^>]+>/g, "") // remove html tag
 
     if (content.length > 150) {
-      content = content.substring(0,150) + '...'
+      content = content.substring(0, 150) + '...'
     }
     return content
-  }
+  },
 
-  const findTrueUrl = (array) => {
+  generateHtml: (array, ele) => {
+    let result = ''
+
+    if (array.length) {
+      for (let i = 0; i < array.length; i++) {
+        result += '<div class="aside-list-item">'
+
+        if (true && array[i].avatar) {
+          const imgAttr = 'src'
+          const lazyloadNative = ''
+          result += `<a href="${array[i].url}" class="thumbnail"><img ${imgAttr}="${array[i].avatar}" alt="${array[i].nick}" ${lazyloadNative}></a>`
+        }
+
+        result += `<div class="content">
+        <a class="comment" href="${array[i].url}" title="${array[i].content}">${array[i].content}</a>
+        <div class="name"><span>${array[i].nick} / </span><time datetime="${array[i].date}">${btf.diffDate(array[i].date, true)}</time></div>
+        </div></div>`
+      }
+    } else {
+      result += 'No comments'
+    }
+
+    ele.innerHTML = result
+    window.lazyLoadInstance && window.lazyLoadInstance.update()
+    window.pjax && window.pjax.refresh(ele)
+  },
+
+  newestCommentInit: (name, getComment) => {
+    const $dom = document.querySelector('#card-newest-comments .aside-list')
+    if ($dom) {
+      const data = btf.saveToLocal.get(name)
+      if (data) {
+        newestComments.generateHtml(JSON.parse(data), $dom)
+      } else {
+        getComment($dom)
+      }
+    }
+  },
+
+  run: (name, getComment) => {
+    newestComments.newestCommentInit(name, getComment)
+    btf.addGlobalFn('pjaxComplete', () => newestComments.newestCommentInit(name, getComment), name)
+  }
+}</script><script>window.addEventListener('load', () => {
+  const keyName = 'github-newest-comments'
+  const { changeContent, generateHtml, run } = window.newestComments
+
+  const findTrueUrl = (array, ele) => {
     Promise.all(array.map(item =>
       fetch(item.url).then(resp => resp.json()).then(data => {
-        const urlArray = data.body.match(/(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?/ig)
+        let urlArray = data.body ? data.body.match(/(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?/ig) : []
+        if (!Array.isArray(urlArray) || urlArray.length === 0) {
+          urlArray = [`${data.html_url}`]
+        }
         if (data.user.login === 'utterances-bot') {
           return urlArray.pop()
         } else {
@@ -393,12 +383,12 @@ window.addEventListener('load',preloader.endLoading())</script><div class="js-pj
           }
         })
 
-        saveToLocal.set('github-newest-comments', JSON.stringify(array), 10/(60*24))
-        generateHtml(array)
+        btf.saveToLocal.set(keyName, JSON.stringify(array), 10/(60*24))
+        generateHtml(array, ele)
     });
   }
 
-  const getComment = () => {
+  const getComment = ele => {
     fetch('https://api.github.com/repos/ZiHao256/ZiHao256.github.io/issues/comments?sort=updated&direction=desc&per_page=6&page=1',{
       "headers": {
         Accept: 'application/vnd.github.v3.html+json'
@@ -409,128 +399,75 @@ window.addEventListener('load',preloader.endLoading())</script><div class="js-pj
         const githubArray = data.map(item => {
           return {
             'avatar': item.user.avatar_url,
-            'content': changeContent(item.body_html),
+            'content': changeContent(item.body_html || item.body),
             'nick': item.user.login,
             'url': item.issue_url,
-            'date': item.updated_at,
-            'githubUrl': item.html_url
+            'date': item.updated_at
           }
         })
-        findTrueUrl(githubArray)
+        findTrueUrl(githubArray, ele)
       }).catch(e => {
-        const $dom = document.querySelector('#card-newest-comments .aside-list')
-        $dom.innerHTML= "Unable to get the data, please make sure the settings are correct."
+        console.error(e)
+        ele.textContent= "Unable to retrieve comments, please check the configuration"
       })
   }
+  run(keyName, getComment)
+})</script><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/dist/canvas-fluttering-ribbon.min.js"></script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/dist/click-heart.min.js" async="async" mobile="true"></script><script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js" defer="defer"></script><script>document.addEventListener('DOMContentLoaded', () => {
+  const pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
 
-  const generateHtml = array => {
-    let result = ''
-
-    if (array.length) {
-      for (let i = 0; i < array.length; i++) {
-        result += '<div class=\'aside-list-item\'>'
-
-        if (true) {
-          const name = 'src'
-          result += `<a href='${array[i].url}' class='thumbnail'><img ${name}='${array[i].avatar}' alt='${array[i].nick}'></a>`
-        }
-
-        result += `<div class='content'>
-        <a class='comment' href='${array[i].url}' title='${array[i].content}'>${array[i].content}</a>
-        <div class='name'><span>${array[i].nick} / </span><time datetime="${array[i].date}">${btf.diffDate(array[i].date, true)}</time></div>
-        </div></div>`
-      }
-    } else {
-      result += 'No Comment'
-    }
-
-    let $dom = document.querySelector('#card-newest-comments .aside-list')
-    $dom.innerHTML= result
-    window.lazyLoadInstance && window.lazyLoadInstance.update()
-    window.pjax && window.pjax.refresh($dom)
-  }
-
-  const newestCommentInit = () => {
-    if (document.querySelector('#card-newest-comments .aside-list')) {
-      const data = saveToLocal.get('github-newest-comments')
-      if (data) {
-        generateHtml(JSON.parse(data))
-      } else {
-        getComment()
-      }
-    }
-  }
-
-  newestCommentInit()
-  document.addEventListener('pjax:complete', newestCommentInit)
-})</script><div class="aplayer no-destroy" data-id="6738460302" data-server="netease" data-type="playlist" data-fixed="true" data-autoplay="true"> </div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-heart.min.js" async="async" mobile="true"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
-
-var pjax = new Pjax({
-  elements: 'a:not([target="_blank"])',
-  selectors: pjaxSelectors,
-  cacheBust: false,
-  analytics: false,
-  scrollRestoration: false
-})
-
-document.addEventListener('pjax:send', function () {
-
-  // removeEventListener scroll 
-  window.tocScrollFn && window.removeEventListener('scroll', window.tocScrollFn)
-  window.scrollCollect && window.removeEventListener('scroll', scrollCollect)
-
-  typeof preloader === 'object' && preloader.initLoading()
-  document.getElementById('rightside').style.cssText = "opacity: ''; transform: ''"
-  
-  if (window.aplayers) {
-    for (let i = 0; i < window.aplayers.length; i++) {
-      if (!window.aplayers[i].options.fixed) {
-        window.aplayers[i].destroy()
-      }
-    }
-  }
-
-  typeof typed === 'object' && typed.destroy()
-
-  //reset readmode
-  const $bodyClassList = document.body.classList
-  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
-
-  typeof disqusjs === 'object' && disqusjs.destroy()
-})
-
-document.addEventListener('pjax:complete', function () {
-  window.refreshFn()
-
-  document.querySelectorAll('script[data-pjax]').forEach(item => {
-    const newScript = document.createElement('script')
-    const content = item.text || item.textContent || item.innerHTML || ""
-    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
-    newScript.appendChild(document.createTextNode(content))
-    item.parentNode.replaceChild(newScript, item)
+  window.pjax = new Pjax({
+    elements: 'a:not([target="_blank"]):not([data-fancybox])',
+    selectors: pjaxSelectors,
+    cacheBust: false,
+    analytics: false,
+    scrollRestoration: false
   })
 
-  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
-
-  typeof chatBtnFn === 'function' && chatBtnFn()
-  typeof panguInit === 'function' && panguInit()
-
-  // google analytics
-  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
-
-  // baidu analytics
-  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
-
-  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
-
-  // prismjs
-  typeof Prism === 'object' && Prism.highlightAll()
-
-  typeof preloader === 'object' && preloader.endLoading()
-})
-
-document.addEventListener('pjax:error', (e) => {
-  if (e.request.status === 404) {
-    pjax.loadUrl('/404.html')
+  const triggerPjaxFn = (val) => {
+    if (!val) return
+    Object.values(val).forEach(fn => {
+      try {
+        fn()
+      } catch (err) {
+        console.debug('Pjax callback failed:', err)
+      }
+    })
   }
-})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
+
+  document.addEventListener('pjax:send', () => {
+    // removeEventListener
+    btf.removeGlobalFnEvent('pjaxSendOnce')
+    btf.removeGlobalFnEvent('themeChange')
+
+    // reset readmode
+    const $bodyClassList = document.body.classList
+    if ($bodyClassList.contains('read-mode')) $bodyClassList.remove('read-mode')
+
+    triggerPjaxFn(window.globalFn.pjaxSend)
+  })
+
+  document.addEventListener('pjax:complete', () => {
+    btf.removeGlobalFnEvent('pjaxCompleteOnce')
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+      if (!item.parentNode) return
+      const newScript = document.createElement('script')
+      const content = item.text || item.textContent || ''
+      Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+      newScript.appendChild(document.createTextNode(content))
+      item.parentNode.replaceChild(newScript, item)
+    })
+
+    triggerPjaxFn(window.globalFn.pjaxComplete)
+  })
+
+  document.addEventListener('pjax:error', e => {
+    const responseURL = e.request && e.request.responseURL
+    if (e.request && e.request.status === 404) {
+      true
+        ? pjax.loadUrl('/404.html')
+        : responseURL && (window.location.href = responseURL)
+    } else if (responseURL) {
+      window.location.href = responseURL
+    }
+  })
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">Search</span><i class="fas fa-spinner fa-pulse" id="loading-status" hidden="hidden"></i><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  Loading Database</span></div><div class="local-search-input"><input placeholder="Search for Posts" type="text"/></div><hr/><div id="local-search-results"></div><div class="ais-Pagination" id="local-search-pagination" style="display:none;"><ul class="ais-Pagination-list"></ul></div><div id="local-search-stats"></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=5.7.0"></script></div></div></body></html>

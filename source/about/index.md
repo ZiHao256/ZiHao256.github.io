@@ -4,23 +4,12 @@ type: "about"
 date: 2021-05-01 09:50:14
 ---
 # Zihao(Zahi) Ma
-<div align="center">
-{% btn 'https://github.com/ZiHao256',Github Homepage, iconfont icon-house-user,outline blue larger %}
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-{% btn 'https://zihao256.github.io/ZiHao256.com',Homepage, iconfont icon-house-user,outline blue larger %}
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-{% btn 'https://zihao256.github.io',Blog,iconfont icon-blog,outline blue larger %}
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-{% btn 'https://zihao256.github.io/about/',About, iconfont icon-about,outline blue larger %}
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-{% btn 'https://zihao256.github.io/ZiHao256.com/assets/pdf/Awesome_CV.pdf',CV,iconfont icon-cv,outline blue larger %}
-</div>
 
 # About Me
 {% note info %}
-I am currently a third-year PhD student in Computer Science and Technology at [Xidian University](https://www.xidian.edu.cn/). I am advised by [Prof. Hui Li](https://web.xidian.edu.cn/hli/) and [Prof. Xiangyang Ji](https://www.au.tsinghua.edu.cn/info/1165/3179.htm). I received my bachelor's degree in software engineering from [Xidian University](https://www.xidian.edu.cn/).
-I can be referred to as Zahi Ma and Zihao Ma.
-I have been focusing on learning system software, especially database systems, during my undergraduate and graduate study. 
+I am a third-year PhD student in Computer Science and Technology at [Xidian University](https://en.xidian.edu.cn/), jointly trained with Qiyuan Laboratory and advised by [Prof. Hui Li](https://web.xidian.edu.cn/hli/) and [Prof. Xiangyang Ji](https://www.au.tsinghua.edu.cn/info/1165/3179.htm). I received my bachelor's degree in Software Engineering from Xidian University.
+
+My research focuses on system software, particularly database systems.
 {% endnote %}
 
 {% hideToggle I am keep moving in 2024,#3196DB,#fff%}

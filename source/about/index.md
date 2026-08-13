@@ -13,12 +13,12 @@ date: 2021-05-01 09:50:14
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 {% btn 'https://zihao256.github.io/about/',About, iconfont icon-about,outline blue larger %}
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-{% btn 'https://zihao256.github.io/ZiHao256.com/Awesome_CV.pdf',CV,iconfont icon-cv,outline blue larger %}
+{% btn 'https://zihao256.github.io/ZiHao256.com/assets/pdf/Awesome_CV.pdf',CV,iconfont icon-cv,outline blue larger %}
 </div>
 
 # About Me
 {% note info %}
-I am currently a third-year PhD student in Computer Science and Technology at [Xidian University](https://www.xidian.edu.cn/). I received my bachelor's degree in software engineering from [Xidian University](https://www.xidian.edu.cn/).
+I am currently a third-year PhD student in Computer Science and Technology at [Xidian University](https://www.xidian.edu.cn/). I am advised by [Prof. Hui Li](https://web.xidian.edu.cn/hli/) and [Prof. Xiangyang Ji](https://www.au.tsinghua.edu.cn/info/1165/3179.htm). I received my bachelor's degree in software engineering from [Xidian University](https://www.xidian.edu.cn/).
 I can be referred to as Zahi Ma and Zihao Ma.
 I have been focusing on learning system software, especially database systems, during my undergraduate and graduate study. 
 {% endnote %}
